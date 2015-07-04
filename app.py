@@ -11,6 +11,14 @@ import json
 
 import datetime
 
+# Status codes
+NOT_ACCEPTED = 0
+ALLOCATED = 1
+STARTED = 2
+COMPLETED = 3
+QUITEARLY = 6
+
+
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
@@ -71,7 +79,7 @@ def start_exp():
         part = matches[0]
 
         ## Status
-        if part.status == "started":
+        if part.status == 2:
         	raise ExperimentError('already_started_exp')
 
         
@@ -95,7 +103,7 @@ def enterexp():
     try:
         user = Participant.query.\
             filter(Participant.uniqueid == unique_id).one()
-        user.status = 'started'
+        user.status = 2
         user.beginexp = datetime.datetime.now()
         db.session.add(user)
         db.session.commit()
@@ -188,7 +196,7 @@ def quitter():
             user = Participant.query.\
                 filter(Participant.uniqueid == unique_id).\
                 one()
-            user.status = "quitearly"
+            user.status = 6
             db.session.add(user)
             db.session.commit()
         except SQLAlchemy.exc.SQLAlchemyError:

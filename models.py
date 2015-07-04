@@ -7,7 +7,7 @@ import io, csv, json
 class Participant(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    uniqueid = db.Column(db.String(), primary_key=True)
+    uniqueid = db.Column(db.String())
     ipaddress = db.Column(db.String())
 
     ipaddress = db.Column(db.String())
@@ -18,14 +18,14 @@ class Participant(db.Model):
     arrive = db.Column(db.DateTime)
     beginexp = db.Column(db.DateTime)
     endexp = db.Column(db.DateTime)
-    status = db.Column(db.Integer, default = 1)
-    db.datastring = db.Column(db.Text(4294967295))
+    status = db.Column(db.String(), default = 1)
+    datastring = db.Column(db.Text(4294967295))
 
     def __init__(self, **kwargs):
         for key in kwargs:
             setattr(self, key, kwargs[key])
 
-        self.status = "assigned"
+        self.status = 1
         self.arrive = datetime.datetime.now()
 
 
