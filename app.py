@@ -18,8 +18,6 @@ STARTED = 2
 COMPLETED = 3
 QUITEARLY = 6
 
-
-
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 
@@ -28,19 +26,25 @@ db.init_app(app)
 
 from models import Participant
 
+experiments = {
+	'keep_track' : 'exp.html'
+}
+
 @app.route('/')
 @nocache
 def index():
     ''' Index route '''
     return render_template('default.html')
 
-@app.route('/exp', methods=['GET'])
+@app.route('/exp/begin', methods=['GET'])
 @nocache
 def start_exp():
     """ Serves up the experiment applet. """
 
     if not ('uniqueId' in request.args):
         raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
+    elif not ('experimentName' in request.args) or not ('experimentName' in experiments.keys()):
+        raise ExperimentError('experiment_code_error')
 
     unique_id = request.args['uniqueId']
 
@@ -79,14 +83,14 @@ def start_exp():
         part = matches[0]
 
         ## Status
-        if part.status == 2:
+        if part.status > 1:
         	raise ExperimentError('already_started_exp')
 
         
     return render_template('exp.html', uniqueId=part.uniqueid)
 
 
-@app.route('/inexp', methods=['POST'])
+@app.route('/exp/inexp', methods=['POST'])
 def enterexp():
     """
     AJAX listener that listens for a signal from the user's script when they
@@ -114,7 +118,7 @@ def enterexp():
     return jsonify(**resp)
 
 
-@app.route('/sync/<uid>', methods=['GET'])
+@app.route('/exp/sync/<uid>', methods=['GET'])
 def load(uid=None):
     """
     Load experiment data, which should be a JSON object and will be stored
@@ -133,17 +137,12 @@ def load(uid=None):
         resp = json.loads(user.datastring)
     except:
         resp = {
-            "condition": user.cond,
-            "counterbalance": user.counterbalance,
-            "assignmentId": user.assignmentid,
-            "workerId": user.workerid,
-            "hitId": user.hitid,
-            "bonus": user.bonus
+            "uniqueId": user.uniqueid,
         }
 
     return jsonify(**resp)
 
-@app.route('/sync/<uid>', methods=['PUT'])
+@app.route('/exp/sync/<uid>', methods=['PUT'])
 def update(uid=None):
     """
     Save experiment data, which should be a JSON object and will be stored
@@ -175,7 +174,7 @@ def update(uid=None):
     resp = {"status": "user data saved"}
     return jsonify(**resp)
 
-@app.route('/quitter', methods=['POST'])
+@app.route('/exp/quitter', methods=['POST'])
 def quitter():
     """
     Mark quitter as such.
@@ -205,7 +204,7 @@ def quitter():
             resp = {"status": "marked as quitter"}
             return jsonify(**resp)
 
-@app.route('/worker_complete', methods=['GET'])
+@app.route('/exp/worker_complete', methods=['GET'])
 def worker_complete():
     ''' Complete worker. '''
     if not 'uniqueId' in request.args:
@@ -247,12 +246,17 @@ def regularpage(foldername=None, pagename=None):
     """
     Route not found by the other routes above. May point to a static template.
     """
-    if foldername is None and pagename is None:
-        raise ExperimentError('page_not_found')
-    if foldername is None and pagename is not None:
-        return render_template(pagename)
-    else:
-        return render_template(foldername+"/"+pagename)
+    from jinja2.exceptions import TemplateNotFound
+
+    try: 
+        
+	    if foldername is None and pagename is not None:
+	        return render_template(pagename)
+	    else:
+    		return render_template(foldername+"/"+pagename)
+    except TemplateNotFound:
+    	raise ExperimentError('page_not_found')
+
 
 if __name__ == '__main__':
 	app.debug = True

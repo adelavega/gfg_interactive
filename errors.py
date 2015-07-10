@@ -32,7 +32,8 @@ class ExperimentError(Exception):
             insert_mode_failed = 1020,
             page_not_found = 404,
             in_debug = 2005,
-            unknown_error = 9999
+            unknown_error = 9999,
+            experiment_code_error = 2000
         )
         self.value = value
         self.errornum = experiment_errors[self.value]

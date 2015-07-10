@@ -13,40 +13,36 @@
                 <hr>
 
                 <div class="alert alert-danger">
-                {% if errornum == 1008 %}
+                {% if errortype == 'already_started_exp' %}
                     
-                        <p>Sorry, our records indicate that you have attempted to complete this HIT, but quit before finishing.</p>
-                        <p>Because this is a Psychology experiment, you can only complete this HIT once.</p>
-                        <p>Please return the HIT so someone else can perform the experiment.</p>
+                        <p>Sorry, our records indicate that you have attempted to complete this task, but quit before finishing.</p>
+                        <p>Because this is a Psychology experiment, you can only complete this task once.</p>
 
-                {% elif errornum == 1010 %}
+                {% elif errortype == 'already_did_exp_hit' %}
 
-                        <p>Sorry, our records indicate that you have already completed (or attempted to complete) this HIT.</p>
+                        <p>Sorry, our records indicate that you have already completed (or attempted to complete) this task.</p>
                         <p>Because this is a Psychology experiment, you can only complete this HIT once.</p>
-                        <p>Please release the HIT so someone else can perform the experiment.</p>
 
                 {% else %}
 
-                        <p>Sorry, there was an unexpected error in our processing of your HIT.<p>
+                        <p>Sorry, there was an unexpected error loading this page. <br><p>
 
                 {% endif %}
+
                         <p>
-                            If you would like to receive partial compensation or feel you
-                            have reached this page in error, please email
+                            If you feel you
+                            have reached this page in error and want more information, please email
                             <a href="mailto:{{contact_address}}">{{contact_address}}</a>
                             and send the following information:
                         </p>
                         <p>
                             Error: #{{ errornum }}<br>
-                            {% if hitId %} HITID: #{{ hitId }}<br> {% endif %}
-                            {% if assignId %}AssignmentId: #{{ assignId }}<br> {% endif %}
-                            {% if workerId %} WorkerId: #{{ workerId }}<br> {% endif %}
+                            {% if uniqueID %} uniqueID: #{{ uniqueID[0] }}<br> {% endif %}
                         </p>
 
                 </div>
 
                 <hr>
-                <h3>Our sincere apologies!</h3>
             </div>
         </div>
     </body>

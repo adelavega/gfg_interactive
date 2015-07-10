@@ -42,7 +42,7 @@ deactivate nondestructive
 VIRTUAL_ENV="/Users/aleph4/Dropbox/projects/genes_good/gfg_server"
 export VIRTUAL_ENV
 
-source postactivate.sh
+source bin/postactivate.sh
 
 _OLD_VIRTUAL_PATH="$PATH"
 PATH="$VIRTUAL_ENV/bin:$PATH"

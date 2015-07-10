@@ -19,7 +19,7 @@ class Participant(db.Model):
     beginexp = db.Column(db.DateTime)
     endexp = db.Column(db.DateTime)
     status = db.Column(db.String(), default = 1)
-    datastring = db.Column(db.Text(4294967295))
+    datastring = db.Column(db.Text)
 
     def __init__(self, **kwargs):
         for key in kwargs:
