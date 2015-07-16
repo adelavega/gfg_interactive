@@ -112,7 +112,7 @@ class Session
 		@imgs_loaded = 0
 		
 	start: ->
-		psiTurk.finishInstructions()
+		dataHandler.finishInstructions()
 
 		# This ensures that the images for the two buttons are loaded
 		# Could probably be done better
@@ -147,7 +147,7 @@ class Session
 	# This gets called when block is over.
 	# Saves data and goes back or forward
 	exitBlock: (next = true) ->
-		# psiTurk.saveData()
+		# dataHandler.saveData()
 		if next
 			@nextBlock()
 		else
@@ -155,7 +155,7 @@ class Session
 	
 	# Ends it all
 	endSession: ->
-		psiTurk.completeHIT()
+		dataHandler.completeHIT()
 		
 	# Handles button clocks (mostly for questionnaires)
 	buttonClick: (e) ->
@@ -204,7 +204,7 @@ class Instruction
 				acc = 'FORWARD'
 				@exitTrial()
 
-		psiTurk.recordTrialData({'block': @message, 'rt': rt, 'resp': button, 'acc': acc})
+		dataHandler.recordTrialData({'block': @message, 'rt': rt, 'resp': button, 'acc': acc})
 
 class InstGrid
 	constructor: (@message, @categories=all_cats, @disabled=true, @correct=false, @leftKey = "Back", @rightKey = "Continue") ->
@@ -327,7 +327,7 @@ class Block
 	buttonClick: (button) ->
 		if button.id is 'rightText' or button.id is 'rightButton'
 			closeGrid(@exitBlock)
-			psiTurk.recordTrialData({'block': @condition, 'target_words': @target_words, 'input_words': @data})
+			dataHandler.recordTrialData({'block': @condition, 'target_words': @target_words, 'input_words': @data})
 		else  
 			$(button).siblings().removeClass('btn-primary')
 			$(button).toggleClass('btn-primary')

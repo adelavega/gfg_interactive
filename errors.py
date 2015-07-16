@@ -30,7 +30,6 @@ class ExperimentError(Exception):
             hit_not_registered_with_ad_server = 1018,
             template_unsafe = 1019,
             insert_mode_failed = 1020,
-            page_not_found = 404,
             in_debug = 2005,
             unknown_error = 9999,
             experiment_code_error = 2000

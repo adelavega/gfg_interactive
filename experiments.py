@@ -16,12 +16,11 @@ STARTED = 2
 COMPLETED = 3
 QUITEARLY = 6
 
-
 experiments = Blueprint('experiments', __name__,
                         template_folder='exp/templates', static_folder='exp/static')
 
 exp_list = {
-	'keep_track' : 'exp.html'
+	'keep_track' : 'keep_track.html'
 }
 
 @experiments.route('/begin', methods=['GET'])
@@ -117,15 +116,16 @@ def enterexp():
     return jsonify(**resp)
 
 
-@experiments.route('/sync/<unique_id>/<experiment_name>', methods=['GET'])
-def load(unique_id=None, experiment_name=None):
+@experiments.route('/sync/<id_exp>', methods=['GET'])
+def load(id_exp=None):
     """
     Load experiment data, which should be a JSON object and will be stored
     after converting to string.
     """
-    current_app.logger.info("GET /sync route with id: %s" % unique_id)
+    current_app.logger.info("GET /sync route with id: %s" % id_exp)
 
     try:
+        unique_id, experiment_name = id_exp.split("&")
         user = Participant.query.\
             filter(Participant.uniqueid == unique_id and Participant.experimentname == experiment_name).\
             one()
@@ -142,15 +142,16 @@ def load(unique_id=None, experiment_name=None):
 
     return jsonify(**resp)
 
-@experiments.route('/sync/<unique_id>/<experiment_name>', methods=['PUT'])
-def update(unique_id=None, experiment_name=None):
+@experiments.route('/sync/<id_exp>', methods=['PUT'])
+def update(id_exp=None):
     """
     Save experiment data, which should be a JSON object and will be stored
     after converting to string.
     """
-    current_app.logger.info("PUT /sync route with id: %s" % unique_id)
+    current_app.logger.info("PUT /sync route with id: %s" % id_exp)
 
     try:
+        unique_id, experiment_name = id_exp.split("&")
         user = Participant.query.\
             filter(Participant.uniqueid == unique_id and Participant.experimentname == experiment_name).\
             one()
@@ -176,9 +177,7 @@ def update(unique_id=None, experiment_name=None):
 
 @experiments.route('/quitter', methods=['POST'])
 def quitter():
-    """
-    Mark quitter as such.
-    """
+    """ Mark quitter as such. """
     if not ('uniqueId' in request.form) or not ('experimentName' in request.form):
         resp = {"status": "bad request"}
         return jsonify(**resp)
@@ -211,7 +210,7 @@ def quitter():
 
 @experiments.route('/worker_complete', methods=['GET'])
 def worker_complete():
-    ''' Complete worker. '''
+    """Complete worker."""
 
     if not ('uniqueId' in request.form) or not ('experimentName' in request.form):
         resp = {"status": "bad request"}

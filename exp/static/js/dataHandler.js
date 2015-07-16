@@ -19,18 +19,16 @@ _.extend(Backbone.Notifications, Backbone.Events);
 /*******
  * API *
  ******/
-var PsiTurk = function(uniqueId, mode) {
-	mode = mode || "live";  // defaults to live mode in case user doesn't pass this
+var DataHandler = function(uniqueId, experimentName) {
 	var self = this;
 	
 	/****************
 	 * TASK DATA    *
 	 ***************/
 	var TaskData = Backbone.Model.extend({
-		urlRoot: "/sync", // Save will PUT to /sync (data obj), with mimetype 'application/JSON'
-		id: uniqueId,
-		mode: mode,
-		
+		urlRoot: "/exp/sync/", // Save will PUT to /sync (data obj), with mimetype 'application/JSON'
+		id: uniqueId + "&" + experimentName,
+
 		defaults: {
 			uniqueId: 0,
 			currenttrial: 0,

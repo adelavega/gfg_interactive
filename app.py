@@ -5,21 +5,14 @@ import os
 # Setup flask
 from flask import Flask, render_template
 from utils import nocache
-from errors import ExperimentError
 
 from experiments import experiments
-
-
-# Status codes
-NOT_ACCEPTED = 0
-ALLOCATED = 1
-STARTED = 2
-COMPLETED = 3
-QUITEARLY = 6
+from dashboard import dashboard
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.register_blueprint(experiments, url_prefix='/exp')
+app.register_blueprint(dashboard, url_prefix='/dashboard')
 
 from database import db
 db.init_app(app)
@@ -53,9 +46,7 @@ def regularpage(foldername=None, pagename=None):
 	    else:
     		return render_template(foldername+"/"+pagename)
     except TemplateNotFound:
-        ## Maybe have to replace with generic error here
-    	raise ExperimentError('page_not_found')
-
+    	return render_template("error.html", errornum = 404)
 
 if __name__ == '__main__':
 	app.debug = True
