@@ -15,6 +15,7 @@ class Participant(db.Model):
     platform = db.Column(db.String())
     language = db.Column(db.String())
 
+    experimentname = db.Column(db.String())
     arrive = db.Column(db.DateTime)
     beginexp = db.Column(db.DateTime)
     endexp = db.Column(db.DateTime)
@@ -76,7 +77,7 @@ class Participant(db.Model):
             return("")
 
     def __repr__(self):
-        return "Subject(%s, %s, %s, %s)" % ( 
+        return "Subject(%s, %s, %s)" % ( 
             self.uniqueid, 
             self.status,
-            self.codeversion)
+            self.experimentname)
