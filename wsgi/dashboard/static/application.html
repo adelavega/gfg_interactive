@@ -1,0 +1,147 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+          <h1>Research assistant application</h1>
+          <p class="lead">
+            Please, fill out all the fields below. We get a lot of applications so if you don't hear from us, we'll keep you on our list for future candidates
+          </p>
+          <h4>Basic information</h5>
+          <form class="form-horizontal", method="post" action="/application">
+            <div class="control-group">
+              <label class="control-label" for="first_name">First Name</label>
+              <div class="controls">
+                <input type="text" id="first_name"  name="first_name" placeholder="First Name"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="last_name">Last Name</label>
+              <div class="controls">
+                <input type="text" id="last_name" name="last_name" placeholder="Last Name"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="email">Email address</label>
+              <div class="controls">
+                <input type="email" id="email" name="email" placeholder="name@colorado.edu"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="major">Major</label>
+              <div class="controls">
+                <input type="text" id="major" name="major" placeholder=""/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="minor">Minor</label>
+              <div class="controls">
+                <input type="text" id="minor" name="minor" placeholder=""/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="age">Age</label>
+              <div class="controls">
+                <input type="text" id="age" name="age" placeholder=""/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="year">Year in school</label>
+              <div class="controls">
+                <select id="year" name="year">
+                  <option>Freshman</option>
+                  <option>Sophomore</option>
+                  <option>Junior</option>
+                  <option>Senior+</option>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="grad">Expected graduation</label>
+              <div class="controls">
+                <input type="month" id="grad" name="grad_date" placeholder="May 2014"/>
+              </div>
+            </div><br>
+            <div class="control-group">
+              <label class="control-label" for="gpa">GPA</label>
+              <div class="controls">
+                <input type="text" id="gpa" name="gpa" placeholder=""/>
+              </div>
+            </div>
+          <h4>Education</h5>
+            Briefly answer the following questions about your education so far.
+            <br><br>
+            Which class you've taken is your favorite so far, and why?
+            <textarea rows="5" class="text required span7" id="favclass" name="fav_class"></textarea>
+            <br><br>
+            Which class has been your least favorite, and why?
+            <textarea rows="5" class="text required span7" id="leastfavclass" name="least_fav"></textarea>
+            
+            <br><br>
+            Have you taken statistics?<br>
+            <label class="radio inline">
+              <input type="radio" name="stats" id="stats1" value="no" checked/>
+              No </label>
+            <label class="radio inline">
+              <input type="radio" name="stats" id="stats1" value="yes"/>
+              Yes </label>
+
+            <br><br>
+            List other classes you have taken that are relevant to this position (maximum of 5)
+            <textarea rows="2" class="text required span7" id ="rel_courses" name="rel_courses"></textarea>
+
+            <br><br>
+            What are you research interests? (If you have a specific research question in mind, great. If not, tell me why you think our labs research or cognitive neuroscience is interesting to you)
+            <textarea rows="5" class="text required span7" id ="res_interest" name = "res_interest"></textarea>
+
+            <br><br>
+            What are you goals after graduation or after this position? (i.e. med school, graduate school, industry)
+            <textarea rows="5" class="text required span7" id = "grad_goals" name = "grad_goals"></textarea>
+
+            <br><br>
+            Which of the following skills do you have?<br> 
+
+            <label class="checkbox inline"> <input type="checkbox" id="word" name="word" value="word">Word</label>
+            <label class="checkbox inline"> <input type="checkbox" id="excel" name="excel" value="excel">Excel</label>
+            <label class="checkbox inline"> <input type="checkbox" id="spss" name="spss" value="spss">SPSS</label>
+            <label class="checkbox inline"> <input type="checkbox" id="r" name="r" value="r ">R</label>
+            <label class="checkbox inline"> <input type="checkbox" id="otherstat" name="otherstat" value="otherstat">Other stat package</label>
+            <label class="checkbox inline"> <input type="checkbox" id="program"  name="program" value="programming">Computer programming </label><br>
+            <label class="checkbox inline"> <input type="checkbox" id="runsubs" name="runsubs" value="runsubs"/>Running subjects</label>
+
+            <br><br>
+            Do you have previous research experience?<br>
+            <label class="radio inline">
+              <input type="radio" name="stats" id="res_experience_yn" value="no" checked/>
+              No </label>
+            <label class="radio inline">
+              <input type="radio" name="stats" id="res_experience_yn" value="yes"/>
+              Yes </label>
+
+            <br><br>
+            If so, explain what skills you learned, how you liked it, and why you've chosen to move and apply to our lab.
+            <textarea rows="5" class="text required span7" id="res_experience" name="res_experience"></textarea>
+
+            <br><br>
+            What are you expectations of an opportunity like this? What do you expect to gain? What role do you want to play?
+            <textarea rows="5" class="text required span7" id ="expectations" name="expectations"></textarea>
+
+            <br><br>
+            List any references from previous jobs or research experiences here.
+            <textarea rows="3" class="text required span7" id="refs" name="refs"></textarea>
+
+            <br><br>
+            In what capacity do you want to get involved? <br>
+
+            <label class="checkbox inline"> <input type="checkbox" id="fellowship" name="fellowship" value="fellowship"/>Fellowship (e.g. UROP)</label>
+            <label class="checkbox inline"> <input type="checkbox" id="credit" name="credit" value="credit"/>Independent study credit</label>
+            <label class="checkbox inline"> <input type="checkbox" id="thesis" name="thesis" value="thesis"/>Honors thesis</label>
+            <label class="checkbox inline"> <input type="checkbox" id="volunteer" name="volunteer" value="volunteer"/>Volunteer</label> <br><br>
+
+            That's all! Thanks for applying to be a research assistant. Remember, we receive many applications, so if you don't hear from us your name will be stored in our database for future positions <br><br>
+
+            <input class="btn btn-large btn-primary" name = "commit" value = "Submit" type="submit"/ >
+          </form>
+       </div>
+      </div>
+{% endblock %}
+
