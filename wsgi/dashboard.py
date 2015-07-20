@@ -28,11 +28,11 @@ fig = '\n\n<style>\n\n</style>\n\n<div id="fig_el149044349181609087646510"></div
 ### JUST ADD STATIC DATA FOR NOW
 def make_plot():
 
-    qs_data = pd.read_csv(os.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard/static/data/qs_data.csv'))
+    qs_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard/static/data/qs_data.csv'))
 
     tab1 = Panel(child=BoxPlot(qs_data, title="Questionnaires", width=400, height=400), title="questionnaire answers")
 
-    avg_sub_data = pd.read_csv(os.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard/static/data/avg_sub_data.csv'))
+    avg_sub_data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard/static/data/avg_sub_data.csv'))
     # sns.violinplot(avg_sub_data['perc_score'] ,avg_sub_data['n_targets'], bw=.3)
 
     # tab2 = Panel(child=mpl.to_bokeh(notebook=True), title="score x categories (sub.-level)")
