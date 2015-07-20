@@ -29,7 +29,7 @@ fig = '\n\n<style>\n\n</style>\n\n<div id="fig_el149044349181609087646510"></div
 def make_plot():
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(hostname='genesforgood-banichlab.rhcloud.com', username='54bf3ae6e0b8cd98c6000041', key_filename='id_rsa')
+    ssh.connect(hostname='genesforgood-banichlab.rhcloud.com', username='54bf3ae6e0b8cd98c6000041', key_filename='../id_rsa')
     stdin, stdout, stderr = ssh.exec_command('python app-root/repo/python/download_data.py')
     all_data = [json.loads(part) for part in stdout.readlines() if len(part) > 5]
 
