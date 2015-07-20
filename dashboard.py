@@ -65,9 +65,9 @@ def make_plot():
     kt_data['n_targets'] = kt_data.apply(lambda x: (len(x['target_words']) * 1.0), axis=1)
 
     avg_sub_data = pd.DataFrame(kt_data.groupby(['uniqueid', 'n_targets']).perc_score.mean()).reset_index()
-    sns.violinplot(avg_sub_data['perc_score'] ,avg_sub_data['n_targets'], bw=.3)
+    # sns.violinplot(avg_sub_data['perc_score'] ,avg_sub_data['n_targets'], bw=.3)
 
-    tab2 = Panel(child=mpl.to_bokeh(notebook=True), title="score x categories (sub.-level)")
+    # tab2 = Panel(child=mpl.to_bokeh(notebook=True), title="score x categories (sub.-level)")
 
     g = gg.ggplot(avg_sub_data, gg.aes('perc_score', fill='n_targets'))  + gg.geom_density(alpha=0.25) 
     g.draw()
@@ -75,7 +75,7 @@ def make_plot():
 
     tab4 = Panel(child=bkc.Histogram(avg_sub_data.groupby('uniqueid').mean().perc_score, 20, density=True), title="score density by category(sub.-level)")
 
-    tabs = Tabs(tabs=[ tab1, tab2, tab3, tab4])
+    tabs = Tabs(tabs=[ tab1, tab3, tab4])
     
     return tabs
 
