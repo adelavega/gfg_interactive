@@ -14,7 +14,7 @@ import json
 from bokeh.charts import BoxPlot, output_notebook, show
 import bokeh.charts as bkc
 from bokeh.models.widgets import Panel, Tabs
-from bokeh import mpl
+# from bokeh import mpl
 
 from bokeh.resources import CDN
 from bokeh.embed import file_html
