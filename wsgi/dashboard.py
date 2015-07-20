@@ -5,13 +5,11 @@ from sqlalchemy.exc import SQLAlchemyError
 from database import db
 
 import pandas as pd
-import numpy as np
+
 # import seaborn as sns
-import paramiko
-import json
 # import ggplot as gg
 
-from bokeh.charts import BoxPlot, output_notebook, show
+from bokeh.charts import BoxPlot
 import bokeh.charts as bkc
 from bokeh.models.widgets import Panel, Tabs
 # from bokeh import mpl
@@ -28,11 +26,11 @@ fig = '\n\n<style>\n\n</style>\n\n<div id="fig_el149044349181609087646510"></div
 ### JUST ADD STATIC DATA FOR NOW
 def make_plot():
 
-    qs_data = pd.read_csv('../data/qs_data.csv')
+    qs_data = pd.read_csv('data/qs_data.csv')
 
     tab1 = Panel(child=BoxPlot(qs_data, title="Questionnaires", width=400, height=400), title="questionnaire answers")
 
-    avg_sub_data = pd.read_csv('../data/avg_sub_data.csv')
+    avg_sub_data = pd.read_csv('data/avg_sub_data.csv')
     # sns.violinplot(avg_sub_data['perc_score'] ,avg_sub_data['n_targets'], bw=.3)
 
     # tab2 = Panel(child=mpl.to_bokeh(notebook=True), title="score x categories (sub.-level)")
