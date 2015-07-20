@@ -1,0 +1,5 @@
+,0,1,2,3,4,5,6
+0,Distances,Colors,Animals,Relatives,Countries,Relatives,Countries
+1,Animals,Metals,Countries,Distances,Colors,Distances,Colors
+2,Countries,Relatives,Colors,Animals,Metals,Animals,Metals
+3,,Distances,Metals,,,,Relatives
