@@ -17,6 +17,8 @@ from bokeh.models.widgets import Panel, Tabs
 from bokeh.resources import CDN
 from bokeh.embed import file_html
 
+import os
+
 
 dashboard = Blueprint('dashboard', __name__,
                         template_folder='dashboard/templates', static_folder='dashboard/static')
@@ -25,6 +27,8 @@ fig = '\n\n<style>\n\n</style>\n\n<div id="fig_el149044349181609087646510"></div
 
 ### JUST ADD STATIC DATA FOR NOW
 def make_plot():
+
+    current_app.logger.info(os.path.dirname(os.path.abspath(__file__)))
 
     qs_data = pd.read_csv('data/qs_data.csv')
 
