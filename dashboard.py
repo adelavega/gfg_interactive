@@ -9,7 +9,7 @@ import numpy as np
 # import seaborn as sns
 import paramiko
 import json
-import ggplot as gg
+# import ggplot as gg
 
 from bokeh.charts import BoxPlot, output_notebook, show
 import bokeh.charts as bkc
@@ -69,13 +69,13 @@ def make_plot():
 
     # tab2 = Panel(child=mpl.to_bokeh(notebook=True), title="score x categories (sub.-level)")
 
-    g = gg.ggplot(avg_sub_data, gg.aes('perc_score', fill='n_targets'))  + gg.geom_density(alpha=0.25) 
-    g.draw()
-    tab3 = Panel(child=mpl.to_bokeh(notebook=True), title="score histogram (sub.-level)")
+    # g = gg.ggplot(avg_sub_data, gg.aes('perc_score', fill='n_targets'))  + gg.geom_density(alpha=0.25) 
+    # g.draw()
+    # tab3 = Panel(child=mpl.to_bokeh(notebook=True), title="score histogram (sub.-level)")
 
     tab4 = Panel(child=bkc.Histogram(avg_sub_data.groupby('uniqueid').mean().perc_score, 20, density=True), title="score density by category(sub.-level)")
 
-    tabs = Tabs(tabs=[ tab1, tab3, tab4])
+    tabs = Tabs(tabs=[ tab1, tab4])
     
     return tabs
 
