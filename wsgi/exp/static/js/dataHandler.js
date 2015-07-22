@@ -28,12 +28,14 @@ var DataHandler = function(uniqueId, experimentName) {
 	var TaskData = Backbone.Model.extend({
 		urlRoot: "/exp/sync/", // Save will PUT to /sync (data obj), with mimetype 'application/JSON'
 		id: uniqueId + "&" + experimentName,
+		uniqueId: uniqueId,
+		experimentName: experimentName,
 
 		defaults: {
-			uniqueId: 0,
 			currenttrial: 0,
 			data: [],
 			eventdata: [],
+			questiondata: {},
 			useragent: ""
 		},
 		
@@ -53,6 +55,12 @@ var DataHandler = function(uniqueId, experimentName) {
 			data.push(trialdata);
 			this.set('data', data);
 			this.set({"currenttrial": this.get("currenttrial")+1});
+		},
+
+		addUnstructuredData: function(field, response) {
+			var qd = this.get("questiondata");
+			qd[field] = response;
+			this.set("questiondata", qd);
 		},
 		
 
@@ -145,11 +153,11 @@ var DataHandler = function(uniqueId, experimentName) {
 	};
 
 	self.startTask = function () {
-		self.saveData();
-		
+		self.saveData();		
+
 		$.ajax("inexp", {
 				type: "POST",
-				data: {uniqueId: self.taskdata.uniqueId}
+				data: {'uniqueId' : self.taskdata.uniqueId, 'experimentName': self.taskdata.experimentName}
 		});
 		
 		if (self.taskdata.mode != 'debug') {  // don't block people from reloading in debug mode
@@ -159,7 +167,7 @@ var DataHandler = function(uniqueId, experimentName) {
 				
 				$.ajax("quitter", {
 						type: "POST",
-						data: {uniqueId: self.taskdata.uniqueId}
+						data: {'uniqueId' : self.taskdata.uniqueId, 'experimentName': self.taskdata.experimentName}
 				});
 
 				return "By leaving or reloading this page, you opt out of the experiment.  Are you sure you want to leave the experiment?";
@@ -177,10 +185,10 @@ var DataHandler = function(uniqueId, experimentName) {
 		Backbone.Notifications.trigger('_psiturk_finishedtask', optmessage);
 	};
 
-	self.completeTask = function() {
+	self.completeHIT = function() {
 		self.teardownTask();
 
-		window.location= self.taskdata.adServerLoc + "?uniqueId=" + self.taskdata.uniqueId;
+		window.location= "/exp/worker_complete?" + "uniqueId=" + uniqueId + "&experimentName=" + experimentName;
 	}
 
 	// To be fleshed out with backbone views in the future.

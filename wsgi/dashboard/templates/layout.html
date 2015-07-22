@@ -10,10 +10,13 @@
   <div class="container">
     <div class="navbar">
       <div class="navbar-inner">
-        <a class = "brand" href="{{ url_for('.view') }}">Dashboard</a>
+        <a class = "brand">Dashboard</a>
         <ul class="nav">
-         {%- for endpoint, caption in [
-            ('dashboard.login', 'Log In'),
+         {%- for endpoint, exp, caption in [
+            ('dashboard.view', 'keep_track', 'Keep Track'),
+            ('dashboard.view', 'keep_track_ref', 'Keep Track Reference'),
+            ('dashboard.view', 'category_switch', 'Category Switch'),
+            ('dashboard.login', 'None', 'Log In'),
 
           ] %}
       
@@ -26,8 +29,8 @@
         {% endif %}
           
          {% else %}
-          <li{% if endpoint == request.endpoint %} class=active{% endif%}>
-          <a href={{ url_for(endpoint) }}>{{ caption }}</a>
+          <li{% if request.args['experiment'] == exp %} class=active{% endif%}>
+          <a href={{ url_for(endpoint) + "?experiment=" + exp }}>{{ caption }}</a>
          {% endif %} 
 
         {% endfor %}

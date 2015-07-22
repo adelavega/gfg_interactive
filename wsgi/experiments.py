@@ -33,6 +33,11 @@ def start_exp():
     elif not ('experimentName' in request.args) or not (request.args['experimentName'] in exp_list.keys()):
         raise ExperimentError('experiment_code_error')
 
+    if 'debug' in request.args:
+        debug = request.args['debug']
+    else:
+        debug = False
+
 
     unique_id = request.args['uniqueId']
     experiment_name = request.args['experimentName']
@@ -63,7 +68,7 @@ def start_exp():
             request.user_agent.language
 
         part = Participant(uniqueid=unique_id, ipaddress=worker_ip, browser=browser, platform=platform,
-            language=language, experimentname=experiment_name)
+            language=language, experimentname=experiment_name, debug=debug)
 
         db.session.add(part)
         db.session.commit()
@@ -75,11 +80,11 @@ def start_exp():
         part = matches[0]
 
         ## Status
-        if part.status > 1:
+        if int(part.status) > 1 and debug == False:
         	raise ExperimentError('already_started_exp')
 
         
-    return render_template(exp_list[experiment_name], uniqueId=part.uniqueid)
+    return render_template(experiment_name + "/" + exp_list[experiment_name], uniqueId=part.uniqueid, experimentName=part.experimentname)
 
 
 @experiments.route('/inexp', methods=['POST'])
@@ -92,13 +97,11 @@ def enterexp():
     referesh to start over).
     """
 
-    current_app.logger.info("Accessing /inexp")
-
     if not ('uniqueId' in request.form) or not ('experimentName' in request.form):
         raise ExperimentError('improper_inputs')
 
     unique_id = request.form['uniqueId']
-    experiment_name = request.form('experimentName')
+    experiment_name = request.form['experimentName']
 
     try:
         user = Participant.query.\
@@ -159,7 +162,7 @@ def update(id_exp=None):
         current_app.logger.error("DB error: Unique user not found.")
 
     if hasattr(request, 'json'):
-        user.datastring = request.data.decode('utf-8').encode(
+        user.datastring = request.get_data().decode('utf-8').encode(
             'ascii', 'xmlcharrefreplace'
         )
         db.session.add(user)
@@ -183,7 +186,7 @@ def quitter():
         return jsonify(**resp)
 
     unique_id = request.form['uniqueId']
-    experiment_name = request.form('experimentName')
+    experiment_name = request.form['experimentName']
 
     if unique_id[:5] == "debug":
         debug_mode = True
@@ -212,15 +215,14 @@ def quitter():
 def worker_complete():
     """Complete worker."""
 
-    if not ('uniqueId' in request.form) or not ('experimentName' in request.form):
-        resp = {"status": "bad request"}
-        return jsonify(**resp)
+    if not ('uniqueId' in request.args) or not ('experimentName' in request.args):
+        raise ExperimentError('improper_inputs')
                 
     else:
-        unique_id = request.form['uniqueId']
-        experiment_name = request.form('experimentName')
+        unique_id = request.args['uniqueId']
+        experiment_name = request.args['experimentName']
 
-        current_app.logger.info("Completed experiment %s, %s" % unique_id, experiment_name)
+        current_app.logger.info("Completed experiment %s, %s" % (unique_id, experiment_name))
         try:
             user = Participant.query.\
                 filter(Participant.uniqueid == unique_id and Participant.experimentname == experiment_name).\
@@ -229,11 +231,29 @@ def worker_complete():
             user.endhit = datetime.datetime.now()
             db.session.add(user)
             db.session.commit()
-            status = "success"
+
         except SQLAlchemyError:
-            status = "database error"
-        resp = {"status" : status}
-        return jsonify(**resp)
+           raise ExperimentError('unknown_error')
+
+        return render_template("complete.html")
+
+# Generic route
+@experiments.route('/<pagename>')
+@experiments.route('/<foldername>/<pagename>')
+def regularpage(foldername=None, pagename=None):
+    """
+    Route not found by the other routes above. May point to a static template.
+    """
+    from jinja2.exceptions import TemplateNotFound
+
+    try: 
+        
+        if foldername is None and pagename is not None:
+            return render_template(pagename)
+        else:
+            return render_template(foldername+"/"+pagename)
+    except TemplateNotFound:
+        return render_template("error.html", errornum = 404)
 
 
 @experiments.errorhandler(ExperimentError)

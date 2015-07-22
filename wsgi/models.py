@@ -19,7 +19,8 @@ class Participant(db.Model):
     arrive = db.Column(db.DateTime)
     beginexp = db.Column(db.DateTime)
     endexp = db.Column(db.DateTime)
-    status = db.Column(db.String(), default = 1)
+    status = db.Column(db.Integer(), default = 1)
+    debug = db.Column(db.Boolean)
     datastring = db.Column(db.Text)
 
     def __init__(self, **kwargs):
