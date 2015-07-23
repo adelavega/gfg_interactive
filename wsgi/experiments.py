@@ -19,9 +19,7 @@ QUITEARLY = 6
 experiments = Blueprint('experiments', __name__,
                         template_folder='exp/templates', static_folder='exp/static')
 
-exp_list = {
-	'keep_track' : 'keep_track.html'
-}
+experiment_list = ['keep_track']
 
 @experiments.route('/begin', methods=['GET'])
 @nocache
@@ -30,7 +28,7 @@ def start_exp():
 
     if not ('uniqueId' in request.args):
         raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
-    elif not ('experimentName' in request.args) or not (request.args['experimentName'] in exp_list.keys()):
+    elif not ('experimentName' in request.args) or not (request.args['experimentName'] in experiment_list):
         raise ExperimentError('experiment_code_error')
 
     if 'debug' in request.args:
@@ -84,7 +82,7 @@ def start_exp():
         	raise ExperimentError('already_started_exp')
 
         
-    return render_template(experiment_name + "/" + exp_list[experiment_name], uniqueId=part.uniqueid, experimentName=part.experimentname)
+    return render_template(experiment_name + "/exp.html", uniqueId=part.uniqueid, experimentName=part.experimentname)
 
 
 @experiments.route('/inexp', methods=['POST'])
