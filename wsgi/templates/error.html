@@ -13,10 +13,10 @@
                 <hr>
 
                 <div class="alert alert-danger">
-                {% if errortype == 'already_started_exp' %}
+                {% if errornum == 1008 %}
                     
                         <p>Sorry, our records indicate that you have attempted to complete this task, but quit before finishing.</p>
-                        <p>Because this is a Psychology experiment, you can only complete this task once.</p>
+                        <p>Because this is a Psychology experiment, you can only complete this task once.</p><br>
 
                 {% elif errortype == 'already_did_exp_hit' %}
 

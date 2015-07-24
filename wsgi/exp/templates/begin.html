@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html>
+	<head>
+		<title>COTwins Study</title>
+		<link rel=stylesheet href="/static/css/bootstrap.min.css" type="text/css">
+		<link rel=stylesheet href="/static/css/style.css" type="text/css">
+	</head>
+	<body>
+		<div class="container-fluid">
+				<div class="row"><div class="col-md-1"><br><br> </div></div>
+				<div class="row">
+				<div class="col-md-1"></div>
+					<div class="col-md-2">
+						<!-- REPLACE THE LOGO HERE WITH YOUR  UNIVERSITY, LAB, or COMPANY -->
+						<img id="adlogo" src="/static/img/university.png" alt="Lab Logo" />
+					</div>
+					{% if experiments|length == 0 %}
+					<div class="col-md-8">
+						<h1>You're done for now!</h1>
+						<hr>
+					    <div class="lead">
+					    	You have completed all of the cognitive tasks for now. We will send you an email if there are any more tasks to complete. Thank you!
+					    </div>
+					</div>
+					{% else %}
+
+					<div class="col-md-7">
+						{% if new == True %}
+						<h1>Welcome to the COTwins cognitive assesments</h1>
+						<div class="lead">
+					    	We have a few cognitive assesments we'd like you to complete for us. Once you're done with an assesment, you'll be given a choice between completing another assesment or you can come back via the link we sent you to complete any assesments you didn't get to today. <br><br> Each task takes around 15 minutes to complete, so please only start a task when you have set aside that time. Once you begin, you cannot refresh the page or start over. <br><br>
+
+					    	Here are the tasks you can work on now:
+					    </div>
+
+
+
+						{% else %}
+						<h1>You're done with that assesment!</h1>
+
+						
+					    <div class="lead">
+					    	If you have more time, you can choose to complete any of the following assesments. Remember to set aside 15 minutes for each, because once you start you cannot refresh the page or start over. Thanks!
+					    </div>
+					    {% endif %}
+
+					<div class="row">
+					<div class="col-md-5"></div>
+					<div class="col-md-9">
+					<br>
+					{% for (exp, label) in experiments %}
+					<a class="btn btn-lg btn-primary" href="task?uniqueId={{ uniqueId }}&experimentName={{ exp }}&debug={{ debug }}">{{ label }}</a> &nbsp;&nbsp;&nbsp;
+					
+					{% endfor %}
+					</div>
+
+					{% endif %}
+
+		</div>
+	</body>
+</html>

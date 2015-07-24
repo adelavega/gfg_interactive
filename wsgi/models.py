@@ -10,6 +10,8 @@ class Participant(db.Model):
     uniqueid = db.Column(db.String())
     ipaddress = db.Column(db.String())
 
+    first_name = db.Column(db.String())
+
     ipaddress = db.Column(db.String())
     browser = db.Column(db.String())
     platform = db.Column(db.String())

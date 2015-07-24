@@ -19,20 +19,52 @@ QUITEARLY = 6
 experiments = Blueprint('experiments', __name__,
                         template_folder='exp/templates', static_folder='exp/static')
 
-experiment_list = ['keep_track']
+experiment_list = [('keep_track', "Keep Track"), ('category_switch', "Category Switch")]
 
-@experiments.route('/begin', methods=['GET'])
+@experiments.route('/', methods=['GET'])
+def welcome():
+    """ Serves welcome page, sets up data base, and forwards to experiment if ready"""
+
+    if not ('uniqueId' in request.args):
+        raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
+
+    if 'debug' in request.args:
+        debug = request.args['debug']
+    else:
+        debug = False
+
+    if 'new' in request.args:
+        new = bool(int(request.args['new']))
+    else:
+        new = True 
+
+    unique_id = request.args['uniqueId']
+
+    current_app.logger.info("Subject: %s arrived" % unique_id)
+
+    # Check to see which if any experiments this subject has done
+    matches = Participant.query.\
+        filter((Participant.uniqueid == unique_id) & (Participant.status > 1)).\
+        all()
+
+    experiments_left = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches]]
+
+    return render_template("begin.html", uniqueId=unique_id, experiments=experiments_left, debug=debug, new=new)
+
+@experiments.route('/task', methods=['GET'])
 @nocache
 def start_exp():
     """ Serves up the experiment applet. """
 
+
     if not ('uniqueId' in request.args):
         raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
-    elif not ('experimentName' in request.args) or not (request.args['experimentName'] in experiment_list):
+    elif not ('experimentName' in request.args) or not (request.args['experimentName'] in zip(*experiment_list)[0]):
         raise ExperimentError('experiment_code_error')
 
     if 'debug' in request.args:
         debug = request.args['debug']
+        debug = debug == 'True'
     else:
         debug = False
 
@@ -40,14 +72,12 @@ def start_exp():
     unique_id = request.args['uniqueId']
     experiment_name = request.args['experimentName']
 
-    # UPDATE
-    current_app.logger.info("Accessing /exp: %(i)s" % {
-        "i" : unique_id})
+    current_app.logger.info("Subject: %s in task %s" % (unique_id, experiment_name))
 
-    # Check first to see if this hitId or assignmentId exists.  If so, check to
-    # see if inExp is set
+
+      # Check to see which if any experiments this subject has done
     matches = Participant.query.\
-        filter(Participant.uniqueid == unique_id and Participant.experimentname == experiment_name).\
+        filter((Participant.uniqueid == unique_id) & (Participant.experimentname == experiment_name)).\
         all()
 
 
@@ -71,18 +101,19 @@ def start_exp():
         db.session.add(part)
         db.session.commit()
 
-    elif numrecs == 1:
+    elif numrecs > 0:
         # They've already done an assignment, then we should tell them they
         #    can't do another one
 
         part = matches[0]
+        current_app.logger.info(part)
 
         ## Status
         if int(part.status) > 1 and debug == False:
-        	raise ExperimentError('already_started_exp')
+            raise ExperimentError('already_started_exp')
 
         
-    return render_template(experiment_name + "/exp.html", uniqueId=part.uniqueid, experimentName=part.experimentname)
+    return render_template(experiment_name + "/exp.html", uniqueId=unique_id, experimentName=experiment_name)
 
 
 @experiments.route('/inexp', methods=['POST'])
@@ -103,7 +134,7 @@ def enterexp():
 
     try:
         user = Participant.query.\
-            filter(Participant.uniqueid == unique_id and Participant.experimentname == experiment_name).one()
+            filter((Participant.uniqueid == unique_id) & (Participant.experimentname == experiment_name)).one()
         user.status = 2
         user.beginexp = datetime.datetime.now()
         db.session.add(user)
@@ -128,7 +159,7 @@ def load(id_exp=None):
     try:
         unique_id, experiment_name = id_exp.split("&")
         user = Participant.query.\
-            filter(Participant.uniqueid == unique_id and Participant.experimentname == experiment_name).\
+            filter((Participant.uniqueid == unique_id) & (Participant.experimentname == experiment_name)).\
             one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user /experimetn combo not found.")
@@ -154,7 +185,7 @@ def update(id_exp=None):
     try:
         unique_id, experiment_name = id_exp.split("&")
         user = Participant.query.\
-            filter(Participant.uniqueid == unique_id and Participant.experimentname == experiment_name).\
+            filter((Participant.uniqueid == unique_id) & (Participant.experimentname == experiment_name)).\
             one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user not found.")
@@ -196,9 +227,9 @@ def quitter():
         return jsonify(**resp)
     else:
         try:
-            current_app.logger.info("Marking quitter %s in experiment %s" % unique_id, experiment_name)
+            current_app.logger.info("Marking quitter %s in experiment %s" % (unique_id, experiment_name))
             user = Participant.query.\
-                filter(Participant.uniqueid == unique_id and Participant.experimentname == experiment_name).\
+                filter((Participant.uniqueid == unique_id) & (Participant.experimentname == experiment_name)).\
                 one()
             user.status = 6
             db.session.add(user)
@@ -223,7 +254,7 @@ def worker_complete():
         current_app.logger.info("Completed experiment %s, %s" % (unique_id, experiment_name))
         try:
             user = Participant.query.\
-                filter(Participant.uniqueid == unique_id and Participant.experimentname == experiment_name).\
+                filter((Participant.uniqueid == unique_id) & (Participant.experimentname == experiment_name)).\
                 one()
             user.status = 3
             user.endhit = datetime.datetime.now()
