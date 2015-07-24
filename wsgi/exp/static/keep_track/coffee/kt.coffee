@@ -116,6 +116,13 @@ class Session
 	buttonClick: (e) ->
 		@currBlock.buttonClick(e)
 
+class FinishInstructions
+	constructor: ->
+
+	start: (@exitBlock) ->
+		dataHandler.finishInstructions()
+		@exitBlock()
+
 ## Instruction block
 ## Will display instructions in @message, and set left and right buttons to said text
 ## Can optionally take a correct response (if incorrect, will not allow you to advance) & button colors

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, current_app
+from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from utils import nocache
 from errors import ExperimentError
 from models import Participant
@@ -22,7 +22,7 @@ experiments = Blueprint('experiments', __name__,
 experiment_list = [('keep_track', "Keep Track"), ('category_switch', "Category Switch")]
 
 @experiments.route('/', methods=['GET'])
-def welcome():
+def index():
     """ Serves welcome page, sets up data base, and forwards to experiment if ready"""
 
     if not ('uniqueId' in request.args):
@@ -34,7 +34,10 @@ def welcome():
         debug = False
 
     if 'new' in request.args:
-        new = bool(int(request.args['new']))
+        new = request.args['new']
+
+        if isinstance(new, str):
+            new = bool(int())
     else:
         new = True 
 
@@ -264,7 +267,7 @@ def worker_complete():
         except SQLAlchemyError:
            raise ExperimentError('unknown_error')
 
-        return render_template("complete.html")
+        return redirect(url_for(".index", uniqueId=unique_id, new=False))
 
 # Generic route
 @experiments.route('/<pagename>')

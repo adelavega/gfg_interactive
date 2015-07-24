@@ -13,6 +13,7 @@ blocks = [
 	new kTrack.Instruction kTrackInst[3]
 	new kTrack.Instruction kTrackInst[4], "Back", "Start!"
 	# new kTrack.PracBlock "prac1", "Ready?", kTrack.stim['pracLists'][0], 2000
+	new FinishInstructions
 	# new kTrack.Instruction kTrackInst[5], "See again", "Continue" ## Change instructions
 	# new kTrack.InstGrid kTrackInst[6], kTrack.stim['pracLists'][0][0], true, false
 	# new kTrack.InstGrid kTrackInst[7], kTrack.stim['pracLists'][0][0], false, ['Cat'], false, false
