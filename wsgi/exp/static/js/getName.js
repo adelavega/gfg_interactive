@@ -13,7 +13,8 @@
           return window.location = whereto;
         }
       } else {
-        return whereto = 'task?uniqueId=' + uniqueId + '&experimentName=' + event.target.id + '&debug=' + debug;
+        whereto = 'task?uniqueId=' + uniqueId + '&experimentName=' + event.target.id + '&debug=' + debug;
+        return window.location = whereto;
       }
     });
   });

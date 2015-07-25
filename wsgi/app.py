@@ -19,9 +19,6 @@ db.init_app(app)
 
 import werkzeug
 
-app.logger.info("++++++++++")
-app.logger.info(werkzeug.__version__)
-
 @app.route('/')
 @nocache
 def index():
