@@ -198,6 +198,7 @@ def update(id_exp=None):
         current_app.logger.error("DB error: Unique user not found.")
 
     if hasattr(request, 'json'):
+        print request.get_data()
         user.datastring = request.get_data().decode('utf-8').encode(
             'ascii', 'xmlcharrefreplace'
         )
@@ -210,7 +211,7 @@ def update(id_exp=None):
         data = {}
 
     trial = data.get("currenttrial", None)
-    current_app.logger.info("saved data for %s, experiment %s (current trial: %s)", unique_id, experiment_name, trial)
+    current_app.logger.info("saved data for %s, experiment %s (current trial: %s)", (unique_id, experiment_name, trial))
     resp = {"status": "user data saved"}
     return jsonify(**resp)
 

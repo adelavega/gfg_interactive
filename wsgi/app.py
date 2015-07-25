@@ -17,6 +17,10 @@ app.register_blueprint(dashboard, url_prefix='/dashboard')
 from database import db
 db.init_app(app)
 
+import werkzeug
+
+app.logger.info("++++++++++")
+app.logger.info(werkzeug.__version__)
 
 @app.route('/')
 @nocache
