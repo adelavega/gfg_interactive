@@ -9,7 +9,7 @@
     return currSession.start();
   });
 
-  blocks = [new kTrack.Instruction(kTrackInst[0]), new kTrack.InstGrid(kTrackInst[1]), new kTrack.Instruction(kTrackInst[2]), new kTrack.Instruction(kTrackInst[3]), new kTrack.Instruction(kTrackInst[4], "Back", "Start!"), new common.Questionnaire, new common.Debriefing];
+  blocks = [new kTrack.Instruction(kTrackInst[0]), new kTrack.InstGrid(kTrackInst[1]), new kTrack.Instruction(kTrackInst[2]), new kTrack.Instruction(kTrackInst[3]), new kTrack.Instruction(kTrackInst[4], "Back", "Start!"), new common.FinishInstructions, new common.Questionnaire];
 
   currSession = new kTrack.Session(blocks);
 

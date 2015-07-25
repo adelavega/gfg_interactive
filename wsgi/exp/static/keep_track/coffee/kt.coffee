@@ -67,8 +67,6 @@ class Session
 		@imgs_loaded = 0
 		
 	start: ->
-		dataHandler.finishInstructions()
-
 		# This ensures that the images for the two buttons are loaded
 		# Could probably be done better
 		@imgs_loaded++
@@ -116,12 +114,6 @@ class Session
 	buttonClick: (e) ->
 		@currBlock.buttonClick(e)
 
-class FinishInstructions
-	constructor: ->
-
-	start: (@exitBlock) ->
-		dataHandler.finishInstructions()
-		@exitBlock()
 
 ## Instruction block
 ## Will display instructions in @message, and set left and right buttons to said text

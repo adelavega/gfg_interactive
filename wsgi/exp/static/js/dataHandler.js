@@ -188,7 +188,7 @@ var DataHandler = function(uniqueId, experimentName) {
 	self.completeHIT = function() {
 		self.teardownTask();
 
-		window.location= "/exp/worker_complete?" + "uniqueId=" + uniqueId + "&experimentName=" + experimentName;
+		window.location= "/exp/worker_complete?" + "uniqueId=" + uniqueId + "&experimentName=" + experimentName + "&debug=" + debug;
 	}
 
 	// To be fleshed out with backbone views in the future.

@@ -7,7 +7,7 @@
 
 dataHandler = DataHandler(uniqueId, experimentName)
 
-dataHandler.preloadPages([experimentName + '/postquestionnaire.html', experimentName + '/kt_debriefing.html'])
+dataHandler.preloadPages([experimentName + '/postquestionnaire.html', experimentName + '/debriefing.html'])
 
 # Calculates the mean of a numeric array (for feedback)
 mean = (numericArray) ->
@@ -36,15 +36,24 @@ class Questionnaire
 # Displays debriefing and when button is clicked ends
 class Debriefing
 	start: (@exitTrial) ->
-		$('body').html(dataHandler.getPage(experimentName + '/kt_debriefing.html'))
+		$('body').html(dataHandler.getPage(experimentName + '/debriefing.html'))
 
 	buttonClick: ->
 		@exitTrial()	
+
+
+class FinishInstructions
+	constructor: ->
+
+	start: (@exitBlock) ->
+		dataHandler.finishInstructions()
+		@exitBlock()
 
 @dataHandler = dataHandler
 
 @common = {
 	Questionnaire
 	Debriefing
+	FinishInstructions
 	mean
 }

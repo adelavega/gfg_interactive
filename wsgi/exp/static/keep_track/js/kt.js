@@ -85,7 +85,6 @@
     }
 
     Session.prototype.start = function() {
-      dataHandler.finishInstructions();
       this.imgs_loaded++;
       if (this.imgs_loaded === 2) {
         return this.nextBlock();

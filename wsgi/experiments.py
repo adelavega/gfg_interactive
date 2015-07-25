@@ -65,6 +65,11 @@ def start_exp():
     elif not ('experimentName' in request.args) or not (request.args['experimentName'] in zip(*experiment_list)[0]):
         raise ExperimentError('experiment_code_error')
 
+    if 'name' in request.args:
+        first_name = request.args['name']
+    else:
+        first_name = 'None'
+
     if 'debug' in request.args:
         debug = request.args['debug']
         debug = debug == 'True'
@@ -99,24 +104,23 @@ def start_exp():
             request.user_agent.language
 
         part = Participant(uniqueid=unique_id, ipaddress=worker_ip, browser=browser, platform=platform,
-            language=language, experimentname=experiment_name, debug=debug)
+            language=language, experimentname=experiment_name, debug=debug, first_name=first_name)
 
         db.session.add(part)
         db.session.commit()
 
     elif numrecs > 0:
         # They've already done an assignment, then we should tell them they
-        #    can't do another one
+        # can't do another one if they're past status 1
 
         part = matches[0]
-        current_app.logger.info(part)
 
         ## Status
         if int(part.status) > 1 and debug == False:
             raise ExperimentError('already_started_exp')
 
         
-    return render_template(experiment_name + "/exp.html", uniqueId=unique_id, experimentName=experiment_name)
+    return render_template(experiment_name + "/exp.html", uniqueId=unique_id, experimentName=experiment_name, debug=debug)
 
 
 @experiments.route('/inexp', methods=['POST'])
@@ -247,9 +251,14 @@ def quitter():
 def worker_complete():
     """Complete worker."""
 
+    if 'debug' in request.args:
+        debug = request.args['debug']
+    else:
+        debug = False
+
     if not ('uniqueId' in request.args) or not ('experimentName' in request.args):
         raise ExperimentError('improper_inputs')
-                
+          
     else:
         unique_id = request.args['uniqueId']
         experiment_name = request.args['experimentName']
@@ -267,7 +276,7 @@ def worker_complete():
         except SQLAlchemyError:
            raise ExperimentError('unknown_error')
 
-        return redirect(url_for(".index", uniqueId=unique_id, new=False))
+        return redirect(url_for(".index", uniqueId=unique_id, new=False, debug=debug))
 
 # Generic route
 @experiments.route('/<pagename>')
