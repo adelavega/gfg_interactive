@@ -7,7 +7,7 @@
 
 dataHandler = DataHandler(uniqueId, experimentName)
 
-dataHandler.preloadPages([experimentName + '/postquestionnaire.html', experimentName + '/debriefing.html'])
+dataHandler.preloadPages(['postquestionnaire.html', experimentName + '/debriefing.html'])
 
 # Calculates the mean of a numeric array (for feedback)
 mean = (numericArray) ->

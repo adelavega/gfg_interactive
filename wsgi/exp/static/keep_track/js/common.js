@@ -4,7 +4,7 @@
 
   dataHandler = DataHandler(uniqueId, experimentName);
 
-  dataHandler.preloadPages([experimentName + '/postquestionnaire.html', experimentName + '/debriefing.html']);
+  dataHandler.preloadPages(['postquestionnaire.html', experimentName + '/debriefing.html']);
 
   mean = function(numericArray) {
     var avg, sum;
