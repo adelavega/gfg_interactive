@@ -20,7 +20,7 @@
 
     Questionnaire.prototype.start = function(exitTrial) {
       this.exitTrial = exitTrial;
-      return $('body').html(dataHandler.getPage(experimentName + '/postquestionnaire.html'));
+      return $('body').html(dataHandler.getPage('postquestionnaire.html'));
     };
 
     Questionnaire.prototype.buttonClick = function() {

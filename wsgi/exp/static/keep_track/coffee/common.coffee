@@ -21,7 +21,7 @@ mean = (numericArray) ->
 # collects information from it once button is clocked
 class Questionnaire
 	start: (@exitTrial) ->
-		$('body').html(dataHandler.getPage(experimentName + '/postquestionnaire.html'))
+		$('body').html(dataHandler.getPage('postquestionnaire.html'))
 
 	buttonClick: ->
 		$("select").each (i, val) ->
