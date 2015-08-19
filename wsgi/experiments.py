@@ -5,6 +5,7 @@ from models import Participant
 
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
+import re
 
 import datetime
 import json
@@ -25,34 +26,53 @@ experiment_list = [('keep_track', "Keep Track"), ('category_switch', "Category S
 def index():
     """ Serves welcome page, sets up data base, and forwards to experiment if ready"""
 
-    if not ('uniqueId' in request.args):
-        raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
 
-    if 'debug' in request.args:
-        debug = request.args['debug']
+    browser = request.user_agent.browser
+    version = request.user_agent.version and int(request.user_agent.version.split('.')[0])
+    platform = request.user_agent.platform
+    uas = request.user_agent.string
+
+    if (browser == 'msie' and version < 9) \
+        or (browser == 'firefox' and version < 4) \
+        or (platform == 'android') \
+        or (platform == 'iphone') \
+        or ((platform == 'macos' or platform == 'windows') and browser == 'safari' and not re.search('Mobile', uas) and version < 534) \
+        or (re.search('iPad', uas) and browser == 'safari') \
+        or (platform == 'windows' and re.search('Windows Phone OS', uas)) \
+        or (browser == 'opera') \
+        or (re.search('BlackBerry', uas)):
+            return render_template('unsupported.html')
+
     else:
-        debug = False
 
-    if 'new' in request.args:
-        new = request.args['new']
+        if not ('uniqueId' in request.args):
+            raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
 
-        if isinstance(new, str):
-            new = bool(int())
-    else:
-        new = True 
+        if 'debug' in request.args:
+            debug = request.args['debug']
+        else:
+            debug = False
 
-    unique_id = request.args['uniqueId']
+        if 'new' in request.args:
+            new = request.args['new']
 
-    current_app.logger.info("Subject: %s arrived" % unique_id)
+            if isinstance(new, str):
+                new = bool(int())
+        else:
+            new = True 
 
-    # Check to see which if any experiments this subject has done
-    matches = Participant.query.\
-        filter((Participant.uniqueid == unique_id) & (Participant.status > 1)).\
-        all()
+        unique_id = request.args['uniqueId']
 
-    experiments_left = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches]]
+        current_app.logger.info("Subject: %s arrived" % unique_id)
 
-    return render_template("begin.html", uniqueId=unique_id, experiments=experiments_left, debug=debug, new=new)
+        # Check to see which if any experiments this subject has done
+        matches = Participant.query.\
+            filter((Participant.uniqueid == unique_id) & (Participant.status > 1)).\
+            all()
+
+        experiments_left = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches]]
+
+        return render_template("begin.html", uniqueId=unique_id, experiments=experiments_left, debug=debug, new=new)
 
 @experiments.route('/task', methods=['GET'])
 @nocache
