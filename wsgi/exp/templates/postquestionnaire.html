@@ -1,9 +1,11 @@
 <div id="container-questionnaire">
-    <h1>Task Complete</h1>
+    <h1>Assesment Complete</h1>
 
     <hr>
 
     <p class='lead'>You are finished!  Thank you for your contributions to science. Please answers these questions so we can improve this study.</p>
+
+    <div class="alert alert-warning hidden" id="noqs" role="alert">Please answer all of the questions</div>
 
         <form id="postquiz" action="debrief" method="post">
 
@@ -11,7 +13,7 @@
             <!-- beginning of a question -->
             <div class="row question">
                 <div class="col-md-8">
-                    On a scale of 1-10 (where 10 is the most engaged), please rate how <b>ENGAGING</b> you found the switching task:
+                    On a scale of 1-10 (where 10 is the most engaged), rate how <b>ENGAGING</b> you found this assesment:
                 </div>
                 <div class="col-md-4">
                     <select id="engagement" name="engagement">
@@ -20,7 +22,8 @@
                         <option value="8">8</option>
                         <option value="7">7</option>
                         <option value="6">6</option>
-                        <option value="5" SELECTED>5 - Moderately</option>
+                        <option value="NONE" SELECTED>------</option>
+                        <option value="5">5 - Moderately</option>
                         <option value="4">4</option>
                         <option value="3">3</option>
                         <option value="2">2</option>
@@ -35,7 +38,7 @@
             <!-- beginning of a question -->
             <div class="row question">
                 <div class="col-md-8">
-                    On a scale of 1-10 (where 10 is the most difficult), please rate how <b>DIFFICULT</b> you found the switching task:
+                    On a scale of 1-10 (where 10 is the most difficult), rate how <b>DIFFICULT</b> you found this assesment:
                 </div>
                 <div class="col-md-4">
                     <select id="difficulty" name="difficulty">
@@ -44,7 +47,8 @@
                         <option value="8">8</option>
                         <option value="7">7</option>
                         <option value="6">6</option>
-                        <option value="5" SELECTED>5 - Moderately difficult</option>
+                        <option value="NONE" SELECTED>------</option>
+                        <option value="5" >5 - Moderately difficult</option>
                         <option value="4">4</option>
                         <option value="3">3</option>
                         <option value="2">2</option>
@@ -58,7 +62,7 @@
             <!-- beginning of a question -->
             <div class="row question">
                 <div class="col-md-8">
-                    On a scale of 1-10 (where 10 is the most informative), please rate how <b>INFORMATIVE</b> the instruction slides were:
+                    On a scale of 1-10 (where 10 is the most informative), rate how <b>INFORMATIVE</b> the instructions were:
                 </div>
                 <div class="col-md-4">
                     <select id="informative" name="informative">
@@ -67,12 +71,39 @@
                         <option value="8">8</option>
                         <option value="7">7</option>
                         <option value="6">6</option>
-                        <option value="5" SELECTED>5 - Moderately informative</option>
+                        <option value="NONE" SELECTED>------</option>
+                        <option value="5">5 - Moderately informative</option>
                         <option value="4">4</option>
                         <option value="3">3</option>
                         <option value="2">2</option>
                         <option value="1">1</option>
                         <option value="0">0 - Not informative at all</option>
+                    </select>
+                </div>
+            </div>
+            <!-- end of a question -->
+
+
+            
+            <!-- beginning of a question -->
+            <div class="row question">
+                <div class="col-md-8">
+                    On a scale of 1-10 (where 10 is most distracting), rate how <b>DISTRACTING</b> your environment was during the assesment. Were there loud noises and things going on that distracted you?
+                </div>
+                <div class="col-md-4">
+                    <select id="engagement" name="engagement">
+                        <option value="10">10 - Very distracting</option>
+                        <option value="9">9</option>
+                        <option value="8">8</option>
+                        <option value="7">7</option>
+                        <option value="6">6</option>
+                        <option value="NONE" SELECTED>------</option>
+                        <option value="5">5 - Moderately</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                        <option value="0">0 - Not distracting</option>
                     </select>
                 </div>
             </div>

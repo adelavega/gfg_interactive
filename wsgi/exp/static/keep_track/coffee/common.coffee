@@ -24,14 +24,25 @@ class Questionnaire
 		$('body').html(dataHandler.getPage('postquestionnaire.html'))
 
 	buttonClick: ->
+
+		any_blank = false
 		$("select").each (i, val) ->
-		  dataHandler.recordUnstructuredData @id, @value
+			if @value == "NONE"
+				any_blank = true
 
-		dataHandler.recordUnstructuredData 'openended', $('#openended').val()
+		if any_blank
+			console.log("Some blank")
+			$("#noqs").removeClass("hidden")
 
-		dataHandler.saveData()
+		else
+			$("select").each (i, val) ->
+				dataHandler.recordUnstructuredData @id, @value
 
-		@exitTrial()
+			dataHandler.recordUnstructuredData 'openended', $('#openended').val()
+			dataHandler.saveData()
+			@exitTrial()
+		  
+
 
 # Displays debriefing and when button is clicked ends
 class Debriefing

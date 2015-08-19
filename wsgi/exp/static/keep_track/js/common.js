@@ -24,12 +24,24 @@
     };
 
     Questionnaire.prototype.buttonClick = function() {
+      var any_blank;
+      any_blank = false;
       $("select").each(function(i, val) {
-        return dataHandler.recordUnstructuredData(this.id, this.value);
+        if (this.value === "NONE") {
+          return any_blank = true;
+        }
       });
-      dataHandler.recordUnstructuredData('openended', $('#openended').val());
-      dataHandler.saveData();
-      return this.exitTrial();
+      if (any_blank) {
+        console.log("Some blank");
+        return $("#noqs").removeClass("hidden");
+      } else {
+        $("select").each(function(i, val) {
+          return dataHandler.recordUnstructuredData(this.id, this.value);
+        });
+        dataHandler.recordUnstructuredData('openended', $('#openended').val());
+        dataHandler.saveData();
+        return this.exitTrial();
+      }
     };
 
     return Questionnaire;
