@@ -32,6 +32,8 @@ def index():
     platform = request.user_agent.platform
     uas = request.user_agent.string
 
+
+    ## Check that the browser is up to date and not mobile
     if (browser == 'msie' and version < 9) \
         or (browser == 'firefox' and version < 4) \
         or (platform == 'android') \
@@ -45,6 +47,8 @@ def index():
 
     else:
 
+        ## If the browser is good:
+        
         if not ('uniqueId' in request.args):
             raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
 
