@@ -5,7 +5,7 @@ import os
 # Setup flask
 from flask import Flask, render_template
 from experiments import experiments
-from dashboard import dashboard
+#from dashboard import dashboard
 
 from database import db
 
