@@ -75,11 +75,11 @@ and its main html template under
 
 To add an experiment to the server, ensure the experiments files are as above and that you edit the list of experiments. The server should now be serving your new experiment under the following. Note that to run without error the server expects you to also specify a user ID and optionally if the task is in debug mode (will be noted in the DB and allows you to refresh task)
 
-	/exp/task?experimentName=YOUR_EXPERIMENT_NAME&uniqueID=1234&debug=True
+	/exp/task?experimentName=YOUR_EXPERIMENT_NAME&uniqueId=1234&debug=True
 	
 If you have added multple tasks, you can send subjects to a landing page that lists the tasks yet to complete by the uniqueId and any custom instructions you want to add:
 
-	/exp/?&uniqueID=1234
+	/exp/?&uniqueId=1234
 	
 You can edit this landing page (/exp/templates/begin.html)
 
