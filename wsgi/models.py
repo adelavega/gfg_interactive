@@ -7,7 +7,7 @@ import io, csv, json
 class Participant(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    uniqueid = db.Column(db.String())
+    gfgid = db.Column(db.String())      #rename UNIQUEID to gfgid
     ipaddress = db.Column(db.String())
 
     first_name = db.Column(db.String())
@@ -49,7 +49,7 @@ class Participant(db.Model):
                 csvwriter = csv.writer(outstring)
                 for trial in trialdata:
                     csvwriter.writerow((
-                        self.uniqueid,
+                        self.gfgid,
                         trial["current_trial"],
                         trial["dateTime"],
                         json.dumps(trial["trialdata"])))
@@ -72,7 +72,7 @@ class Participant(db.Model):
             with io.BytesIO() as outstring:
                 csvwriter = csv.writer(outstring)
                 for event in eventdata:
-                    csvwriter.writerow((self.uniqueid, event["eventtype"], event["interval"], event["value"], event["timestamp"]))
+                    csvwriter.writerow((self.gfgid, event["eventtype"], event["interval"], event["value"], event["timestamp"]))
                 ret = outstring.getvalue()
             return ret
         except:
@@ -81,7 +81,7 @@ class Participant(db.Model):
 
     def __repr__(self):
         return "Subject(%s, %s, %s)" % ( 
-            self.uniqueid, 
+            self.gfgid, 
             self.status,
             self.experimentname)
 
