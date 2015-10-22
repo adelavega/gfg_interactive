@@ -71,7 +71,7 @@ def index():
 
         # Check to see which if any experiments this subject has done
         matches = Participant.query.\
-            filter((Participant.uniqueid == unique_id) & (Participant.status > 1)).\
+            filter((Participant.gfgid == unique_id) & (Participant.status > 1)).\
             all()
 
         experiments_left = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches]]
@@ -109,7 +109,7 @@ def start_exp():
 
       # Check to see which if any experiments this subject has done
     matches = Participant.query.\
-        filter((Participant.uniqueid == unique_id) & (Participant.experimentname == experiment_name)).\
+        filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).\
         all()
 
 
@@ -165,7 +165,7 @@ def enterexp():
 
     try:
         user = Participant.query.\
-            filter((Participant.uniqueid == unique_id) & (Participant.experimentname == experiment_name)).one()
+            filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
         user.status = 2
         user.beginexp = datetime.datetime.now()
         db.session.add(user)
@@ -190,7 +190,7 @@ def load(id_exp=None):
     try:
         unique_id, experiment_name = id_exp.split("&")
         user = Participant.query.\
-            filter((Participant.uniqueid == unique_id) & (Participant.experimentname == experiment_name)).\
+            filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).\
             one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user /experimetn combo not found.")
@@ -216,7 +216,7 @@ def update(id_exp=None):
     try:
         unique_id, experiment_name = id_exp.split("&")
         user = Participant.query.\
-            filter((Participant.uniqueid == unique_id) & (Participant.experimentname == experiment_name)).\
+            filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).\
             one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user not found.")
@@ -261,7 +261,7 @@ def quitter():
         try:
             current_app.logger.info("Marking quitter %s in experiment %s" % (unique_id, experiment_name))
             user = Participant.query.\
-                filter((Participant.uniqueid == unique_id) & (Participant.experimentname == experiment_name)).\
+                filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).\
                 one()
             user.status = 6
             db.session.add(user)
@@ -291,7 +291,7 @@ def worker_complete():
         current_app.logger.info("Completed experiment %s, %s" % (unique_id, experiment_name))
         try:
             user = Participant.query.\
-                filter((Participant.uniqueid == unique_id) & (Participant.experimentname == experiment_name)).\
+                filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).\
                 one()
             user.status = 3
             user.endhit = datetime.datetime.now()
