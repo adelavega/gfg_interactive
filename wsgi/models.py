@@ -7,15 +7,11 @@ import io, csv, json
 class Participant(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    gfgid = db.Column(db.String())      #rename UNIQUEID to gfgid
-    ipaddress = db.Column(db.String())
-
-    first_name = db.Column(db.String())
-
-    ipaddress = db.Column(db.String())
+    gfgid = db.Column(db.String())      
+     
     browser = db.Column(db.String())
     platform = db.Column(db.String())
-    language = db.Column(db.String())
+    language = db.Column(db.String())		# ????
 
     experimentname = db.Column(db.String())
     arrive = db.Column(db.DateTime)
@@ -34,7 +30,7 @@ class Participant(db.Model):
 
 
     def get_trial_data(self):
-        """ Refactor this to use postegresql json functions and reflect actual experiments. 
+        """ Refactor this to use postegresql json functions and reflect actualall_correct_responses.to_csv('all_correct_responses.csv',index=False,header=False) experiments. 
         Maybe leave with some flexibility though..."""
         try:
             trialdata = json.loads(self.datastring)["data"]
