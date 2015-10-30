@@ -4,6 +4,7 @@ import datetime
 import io, csv, json
 import os, platform     #to get the platform information
 
+###########################################  PARTICPANT ##################################
 #Central Table with all the ids
 class Participant(db.Model):
     id = db.Column(db.Integer, primary_key=True)     # PRIMARY KEY 
@@ -68,6 +69,7 @@ class Participant(db.Model):
             self.id, 
             self.gfgid)
 
+###########################################  SESSION ##################################
 #Session Table - all about the session
 class Session(db.Model):
     session_id = db.Column(db.Integer, primary_key=True)    # PRIMARY KEY 
@@ -85,7 +87,7 @@ class Session(db.Model):
         self.browser, self.platform,
         self.exp_name, self.status, self.debug)
 
-
+###########################################  CATEGORY SWITCH ##################################
 #Experiment - Category Switch
 class CategorySwitch(db.model):
     cs_id = db.Column(db.Integer, primary_key=True)    # PRIMARY KEY 
@@ -101,5 +103,5 @@ class CategorySwitch(db.model):
     beginexp = db.Column(db.DateTime, nullable=False)
     endexp = db.Column(db.DateTime, nullable=False)
 
-
+###########################################  KEEP TRACK ##################################
 #Experiment - Keep Track (TBD)

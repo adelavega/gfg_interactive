@@ -17,6 +17,8 @@ STARTED = 2
 COMPLETED = 3
 QUITEARLY = 6
 
+
+
 experiments = Blueprint('experiments', __name__,
                         template_folder='exp/templates', static_folder='exp/static')
 
@@ -24,13 +26,16 @@ experiment_list = [('keep_track', "Keep Track"), ('category_switch', "Category S
 
 @experiments.route('/', methods=['GET'])
 def index():
-    """ Serves welcome page, sets up data base, and forwards to experiment if ready"""
-
-
+    ### Serves welcome page, sets up data base, and forwards to experiment if ready"""
     browser = request.user_agent.browser
     version = request.user_agent.version and int(request.user_agent.version.split('.')[0])
     platform = request.user_agent.platform
     uas = request.user_agent.string
+
+    ## Add the browser to "Session" Table
+    print "Browser is - ", browser
+    print "Version is - ", version
+    print "Platform is - ", platform
 
 
     ## Check that the browser is up to date and not mobile
@@ -46,9 +51,7 @@ def index():
             return render_template('unsupported.html')
 
     else:
-
         ## If the browser is good:
-        
         if not ('uniqueId' in request.args):
             raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
 
