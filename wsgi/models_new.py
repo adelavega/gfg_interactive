@@ -77,7 +77,7 @@ class Session(db.Model):
     browser = db.Column(db.String(), nullable=False)
     platform = db.Column(db.String(), nullable=False)
     debug = db.Column(db.Boolean)   #not sure if this is needed or not
-    status = db.Column(db.Integer(), nullable=False, default = 1)   #needs discussion after refactoring
+    status = db.Column(db.Integer(), nullable=False)   #needs discussion after refactoring
     exp_name = db.Column(db.String(), nullable=False)
 
     # Return each row just like that
@@ -89,7 +89,7 @@ class Session(db.Model):
 
 ###########################################  CATEGORY SWITCH ##################################
 #Experiment - Category Switch
-class CategorySwitch(db.model):
+class CategorySwitch(db.Model):
     cs_id = db.Column(db.Integer, primary_key=True)    # PRIMARY KEY 
     gfgid = db.Column(db.String(), nullable=False)  
     sess_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))    # FORIEGN KEY

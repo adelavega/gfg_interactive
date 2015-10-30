@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from utils import nocache
 from errors import ExperimentError
-from models import Participant
+from models import Participant, Session
 
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
@@ -17,8 +17,6 @@ STARTED = 2
 COMPLETED = 3
 QUITEARLY = 6
 
-
-
 experiments = Blueprint('experiments', __name__,
                         template_folder='exp/templates', static_folder='exp/static')
 
@@ -26,17 +24,11 @@ experiment_list = [('keep_track', "Keep Track"), ('category_switch', "Category S
 
 @experiments.route('/', methods=['GET'])
 def index():
-    ### Serves welcome page, sets up data base, and forwards to experiment if ready"""
+    """ Serves welcome page, sets up data base, and forwards to experiment if ready"""
     browser = request.user_agent.browser
     version = request.user_agent.version and int(request.user_agent.version.split('.')[0])
     platform = request.user_agent.platform
     uas = request.user_agent.string
-
-    ## Add the browser to "Session" Table
-    print "Browser is - ", browser
-    print "Version is - ", version
-    print "Platform is - ", platform
-
 
     ## Check that the browser is up to date and not mobile
     if (browser == 'msie' and version < 9) \
@@ -51,8 +43,9 @@ def index():
             return render_template('unsupported.html')
 
     else:
-        ## If the browser is good:
+        ## If the browser is good:        
         if not ('uniqueId' in request.args):
+            print "DID NOT GERT UNIQUE ID"
             raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
 
         if 'debug' in request.args:
@@ -69,24 +62,26 @@ def index():
             new = True 
 
         unique_id = request.args['uniqueId']
-
+        ## Add the browser to "Session" Table
+        print "Browser is - ", browser
+        print "Version is - ", version
+        print "Platform is - ", platform
+        print "Unique ID is - ", unique_id
         current_app.logger.info("Subject: %s arrived" % unique_id)
 
-        # Check to see which if any experiments this subject has done
+        # Check to see which (if any) experiments this subject has done
         matches = Participant.query.\
             filter((Participant.gfgid == unique_id) & (Participant.status > 1)).\
             all()
 
         experiments_left = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches]]
-
+        print "Experiments left are - ", experiments_left
         return render_template("begin.html", uniqueId=unique_id, experiments=experiments_left, debug=debug, new=new)
 
 @experiments.route('/task', methods=['GET'])
 @nocache
 def start_exp():
     """ Serves up the experiment applet. """
-
-
     if not ('uniqueId' in request.args):
         raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
     elif not ('experimentName' in request.args) or not (request.args['experimentName'] in zip(*experiment_list)[0]):
@@ -106,47 +101,43 @@ def start_exp():
 
     unique_id = request.args['uniqueId']
     experiment_name = request.args['experimentName']
-
     current_app.logger.info("Subject: %s in task %s" % (unique_id, experiment_name))
-
-
-      # Check to see which if any experiments this subject has done
+    # Check to see which if any experiments this subject has done
     matches = Participant.query.\
         filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).\
         all()
-
-
     numrecs = len(matches)
+    print "Number of matches is - ", numrecs
 
+    ## numrecs=0 means this user has done no experiments before, so status=1 [allocated]
     if numrecs == 0:
         # Choose condition and counterbalance
-
-        worker_ip = "UNKNOWN" if not request.remote_addr else \
-            request.remote_addr
         browser = "UNKNOWN" if not request.user_agent.browser else \
             request.user_agent.browser
         platform = "UNKNOWN" if not request.user_agent.platform else \
             request.user_agent.platform
-        language = "UNKNOWN" if not request.user_agent.language else \
-            request.user_agent.language
-
-        part = Participant(uniqueid=unique_id, ipaddress=worker_ip, browser=browser, platform=platform,
-            language=language, experimentname=experiment_name, debug=debug, first_name=first_name)
-
+        
+        ## Adding data to participant table
+        part = Participant(uniqueid=unique_id, browser=browser, platform=platform, language="english", experimentname=experiment_name, debug=debug, first_name=first_name)
         db.session.add(part)
         db.session.commit()
+        print "########### YES we added it to participant table"
+
+        ## Add gfgid, browser, platform, debug, status, exp_name to "session table"
+        session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=1,debug=debug, exp_name=experiment_name)
+        db.session.add(session_info)
+        db.session.commit()
+        print "########### YES we added it to session table"
 
     elif numrecs > 0:
         # They've already done an assignment, then we should tell them they
         # can't do another one if they're past status 1
-
         part = matches[0]
-
         ## Status
         if int(part.status) > 1 and debug == False:
             raise ExperimentError('already_started_exp')
 
-        
+    ## building the URL to render    
     return render_template(experiment_name + "/exp.html", uniqueId=unique_id, experimentName=experiment_name, debug=debug)
 
 
@@ -331,4 +322,3 @@ def handle_exp_error(exception):
     current_app.logger.error(
         "%s (%s) %s", exception.value, exception.errornum, str(dict(request.args)))
     return exception.error_page(request, "delavega@colorado.edu")
-

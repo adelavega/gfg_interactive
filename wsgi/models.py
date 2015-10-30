@@ -91,7 +91,7 @@ class Session(db.Model):
     browser = db.Column(db.String(), nullable=False)
     platform = db.Column(db.String(), nullable=False)
     debug = db.Column(db.Boolean)   #not sure if this is needed or not
-    status = db.Column(db.Integer(), nullable=False, default = 1)   #needs discussion after refactoring
+    status = db.Column(db.Integer(), nullable=False)   #needs discussion after refactoring
     exp_name = db.Column(db.String(), nullable=False)
 
     # Return each row just like that
@@ -111,7 +111,7 @@ class CategorySwitch(db.Model):
     block = db.Column(db.String(20), nullable=False)
     question = db.Column(db.String(20), nullable=False)
     answer = db.Column(db.String(20), nullable=False)
-    user_answer = block = db.Column(db.String(20), nullable=False)
+    user_answer = db.Column(db.String(20), nullable=False)
     beginexp = db.Column(db.DateTime, nullable=False)
     endexp = db.Column(db.DateTime, nullable=False)
     # Return each row just like that
