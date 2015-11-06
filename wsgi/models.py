@@ -81,6 +81,15 @@ class Participant(db.Model):
             self.status,
             self.experimentname)
 
+########################################### STORE USER ##################################
+#Store_user Table - central table for user ids (same as Particpant(old))
+class Store_user(db.Model):
+    id = db.Column(db.Integer, primary_key=True)    # PRIMARY KEY 
+    gfgid = db.Column(db.String(), nullable=False)
+    
+    # Return each row just like that
+    def __repr__(self):
+        return "Store_user values (%s, %s)" %(self.id, self.gfgid)
 
 
 ###########################################  SESSION ##################################

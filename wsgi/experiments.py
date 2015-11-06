@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from utils import nocache
 from errors import ExperimentError
-from models import Participant, Session
+from models import Participant, Session, Store_user
 
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
@@ -101,9 +101,7 @@ def start_exp():
     experiment_name = request.args['experimentName']
     current_app.logger.info("Subject: %s in task %s" % (unique_id, experiment_name))
     # Check to see which if any experiments this subject has done
-    matches = Participant.query.\
-        filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).\
-        all()
+    matches = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).all()
     numrecs = len(matches)
     print "Number of matches is - ", numrecs
 
@@ -121,6 +119,13 @@ def start_exp():
         db.session.commit()
         print "########### YES we added it to participant table"
 
+        ## Add gfgid to "store_user table"
+        user_info = Store_user(gfgid=unique_id)
+        db.session.add(user_info)
+        db.session.commit()
+        print "########### YES we added it to store_user table"
+
+
         ## Add gfgid, browser, platform, debug, status, exp_name to "session table"
         session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=1,debug=debug, exp_name=experiment_name)
         db.session.add(session_info)
@@ -129,7 +134,7 @@ def start_exp():
 
         # just for testing
         matches_new = Session.query.filter((Session.gfgid == unique_id) & (Session.status > 1)).all()       #new Query
-        print "(new query) matches are - ", matches_new
+        print "(new query)matches are - ", matches_new
         experiments_left_new = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches_new]]    #new query experiment list
         print "(new query)Experiments left are - ", experiments_left_new
 

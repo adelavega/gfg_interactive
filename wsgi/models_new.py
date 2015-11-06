@@ -4,9 +4,9 @@ import datetime
 import io, csv, json
 import os, platform     #to get the platform information
 
-###########################################  PARTICPANT ##################################
+###########################################  Store_user(PARTICPANT) ##################################
 #Central Table with all the ids
-class Participant(db.Model):
+class Store_user(db.Model):
     id = db.Column(db.Integer, primary_key=True)     # PRIMARY KEY 
     gfgid = db.Column(db.String(), nullable=False, unique=True)      
      
@@ -68,6 +68,7 @@ class Participant(db.Model):
         return "Data is (%s, %s)" % ( 
             self.id, 
             self.gfgid)
+
 
 ###########################################  SESSION ##################################
 #Session Table - all about the session
