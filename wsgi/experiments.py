@@ -87,11 +87,6 @@ def start_exp():
     elif not ('experimentName' in request.args) or not (request.args['experimentName'] in zip(*experiment_list)[0]):
         raise ExperimentError('experiment_code_error')
 
-    if 'name' in request.args:
-        first_name = request.args['name']
-    else:
-        first_name = 'None'
-
     if 'debug' in request.args:
         debug = request.args['debug']
         debug = debug == 'True'
@@ -118,7 +113,7 @@ def start_exp():
             request.user_agent.platform
         
         ## Adding data to participant table
-        part = Participant(gfgid=unique_id, browser=browser, platform=platform, language="english", experimentname=experiment_name, debug=debug, first_name=first_name)
+        part = Participant(gfgid=unique_id, browser=browser, platform=platform, language="english", experimentname=experiment_name, debug=debug)
         db.session.add(part)
         db.session.commit()
         print "########### YES we added it to participant table"
@@ -128,6 +123,12 @@ def start_exp():
         db.session.add(session_info)
         db.session.commit()
         print "########### YES we added it to session table"
+
+        # just for testing
+        matches_new = Session.query.filter((Session.gfgid == unique_id) & (Session.status > 1)).all()       #new Query
+        print "(new query) matches are - ", matches_new
+        experiments_left_new = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches_new]]    #new query experiment list
+        return render_template("begin.html", uniqueId=unique_id, experiments=experiments_left, debug=debug, new=new)
 
     elif numrecs > 0:
         # They've already done an assignment, then we should tell them they

@@ -7,14 +7,14 @@
 		<link rel=stylesheet href="/static/css/style.css" type="text/css">
 
 		<script type="text/javascript">
-			// These fields provided by the psiTurk Server
+			// These fields are coming from experiments.py 
 			var newstatus = "{{ new }}"; 
 			var debug = "{{ debug }}"; 
 			var uniqueId = "{{ uniqueId }}"; 
 		</script>
 
 		<script src="/static/lib/jquery-min.js" type="text/javascript"> </script>
-		<script src="static/js/getName.js" type="text/javascript"> </script>
+		<script src="static/js/getName.js" type="text/javascript"> </script>  <!-- Do we even need this anymore??? -->
 
 
 	</head>
@@ -27,7 +27,7 @@
 						<img id="adlogo" src="/static/img/university.png" alt="Lab Logo" />
 					</div>
 
-
+					<!-- ********* CASE 1 ******* -->
 					<!-- If there are no experiments left, do the following -->
 					{% if experiments|length == 0 %}
 					<div class="col-md-8">
@@ -38,12 +38,14 @@
 					    </div>
 					</div>
 
+					<!-- ********* CASE 2 ******* -->
 					<!-- If there are experiments left to-do, do the following -->
 					{% else %}
 
 					<div class="col-md-7">
 						<!-- "New" designates if the person just came here from an email or from another task (new=false)
 						what about debug=True ??? -->
+						<!-- ********* SUB-CASE 1 : not done before******* -->
 						{% if new == True %}
 						<h1>Welcome to Cognitive Tests!</h1>
 						<div class="lead">
