@@ -24,6 +24,7 @@ experiment_list = [('keep_track', "Keep Track"), ('category_switch', "Category S
 
 @experiments.route('/', methods=['GET'])
 def index():
+    print "------------------------------- inside '/' function in experiments.py-----------------------------------------------"
     """ Serves welcome page, sets up data base, and forwards to experiment if query string parameters are correct"""
     browser = request.user_agent.browser
     version = request.user_agent.version and int(request.user_agent.version.split('.')[0])
@@ -76,12 +77,13 @@ def index():
         experiments_left = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches]]    #old query experiment list
         print "(old query)Experiments left are - ", experiments_left
         experiments_left_new = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches_new]]    #new query experiment list
-        print "(old query)Experiments left are - ", experiments_left_new
+        print "(new query)Experiments left are - ", experiments_left_new
         return render_template("begin.html", uniqueId=unique_id, experiments=experiments_left, debug=debug, new=new)
 
 @experiments.route('/task', methods=['GET'])
 @nocache
 def start_exp():
+    print "------------------------------- inside '/task' function in experiments.py-----------------------------------------------"
     """ Serves up the experiment applet. """
     if not ('uniqueId' in request.args):
         raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
@@ -129,7 +131,7 @@ def start_exp():
         matches_new = Session.query.filter((Session.gfgid == unique_id) & (Session.status > 1)).all()       #new Query
         print "(new query) matches are - ", matches_new
         experiments_left_new = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches_new]]    #new query experiment list
-        print "(old query)Experiments left are - ", experiments_left_new
+        print "(new query)Experiments left are - ", experiments_left_new
 
     elif numrecs > 0:
         # They've already done an assignment, then we should tell them they
@@ -145,6 +147,7 @@ def start_exp():
 
 @experiments.route('/inexp', methods=['POST'])
 def enterexp():
+    print "------------------------------- inside '/inexp' function in experiments.py-----------------------------------------------"
     """
     AJAX listener that listens for a signal from the user's script when they
     leave the instructions and enter the real experiment. After the server
