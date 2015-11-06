@@ -24,12 +24,12 @@ experiment_list = [('keep_track', "Keep Track"), ('category_switch', "Category S
 
 @experiments.route('/', methods=['GET'])
 def index():
-    """ Serves welcome page, sets up data base, and forwards to experiment if ready"""
+    """ Serves welcome page, sets up data base, and forwards to experiment if query string parameters are correct"""
     browser = request.user_agent.browser
     version = request.user_agent.version and int(request.user_agent.version.split('.')[0])
     platform = request.user_agent.platform
     uas = request.user_agent.string
-
+    # *************** BROWSER CHECK *********************
     ## Check that the browser is up to date and not mobile
     if (browser == 'msie' and version < 9) \
         or (browser == 'firefox' and version < 4) \
@@ -41,22 +41,21 @@ def index():
         or (browser == 'opera') \
         or (re.search('BlackBerry', uas)):
             return render_template('unsupported.html')
-
     else:
-        ## If the browser is good:        
+        ## If the browser is good:
+        # *************** Unique Id check *********************        
         if not ('uniqueId' in request.args):
-            print "DID NOT GERT UNIQUE ID"
+            print "DID NOT GET UNIQUE ID"
             raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
-
+        # *************** Debug CHECK *********************
         if 'debug' in request.args:
             debug = request.args['debug']
         else:
             debug = False
-
-        if 'new' in request.args:
+        # *************** new CHECK *********************
+        if 'new' in request.args:          #if new is present in query string, 
             new = request.args['new']
-
-            if isinstance(new, str):
+            if isinstance(new, str):    #if new is a "string" , make it boolean
                 new = bool(int())
         else:
             new = True 
@@ -98,7 +97,7 @@ def start_exp():
     else:
         debug = False
 
-
+    #     
     unique_id = request.args['uniqueId']
     experiment_name = request.args['experimentName']
     current_app.logger.info("Subject: %s in task %s" % (unique_id, experiment_name))
@@ -118,7 +117,7 @@ def start_exp():
             request.user_agent.platform
         
         ## Adding data to participant table
-        part = Participant(uniqueid=unique_id, browser=browser, platform=platform, language="english", experimentname=experiment_name, debug=debug, first_name=first_name)
+        part = Participant(gfgid=unique_id, browser=browser, platform=platform, language="english", experimentname=experiment_name, debug=debug, first_name=first_name)
         db.session.add(part)
         db.session.commit()
         print "########### YES we added it to participant table"
