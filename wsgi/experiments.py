@@ -55,7 +55,7 @@ def index():
         # *************** new CHECK *********************
         if 'new' in request.args:          #if new is present in query string, 
             new = request.args['new']
-            if isinstance(new, str):    #if new is a "string" , make it boolean
+            if isinstance(new, str):    #if new is a "string", make it boolean
                 new = bool(int())
         else:
             new = True 
@@ -69,12 +69,13 @@ def index():
         current_app.logger.info("Subject: %s arrived" % unique_id)
 
         # Check to see which (if any) experiments this subject has done
-        matches = Participant.query.\
-            filter((Participant.gfgid == unique_id) & (Participant.status > 1)).\
-            all()
-
-        experiments_left = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches]]
-        print "Experiments left are - ", experiments_left
+        matches = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.status > 1)).all()       #old query
+        print "(old query) matches are - ", matches
+        matches_new = Session.query.filter((Session.gfgid == unique_id) & (Session.status > 1)).all()       #new Query
+        print "(new query) matches are - ", matches_new
+        experiments_left = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches]]    #old query experiment list
+        print "(old query)Experiments left are - ", experiments_left
+        experiments_left_new = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches_new]]    #new query experiment list
         return render_template("begin.html", uniqueId=unique_id, experiments=experiments_left, debug=debug, new=new)
 
 @experiments.route('/task', methods=['GET'])
