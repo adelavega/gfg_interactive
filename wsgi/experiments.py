@@ -76,6 +76,7 @@ def index():
         experiments_left = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches]]    #old query experiment list
         print "(old query)Experiments left are - ", experiments_left
         experiments_left_new = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches_new]]    #new query experiment list
+        print "(old query)Experiments left are - ", experiments_left_new
         return render_template("begin.html", uniqueId=unique_id, experiments=experiments_left, debug=debug, new=new)
 
 @experiments.route('/task', methods=['GET'])
@@ -128,7 +129,7 @@ def start_exp():
         matches_new = Session.query.filter((Session.gfgid == unique_id) & (Session.status > 1)).all()       #new Query
         print "(new query) matches are - ", matches_new
         experiments_left_new = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches_new]]    #new query experiment list
-        return render_template("begin.html", uniqueId=unique_id, experiments=experiments_left, debug=debug, new=new)
+        print "(old query)Experiments left are - ", experiments_left_new
 
     elif numrecs > 0:
         # They've already done an assignment, then we should tell them they
