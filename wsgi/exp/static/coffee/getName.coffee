@@ -11,7 +11,6 @@ jQuery ->
 		else
 			whereto = 'task?uniqueId=' + uniqueId + '&experimentName=' + event.target.id + '&debug=' + debug
 			window.location=whereto
-
 		)
 
 

@@ -17,11 +17,11 @@ _.extend(Backbone.Notifications, Backbone.Events);
 
 
 /*******
- * API *
+ * API *t
  ******/
+//Called from from CStask.js or KTtask.js
 var DataHandler = function(uniqueId, experimentName) {
 	var self = this;
-	
 	/****************
 	 * TASK DATA    *
 	 ***************/
@@ -38,6 +38,14 @@ var DataHandler = function(uniqueId, experimentName) {
 			questiondata: {},
 			useragent: ""
 		},
+		/*	******* HOW IS THE JSON BUILT UP ???? **********************
+			Each function builds up the JSON (key-value pairs)
+			initialize - just loads data about window resize etc. [Status = 0]
+			addTrialData - 'data' gets populated with each new trial in the instructions phase [Status=1]
+			addUnstructuredData - 'questiondata' gets populatedwith the questions only once the user neters the actual experiment phase [Status = 2]
+									maybe empty if the user decides to quit at instructions phase itself
+			addEvent - Just like addTrialData, 'eventdata' getspopulated with every new event & its details(of coz) as and when the event 'initialized' is triggerd
+		*/
 		
 		initialize: function() {
 			this.useragent = navigator.userAgent;
@@ -49,21 +57,41 @@ var DataHandler = function(uniqueId, experimentName) {
 			this.listenTo(Backbone.Notifications, '_psiturk_windowresize', function(newsize) { this.addEvent('window_resize', newsize); });
 		},
 
+		//populates the "data" in JSON and appends each new trrial to it
+		// New Model -  we need to add each trail as a new row in the table - Category_switch 
 		addTrialData: function(trialdata) {
 			trialdata = {"uniqueid":this.uniqueId, "current_trial":this.get("currenttrial"), "dateTime":(new Date().getTime()), "trialdata":trialdata};
 			var data = this.get('data');
 			data.push(trialdata);
 			this.set('data', data);
-			this.set({"currenttrial": this.get("currenttrial")+1});
+			this.set({"currenttrial": this.get("currenttrial")+1});		//updates the current trial number
 		},
 
+		//set the recieved reponse from the user in  the 'questiondata' key of the JSON
 		addUnstructuredData: function(field, response) {
 			var qd = this.get("questiondata");
 			qd[field] = response;
 			this.set("questiondata", qd);
 		},
-		
 
+		//if window resized etc then add the data to 'eventdata'
+		addEvent: function(eventtype, value) {
+			var interval;
+			var ed = this.get('eventdata');
+			var timestamp = new Date().getTime();
+
+			if (eventtype == 'initialized') {
+				interval = 0;
+			} else {
+				interval = timestamp - ed[ed.length-1]['timestamp'];
+			}
+			ed.push({'eventtype': eventtype, 'value': value, 'timestamp': timestamp, 'interval': interval});
+			this.set('eventdata', ed);
+		},
+		
+		/************************************************
+					   GETTER FUNCTIONS
+		************************************************/
 		getTrialData: function() {
 			return this.get('data');	
 		},
@@ -74,26 +102,15 @@ var DataHandler = function(uniqueId, experimentName) {
 		
 		getQuestionData: function() {
 			return this.get('questiondata');	
-		},
-		
-		addEvent: function(eventtype, value) {
-			var interval,
-			    ed = this.get('eventdata'),
-			    timestamp = new Date().getTime();
-
-			if (eventtype == 'initialized') {
-				interval = 0;
-			} else {
-				interval = timestamp - ed[ed.length-1]['timestamp'];
-			}
-
-			ed.push({'eventtype': eventtype, 'value': value, 'timestamp': timestamp, 'interval': interval});
-			this.set('eventdata', ed);
 		}
-	});
+	
+		
+	});		//End of Taskdata
 
 
-	/*  PUBLIC METHODS: */
+	/* *********************************** 
+				PUBLIC METHODS
+	*********************************** */
 	self.preloadImages = function(imagenames) {
 		$(imagenames).each(function() {
 			image = new Image();

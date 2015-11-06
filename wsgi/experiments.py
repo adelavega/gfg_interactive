@@ -12,8 +12,8 @@ import json
 
 # Status codes
 NOT_ACCEPTED = 0
-ALLOCATED = 1
-STARTED = 2
+ALLOCATED = 1       # given when the user has entered the instructions phase
+STARTED = 2         # given when the user has entered the actual experiment (and at this point the trials need to be recorded )
 COMPLETED = 3
 QUITEARLY = 6
 
@@ -96,7 +96,6 @@ def start_exp():
     else:
         debug = False
 
-    #     
     unique_id = request.args['uniqueId']
     experiment_name = request.args['experimentName']
     current_app.logger.info("Subject: %s in task %s" % (unique_id, experiment_name))
@@ -125,18 +124,11 @@ def start_exp():
         db.session.commit()
         print "########### YES we added it to store_user table"
 
-
         ## Add gfgid, browser, platform, debug, status, exp_name to "session table"
         session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=1,debug=debug, exp_name=experiment_name)
         db.session.add(session_info)
         db.session.commit()
         print "########### YES we added it to session table"
-
-        # just for testing
-        matches_new = Session.query.filter((Session.gfgid == unique_id) & (Session.status > 1)).all()       #new Query
-        print "(new query)matches are - ", matches_new
-        experiments_left_new = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches_new]]    #new query experiment list
-        print "(new query)Experiments left are - ", experiments_left_new
 
     elif numrecs > 0:
         # They've already done an assignment, then we should tell them they
@@ -167,10 +159,10 @@ def enterexp():
     unique_id = request.form['uniqueId']
     experiment_name = request.form['experimentName']
 
+    #Category_switch should be populated now, ie after status code 2
     try:
-        user = Participant.query.\
-            filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
-        user.status = 2
+        user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
+        user.status = 2     # entered the actual experiment phase
         user.beginexp = datetime.datetime.now()
         db.session.add(user)
         db.session.commit()
@@ -185,17 +177,15 @@ def enterexp():
 
 @experiments.route('/sync/<id_exp>', methods=['GET'])
 def load(id_exp=None):
+    print "------------------------------- inside '/sync/<id_exp>' load function in experiments.py-----------------------------------------------"
     """
     Load experiment data, which should be a JSON object and will be stored
     after converting to string.
     """
     current_app.logger.info("GET /sync route with id: %s" % id_exp)
-
     try:
         unique_id, experiment_name = id_exp.split("&")
-        user = Participant.query.\
-            filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).\
-            one()
+        user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user /experimetn combo not found.")
 
@@ -203,7 +193,7 @@ def load(id_exp=None):
         resp = json.loads(user.datastring)
     except:
         resp = {
-            "uniqueId": user.uniqueid,
+            "uniqueId": user.gfgid,
             "experimentName" : user.experimentname
         }
 
@@ -211,6 +201,7 @@ def load(id_exp=None):
 
 @experiments.route('/sync/<id_exp>', methods=['PUT'])
 def update(id_exp=None):
+    print "------------------------------- inside '/sync/<id_exp>' update function in experiments.py-----------------------------------------------"    
     """
     Save experiment data, which should be a JSON object and will be stored
     after converting to string.
@@ -245,6 +236,7 @@ def update(id_exp=None):
 
 @experiments.route('/quitter', methods=['POST'])
 def quitter():
+    print "------------------------------- inside '/quitter' function in experiments.py-----------------------------------------------" 
     """ Mark quitter as such. """
     if not ('uniqueId' in request.form) or not ('experimentName' in request.form):
         resp = {"status": "bad request"}
@@ -264,10 +256,8 @@ def quitter():
     else:
         try:
             current_app.logger.info("Marking quitter %s in experiment %s" % (unique_id, experiment_name))
-            user = Participant.query.\
-                filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).\
-                one()
-            user.status = 6
+            user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
+            user.status = 6     # Quitter
             db.session.add(user)
             db.session.commit()
         except SQLAlchemyError:
@@ -278,6 +268,7 @@ def quitter():
 
 @experiments.route('/worker_complete', methods=['GET'])
 def worker_complete():
+    print "------------------------------- inside '/worker_complete' function in experiments.py-----------------------------------------------" 
     """Complete worker."""
 
     if 'debug' in request.args:
@@ -291,13 +282,10 @@ def worker_complete():
     else:
         unique_id = request.args['uniqueId']
         experiment_name = request.args['experimentName']
-
         current_app.logger.info("Completed experiment %s, %s" % (unique_id, experiment_name))
         try:
-            user = Participant.query.\
-                filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).\
-                one()
-            user.status = 3
+            user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
+            user.status = 3     #Status is Complete
             user.endhit = datetime.datetime.now()
             db.session.add(user)
             db.session.commit()
