@@ -22,7 +22,7 @@ experiments = Blueprint('experiments', __name__,
 
 experiment_list = [('keep_track', "Keep Track"), ('category_switch', "Category Switch")]
 
-@experiments.route('/', methods=['GET'])
+@experiments.route('/', methods=['GET'])            #needs to be merged with /task function
 def index():
     print "------------------------------- inside '/' function in experiments.py-----------------------------------------------"
     """ Serves welcome page, sets up data base, and forwards to experiment if query string parameters are correct"""

@@ -46,7 +46,9 @@ var DataHandler = function(uniqueId, experimentName) {
 									maybe empty if the user decides to quit at instructions phase itself
 			addEvent - Just like addTrialData, 'eventdata' getspopulated with every new event & its details(of coz) as and when the event 'initialized' is triggerd
 		*/
-		
+		/************************************************
+					   SETTER FUNCTIONS
+		************************************************/
 		initialize: function() {
 			this.useragent = navigator.userAgent;
 			this.addEvent('initialized', null);
@@ -103,8 +105,6 @@ var DataHandler = function(uniqueId, experimentName) {
 		getQuestionData: function() {
 			return this.get('questiondata');	
 		}
-	
-		
 	});		//End of Taskdata
 
 
@@ -118,6 +118,7 @@ var DataHandler = function(uniqueId, experimentName) {
 		});
 	};
 	
+	//I dont get this :(
 	self.preloadPages = function(pagenames) {
 		// Synchronously preload pages.
 		$(pagenames).each(function() {
@@ -177,16 +178,14 @@ var DataHandler = function(uniqueId, experimentName) {
 				data: {'uniqueId' : self.taskdata.uniqueId, 'experimentName': self.taskdata.experimentName}
 		});
 		
-		if (self.taskdata.mode != 'debug') {  // don't block people from reloading in debug mode
+		if (self.taskdata.mode != 'debug') {  //don't block people from reloading in debug mode
 			// Provide opt-out 
 			$(window).on("beforeunload", function(){
 				self.saveData();
-				
 				$.ajax("quitter", {
 						type: "POST",
 						data: {'uniqueId' : self.taskdata.uniqueId, 'experimentName': self.taskdata.experimentName}
 				});
-
 				return "By leaving or reloading this page, you opt out of the experiment.  Are you sure you want to leave the experiment?";
 			});
 		}
