@@ -18,7 +18,7 @@
 			var newstatus = "{{ new }}"; 
 			var debug = "{{ debug }}"; 
 			var uniqueId = "{{ uniqueId }}"; 
-
+			//var experiment_list = {'keep_track':"Keep Track", 'category_switch':"Category Switch"};
 			(function() {
 				  jQuery(function() {
 				    return $("body").on('click', 'button', function(event) {
@@ -40,41 +40,27 @@
 						<img id="adlogo" src="/static/img/GFG_cog.png" alt="Lab Logo" />
 					</div>
 
-					<!-- ********* CASE 1 ******* -->
-					<!-- If there are no experiments left, do the following -->
-					{% if experiments|length == 0 %}
-					<div class="col-md-8">
-						<h1>You're done for now!</h1>
-						<hr>
-					    <div class="lead">
-					    	You have completed all of the cognitive tasks for now. We will send you an email if there are any more tasks to complete. Thank you!
-					    </div>
-					</div>
-
-					<!-- ********* CASE 2 ******* -->
-					<!-- If there are experiments left to-do, do the following -->
-					{% else %}
-						<div class="col-md-7">
+					<div class="col-md-7">
 							<!-- "New" designates if the person just came here from an email or from another task (new=false)
 							what about debug=True ??? -->
 							<!-- ********* SUB-CASE 1 : not done before******* -->
 							{% if new == True %}
-							<h1>Welcome to Cognitive Tests!</h1>
-							<div class="lead">
-						    	We have a few cognitive assesments we'd like you to complete. <br>Each one will take around <strong>15 minutes</strong> to complete. <br> Once you're finished, you can complete another assesment or you can come back to this page later to complete remaining assesments when you have the time. <br><br> Only begin when you have set some time aside-- <strong>you will not be allowed to refresh the page or start over.</strong> Please make sure to <strong>close any distracting windows </strong>such as messengers, social media, and video games.<br>
-						    	Finally, remember that all of the following tasks need to be done <strong>in your head.</strong><br><br>
+								<h1>Welcome to Cognitive Tests!</h1>
+								<div class="lead">
+							    	We have a few cognitive assesments we'd like you to complete. <br>Each one will take around <strong>15 minutes</strong> to complete. <br> Once you're finished, you can complete another assesment or you can come back to this page later to complete remaining assesments when you have the time. <br><br> Only begin when you have set some time aside-- <strong>you will not be allowed to refresh the page or start over.</strong> Please make sure to <strong>close any distracting windows </strong>such as messengers, social media, and video games.<br>
+							    	Finally, remember that all of the following tasks need to be done <strong>in your head.</strong><br><br>
 
-						    	Click on the task you want to work on to begin! <br>
-	 						</div>
-						    <div class="row">
-							    <div class="col-md-7">
-							{% else %} <!--If new==False ; not a new candidate anymore. We could check for the status code here as well. -->
-								<h1>You're done with that assesment!</h1>
-							    <div class="lead">
-							    	If you have more time, you can choose to complete any of the following assesments. If not, you can come back here using the link the email we sent you. <br> <br> Remember to set aside 15 minutes for each, because once you start you cannot refresh the page or start over. Thanks!
-							    </div>
-							    </div>
-							</div> 
+							    	Click on the task you want to work on to begin! <br>
+		 						</div>
+							    <div class="row">
+								    <div class="col-md-7">
+								{% else %} <!--If new==False ; not a new candidate anymore. We could check for the status code here as well. -->
+									<h1>You're done with that assesment!</h1>
+								    <div class="lead">
+								    	If you have more time, you can choose to complete any of the following assesments. If not, you can come back here using the link the email we sent you. <br> <br> Remember to set aside 15 minutes for each, because once you start you cannot refresh the page or start over. Thanks!
+								    </div>
+								    </div>
+								</div> 
 						    {% endif %}
 
 						<div class="row">
@@ -85,7 +71,6 @@
 								<button class="btn-lg btn-primary" id={{ exp }}>{{ label }} </button> &nbsp;&nbsp;&nbsp;
 							{% endfor %}
 						</div>
-					{% endif %}
 		</div>
 	</body>
 </html>

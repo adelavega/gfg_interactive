@@ -62,79 +62,56 @@ def index():
             new = True 
 
         unique_id = request.args['uniqueId']
-        ## Add the browser to "Session" Table
-        print "Browser is - ", browser
-        print "Version is - ", version
-        print "Platform is - ", platform
-        print "Unique ID is - ", unique_id
-        current_app.logger.info("Subject: %s arrived" % unique_id)
-
-        # Check to see which (if any) experiments this subject has done
-        matches = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.status > 1)).all()       #old query
-        print "(old query) matches are - ", matches
-        matches_new = Session.query.filter((Session.gfgid == unique_id) & (Session.status > 1)).all()       #new Query
-        print "(new query) matches are - ", matches_new
-        experiments_left = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches]]    #old query experiment list
-        print "(old query)Experiments left are - ", experiments_left
-        experiments_left_new = [exp for exp in experiment_list if exp[0] not in [match.experimentname for match in matches_new]]    #new query experiment list
-        print "(new query)Experiments left are - ", experiments_left_new
-        return render_template("begin.html", uniqueId=unique_id, experiments=experiments_left, debug=debug, new=new)
+        current_app.logger.info("Log 001 - Subject: %s started Cognitive Tests" % unique_id)
+        return render_template("begin.html", uniqueId=unique_id, experiments=experiment_list, debug=debug, new=new)
 
 @experiments.route('/task', methods=['GET'])
 @nocache
 def start_exp():
     print "------------------------------- inside '/task' function in experiments.py-----------------------------------------------"
     """ Serves up the experiment applet. """
-    if not ('uniqueId' in request.args):
-        raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
-    elif not ('experimentName' in request.args) or not (request.args['experimentName'] in zip(*experiment_list)[0]):
-        raise ExperimentError('experiment_code_error')
-
-    if 'debug' in request.args:
-        debug = request.args['debug']
-        debug = debug == 'True'
-    else:
-        debug = False
-
     unique_id = request.args['uniqueId']
     experiment_name = request.args['experimentName']
-    current_app.logger.info("Subject: %s in task %s" % (unique_id, experiment_name))
-    # Check to see which if any experiments this subject has done
-    matches = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).all()
-    numrecs = len(matches)
-    print "Number of matches is - ", numrecs
+    browser = "UNKNOWN" if not request.user_agent.browser else request.user_agent.browser
+    platform = "UNKNOWN" if not request.user_agent.platform else request.user_agent.platform
+    debug = request.args['debug']
+    current_app.logger.info("Log 002 - Subject: %s started task %s in %s platform and %s browser" % (unique_id, experiment_name, platform, browser))
 
-    ## numrecs=0 means this user has done no experiments before, so status=1 [allocated]
-    if numrecs == 0:
-        # Choose condition and counterbalance
-        browser = "UNKNOWN" if not request.user_agent.browser else \
-            request.user_agent.browser
-        platform = "UNKNOWN" if not request.user_agent.platform else \
-            request.user_agent.platform
+    # Check to see how many records exist for this experiment in Session Table with status > 1
+    
+    matches = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name)).all()
+    sessions_found = len(matches)
+    current_app.logger.info("Log 003 - Sessions found on this experiment: %s", sessions_found)
+
+    ## exps_done=0 means this user has done no experiments before, so allocate status=1 
+    if sessions_found == 0:
+        #Allocate Status of 1
+        exp_status = 1
         
         ## Adding data to participant table
         part = Participant(gfgid=unique_id, browser=browser, platform=platform, language="english", experimentname=experiment_name, debug=debug)
         db.session.add(part)
         db.session.commit()
-        print "########### YES we added it to participant table"
+        current_app.logger.info("Log 004 - added it to participant table")
 
         ## Add gfgid to "store_user table"
         user_info = Store_user(gfgid=unique_id)
         db.session.add(user_info)
         db.session.commit()
-        print "########### YES we added it to store_user table"
+        current_app.logger.info("Log 005 - added it to store_user table")
 
         ## Add gfgid, browser, platform, debug, status, exp_name to "session table"
-        session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=1,debug=debug, exp_name=experiment_name)
+        session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=exp_status ,debug=debug, exp_name=experiment_name)
         db.session.add(session_info)
         db.session.commit()
-        print "########### YES we added it to session table"
+        current_app.logger.info("Log 006 - added it to session table")
 
-    elif numrecs > 0:
-        # They've already done an assignment, then we should tell them they
+    elif sessions_found > 0:
+        # They've already done this experiment, we should find out what status they were at and 
         # can't do another one if they're past status 1
         part = matches[0]
-        ## Status
+        print "part - %s", part
+        ## Check the Status
         if int(part.status) > 1 and debug == False:
             raise ExperimentError('already_started_exp')
 
