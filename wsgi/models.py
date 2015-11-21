@@ -105,7 +105,7 @@ class Session(db.Model):
 
     # Return each row just like that
     def __repr__(self):
-        return "Session values (%s, %s, %s, %s, %s, %s, %s)" %(self.id, self.gfgid, self.browser, self.platform, self.exp_name, self.status, self.debug)
+        return "Session values (%s, %s, %s, %s, %s, %s, %s)" %(self.session_id, self.gfgid, self.browser, self.platform, self.exp_name, self.status, self.debug)
 
 
 ###########################################  CATEGORY SWITCH ##################################
