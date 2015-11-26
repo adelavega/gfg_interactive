@@ -22,7 +22,7 @@ experiments = Blueprint('experiments', __name__,
 
 experiment_list = [('keep_track', "Keep Track"), ('category_switch', "Category Switch")]
 
-@experiments.route('/', methods=['GET'])            #needs to be merged with /task function
+@experiments.route('/', methods=['GET'])         
 def index():
     print "------------------------------- inside '/' function in experiments.py-----------------------------------------------"
     """ Serves welcome page, sets up data base, and forwards to experiment if query string parameters are correct"""
@@ -169,16 +169,16 @@ def enterexp():
     leave the instructions and enter the real experiment. After the server
     receives this signal, it will no longer allow them to re-access the
     experiment applet (meaning they can't do part of the experiment and
-    referesh to start over).
+    refresh to start over).
     """
 
-    if not ('uniqueId' in request.form) or not ('experimentName' in request.form):
+    if not ('uniqueId' in request.form) or not ('experimentName' in request.form) or not ('sessionid' in request.form) :
         raise ExperimentError('improper_inputs')
 
     unique_id = request.form['uniqueId']
     experiment_name = request.form['experimentName']
-    #get the sessionid as well
-
+    session_id = request.form['sessionid']
+    current_app.logger.info("Log 012 - User has finished the instructions in session id: %s", session_id)
     #Category_switch should be populated now, ie after status code 2
     try:
         user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
@@ -186,7 +186,15 @@ def enterexp():
         user.beginexp = datetime.datetime.now()
         db.session.add(user)
         db.session.commit()
+
         # Update the appropriate session with the sessionid
+        sess = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
+        print "** sess: %s", sess
+        sess.status = 2
+        sess.begin_session = datetime.datetime.now()
+        db.session.add(sess)
+        db.session.commit()
+        current_app.logger.info("Log 012 - User has finished the instructions in session id: %s", session_id)
         resp = {"status": "success"}
 
     except SQLAlchemyError:
@@ -205,8 +213,9 @@ def load(id_exp=None):
     """
     current_app.logger.info("GET /sync route with id: %s" % id_exp)
     try:
-        unique_id, experiment_name = id_exp.split("&")
+        unique_id, experiment_name, session_id = id_exp.split("&")
         user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
+        sess = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user /experiment combo not found.")
 
@@ -215,7 +224,8 @@ def load(id_exp=None):
     except:
         resp = {
             "uniqueId": user.gfgid,
-            "experimentName" : user.experimentname
+            "experimentName" : user.experimentname,
+            "sessionid" : sess.session_id
         }
 
     return jsonify(**resp)
@@ -230,18 +240,16 @@ def update(id_exp=None):
     current_app.logger.info("PUT /sync route with id: %s" % id_exp)
 
     try:
-        unique_id, experiment_name = id_exp.split("&")
-        user = Participant.query.\
-            filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).\
-            one()
+        unique_id, experiment_name, session_id = id_exp.split("&")
+
+        user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
+        sess = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user not found.")
 
     if hasattr(request, 'json'):
-        print request.get_data()
-        user.datastring = request.get_data().decode('utf-8').encode(
-            'ascii', 'xmlcharrefreplace'
-        )
+        #print request.get_data()
+        user.datastring = request.get_data().decode('utf-8').encode('ascii', 'xmlcharrefreplace')
         db.session.add(user)
         db.session.commit()
 
@@ -259,33 +267,43 @@ def update(id_exp=None):
 def quitter():
     print "------------------------------- inside '/quitter' function in experiments.py-----------------------------------------------" 
     """ Mark quitter as such. """
-    if not ('uniqueId' in request.form) or not ('experimentName' in request.form):
+    if not ('uniqueId' in request.form) or not ('experimentName' in request.form) or not ('sessionid' in request.form):
         resp = {"status": "bad request"}
         return jsonify(**resp)
 
     unique_id = request.form['uniqueId']
     experiment_name = request.form['experimentName']
+    session_id = request.form['sessionid']
 
     if unique_id[:5] == "debug":
         debug_mode = True
     else:
         debug_mode = False
 
-    if debug_mode:
+    """if debug_mode:
         resp = {"status": "didn't mark as quitter since this is debugging"}
         return jsonify(**resp)
+    else:"""
+    try:
+        current_app.logger.info("Marking quitter %s in experiment %s" % (unique_id, experiment_name))
+        user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
+        user.status = 6     # Quitter
+        db.session.add(user)
+        db.session.commit()
+
+        #pull records from Session table to update
+        sess = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
+        print "** sess: ", sess
+        sess.status = 6
+        sess.begin_session = datetime.datetime.now()
+        db.session.add(sess)
+        db.session.commit()
+
+    except SQLAlchemyError:
+        raise ExperimentError('tried_to_quit')
     else:
-        try:
-            current_app.logger.info("Marking quitter %s in experiment %s" % (unique_id, experiment_name))
-            user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
-            user.status = 6     # Quitter
-            db.session.add(user)
-            db.session.commit()
-        except SQLAlchemyError:
-            raise ExperimentError('tried_to_quit')
-        else:
-            resp = {"status": "marked as quitter"}
-            return jsonify(**resp)
+        resp = {"status": "marked as quitter"}
+        return jsonify(**resp)
 
 @experiments.route('/worker_complete', methods=['GET'])
 def worker_complete():
@@ -297,18 +315,27 @@ def worker_complete():
     else:
         debug = False
 
-    if not ('uniqueId' in request.args) or not ('experimentName' in request.args):
+    if not ('uniqueId' in request.args) or not ('experimentName' in request.args) or not ('sessionid' in request.args):
         raise ExperimentError('improper_inputs')
           
     else:
         unique_id = request.args['uniqueId']
         experiment_name = request.args['experimentName']
-        current_app.logger.info("Completed experiment %s, %s" % (unique_id, experiment_name))
+        session_id = request.args['sessionid']
+        current_app.logger.info("Completed experiment %s, %s, %s" % (unique_id, experiment_name, session_id))
         try:
             user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
             user.status = 3     #Status is Complete
             user.endhit = datetime.datetime.now()
             db.session.add(user)
+            db.session.commit()
+
+            #pull records from Session table to update
+            sess = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
+            print "** sess: ", sess
+            sess.status = 3
+            sess.begin_session = datetime.datetime.now()
+            db.session.add(sess)
             db.session.commit()
 
         except SQLAlchemyError:
@@ -338,6 +365,5 @@ def regularpage(foldername=None, pagename=None):
 @experiments.errorhandler(ExperimentError)
 def handle_exp_error(exception):
     """Handle errors by sending an error page."""
-    current_app.logger.error(
-        "%s (%s) %s", exception.value, exception.errornum, str(dict(request.args)))
+    current_app.logger.error("%s (%s) %s", exception.value, exception.errornum, str(dict(request.args)))
     return exception.error_page(request, "delavega@colorado.edu")

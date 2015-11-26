@@ -17,7 +17,7 @@ _.extend(Backbone.Notifications, Backbone.Events);
 
 
 /*******
- * API *t
+ * API *
  ******/
 //Called from from CStask.js or KTtask.js
 //Added sessiion id as well
@@ -28,7 +28,7 @@ var DataHandler = function(uniqueId, experimentName, sessionid) {
 	 ***************/
 	var TaskData = Backbone.Model.extend({
 		urlRoot: "/exp/sync/", // Save will PUT to /sync (data obj), with mimetype 'application/JSON'
-		id: uniqueId + "&" + experimentName,
+		id: uniqueId + "&" + experimentName + "&"+ sessionid,
 		uniqueId: uniqueId,
 		experimentName: experimentName,
 		sessionid: sessionid,
