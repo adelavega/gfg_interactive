@@ -20,7 +20,8 @@ _.extend(Backbone.Notifications, Backbone.Events);
  * API *t
  ******/
 //Called from from CStask.js or KTtask.js
-var DataHandler = function(uniqueId, experimentName) {
+//Added sessiion id as well
+var DataHandler = function(uniqueId, experimentName, sessionid) {
 	var self = this;
 	/****************
 	 * TASK DATA    *
@@ -30,6 +31,7 @@ var DataHandler = function(uniqueId, experimentName) {
 		id: uniqueId + "&" + experimentName,
 		uniqueId: uniqueId,
 		experimentName: experimentName,
+		sessionid: sessionid,
 
 		defaults: {
 			currenttrial: 0,
@@ -175,7 +177,7 @@ var DataHandler = function(uniqueId, experimentName) {
 
 		$.ajax("inexp", {
 				type: "POST",
-				data: {'uniqueId' : self.taskdata.uniqueId, 'experimentName': self.taskdata.experimentName}
+				data: {'uniqueId' : self.taskdata.uniqueId, 'experimentName': self.taskdata.experimentName, 'sessionid': self.taskdata.sessionid}
 		});
 		
 		if (self.taskdata.mode != 'debug') {  //don't block people from reloading in debug mode
@@ -184,7 +186,7 @@ var DataHandler = function(uniqueId, experimentName) {
 				self.saveData();
 				$.ajax("quitter", {
 						type: "POST",
-						data: {'uniqueId' : self.taskdata.uniqueId, 'experimentName': self.taskdata.experimentName}
+						data: {'uniqueId' : self.taskdata.uniqueId, 'experimentName': self.taskdata.experimentName, 'sessionid': self.taskdata.sessionid}
 				});
 				return "By leaving or reloading this page, you opt out of the experiment.  Are you sure you want to leave the experiment?";
 			});
@@ -204,7 +206,7 @@ var DataHandler = function(uniqueId, experimentName) {
 	self.completeHIT = function() {
 		self.teardownTask();
 
-		window.location= "/exp/worker_complete?" + "uniqueId=" + uniqueId + "&experimentName=" + experimentName + "&debug=" + debug;
+		window.location= "/exp/worker_complete?" + "uniqueId=" + uniqueId + "&experimentName=" + experimentName + "&debug=" + debug + "&sessionid=" + sessionid;
 	}
 
 	// To be fleshed out with backbone views in the future.

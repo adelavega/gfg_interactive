@@ -103,17 +103,19 @@ def start_exp():
         current_app.logger.info("Log 005 - added it to store_user table")
 
         ## Add gfgid, browser, platform, debug, status, exp_name to "session table"
-        session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=exp_status ,debug=debug, exp_name=experiment_name)
+        current_time = datetime.datetime.now()
+        session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=exp_status ,debug=debug, exp_name=experiment_name, begin_session=current_time)
         db.session.add(session_info)
         db.session.commit()
         current_app.logger.info("Log 006 - added it to session table")
+        return render_template(experiment_name + "/exp.html", uniqueId=unique_id, experimentName=experiment_name, debug=debug)
 
     elif sessions_found > 0:
-        # They've already done this experiment, we should find out what status they were at and 
-        # can't do another one if they're past status 1
+        # They've already done this experiment, we should find out what status they were at and can't do another one if they're past status 1
         ## Option: Re-run the query again on the Session table and pull out those records with status == 3 .. completed
         status_3 = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.status == 3)).all()
         current_app.logger.info("LOGGER status 3-%s", status_3)
+        
         if(len(status_3) == 0):
             ## Pull out those records with status = 6..Quit Early
             status_6 = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.status == 6)).all()
@@ -126,33 +128,39 @@ def start_exp():
                     ## Pull out those records with status = 1 
                     status_1 = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.status == 1)).all()
                     if(len(status_1) > 0):
-                        current_app.logger.info("Log 007 - User is in Status 1 and can continue experiment")
-                        return render_template(experiment_name + "/exp.html", uniqueId=unique_id, experimentName=experiment_name, debug=debug)
+                        current_app.logger.info("Log 007 - User is in Status 1 and can continue experiment in a new session")
+                        current_time = datetime.datetime.now()
+                        session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=1 ,debug=debug, exp_name=experiment_name, begin_session=current_time)
+                        db.session.add(session_info)
+                        db.session.commit()
+                        sess = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.begin_session == current_time)).one()
+                        ## pass the session id also in the URL.
+                        return render_template(experiment_name + "/exp.html", uniqueId=unique_id, experimentName=experiment_name, debug=debug, sessionid=sess.session_id)
                     else:
                         current_app.logger.info("Log 008 - Something is not right in the code")
+                        session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=0 ,debug=debug, exp_name=experiment_name, begin_session=datetime.datetime.now())
+                        db.session.add(session_info)
+                        db.session.commit()
                         raise ExperimentError('status_incorrectly_set') #this state should not be reached at all. 
                 else:
                     current_app.logger.info("Log 009 - User is in Status 2 and cannot re-do this experiment now")
+                    session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=2 ,debug=debug, exp_name=experiment_name, begin_session=datetime.datetime.now())
+                    db.session.add(session_info)
+                    db.session.commit()
                     raise ExperimentError('already_started_exp')
             else:
                 current_app.logger.info("Log 010 - User is in status 6 and cannot re-do this experiment now")
+                session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=6 ,debug=debug, exp_name=experiment_name, begin_session=datetime.datetime.now())
+                db.session.add(session_info)
+                db.session.commit()
                 raise ExperimentError('tried_to_quit')
         else:
-            current_app.logger.info("Log 011 - User is in status 3 and has alreadu finished this experiment")
+            current_app.logger.info("Log 011 - User is in status 3 and has already finished this experiment")
+            session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=3 ,debug=debug, exp_name=experiment_name, begin_session=datetime.datetime.now())
+            db.session.add(session_info)
+            db.session.commit()
             raise ExperimentError('already_did_exp_hit')
        
-
-        ## Option 2: Either run another filtered query on the query object "matches"
-        """with_status_1 = matches.query.filter
-        part = matches[0]
-        print "part - %s", part
-        ## Check the Status
-        if int(part.status) > 1 and debug == False:
-            raise ExperimentError('already_started_exp')
-       ## building the URL to render    
-        return render_template(experiment_name + "/exp.html", uniqueId=unique_id, experimentName=experiment_name, debug=debug) """
-
-
 @experiments.route('/inexp', methods=['POST'])
 def enterexp():
     print "------------------------------- inside '/inexp' function in experiments.py-----------------------------------------------"
@@ -169,6 +177,7 @@ def enterexp():
 
     unique_id = request.form['uniqueId']
     experiment_name = request.form['experimentName']
+    #get the sessionid as well
 
     #Category_switch should be populated now, ie after status code 2
     try:
@@ -177,6 +186,7 @@ def enterexp():
         user.beginexp = datetime.datetime.now()
         db.session.add(user)
         db.session.commit()
+        # Update the appropriate session with the sessionid
         resp = {"status": "success"}
 
     except SQLAlchemyError:
@@ -198,7 +208,7 @@ def load(id_exp=None):
         unique_id, experiment_name = id_exp.split("&")
         user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
     except SQLAlchemyError:
-        current_app.logger.error("DB error: Unique user /experimetn combo not found.")
+        current_app.logger.error("DB error: Unique user /experiment combo not found.")
 
     try:
         resp = json.loads(user.datastring)
