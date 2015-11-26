@@ -113,16 +113,19 @@ def start_exp():
         # can't do another one if they're past status 1
         ## Option: Re-run the query again on the Session table and pull out those records with status == 3 .. completed
         status_3 = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.status == 3)).all()
+        current_app.logger.info("LOGGER status 3-%s", status_3)
         if(len(status_3) == 0):
             ## Pull out those records with status = 6..Quit Early
             status_6 = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.status == 6)).all()
+            current_app.logger.info("LOGGER status 6-%s", status_6)
             if(len(status_6) == 0):
                 ## Pull out those records with status = 2
                 status_2 = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.status == 2)).all()
-                if(len(status_2 == 0)):
+                current_app.logger.info("LOGGER status 2-%s", status_2)
+                if(len(status_2 )== 0):
                     ## Pull out those records with status = 1 
                     status_1 = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.status == 1)).all()
-                    if(len(status_1 > 0)):
+                    if(len(status_1) > 0):
                         current_app.logger.info("Log 007 - User is in Status 1 and can continue experiment")
                         return render_template(experiment_name + "/exp.html", uniqueId=unique_id, experimentName=experiment_name, debug=debug)
                     else:

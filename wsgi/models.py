@@ -102,10 +102,11 @@ class Session(db.Model):
     debug = db.Column(db.Boolean)   #not sure if this is needed or not
     status = db.Column(db.Integer(), nullable=False)   #needs discussion after refactoring
     exp_name = db.Column(db.String(), nullable=False)
+    begin_session = db.Column(db.DateTime, nullable=False)
 
     # Return each row just like that
     def __repr__(self):
-        return "Session values (%s, %s, %s, %s, %s, %s, %s)" %(self.session_id, self.gfgid, self.browser, self.platform, self.exp_name, self.status, self.debug)
+        return "Session values (%s, %s, %s, %s, %s, %s, %s, %s)" %(self.session_id, self.gfgid, self.browser, self.platform, self.exp_name, self.status, self.debug, self.begin_session)
 
 
 ###########################################  CATEGORY SWITCH ##################################
