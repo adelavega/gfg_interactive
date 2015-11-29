@@ -134,6 +134,8 @@ def start_exp():
                         db.session.add(session_info)
                         db.session.commit()
                         sess = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.begin_session == current_time)).one()
+                        print "sess is: %s", sess
+                        print "session id is: %s", sess.session_id
                         ## pass the session id also in the URL.
                         return render_template(experiment_name + "/exp.html", uniqueId=unique_id, experimentName=experiment_name, debug=debug, sessionid=sess.session_id)
                     else:
@@ -178,6 +180,7 @@ def enterexp():
     unique_id = request.form['uniqueId']
     experiment_name = request.form['experimentName']
     session_id = request.form['sessionid']
+
     current_app.logger.info("Log 012 - User has finished the instructions in session id: %s", session_id)
     #Category_switch should be populated now, ie after status code 2
     try:
