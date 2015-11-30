@@ -119,7 +119,7 @@ class CategorySwitch(db.Model):
     response = db.Column(db.String(2))  # J or K key pressed
     reaction_time = db.Column(db.Float) # Reaction time in seconds- depends on what level of accuracy we want
     accuracy = db.Column(db.Integer) # calculated based on a number of factors
-    block = db.Column(db.String(20))
+    block = db.Column(db.String(100))
     question = db.Column(db.String(20))
     answer = db.Column(db.String(20))
     user_answer = db.Column(db.String(20))

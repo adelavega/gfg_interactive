@@ -263,18 +263,23 @@ def update(id_exp=None):
     except:
         data = {}
     # 4. Now extract the latest trial from this freshly saved data
-    trial = data.get("currenttrial", None)  #<---- doesnt work.
+    trial = data.get("currenttrial", None) 
     print "trial is - ", trial
-    current_app.logger.info("Saved Trial data for %s, experiment %s in Participant table" % (unique_id, experiment_name))
+    current_app.logger.info("Saved Trial data for %s, experiment %s and trial # %s in Participant table" % (unique_id, experiment_name, trial))
 
     # 5. Now we will parse the recieved jSON and store each trial in the Category_Switch table 
-    json = request.get_data();
+    jsont = request.get_data()
+    print "json before processing is----", jsont
+    json_obj = json.dumps(jsont)
+
+    #check if the json is valis
+    try:
+        valid_json = json.loads(json_obj)
+    except ValueError, e:
+        print "Not valid"
     
-
-
+    print "Json after processing ------------ ", json_obj
     resp = {"status": "user data saved"}
-
- 
     return jsonify(**resp)
 
 @experiments.route('/quitter', methods=['POST'])
