@@ -254,7 +254,7 @@ def update(id_exp=None):
     # 2. now add it to the participant table
     if hasattr(request, 'json'):
         print request.get_data()
-        user.datastring = request.get_data().decode('utf-8').encode('ascii', 'xmlcharrefreplace')
+        user.datastring = request.get_data().decode('utf-8').encode('ascii', 'xmlcharrefreplace')   #encoding the json
         db.session.add(user)
         db.session.commit()
     # 3.Now try to load the "datastring" from the participant table
@@ -269,23 +269,34 @@ def update(id_exp=None):
 
     # 5. Now we will parse the recieved jSON and store each trial in the Category_Switch table 
     jsont = request.get_data()
-    print "json before processing is----", jsont
     json_obj = json.dumps(jsont)
 
-    #check if the json is valis
+    # 6. Check if the json is valid
     try:
         valid_json = json.loads(json_obj)
     except ValueError, e:
         print "Not valid"
-    
-    print "Json after processing ------------ ", json_obj
+        #throw an error here and return out TBD
+
+    # 7. Extract session_id, experiment_name, uniqueid from JSON and compare it with request data
+    # 8. Query the appropriate table based on experiment name
+    # 9. If no rows present
+    # 10. If rows present 
+        # 10.1 loop over the rows
+        # 10.2 set the highest_trial = 0
+        # 10.3 get the current_trial and compare
+    # 11. if valid_json['currenttrial'] - highest_trial = 1 then dont add anything 
+    # 12. if valid_json['currenttrial'] - highest_trial > 1 
+        # 12.1 search valid_json['data'] for current_trial = highest_trial + 1 and extract it
+        # 12.2 Loop till valid_json['currenttrial'] - current_trial = 1. 
+
     resp = {"status": "user data saved"}
     return jsonify(**resp)
 
 @experiments.route('/quitter', methods=['POST'])
 def quitter():
     print "------------------------------- inside '/quitter' function in experiments.py-----------------------------------------------" 
-    """ Mark quitter as such. """
+    """ Mark quitter as such. """vbv
     if not ('uniqueId' in request.form) or not ('experimentName' in request.form) or not ('sessionid' in request.form):
         resp = {"status": "bad request"}
         return jsonify(**resp)
