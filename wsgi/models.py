@@ -111,7 +111,7 @@ class Session(db.Model):
 
 ###########################################  CATEGORY SWITCH ##################################
 #Experiment - Category Switch
-class CategorySwitch(db.Model):
+class Category_switch(db.Model):
     cs_id = db.Column(db.Integer, primary_key=True)    # PRIMARY KEY 
     gfgid = db.Column(db.String(), nullable=False)  
     sess_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))    # FORIEGN KEY

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from utils import nocache
 from errors import ExperimentError
-from models import Participant, Session, Store_user
+from models import Participant, Session, Store_user, Category_switch
 
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
@@ -278,31 +278,77 @@ def update(id_exp=None):
         print "Not valid"
         #throw an error here and return out TBD
 
-    #test code
     valid_json = json.loads(jsont)
-    print "currenttrial of JSON : ", valid_json['currenttrial']
-    for d in valid_json['data']:
+   #test code
+    print "currenttrial of JSON :", valid_json['currenttrial']
+    print "unique id  of JSON :", valid_json['uniqueId']
+    print "Experiment Name of JSON :", valid_json['experimentName']
+    print "session id  of JSON :", valid_json['sessionid']
+    """for d in valid_json['data']:
         print "current_trial: ", d['current_trial']
         td = d['trialdata']
         print "accuracy: ", td['acc']
         print "responsetime: ", td['rt']
         print "Response: ", td['resp']
-        print "block: ", td['block']
-        print ""
-
-
+        #print "block: ", td['block']
+        """
+    s = valid_json['sessionid']
+    
     # 7. Extract session_id, experiment_name, uniqueid from JSON and compare it with request data
-    #if not (unique_id == )
+    if unique_id != valid_json['uniqueId']:
+        print "Unique ID in request and jSON not matching. Create an error code for this one."
+        #throw an error here and return out TBD
+    elif int(session_id) != int(s):
+        print "session_id ", session_id
+        print "valid_json['sessionid'] ", s
+        print "Session ID in request and jSON not matching. Create an error code for this one."
+        #throw an error here and return out TBD
+    elif experiment_name != valid_json['experimentName']:
+        print "Experiment Name in request and jSON not matching. Create an error code for this one."
+        #throw an error here and return out TBD
+    else:
+        current_app.logger.info("Log 013 - All the ids match between JSON and request")
+
     # 8. Query the appropriate table based on experiment name
-    # 9. If no rows present
-    # 10. If rows present 
-        # 10.1 loop over the rows
-        # 10.2 set the highest_trial = 0
-        # 10.3 get the current_trial and compare
-    # 11. if valid_json['currenttrial'] - highest_trial = 1 then dont add anything 
-    # 12. if valid_json['currenttrial'] - highest_trial > 1 
-        # 12.1 search valid_json['data'] for current_trial = highest_trial + 1 and extract it
-        # 12.2 Loop till valid_json['currenttrial'] - current_trial = 1. 
+    if valid_json['experimentName'] == "category_switch":
+        # query CategorySwitch table
+        current_app.logger.info("Querying %s table" % valid_json['experimentName'])
+        row_matches = Category_switch.query.filter((Category_switch.gfgid == unique_id) & (Category_switch.sess_id == session_id)).all()
+        num_rows = len(row_matches)
+        current_app.logger.info("Log 014 - %s rows found for sessionid %s" %(num_rows, valid_json['sessionid']))
+        # 9. If no rows present
+        if num_rows == 0:
+            # extracting values from JSON
+            highest_trial = 0 #set as default
+            if valid_json['currenttrial'] == 0:     #data will be null
+                trialnum = 0
+                cs_info = Category_switch(gfgid=unique_id, sess_id=session_id, trial_num=trialnum, beginexp=datetime.datetime.now())
+                db.session.add(cs_info)
+                db.session.commit()
+                current_app.logger.info("Log 015 - %s added to CategorySwitch for session id %s " % (trialnum, session_id))
+            else:
+                print "Initial Clump of rows"
+                #handle the initial clump of rows ( :O )
+        # 10. If rows present
+        elif num_rows > 0:
+            highest_trial = 0
+            for r in row_matches:
+                print "r.trial_num: ", r.trial_num
+
+            # 10.1 loop over the rows
+            # 10.2 set the highest_trial = 0
+            # 10.3 get the current_trial and compare
+        # 11. if valid_json['currenttrial'] - highest_trial = 1 then dont add anything 
+        # 12. if valid_json['currenttrial'] - highest_trial > 1 
+            # 12.1 search valid_json['data'] for current_trial = highest_trial + 1 and extract it
+            # 12.2 Loop till valid_json['currenttrial'] - current_trial = 1. 
+    elif valid_json['experimentName'] == "keep_track":
+        print "query KeepTrack table"
+        # query KeepTrack table
+
+    else:
+        print "Table not found in database: %s " % valid_json['experimentName']
+        #throw an error here and return out TBD
 
     resp = {"status": "user data saved"}
     return jsonify(**resp)
