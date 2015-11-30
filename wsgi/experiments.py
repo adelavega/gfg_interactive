@@ -264,8 +264,8 @@ def update(id_exp=None):
         data = {}
     # 4. Now extract the latest trial from this freshly saved data
     trial = data.get("currenttrial", None) 
-    print "trial is - ", trial
-    current_app.logger.info("Saved Trial data for %s, experiment %s and trial # %s in Participant table" % (unique_id, experiment_name, trial))
+    #print "trial is - ", trial
+    current_app.logger.info("Saved Trial data for %s, experiment %s and trial# %s in Participant table" % (unique_id, experiment_name, trial))
 
     # 5. Now we will parse the recieved jSON and store each trial in the Category_Switch table 
     jsont = request.get_data()
@@ -273,12 +273,26 @@ def update(id_exp=None):
 
     # 6. Check if the json is valid
     try:
-        valid_json = json.loads(json_obj)
+        valid = json.loads(json_obj)
     except ValueError, e:
         print "Not valid"
         #throw an error here and return out TBD
 
+    #test code
+    valid_json = json.loads(jsont)
+    print "currenttrial of JSON : ", valid_json['currenttrial']
+    for d in valid_json['data']:
+        print "current_trial: ", d['current_trial']
+        td = d['trialdata']
+        print "accuracy: ", td['acc']
+        print "responsetime: ", td['rt']
+        print "Response: ", td['resp']
+        print "block: ", td['block']
+        print ""
+
+
     # 7. Extract session_id, experiment_name, uniqueid from JSON and compare it with request data
+    #if not (unique_id == )
     # 8. Query the appropriate table based on experiment name
     # 9. If no rows present
     # 10. If rows present 
@@ -296,7 +310,7 @@ def update(id_exp=None):
 @experiments.route('/quitter', methods=['POST'])
 def quitter():
     print "------------------------------- inside '/quitter' function in experiments.py-----------------------------------------------" 
-    """ Mark quitter as such. """vbv
+    """ Mark quitter as such. """
     if not ('uniqueId' in request.form) or not ('experimentName' in request.form) or not ('sessionid' in request.form):
         resp = {"status": "bad request"}
         return jsonify(**resp)
