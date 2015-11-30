@@ -115,18 +115,19 @@ class CategorySwitch(db.Model):
     cs_id = db.Column(db.Integer, primary_key=True)    # PRIMARY KEY 
     gfgid = db.Column(db.String(), nullable=False)  
     sess_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))    # FORIEGN KEY
-    response = db.Column(db.String(2), nullable=False)  # J or K key pressed
-    reaction_time = db.Column(db.Float, nullable=False) # Reaction time in seconds- depends on what level of accuracy we want
+    trial_num = db.Column(db.Integer)
+    response = db.Column(db.String(2))  # J or K key pressed
+    reaction_time = db.Column(db.Float) # Reaction time in seconds- depends on what level of accuracy we want
     accuracy = db.Column(db.Integer) # calculated based on a number of factors
-    block = db.Column(db.String(20), nullable=False)
-    question = db.Column(db.String(20), nullable=False)
-    answer = db.Column(db.String(20), nullable=False)
-    user_answer = db.Column(db.String(20), nullable=False)
-    beginexp = db.Column(db.DateTime, nullable=False)
-    endexp = db.Column(db.DateTime, nullable=False)
+    block = db.Column(db.String(20))
+    question = db.Column(db.String(20))
+    answer = db.Column(db.String(20))
+    user_answer = db.Column(db.String(20))
+    beginexp = db.Column(db.DateTime)
+
     # Return each row just like that
     def __repr__(self):
         return "CS Values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" %(self.cs_id, self.gfgid, self.sess_id, self.response, self.reaction_time, 
-        	self.accuracy, self.block, self.question, self.answer, self.user_answer, self.beginexp, self.endexp)
+        	self.accuracy, self.block, self.question, self.answer, self.user_answer, self.beginexp, self.trial_num)
 
 

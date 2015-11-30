@@ -167,6 +167,7 @@ def start_exp():
             db.session.commit()
             raise ExperimentError('already_did_exp_hit')
        
+# changes status to 2
 @experiments.route('/inexp', methods=['POST'])
 def enterexp():
     print "------------------------------- inside '/inexp' function in experiments.py-----------------------------------------------"
@@ -184,8 +185,7 @@ def enterexp():
     unique_id = request.form['uniqueId']
     experiment_name = request.form['experimentName']
     session_id = request.form['sessionid']
-
-    #Category_switch should be populated now, ie after status code 2
+    
     try:
         user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
         user.status = 2     # entered the actual experiment phase
@@ -202,14 +202,14 @@ def enterexp():
         db.session.commit()
         current_app.logger.info("Log 012 - User has finished the instructions in session id: %s", session_id)
         resp = {"status": "success"}
-
+        #Category_switch should be populated now, ie after status code 2
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user and experiment combination not found.")
-        resp = {"status": "error, uniqueId and/or experiment not found"}
-
+        resp = {"status": "error, uniqueId and/or experiment not found"}        # it is the dictionary
+   
     return jsonify(**resp)
 
-
+# called to retrieve the JSON object for returning users
 @experiments.route('/sync/<id_exp>', methods=['GET'])
 def load(id_exp=None):
     print "------------------------------- inside '/sync/<id_exp>' load function in experiments.py-----------------------------------------------"
@@ -233,9 +233,9 @@ def load(id_exp=None):
             "experimentName" : user.experimentname,
             "sessionid" : sess.session_id
         }
-
     return jsonify(**resp)
 
+# called to updated the jSOn everytime and push it back to the table
 @experiments.route('/sync/<id_exp>', methods=['PUT'])
 def update(id_exp=None):
     print "------------------------------- inside '/sync/<id_exp>' update function in experiments.py-----------------------------------------------"    
@@ -244,29 +244,37 @@ def update(id_exp=None):
     after converting to string.
     """
     current_app.logger.info("PUT /sync route with id: %s" % id_exp)
-
+    unique_id, experiment_name, session_id = id_exp.split("&")
     try:
-        unique_id, experiment_name, session_id = id_exp.split("&")
-
         user = Participant.query.filter((Participant.gfgid == unique_id) & (Participant.experimentname == experiment_name)).one()
         sess = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user not found.")
-
+    # 1. get the JSOn from the request
+    # 2. now add it to the participant table
     if hasattr(request, 'json'):
-        #print request.get_data()
+        print request.get_data()
         user.datastring = request.get_data().decode('utf-8').encode('ascii', 'xmlcharrefreplace')
         db.session.add(user)
         db.session.commit()
-
+    # 3.Now try to load the "datastring" from the participant table
     try:
         data = json.loads(user.datastring)
     except:
         data = {}
+    # 4. Now extract the latest trial from this freshly saved data
+    trial = data.get("currenttrial", None)  #<---- doesnt work.
+    print "trial is - ", trial
+    current_app.logger.info("Saved Trial data for %s, experiment %s in Participant table" % (unique_id, experiment_name))
 
-    trial = data.get("currenttrial", None)
-    current_app.logger.info("saved data for %s, experiment %s (current trial: %s)", (unique_id, experiment_name, trial))
+    # 5. Now we will parse the recieved jSON and store each trial in the Category_Switch table 
+    json = request.get_data();
+    
+
+
     resp = {"status": "user data saved"}
+
+ 
     return jsonify(**resp)
 
 @experiments.route('/quitter', methods=['POST'])
