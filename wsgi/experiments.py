@@ -280,6 +280,7 @@ def update(id_exp=None):
 
     valid_json = json.loads(jsont)
    #test code
+    print "------------------- Begins here -----------------------------"
     print "currenttrial of JSON :", valid_json['currenttrial']
     print "unique id  of JSON :", valid_json['uniqueId']
     print "Experiment Name of JSON :", valid_json['experimentName']
@@ -322,21 +323,46 @@ def update(id_exp=None):
             highest_trial = 0 #set as default
             if valid_json['currenttrial'] == 0:     #data will be null
                 trialnum = 0
-                cs_info = Category_switch(gfgid=unique_id, sess_id=session_id, trial_num=trialnum, beginexp=datetime.datetime.now())
-                db.session.add(cs_info)
-                db.session.commit()
-                current_app.logger.info("Log 015 - %s added to CategorySwitch for session id %s " % (trialnum, session_id))
+                #cs_info = Category_switch(gfgid=unique_id, sess_id=session_id, trial_num=trialnum, beginexp=datetime.datetime.now())
+                #db.session.add(cs_info)
+                #db.session.commit()
+                current_app.logger.info("Log 015 - Current trial# %s so do nothing" % (trialnum))
             else:
                 print "Initial Clump of rows"
+                max_trials = valid_json['currenttrial']
+                print "Number of trials contained are ", max_trials
+                for d in valid_json['data']:
+                    if d['current_trial'] < max_trials :
+                        print "current_trial: ", d['current_trial']
+                        td = d['trialdata']
+                        if td['acc'] == "FORWARD" :
+                            acc = 11    #numeric denotation of 'FORWARD' can be changed. TBD
+                        else :
+                            acc = td['acc']
+                        print "responsetime: ", td['rt']
+                        print "Response: ", td['resp']
+                        jsts = d['dateTime']    #Javscript timestamp
+                        print "jsts is-", jsts
+                        dt = datetime.datetime.fromtimestamp(jsts/1000.0) 
+                        print "python convertd datetime is: ", dt
+                        block2 = td['block']; 
+                        print "original Block was-", block2
+                        block1 = block2.replace("\t", "").replace("\n", "").replace("'", "");  #need to replace special chars like - /, ',
+                        print "cleaned up block is - ", block1
+                        cs_info_trial = Category_switch(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], response=td['resp'], reaction_time=td['rt'], accuracy=acc, block=block1, question="null", answer="null", user_answer="null", beginexp=dt)
+                        db.session.add(cs_info_trial)
+                        db.session.commit()
+                        current_app.logger.info("Log 016** - %s added to Category_Switch for session id %s " % (d['current_trial'], session_id))
+                        #print "block: ", td['block']
                 #handle the initial clump of rows ( :O )
-        # 10. If rows present
+        # 10. If rows present 
         elif num_rows > 0:
+            # 10.1 set the highest_trial = 0
             highest_trial = 0
+            # 10.2 loop over the rows
             for r in row_matches:
                 print "r.trial_num: ", r.trial_num
-
-            # 10.1 loop over the rows
-            # 10.2 set the highest_trial = 0
+            
             # 10.3 get the current_trial and compare
         # 11. if valid_json['currenttrial'] - highest_trial = 1 then dont add anything 
         # 12. if valid_json['currenttrial'] - highest_trial > 1 

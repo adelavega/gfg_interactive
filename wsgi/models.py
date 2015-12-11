@@ -1,4 +1,5 @@
 from database import db
+from sqlalchemy import Column, BigInteger, Text, Sequence, Boolean
 # from sqlalchemy.dialects.postgresql import JSON
 import datetime
 import io, csv, json
@@ -119,15 +120,15 @@ class Category_switch(db.Model):
     response = db.Column(db.String(2))  # J or K key pressed
     reaction_time = db.Column(db.Float) # Reaction time in seconds- depends on what level of accuracy we want
     accuracy = db.Column(db.Integer) # calculated based on a number of factors
-    block = db.Column(db.String(100))
-    question = db.Column(db.String(20))
-    answer = db.Column(db.String(20))
-    user_answer = db.Column(db.String(20))
+    block = db.Column(db.Unicode)
+    question = db.Column(db.Unicode)	# TBD
+    answer = db.Column(db.Unicode)		# TBD
+    user_answer = db.Column(db.Unicode)	# TBD
     beginexp = db.Column(db.DateTime)
 
     # Return each row just like that
-    def __repr__(self):
+    """def __repr__(self):
         return "CS Values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" %(self.cs_id, self.gfgid, self.sess_id, self.response, self.reaction_time, 
-        	self.accuracy, self.block, self.question, self.answer, self.user_answer, self.beginexp, self.trial_num)
+        	self.accuracy, self.block, self.question, self.answer, self.user_answer, self.beginexp, self.trial_num)"""
 
 
