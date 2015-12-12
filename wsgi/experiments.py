@@ -240,9 +240,7 @@ def load(id_exp=None):
 def update(id_exp=None):
     print "------------------------------- inside '/sync/<id_exp>' update function in experiments.py-----------------------------------------------"    
     """
-    Save experiment data, which should be a JSON object and will be stored
-    after converting to string.
-    """
+    Save experiment data, which should be a JSON object and will be stored after converting to string. """
     current_app.logger.info("PUT /sync route with id: %s" % id_exp)
     unique_id, experiment_name, session_id = id_exp.split("&")
     try:
@@ -280,19 +278,12 @@ def update(id_exp=None):
 
     valid_json = json.loads(jsont)
    #test code
-    print "------------------- Begins here -----------------------------"
+    print "------------------- JSON PARSING Begins here -----------------------------"
     print "currenttrial of JSON :", valid_json['currenttrial']
     print "unique id  of JSON :", valid_json['uniqueId']
     print "Experiment Name of JSON :", valid_json['experimentName']
     print "session id  of JSON :", valid_json['sessionid']
-    """for d in valid_json['data']:
-        print "current_trial: ", d['current_trial']
-        td = d['trialdata']
-        print "accuracy: ", td['acc']
-        print "responsetime: ", td['rt']
-        print "Response: ", td['resp']
-        #print "block: ", td['block']
-        """
+   
     s = valid_json['sessionid']
     
     # 7. Extract session_id, experiment_name, uniqueid from JSON and compare it with request data
@@ -312,57 +303,51 @@ def update(id_exp=None):
 
     # 8. Query the appropriate table based on experiment name
     if valid_json['experimentName'] == "category_switch":
-        # query CategorySwitch table
+        # Query CategorySwitch table
+        # Add all the trial numbers pertaining to that session id, unique_id combo into an array 
         current_app.logger.info("Querying %s table" % valid_json['experimentName'])
         row_matches = Category_switch.query.filter((Category_switch.gfgid == unique_id) & (Category_switch.sess_id == session_id)).all()
-        num_rows = len(row_matches)
-        current_app.logger.info("Log 014 - %s rows found for sessionid %s" %(num_rows, valid_json['sessionid']))
-        # 9. If no rows present
-        if num_rows == 0:
-            # extracting values from JSON
-            highest_trial = 0 #set as default
-            if valid_json['currenttrial'] == 0:     #data will be null
-                trialnum = 0
-                #cs_info = Category_switch(gfgid=unique_id, sess_id=session_id, trial_num=trialnum, beginexp=datetime.datetime.now())
-                #db.session.add(cs_info)
-                #db.session.commit()
-                current_app.logger.info("Log 015 - Current trial# %s so do nothing" % (trialnum))
-            else:
-                print "Initial Clump of rows"
-                max_trials = valid_json['currenttrial']
-                print "Number of trials contained are ", max_trials
-                for d in valid_json['data']:
-                    if d['current_trial'] < max_trials :
-                        print "current_trial: ", d['current_trial']
-                        td = d['trialdata']
-                        if td['acc'] == "FORWARD" :
-                            acc = 11    #numeric denotation of 'FORWARD' can be changed. TBD
-                        else :
-                            acc = td['acc']
-                        print "responsetime: ", td['rt']
-                        print "Response: ", td['resp']
-                        jsts = d['dateTime']    #Javscript timestamp
-                        print "jsts is-", jsts
-                        dt = datetime.datetime.fromtimestamp(jsts/1000.0) 
-                        print "python convertd datetime is: ", dt
-                        block2 = td['block']; 
-                        print "original Block was-", block2
-                        block1 = block2.replace("\t", "").replace("\n", "").replace("'", "");  #need to replace special chars like - /, ',
-                        print "cleaned up block is - ", block1
-                        cs_info_trial = Category_switch(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], response=td['resp'], reaction_time=td['rt'], accuracy=acc, block=block1, question="null", answer="null", user_answer="null", beginexp=dt)
-                        db.session.add(cs_info_trial)
-                        db.session.commit()
-                        current_app.logger.info("Log 016** - %s added to Category_Switch for session id %s " % (d['current_trial'], session_id))
-                        #print "block: ", td['block']
-                #handle the initial clump of rows ( :O )
+        print "Adding the trial_num present in the table into a list  "
+        trial_list = []
+        for r in row_matches:
+                trial_list = trial_list + [r.trial_num]
+        current_app.logger.info("Log 014 - %s trials found for sessionid %s" %(trial_list, valid_json['sessionid']))
+        print "Parsing the JSON ..........."
+        flag=0; # if flag=0 then add the record to the table
+        for d in valid_json['data']:
+            if d['current_trial'] in trial_list:
+                #print "Trial already exists, now lets check if the data matches"
+                #print "Pull the data for that trail_num from CS table and check if it matches with the d['data']"
+                rec = Category_switch.query.filter((Category_switch.gfgid == unique_id) & (Category_switch.sess_id == session_id) & (Category_switch.trial_num == d['current_trial'])).one()
+                if rec.response == d['resp']:
+                    if rec.reaction_time == d['rt']:
+                        flag=1     #flag=1 means, duplicate record, no need to add to table
+                else:
+                    flag=0
+
+            elif flag==0:   #trial not present in the table
+                #print "current_trial: ", d['current_trial']
+                td = d['trialdata']
+                if td['acc'] == "FORWARD" :
+                    acc = 11    #numeric denotation of 'FORWARD' can be changed. TBD
+                else :
+                    acc = td['acc']
+                #print "responsetime: ", td['rt']
+                #print "Response: ", td['resp']
+                jsts = d['dateTime']    #Javscript timestamp
+                #print "jsts is-", jsts
+                dt = datetime.datetime.fromtimestamp(jsts/1000.0) 
+                #print "python convertd datetime is: ", dt
+                block2 = td['block']; 
+                #print "original Block was-", block2
+                block1 = block2.replace("\t", "").replace("\n", "").replace("'", "");  #need to replace special chars like - /, ',
+                #print "cleaned up block is - ", block1
+                cs_info_trial = Category_switch(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], response=td['resp'], reaction_time=td['rt'], accuracy=acc, block=block1, question="null", answer="null", user_answer="null", beginexp=dt)
+                db.session.add(cs_info_trial)
+                db.session.commit()
+                current_app.logger.info("Log 016** - %s added to Category_Switch for session id %s " % (d['current_trial'], session_id))
         # 10. If rows present 
-        elif num_rows > 0:
-            # 10.1 set the highest_trial = 0
-            highest_trial = 0
-            # 10.2 loop over the rows
-            for r in row_matches:
-                print "r.trial_num: ", r.trial_num
-            
+         
             # 10.3 get the current_trial and compare
         # 11. if valid_json['currenttrial'] - highest_trial = 1 then dont add anything 
         # 12. if valid_json['currenttrial'] - highest_trial > 1 
