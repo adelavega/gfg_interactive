@@ -214,9 +214,8 @@ def enterexp():
 def load(id_exp=None):
     print "------------------------------- inside '/sync/<id_exp>' load function in experiments.py-----------------------------------------------"
     """
-    Load experiment data, which should be a JSON object and will be stored
-    after converting to string.
-    """
+    Load experiment data, which should be a JSON object and will be storedafter converting to string """
+    print "Now we are in the {GET}"
     current_app.logger.info("GET /sync route with id: %s" % id_exp)
     try:
         unique_id, experiment_name, session_id = id_exp.split("&")
@@ -224,7 +223,21 @@ def load(id_exp=None):
         sess = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user /experiment combo not found.")
+    # lets try t o find all the session ids associated with the unique_id & exp_name combo
+    session_id_list = []
+    if experiment_name == "category_switch" :
+        records = Category_switch.query.filter((Category_switch.gfgid == unique_id)).all()
+        for r in records:
+            if r.sess_id in session_id_list :
+                print "in list, dont add"
+            else :
+                session_id_list = session_id_list + [r.sess_id]
+    elif experiment_name == "keep_track" :
+        print "you gotta query keeptrack"
+    else :
+        print "table name incorrect/not found"
 
+    current_app.logger.info("%s session ids associated with %s unique_id" % (session_id_list, unique_id))
     try:
         resp = json.loads(user.datastring)
     except:
@@ -321,7 +334,6 @@ def update(id_exp=None):
                         print "Record already exists"
                 else:
                     print "Record exists but data seems different"
-
             else:
                 td = d['trialdata']
                 # Special case for accuracy
