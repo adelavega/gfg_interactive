@@ -132,3 +132,16 @@ class Category_switch(db.Model):
         	self.accuracy, self.block, self.question, self.answer, self.user_answer, self.beginexp, self.trial_num)"""
 
 
+###########################################  EVENT DATA ##################################
+# For all Experiments
+class Event_data(db.Model):
+	ev_id = db.Column(db.Integer, primary_key=True)    # PRIMARY KEY 
+	gfgid = db.Column(db.String(), nullable=False)
+	sess_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))    # FORIEGN KEY
+	exp_name = db.Column(db.String(), nullable=False)
+	event_type = db.Column(db.String(), nullable=False)
+	value_1 = db.Column(db.String())
+	value_2 = db.Column(db.String())
+	value_3 = db.Column(db.String())
+	interval = db.Column(db.Float)
+	timestamp = db.Column(db.DateTime)	#to store the timestamp.

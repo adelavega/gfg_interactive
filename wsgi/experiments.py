@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from utils import nocache
 from errors import ExperimentError
-from models import Participant, Session, Store_user, Category_switch
+from models import Participant, Session, Store_user, Category_switch, Event_data
 
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
@@ -369,6 +369,12 @@ def update(id_exp=None):
         print "Table not found in database: %s " % valid_json['experimentName']
         #throw an error here and return out TBD
 
+    # Start adding the event data here
+    for e in valid_json['eventdata']:
+        print "event type: ", e['eventtype']
+
+
+        
     resp = {"status": "user data saved"}
     return jsonify(**resp)
 
