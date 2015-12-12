@@ -307,52 +307,48 @@ def update(id_exp=None):
         # Add all the trial numbers pertaining to that session id, unique_id combo into an array 
         current_app.logger.info("Querying %s table" % valid_json['experimentName'])
         row_matches = Category_switch.query.filter((Category_switch.gfgid == unique_id) & (Category_switch.sess_id == session_id)).all()
-        print "Adding the trial_num present in the table into a list  "
         trial_list = []
         for r in row_matches:
                 trial_list = trial_list + [r.trial_num]
         current_app.logger.info("Log 014 - %s trials found for sessionid %s" %(trial_list, valid_json['sessionid']))
         print "Parsing the JSON ..........."
-        flag=0; # if flag=0 then add the record to the table
         for d in valid_json['data']:
             if d['current_trial'] in trial_list:
-                #print "Trial already exists, now lets check if the data matches"
-                #print "Pull the data for that trail_num from CS table and check if it matches with the d['data']"
                 rec = Category_switch.query.filter((Category_switch.gfgid == unique_id) & (Category_switch.sess_id == session_id) & (Category_switch.trial_num == d['current_trial'])).one()
-                if rec.response == d['resp']:
-                    if rec.reaction_time == d['rt']:
-                        flag=1     #flag=1 means, duplicate record, no need to add to table
-                else:
-                    flag=0
-
-            elif flag==0:   #trial not present in the table
-                #print "current_trial: ", d['current_trial']
                 td = d['trialdata']
+                if rec.response == td['resp']:
+                    if rec.accuracy == td['acc']:
+                        print "Record already exists"
+                else:
+                    print "Record exists but data seems different"
+
+            else:
+                td = d['trialdata']
+                # Special case for accuracy
                 if td['acc'] == "FORWARD" :
                     acc = 11    #numeric denotation of 'FORWARD' can be changed. TBD
+                elif td['acc'] == "BACK" :
+                    acc = 22
+                elif td['acc'] == "NA" :
+                    acc = 99
                 else :
                     acc = td['acc']
-                #print "responsetime: ", td['rt']
-                #print "Response: ", td['resp']
+                #Special case for reaction time
+                if td['rt'] == "NA" :
+                    rt = 0
+                else :
+                    rt = td['rt']
+                # Datetime conversion
                 jsts = d['dateTime']    #Javscript timestamp
-                #print "jsts is-", jsts
                 dt = datetime.datetime.fromtimestamp(jsts/1000.0) 
-                #print "python convertd datetime is: ", dt
+                # Block conversion
                 block2 = td['block']; 
-                #print "original Block was-", block2
                 block1 = block2.replace("\t", "").replace("\n", "").replace("'", "");  #need to replace special chars like - /, ',
-                #print "cleaned up block is - ", block1
-                cs_info_trial = Category_switch(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], response=td['resp'], reaction_time=td['rt'], accuracy=acc, block=block1, question="null", answer="null", user_answer="null", beginexp=dt)
+                cs_info_trial = Category_switch(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], response=td['resp'], reaction_time=rt, accuracy=acc, block=block1, question="null", answer="null", user_answer="null", beginexp=dt)
                 db.session.add(cs_info_trial)
                 db.session.commit()
                 current_app.logger.info("Log 016** - %s added to Category_Switch for session id %s " % (d['current_trial'], session_id))
-        # 10. If rows present 
-         
-            # 10.3 get the current_trial and compare
-        # 11. if valid_json['currenttrial'] - highest_trial = 1 then dont add anything 
-        # 12. if valid_json['currenttrial'] - highest_trial > 1 
-            # 12.1 search valid_json['data'] for current_trial = highest_trial + 1 and extract it
-            # 12.2 Loop till valid_json['currenttrial'] - current_trial = 1. 
+   
     elif valid_json['experimentName'] == "keep_track":
         print "query KeepTrack table"
         # query KeepTrack table
