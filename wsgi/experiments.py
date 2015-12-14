@@ -369,19 +369,84 @@ def update(id_exp=None):
    
     elif valid_json['experimentName'] == "keep_track":
         current_app.logger.info("Querying %s table" % valid_json['experimentName'])
-        row_matches = Keep_track.query.filter((.gfgid == unique_id) & (Category_switch.sess_id == session_id)).all()
+        row_matches = Keep_track.query.filter((Keep_track.gfgid == unique_id) & (Keep_track.sess_id == session_id)).all()
         trial_list = []
         for r in row_matches:
                 trial_list = trial_list + [r.trial_num]
         current_app.logger.info("Log 016 - %s trials found for sessionid %s" %(trial_list, valid_json['sessionid']))
         print "Parsing the JSON KT..........."
+        for d in valid_json['data']:
+            if d['current_trial'] in trial_list:
+                print "Record already exists"
+            else: #trial not already in table so add it
+                td = d['trialdata']
+                tw1 = tw2 = tw3 = tw4 = tw4 = tw5 = "null"      #Target words
+                iw1 = iw2 = iw3 = iw4 = iw4 = iw5 = "null"      #Input words
+                if 'rt' not in td:
+                    rt = 99.99
+                else:
+                    rt = td['rt']
+                    print "Rt is ", rt
+                if 'acc' not in td:
+                    acc = "null"
+                else: 
+                    acc = td['acc']
+                if 'target_words' not in td:
+                    print " no target words"
+                else:
+                    length = len(td['target_words'])   
+                    if length==3:
+                        tw1 = td['target_words'][0]
+                        tw2 = td['target_words'][1]
+                        tw3 = td['target_words'][2]
+                    if length==4:
+                        tw1 = td['target_words'][0]
+                        tw2 = td['target_words'][1]
+                        tw3 = td['target_words'][2]
+                        tw4 = td['target_words'][3]
+                    if length==5:
+                        tw1 = td['target_words'][0]
+                        tw2 = td['target_words'][1]
+                        tw3 = td['target_words'][2]
+                        tw4 = td['target_words'][3]
+                        tw5 = td['target_words'][4]
+                if 'input_words' not in td:
+                    print "no input words"
+                else:
+                    length = len(td['input_words'])   
+                    if length==3:
+                        iw1 = td['input_words'][0]
+                        iw2 = td['input_words'][1]
+                        iw3 = td['input_words'][2]
+                    if length==4:
+                        iw1 = td['input_words'][0]
+                        iw2 = td['input_words'][1]
+                        iw3 = td['input_words'][2]
+                        iw4 = td['input_words'][3]
+                    if length==5:
+                        iw1 = td['input_words'][0]
+                        iw2 = td['input_words'][1]
+                        iw3 = td['input_words'][2]
+                        iw4 = td['input_words'][3]
+                        iw5 = td['input_words'][4]
+                # Datetime conversion
+                jsts = d['dateTime']    #Javscript timestamp
+                dt = datetime.datetime.fromtimestamp(jsts/1000.0) 
+                # Block conversion
+                block2 = td['block']; 
+                block1 = block2.replace("\t", "").replace("\n", "").replace("'", "");  #need to replace special chars like - /, ',
+                kt_info_trial = Keep_track(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], reaction_time=rt, accuracy=acc, block=block1, beginexp=dt, target_word1=tw1, target_word2=tw2,target_word3=tw3,target_word4=tw4,target_word5=tw5, input_word1=iw1, input_word2=iw2, input_word3=iw3, input_word4=iw4, input_word5=iw5)
+                db.session.add(kt_info_trial)
+                db.session.commit()
+                current_app.logger.info("Log 017 - %s added to Keep Track for session id %s " % (d['current_trial'], session_id))
+                print "++++++++++++++++++++++++++++++"
     else:
-        current_app.logger.info("Log 016 - %s not found in database" %(valid_json['experimentName']))
+        current_app.logger.info("Log 018 - %s not found in database" %(valid_json['experimentName']))
         #throw an error here and return out TBD
 
-    # Start adding the event data here
-    event_list = [] #list to store the timestamps of all the events in the table
-    current_app.logger.info("Querying Event_data table")
+    ## Populate Event_data Table
+    event_list = []     #list to store the timestamps of all the events in the table
+    current_app.logger.info("Log 019 - Querying Event_data table")
     e_matches = Event_data.query.filter((Event_data.gfgid == unique_id) & (Event_data.sess_id == session_id) & (Event_data.exp_name == experiment_name)).all()
     for row in e_matches:
         event_list = event_list + [row.timestamp] #row.timestamp will be in datetime format.
