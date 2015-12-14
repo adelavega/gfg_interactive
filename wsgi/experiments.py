@@ -359,7 +359,7 @@ def update(id_exp=None):
                 cs_info_trial = Category_switch(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], response=td['resp'], reaction_time=rt, accuracy=acc, block=block1, question="null", answer="null", user_answer="null", beginexp=dt)
                 db.session.add(cs_info_trial)
                 db.session.commit()
-                current_app.logger.info("Log 016** - %s added to Category_Switch for session id %s " % (d['current_trial'], session_id))
+                current_app.logger.info("Log 016 - %s added to Category_Switch for session id %s " % (d['current_trial'], session_id))
    
     elif valid_json['experimentName'] == "keep_track":
         print "query KeepTrack table"
@@ -370,11 +370,33 @@ def update(id_exp=None):
         #throw an error here and return out TBD
 
     # Start adding the event data here
+    event_list = [] #list to store the timestamps of all the events in the table
+    current_app.logger.info("Querying Event_data table")
+    e_matches = Event_data.query.filter((Event_data.gfgid == unique_id) & (Event_data.sess_id == session_id) & (Event_data.exp_name == experiment_name)).all()
+    for row in e_matches:
+        event_list = event_list + [row.timestamp] #row.timestamp will be in datetime format.
+
     for e in valid_json['eventdata']:
+        val1 = "null"
+        val2 = "null"
+        val3 = "null"
         print "event type: ", e['eventtype']
+        jstime = e['timestamp'] #convert timestamp to datetime format and then check in the list if it exists
+        dtime = datetime.datetime.fromtimestamp(jstime/1000.0)  
+        if dtime in  event_list:
+            print "Event already addded"
+        else:   # Add the event to the table
+            if isinstance(e['value'], list):
+                val1 = str(e['value'][0])
+                val2 = str(e['value'][1])
+            else:
+                val3 = str(e['value'])
+            e_trial = Event_data(gfgid=unique_id, sess_id=session_id, exp_name=experiment_name, event_type=e['eventtype'], interval=e['interval'], timestamp=dtime, value_1=val1, value_2=val2, value_3=val3)
+            db.session.add(e_trial)
+            db.session.commit()
+            current_app.logger.info("Log 018 - %s added to Event_data for session id %s " % (e['eventtype'], session_id))
 
 
-        
     resp = {"status": "user data saved"}
     return jsonify(**resp)
 
