@@ -15,10 +15,11 @@
 
 
 	<script type="text/javascript">
-		// These fields provided by the psiTurk Server
+		// These fields are coming from the "/task" start_exp() in experiments.py
 		var uniqueId = "{{ uniqueId }}";  // a unique string identifying the worker/task
 		var experimentName = "{{ experimentName }}"
 		var debug = "{{ debug }}"
+		var sessionid = "{{ sessionid }}"	//to maintain session
 	</script>
 
 	<script src="static/js/dataHandler.js"></script>

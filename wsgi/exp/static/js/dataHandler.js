@@ -5,7 +5,6 @@
  *     underscore
  */
 
-
 /****************
  * Internals    *
  ***************/
@@ -20,7 +19,8 @@ _.extend(Backbone.Notifications, Backbone.Events);
  * API *
  ******/
 //Called from from CStask.js or KTtask.js
-//Added sessiion id as well
+
+//Added session id as well
 var DataHandler = function(uniqueId, experimentName, sessionid) {
 	var self = this;
 	/****************

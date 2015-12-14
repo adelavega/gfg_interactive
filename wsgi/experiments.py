@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from utils import nocache
 from errors import ExperimentError
-from models import Participant, Session, Store_user, Category_switch, Event_data
+from models import Participant, Session, Store_user, Category_switch, Event_data, Keep_track
 
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
@@ -109,8 +109,8 @@ def start_exp():
         db.session.commit()
         current_app.logger.info("Log 006 - added it to session table")
         sess = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.begin_session == current_time)).one()
-        print "sess is: %s", sess
-        print "session id is: %s", sess.session_id
+        print "sess is:", sess
+        print "session id is: ", sess.session_id
         ## pass the session id also in the URL.
         return render_template(experiment_name + "/exp.html", uniqueId=unique_id, experimentName=experiment_name, debug=debug, sessionid=sess.session_id)
       
@@ -223,7 +223,7 @@ def load(id_exp=None):
         sess = Session.query.filter((Session.gfgid == unique_id) & (Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user /experiment combo not found.")
-    # lets try t o find all the session ids associated with the unique_id & exp_name combo
+    # lets try to find all the session ids associated with the unique_id & exp_name combo
     session_id_list = []
     if experiment_name == "category_switch" :
         records = Category_switch.query.filter((Category_switch.gfgid == unique_id)).all()
@@ -234,10 +234,16 @@ def load(id_exp=None):
                 session_id_list = session_id_list + [r.sess_id]
     elif experiment_name == "keep_track" :
         print "you gotta query keeptrack"
+        records = Keep_track.query.filter((Keep_track.gfgid == unique_id)).all()
+        for r in records:
+            if r.sess_id in session_id_list :
+                print "in list, dont add"
+            else :
+                session_id_list = session_id_list + [r.sess_id]
     else :
         print "table name incorrect/not found"
 
-    current_app.logger.info("%s session ids associated with %s unique_id" % (session_id_list, unique_id))
+    current_app.logger.info("%s session ids associated with %s unique_id for %s experiment" % (session_id_list, unique_id, experiment_name))
     try:
         resp = json.loads(user.datastring)
     except:
@@ -324,7 +330,7 @@ def update(id_exp=None):
         for r in row_matches:
                 trial_list = trial_list + [r.trial_num]
         current_app.logger.info("Log 014 - %s trials found for sessionid %s" %(trial_list, valid_json['sessionid']))
-        print "Parsing the JSON ..........."
+        print "Parsing the JSON CS..........."
         for d in valid_json['data']:
             if d['current_trial'] in trial_list:
                 rec = Category_switch.query.filter((Category_switch.gfgid == unique_id) & (Category_switch.sess_id == session_id) & (Category_switch.trial_num == d['current_trial'])).one()
@@ -359,14 +365,18 @@ def update(id_exp=None):
                 cs_info_trial = Category_switch(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], response=td['resp'], reaction_time=rt, accuracy=acc, block=block1, question="null", answer="null", user_answer="null", beginexp=dt)
                 db.session.add(cs_info_trial)
                 db.session.commit()
-                current_app.logger.info("Log 016 - %s added to Category_Switch for session id %s " % (d['current_trial'], session_id))
+                current_app.logger.info("Log 015 - %s added to Category_Switch for session id %s " % (d['current_trial'], session_id))
    
     elif valid_json['experimentName'] == "keep_track":
-        print "query KeepTrack table"
-        # query KeepTrack table
-
+        current_app.logger.info("Querying %s table" % valid_json['experimentName'])
+        row_matches = Keep_track.query.filter((.gfgid == unique_id) & (Category_switch.sess_id == session_id)).all()
+        trial_list = []
+        for r in row_matches:
+                trial_list = trial_list + [r.trial_num]
+        current_app.logger.info("Log 016 - %s trials found for sessionid %s" %(trial_list, valid_json['sessionid']))
+        print "Parsing the JSON KT..........."
     else:
-        print "Table not found in database: %s " % valid_json['experimentName']
+        current_app.logger.info("Log 016 - %s not found in database" %(valid_json['experimentName']))
         #throw an error here and return out TBD
 
     # Start adding the event data here

@@ -2,7 +2,7 @@
 (function() {
   var Debriefing, FinishInstructions, Questionnaire, dataHandler, mean;
 
-  dataHandler = DataHandler(uniqueId, experimentName);
+  dataHandler = DataHandler(uniqueId, experimentName, sessionid); //added the sessionid
 
   dataHandler.preloadPages(['postquestionnaire.html', experimentName + '/debriefing.html']);
 

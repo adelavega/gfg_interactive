@@ -131,6 +131,33 @@ class Category_switch(db.Model):
         return "CS Values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" %(self.cs_id, self.gfgid, self.sess_id, self.response, self.reaction_time, 
         	self.accuracy, self.block, self.question, self.answer, self.user_answer, self.beginexp, self.trial_num)"""
 
+###########################################  CATEGORY SWITCH ##################################
+#Experiment - Category Switch
+class Keep_track(db.Model):
+    kt_id = db.Column(db.Integer, primary_key=True)    # PRIMARY KEY 
+    gfgid = db.Column(db.String(), nullable=False)  
+    sess_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))    # FORIEGN KEY
+    trial_num = db.Column(db.Integer)
+    reaction_time = db.Column(db.Float) # Reaction time in seconds- depends on what level of accuracy we want
+    accuracy = db.Column(db.String) # calculated based on a number of factors
+    block = db.Column(db.Unicode)
+    beginexp = db.Column(db.DateTime)
+    target_word1 = db.Column(db.String)
+    target_word2 = db.Column(db.String)
+    target_word3 = db.Column(db.String)
+    target_word4 = db.Column(db.String)
+    target_word5 = db.Column(db.String)
+    input_word1 = db.Column(db.String)
+    input_word2 = db.Column(db.String)
+    input_word3 = db.Column(db.String)
+    input_word4 = db.Column(db.String)
+    input_word5 = db.Column(db.String)
+    
+    # Return each row just like that
+    """def __repr__(self):
+        return "KT Values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" %(self.cs_id, self.gfgid, self.sess_id, self.response, self.reaction_time, 
+        	self.accuracy, self.block, self.question, self.answer, self.user_answer, self.beginexp, self.trial_num)"""
+
 
 ###########################################  EVENT DATA ##################################
 # For all Experiments
