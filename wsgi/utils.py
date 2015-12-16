@@ -9,3 +9,11 @@ def nocache(func):
         resp.cache_control.no_cache = True
         return resp
     return update_wrapper(new_func, func)
+
+def check_qs(qs, required):
+	error = False
+	for arg in required:
+	    if arg not in qs:
+	        error = True
+
+	return error

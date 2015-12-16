@@ -1,14 +1,15 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from utils import nocache
 from errors import ExperimentError
-from models import Participant, Session, Store_user, Category_switch, Event_data, Keep_track
+from models import Session, User, CategorySwitch, EventData, KeepTrack
 
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
-import re
 
 import datetime
 import json
+
+from tools import check_qs
 
 # Status codes
 NOT_ACCEPTED = 0
@@ -36,33 +37,31 @@ def index():
 def start_exp():
     """ Serves up the experiment applet. """
 
-    ### Add check for improper inputs
+    if not check_qs(request.args, ['uniqueId', 'experimentName']):
+        raise ExperimentError('improper_inputs')
 
+    ### I think we should add a general function to do all this checking
     unique_id = request.args['uniqueId']
     experiment_name = request.args['experimentName']
     browser = "UNKNOWN" if not request.user_agent.browser else request.user_agent.browser
     platform = "UNKNOWN" if not request.user_agent.platform else request.user_agent.platform
-    debug = request.args['debug']
+
+    debug = request.args['debug'] if 'debug' in request.args else False
+
     current_app.logger.info("Log 002 - Subject: %s started task %s in %s platform and %s browser" %
                             (unique_id, experiment_name, platform, browser))
 
-    # Check to see how many records exist for this experiment in Session Table with status >= 1
-    # Status >=1 means: User has already started a session for this experiment, 
-    #but we dont know what stage of the experiemnt did he leave it in and
-    # hence we need to dig deeper on that.
-    # Consider -  A user logs has 4 sessions for CS and has left all 4 times
-    # in instructions phase ie status=1
+
+    ## Check number of session for unique_id
     matches = Session.query.filter(
         (Session.gfgid == unique_id) & (Session.exp_name == experiment_name)).all()
-    sessions_found = len(matches)
     current_app.logger.info(
-        "Log 003 - Sessions found on this experiment: %s", sessions_found)
+        "Log 003 - Sessions found on this experiment: %s", len(matches))
 
-    # exps_done=0 means this user has done no experiments before, so allocate
-    # status=1 and create a new session for him
-    if sessions_found == 0:
+    ## If no session found for experiment & user, allocate new session and user entry
+    if len(matches) == 0:
         # Add gfgid to "store_user table"
-        user_info = Store_user(gfgid=unique_id)
+        user_info = User(gfgid=unique_id)
         db.session.add(user_info)
         db.session.commit()
         current_app.logger.info("Log 005 - added it to store_user table")
@@ -70,136 +69,74 @@ def start_exp():
         # Add gfgid, browser, platform, debug, status, exp_name to "session
         # table"
         current_time = datetime.datetime.now()
-        session_info = Session(gfgid=unique_id, browser=browser, platform=platform,
+        sess = Session(gfgid=unique_id, browser=browser, platform=platform,
                                status=1, debug=debug, exp_name=experiment_name, begin_session=current_time)
-        db.session.add(session_info)
+        db.session.add(sess)
         db.session.commit()
         current_app.logger.info("Log 006 - added it to session table")
 
-
         ### I don't think you need to re-query for this entry. Should be the same as session_info
-        sess = Session.query.filter((Session.gfgid == unique_id) & (
-            Session.exp_name == experiment_name) & (Session.begin_session == current_time)).one()
-        print "sess is:", sess
-        print "session id is: ", sess.session_id
         # pass the session id also in the URL.
         return render_template(experiment_name + "/exp.html", uniqueId=unique_id, 
             experimentName=experiment_name, debug=debug, sessionid=sess.session_id)
 
+    ## Sessions for experiment and user were found
+    else:
 
-    ### If user has active session (2) or has completed (3), do not allow
-    ### Otherwise, allow with new session
-    elif sessions_found > 0:
-        # They've already done this experiment, we should find out what status they were at and can't do another one if they're past status 1
-        # Option: Re-run the query again on the Session table and pull out
-        # those records with status == 3 .. completed
-        status_3 = Session.query.filter((Session.gfgid == unique_id) & (
-            Session.exp_name == experiment_name) & (Session.status == 3)).all()
-        current_app.logger.info("LOGGER status 3-%s", status_3)
+        ## If there are any session that are completed, or ongoing, do not allow re-entry
+        n_completed_ongoing = len(Session.query.filter((Session.gfgid == unique_id) & 
+            (Session.exp_name == experiment_name) & ((Session.status == 2) | (Session.status == 3))).all())
+        if n_completed_ongoing > 0:
+            current_app.logger.info("Found %d sessions in which the user quit early or completed", 
+                n_completed_ongoing)
 
-        if(len(status_3) == 0):
-            # Pull out those records with status = 6..Quit Early
-            status_6 = Session.query.filter((Session.gfgid == unique_id) & (
-                Session.exp_name == experiment_name) & (Session.status == 6)).all()
-            current_app.logger.info("LOGGER status 6-%s", status_6)
-            if(len(status_6) == 0):
-                # Pull out those records with status = 2
-                status_2 = Session.query.filter((Session.gfgid == unique_id) & (
-                    Session.exp_name == experiment_name) & (Session.status == 2)).all()
-                current_app.logger.info("LOGGER status 2-%s", status_2)
-                if(len(status_2) == 0):
-                    # Pull out those records with status = 1
-                    status_1 = Session.query.filter((Session.gfgid == unique_id) & (
-                        Session.exp_name == experiment_name) & (Session.status == 1)).all()
-                    if(len(status_1) > 0):
-                        current_app.logger.info(
-                            "Log 007 - User is in Status 1 and can continue experiment in a new session")
-                        current_time = datetime.datetime.now()
-                        session_info = Session(gfgid=unique_id, browser=browser, platform=platform,
-                                               status=1, debug=debug, exp_name=experiment_name, begin_session=current_time)
-                        db.session.add(session_info)
-                        db.session.commit()
-                        sess = Session.query.filter((Session.gfgid == unique_id) & (
-                            Session.exp_name == experiment_name) & (Session.begin_session == current_time)).one()
-                        print "sess is: %s", sess
-                        print "session id is: %s", sess.session_id
-                        # pass the session id also in the URL.
-                        return render_template(experiment_name + "/exp.html", uniqueId=unique_id, 
-                            experimentName=experiment_name, debug=debug, sessionid=sess.session_id)
-                    else:
-                        current_app.logger.info(
-                            "Log 008 - Something is not right in the code")
-                        session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=0,
-                                               debug=debug, exp_name=experiment_name, begin_session=datetime.datetime.now())
-                        db.session.add(session_info)
-                        db.session.commit()
-                        # this state should not be reached at all.
-                        raise ExperimentError('status_incorrectly_set')
-                else:
-                    current_app.logger.info(
-                        "Log 009 - User is in Status 2 and cannot re-do this experiment now")
-                    session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=2,
-                                           debug=debug, exp_name=experiment_name, begin_session=datetime.datetime.now())
-                    db.session.add(session_info)
-                    db.session.commit()
-                    raise ExperimentError('already_started_exp')
-            else:
-                current_app.logger.info(
-                    "Log 010 - User is in status 6 and cannot re-do this experiment now")
-                session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=6,
-                                       debug=debug, exp_name=experiment_name, begin_session=datetime.datetime.now())
-                db.session.add(session_info)
-                db.session.commit()
-                raise ExperimentError('tried_to_quit')
-        else:
-            current_app.logger.info(
-                "Log 011 - User is in status 3 and has already finished this experiment")
-            session_info = Session(gfgid=unique_id, browser=browser, platform=platform, status=3,
-                                   debug=debug, exp_name=experiment_name, begin_session=datetime.datetime.now())
-            db.session.add(session_info)
-            db.session.commit()
+            ## Generalize this error code
             raise ExperimentError('already_did_exp_hit')
+        
+        ## Otherwise, allow participant to re-enter
+        ## (Are quit early signals sent back during instruction phase?)
+        else:
+            current_time = datetime.datetime.now()
+            sess = Session(gfgid=unique_id, browser=browser, platform=platform,
+                                   status=1, debug=debug, exp_name=experiment_name, begin_session=current_time)
+            db.session.add(sess)
+            db.session.commit()
+            return render_template(experiment_name + "/exp.html", uniqueId=unique_id, 
+                experimentName=experiment_name, debug=debug, sessionid=sess.session_id)
 
 
-# changes status to 2
 @experiments.route('/inexp', methods=['POST'])
 def enterexp():
-    print "------- inside '/inexp' function in experiments.py------------------"
     """
     AJAX listener that listens for a signal from the user's script when they
     leave the instructions and enter the real experiment. After the server
     receives this signal, it will no longer allow them to re-access the
     experiment applet (meaning they can't do part of the experiment and
-    refresh to start over).
+    refresh to start over). This changes the current sessions's status to 2.
     """
 
-    if not ('uniqueId' in request.form) or not ('experimentName' in request.form) or not ('sessionid' in request.form):
+    if not check_qs(request.form, ['uniqueId', 'experimentName', 'sessionid']):
         raise ExperimentError('improper_inputs')
 
     unique_id = request.form['uniqueId']
     experiment_name = request.form['experimentName']
-    session_id = request.form['sessionid']
+    session_id = request.form['sessionid']     ## Change to use same case
 
     try:
-        user = Participant.query.filter((Participant.gfgid == unique_id) & (
-            Participant.experimentname == experiment_name)).one()
-        user.status = 2     # entered the actual experiment phase
-        user.beginexp = datetime.datetime.now()
-        db.session.add(user)
-        db.session.commit()
-
         # Update the appropriate session with the sessionid
         sess = Session.query.filter((Session.gfgid == unique_id) & (
             Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
         print "** sess: %s", sess
         sess.status = 2
+
+        ## I'm not sure that we should be replacing the begin_session time
         sess.begin_session = datetime.datetime.now()
         db.session.add(sess)
         db.session.commit()
         current_app.logger.info(
             "Log 012 - User has finished the instructions in session id: %s", session_id)
         resp = {"status": "success"}
-        # Category_switch should be populated now, ie after status code 2
+
     except SQLAlchemyError:
         current_app.logger.error(
             "DB error: Unique user and experiment combination not found.")
@@ -212,26 +149,31 @@ def enterexp():
 # called to retrieve the JSON object for returning users
 @experiments.route('/sync/<id_exp>', methods=['GET'])
 def load(id_exp=None):
-    print "------------------------ inside '/sync/<id_exp>' load function in experiments.py------------------------"
     """
     Load experiment data, which should be a JSON object and will be storedafter converting to string """
-    print "Now we are in the {GET}"
+
     current_app.logger.info("GET /sync route with id: %s" % id_exp)
     try:
         unique_id, experiment_name, session_id = id_exp.split("&")
-        user = Participant.query.filter((Participant.gfgid == unique_id) & (
-            Participant.experimentname == experiment_name)).one()
+
+        ## Do we need to call. one()? Or shouldn't that be implied there's only one session?
         sess = Session.query.filter((Session.gfgid == unique_id) & (
             Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
     except SQLAlchemyError:
         current_app.logger.error(
             "DB error: Unique user /experiment combo not found.")
+
+    ## What's going on here?
+    ## I kinda forgot what the get function was for... I think it's rarely used in practice 
+
+
+
     # lets try to find all the session ids associated with the unique_id &
     # exp_name combo
     session_id_list = []
     if experiment_name == "category_switch":
-        records = Category_switch.query.filter(
-            (Category_switch.gfgid == unique_id)).all()
+        records = CategorySwitch.query.filter(
+            (CategorySwitch.gfgid == unique_id)).all()
         for r in records:
             if r.sess_id in session_id_list:
                 print "in list, dont add"
@@ -239,8 +181,8 @@ def load(id_exp=None):
                 session_id_list = session_id_list + [r.sess_id]
     elif experiment_name == "keep_track":
         print "you gotta query keeptrack"
-        records = Keep_track.query.filter(
-            (Keep_track.gfgid == unique_id)).all()
+        records = KeepTrack.query.filter(
+            (KeepTrack.gfgid == unique_id)).all()
         for r in records:
             if r.sess_id in session_id_list:
                 print "in list, dont add"
@@ -265,31 +207,29 @@ def load(id_exp=None):
 # called to updated the JSON everytime and push it back to the table
 @experiments.route('/sync/<id_exp>', methods=['PUT'])
 def update(id_exp=None):
-    print "------------------ inside '/sync/<id_exp>' update function in experiments.py----------------------------"
     """
     Save experiment data, which should be a JSON object and will be stored after converting to string. """
+
     current_app.logger.info("PUT /sync route with id: %s" % id_exp)
     unique_id, experiment_name, session_id = id_exp.split("&")
+
     try:
-        user = Participant.query.filter((Participant.gfgid == unique_id) & (
-            Participant.experimentname == experiment_name)).one()
-        sess = Session.query.filter((Session.gfgid == unique_id) & (
+        Session.query.filter((Session.gfgid == unique_id) & (
             Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user not found.")
-    # 1. get the JSOn from the request
-    # 2. now add it to the participant table
+
+    # 1. get the JSON from the request
     if hasattr(request, 'json'):
-        print request.get_data()
-        user.datastring = request.get_data().decode(
+        datastring = request.get_data().decode(
             'utf-8').encode('ascii', 'xmlcharrefreplace')  # encoding the json
-        db.session.add(user)
-        db.session.commit()
+
     # 3.Now try to load the "datastring" from the participant table
     try:
-        data = json.loads(user.datastring)
+        data = json.loads(datastring)
     except:
         data = {}
+
     # 4. Now extract the latest trial from this freshly saved data
     trial = data.get("currenttrial", None)
     # print "trial is - ", trial
@@ -298,16 +238,19 @@ def update(id_exp=None):
 
     # 5. Now we will parse the recieved jSON and store each trial in the
     # Category_Switch table
+
+    ### Can we do this once? And save into a variable?
     jsont = request.get_data()
     json_obj = json.dumps(jsont)
 
     # 6. Check if the json is valid
     try:
-        valid = json.loads(json_obj)
+        json.loads(json_obj)
     except ValueError, e:
         print "Not valid"
-        # throw an error here and return out TBD
+        ### throw an error here and return out TBD
 
+    ## Why the dumps? and loads?
     valid_json = json.loads(jsont)
    # test code
     print "------------------- JSON PARSING Begins here -----------------------------"
@@ -318,6 +261,7 @@ def update(id_exp=None):
 
     s = valid_json['sessionid']
 
+    ### I'm not sure if we need to worry about these fringe cases too much
     # 7. Extract session_id, experiment_name, uniqueid from JSON and compare
     # it with request data
     if unique_id != valid_json['uniqueId']:
@@ -336,14 +280,16 @@ def update(id_exp=None):
             "Log 013 - All the ids match between JSON and request")
 
     # 8. Query the appropriate table based on experiment name
+    #### Separate each task to their own function
+
     if valid_json['experimentName'] == "category_switch":
         # Query CategorySwitch table
         # Add all the trial numbers pertaining to that session id, unique_id
         # combo into an array
         current_app.logger.info(
             "Querying %s table" % valid_json['experimentName'])
-        row_matches = Category_switch.query.filter(
-            (Category_switch.gfgid == unique_id) & (Category_switch.sess_id == session_id)).all()
+        row_matches = CategorySwitch.query.filter(
+            (CategorySwitch.gfgid == unique_id) & (CategorySwitch.sess_id == session_id)).all()
         trial_list = []
         for r in row_matches:
             trial_list = trial_list + [r.trial_num]
@@ -352,8 +298,8 @@ def update(id_exp=None):
         print "Parsing the JSON CS..........."
         for d in valid_json['data']:
             if d['current_trial'] in trial_list:
-                rec = Category_switch.query.filter((Category_switch.gfgid == unique_id) & (
-                    Category_switch.sess_id == session_id) & (Category_switch.trial_num == d['current_trial'])).one()
+                rec = CategorySwitch.query.filter((CategorySwitch.gfgid == unique_id) & (
+                    CategorySwitch.sess_id == session_id) & (CategorySwitch.trial_num == d['current_trial'])).one()
                 td = d['trialdata']
                 if rec.response == td['resp']:
                     if rec.accuracy == td['acc']:
@@ -385,7 +331,7 @@ def update(id_exp=None):
                 # need to replace special chars like - /, ',
                 block1 = block2.replace("\t", "").replace(
                     "\n", "").replace("'", "")
-                cs_info_trial = Category_switch(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], response=td[
+                cs_info_trial = CategorySwitch(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], response=td[
                                                 'resp'], reaction_time=rt, accuracy=acc, block=block1, question="null", 
                                                 answer="null", user_answer="null", beginexp=dt)
                 db.session.add(cs_info_trial)
@@ -396,8 +342,8 @@ def update(id_exp=None):
     elif valid_json['experimentName'] == "keep_track":
         current_app.logger.info(
             "Querying %s table" % valid_json['experimentName'])
-        row_matches = Keep_track.query.filter(
-            (Keep_track.gfgid == unique_id) & (Keep_track.sess_id == session_id)).all()
+        row_matches = KeepTrack.query.filter(
+            (KeepTrack.gfgid == unique_id) & (KeepTrack.sess_id == session_id)).all()
         trial_list = []
         for r in row_matches:
             trial_list = trial_list + [r.trial_num]
@@ -466,7 +412,7 @@ def update(id_exp=None):
                 # need to replace special chars like - /, ',
                 block1 = block2.replace("\t", "").replace(
                     "\n", "").replace("'", "")
-                kt_info_trial = Keep_track(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], 
+                kt_info_trial = KeepTrack(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], 
                                            reaction_time=rt, accuracy=acc, block=block1, beginexp=dt, target_word1=tw1,
                                            target_word2=tw2, target_word3=tw3, target_word4=tw4, target_word5=tw5, 
                                            input_word1=iw1, input_word2=iw2, input_word3=iw3, input_word4=iw4, input_word5=iw5)
@@ -480,12 +426,14 @@ def update(id_exp=None):
             "Log 018 - %s not found in database" % (valid_json['experimentName']))
         # throw an error here and return out TBD
 
-    # Populate Event_data Table
+    # Populate EventData Table
+    ### Separate into own function
+    ### I think these function should be attached to the datamodel int models.py
     # list to store the timestamps of all the events in the table
     event_list = []
     current_app.logger.info("Log 019 - Querying Event_data table")
-    e_matches = Event_data.query.filter((Event_data.gfgid == unique_id) & (
-        Event_data.sess_id == session_id) & (Event_data.exp_name == experiment_name)).all()
+    e_matches = EventData.query.filter((EventData.gfgid == unique_id) & (
+        EventData.sess_id == session_id) & (EventData.exp_name == experiment_name)).all()
     for row in e_matches:
         # row.timestamp will be in datetime format.
         event_list = event_list + [row.timestamp]
@@ -507,7 +455,7 @@ def update(id_exp=None):
                 val2 = str(e['value'][1])
             else:
                 val3 = str(e['value'])
-            e_trial = Event_data(gfgid=unique_id, sess_id=session_id, exp_name=experiment_name, event_type=e[
+            e_trial = EventData(gfgid=unique_id, sess_id=session_id, exp_name=experiment_name, event_type=e[
                                  'eventtype'], interval=e['interval'], timestamp=dtime, value_1=val1, value_2=val2, value_3=val3)
             db.session.add(e_trial)
             db.session.commit()
@@ -520,7 +468,6 @@ def update(id_exp=None):
 
 @experiments.route('/quitter', methods=['POST'])
 def quitter():
-    print "------------------------------- inside '/quitter' function in experiments.py-----------------------------------------------"
     """ Mark quitter as such. """
     if not ('uniqueId' in request.form) or not ('experimentName' in request.form) or not ('sessionid' in request.form):
         resp = {"status": "bad request"}
@@ -540,19 +487,13 @@ def quitter():
         return jsonify(**resp)
     else:"""
     try:
-        current_app.logger.info(
-            "Marking quitter %s in experiment %s" % (unique_id, experiment_name))
-        user = Participant.query.filter((Participant.gfgid == unique_id) & (
-            Participant.experimentname == experiment_name)).one()
-        user.status = 6     # Quitter
-        db.session.add(user)
-        db.session.commit()
-
         # pull records from Session table to update
         sess = Session.query.filter((Session.gfgid == unique_id) & (
             Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
         print "** sess: ", sess
         sess.status = 6
+
+        ### Again I'm not sure its appropriate to do this since this is not the true start
         sess.begin_session = datetime.datetime.now()
         db.session.add(sess)
         db.session.commit()
@@ -566,7 +507,6 @@ def quitter():
 
 @experiments.route('/worker_complete', methods=['GET'])
 def worker_complete():
-    print "-------------------- inside '/worker_complete' function in experiments.py-------------------"
     """Complete worker."""
 
     if 'debug' in request.args:
@@ -584,18 +524,13 @@ def worker_complete():
         current_app.logger.info(
             "Completed experiment %s, %s, %s" % (unique_id, experiment_name, session_id))
         try:
-            user = Participant.query.filter((Participant.gfgid == unique_id) & (
-                Participant.experimentname == experiment_name)).one()
-            user.status = 3  # Status is Complete
-            user.endhit = datetime.datetime.now()
-            db.session.add(user)
-            db.session.commit()
-
             # pull records from Session table to update
             sess = Session.query.filter((Session.gfgid == unique_id) & (
                 Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
             print "** sess: ", sess
             sess.status = 3
+
+            ## Again not sure if we need to do this
             sess.begin_session = datetime.datetime.now()
             db.session.add(sess)
             db.session.commit()
