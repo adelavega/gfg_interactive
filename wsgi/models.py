@@ -84,7 +84,7 @@ class Participant(db.Model):
 
 ########################################### STORE USER ##################################
 #Store_user Table - central table for user ids (same as Particpant(old))
-class Store_user(db.Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)    # PRIMARY KEY 
     gfgid = db.Column(db.String(), nullable=False)
     

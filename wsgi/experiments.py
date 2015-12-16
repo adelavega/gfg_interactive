@@ -25,61 +25,19 @@ experiments = Blueprint('experiments', __name__,
 experiment_list = [
     ('keep_track', "Keep Track"), ('category_switch', "Category Switch")]
 
-
 @experiments.route('/', methods=['GET'])
 def index():
-    print "------------------------------- inside '/' function in experiments.py-----------------------------------------------"
-    """ Serves welcome page, sets up data base, and forwards to experiment if query string parameters are correct
-    ### TODO: Specify proper query string inputs in comment
-
-    """
-    browser = request.user_agent.browser
-    version = request.user_agent.version and int(
-        request.user_agent.version.split('.')[0])
-    platform = request.user_agent.platform
-    uas = request.user_agent.string
-    # *************** BROWSER CHECK *********************
-    # Check that the browser is up to date and not mobile
-    if (browser == 'msie' and version < 9) \
-            or (browser == 'firefox' and version < 4) \
-            or (platform == 'android') \
-            or (platform == 'iphone') \
-            or ((platform == 'macos' or platform == 'windows') and browser == 'safari' and not re.search('Mobile', uas) and version < 534) \
-            or (re.search('iPad', uas) and browser == 'safari') \
-            or (platform == 'windows' and re.search('Windows Phone OS', uas)) \
-            or (browser == 'opera') \
-            or (re.search('BlackBerry', uas)):
-        return render_template('unsupported.html')
-    else:
-        # If the browser is good:
-        # *************** Unique Id check *********************
-        if not ('uniqueId' in request.args):
-            print "DID NOT GET UNIQUE ID"
-            raise ExperimentError('hit_assign_worker_id_not_set_in_exp')
-        # *************** Debug CHECK *********************
-        if 'debug' in request.args:
-            debug = request.args['debug']
-        else:
-            debug = False
-        # *************** new CHECK *********************
-        if 'new' in request.args:  # if new is present in query string,
-            new = request.args['new']
-            if isinstance(new, str):  # if new is a "string", make it boolean
-                new = bool(int())
-        else:
-            new = True
-
-        unique_id = request.args['uniqueId']
-        current_app.logger.info(
-            "Log 001 - Subject: %s started Cognitive Tests" % unique_id)
-        return render_template("begin.html", uniqueId=unique_id, experiments=experiment_list, debug=debug, new=new)
+    """ Welcome page, but there is none so right now its blank"""
+    return render_template("begin.html")
 
 
 @experiments.route('/task', methods=['GET'])
 @nocache
 def start_exp():
-    print "------------------------------- inside '/task' function in experiments.py-----------------------------------------------"
     """ Serves up the experiment applet. """
+
+    ### Add check for improper inputs
+
     unique_id = request.args['uniqueId']
     experiment_name = request.args['experimentName']
     browser = "UNKNOWN" if not request.user_agent.browser else request.user_agent.browser
@@ -103,16 +61,6 @@ def start_exp():
     # exps_done=0 means this user has done no experiments before, so allocate
     # status=1 and create a new session for him
     if sessions_found == 0:
-        # Allocate Status of 1
-        exp_status = 1
-
-        # Adding data to participant table
-        part = Participant(gfgid=unique_id, browser=browser, platform=platform,
-                           language="english", experimentname=experiment_name, debug=debug)
-        db.session.add(part)
-        db.session.commit()
-        current_app.logger.info("Log 004 - added it to participant table")
-
         # Add gfgid to "store_user table"
         user_info = Store_user(gfgid=unique_id)
         db.session.add(user_info)
@@ -123,10 +71,13 @@ def start_exp():
         # table"
         current_time = datetime.datetime.now()
         session_info = Session(gfgid=unique_id, browser=browser, platform=platform,
-                               status=exp_status, debug=debug, exp_name=experiment_name, begin_session=current_time)
+                               status=1, debug=debug, exp_name=experiment_name, begin_session=current_time)
         db.session.add(session_info)
         db.session.commit()
         current_app.logger.info("Log 006 - added it to session table")
+
+
+        ### I don't think you need to re-query for this entry. Should be the same as session_info
         sess = Session.query.filter((Session.gfgid == unique_id) & (
             Session.exp_name == experiment_name) & (Session.begin_session == current_time)).one()
         print "sess is:", sess
@@ -135,6 +86,9 @@ def start_exp():
         return render_template(experiment_name + "/exp.html", uniqueId=unique_id, 
             experimentName=experiment_name, debug=debug, sessionid=sess.session_id)
 
+
+    ### If user has active session (2) or has completed (3), do not allow
+    ### Otherwise, allow with new session
     elif sessions_found > 0:
         # They've already done this experiment, we should find out what status they were at and can't do another one if they're past status 1
         # Option: Re-run the query again on the Session table and pull out
@@ -206,12 +160,11 @@ def start_exp():
             db.session.commit()
             raise ExperimentError('already_did_exp_hit')
 
+
 # changes status to 2
-
-
 @experiments.route('/inexp', methods=['POST'])
 def enterexp():
-    print "------------------------------- inside '/inexp' function in experiments.py-----------------------------------------------"
+    print "------- inside '/inexp' function in experiments.py------------------"
     """
     AJAX listener that listens for a signal from the user's script when they
     leave the instructions and enter the real experiment. After the server
@@ -255,9 +208,8 @@ def enterexp():
 
     return jsonify(**resp)
 
+
 # called to retrieve the JSON object for returning users
-
-
 @experiments.route('/sync/<id_exp>', methods=['GET'])
 def load(id_exp=None):
     print "------------------------ inside '/sync/<id_exp>' load function in experiments.py------------------------"
@@ -309,9 +261,8 @@ def load(id_exp=None):
         }
     return jsonify(**resp)
 
-# called to updated the jSOn everytime and push it back to the table
 
-
+# called to updated the JSON everytime and push it back to the table
 @experiments.route('/sync/<id_exp>', methods=['PUT'])
 def update(id_exp=None):
     print "------------------ inside '/sync/<id_exp>' update function in experiments.py----------------------------"
@@ -654,9 +605,8 @@ def worker_complete():
 
         return redirect(url_for(".index", uniqueId=unique_id, new=False, debug=debug))
 
+
 # Generic route
-
-
 @experiments.route('/<pagename>')
 @experiments.route('/<foldername>/<pagename>')
 def regularpage(foldername=None, pagename=None):
