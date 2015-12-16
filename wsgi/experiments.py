@@ -9,7 +9,7 @@ from database import db
 import datetime
 import json
 
-from tools import check_qs
+from utils import check_qs
 
 # Status codes
 NOT_ACCEPTED = 0
