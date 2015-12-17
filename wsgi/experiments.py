@@ -113,7 +113,7 @@ def enterexp():
         current_app.logger.error(
             "DB error: Unique user and experiment combination not found.")
         # it is the dictionary
-        resp = {"status": "error, uniqueId and/or experiment not found"}
+        resp = {"status": "error, session not found"}
 
     return jsonify(**resp)
 
