@@ -38,7 +38,7 @@ def index():
 def start_exp():
     """ Serves up the experiment applet. 
     If experiment is ongoing or completed, will not serve. 
-    
+
     Querystring args (required):
     uniqueid: External gfg_id
     experimentname: Which experiment to serve
@@ -73,13 +73,13 @@ def start_exp():
     # Otherwise, allow participant to re-enter
     # (Are quit early signals sent back during instruction phase?)
     else:
-        sess = Session(gfg_id=unique_id, browser=browser, platform=platform,
+        session = Session(gfg_id=unique_id, browser=browser, platform=platform,
                        status=1, exp_name=exp_name, begin_session=datetime.datetime.now())
-        db.session.add(sess)
+        db.session.add(session)
         db.session.commit()
 
         return render_template(exp_name + "/exp.html", uniqueId=unique_id,
-                               experimentName=exp_name, sessionid=sess.session_id)
+                               experimentName=exp_name, sessionid=session.session_id)
 
 
 @experiments.route('/inexp', methods=['POST'])
@@ -99,22 +99,17 @@ def enterexp():
     experiment_name = request.form['experimentName']
     session_id = request.form['sessionid']  # Change to use same case
 
-    try:
-        # Update the appropriate session with the sessionid
-        sess = Session.query.filter((Session.gfg_id == unique_id) & (
-            Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
-        print "** sess: %s", sess
-        sess.status = 2
+    session = Session.query.filter((Session.gfg_id == unique_id) & (
+            Session.exp_name == experiment_name) & (Session.session_id == session_id)).first()
 
-        # I'm not sure that we should be replacing the begin_session time
-        sess.begin_session = datetime.datetime.now()
-        db.session.add(sess)
+    if session:
+        session.status = 2
         db.session.commit()
-        current_app.logger.info(
-            "Log 012 - User has finished the instructions in session id: %s", session_id)
-        resp = {"status": "success"}
 
-    except SQLAlchemyError:
+        current_app.logger.info(
+            "User has finished the instructions in session id: %s, experiment name: %s", session_id, session.exp_name)
+        resp = {"status": "success"}
+    else:
         current_app.logger.error(
             "DB error: Unique user and experiment combination not found.")
         # it is the dictionary
@@ -135,7 +130,7 @@ def load(id_exp=None):
 
         # Do we need to call. one()? Or shouldn't that be implied there's only
         # one session?
-        sess = Session.query.filter((Session.gfg_id == unique_id) & (
+        session = Session.query.filter((Session.gfg_id == unique_id) & (
             Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
     except SQLAlchemyError:
         current_app.logger.error(
@@ -176,7 +171,7 @@ def load(id_exp=None):
         resp = {
             "uniqueId": user.gfg_id,
             "experimentName": user.experimentname,
-            "sessionid": sess.session_id
+            "sessionid": session.session_id
         }
     return jsonify(**resp)
 
@@ -465,15 +460,15 @@ def quitter():
     else:"""
     try:
         # pull records from Session table to update
-        sess = Session.query.filter((Session.gfg_id == unique_id) & (
+        session = Session.query.filter((Session.gfg_id == unique_id) & (
             Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
-        print "** sess: ", sess
-        sess.status = 6
+        print "** session: ", session
+        session.status = 6
 
         # Again I'm not sure its appropriate to do this since this is not the
         # true start
-        sess.begin_session = datetime.datetime.now()
-        db.session.add(sess)
+        session.begin_session = datetime.datetime.now()
+        db.session.add(session)
         db.session.commit()
 
     except SQLAlchemyError:
@@ -503,14 +498,14 @@ def worker_complete():
             "Completed experiment %s, %s, %s" % (unique_id, experiment_name, session_id))
         try:
             # pull records from Session table to update
-            sess = Session.query.filter((Session.gfg_id == unique_id) & (
+            session = Session.query.filter((Session.gfg_id == unique_id) & (
                 Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
-            print "** sess: ", sess
-            sess.status = 3
+            print "** session: ", session
+            session.status = 3
 
             # Again not sure if we need to do this
-            sess.begin_session = datetime.datetime.now()
-            db.session.add(sess)
+            session.begin_session = datetime.datetime.now()
+            db.session.add(session)
             db.session.commit()
 
         except SQLAlchemyError:
