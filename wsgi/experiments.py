@@ -5,11 +5,11 @@ from models import Session, User, CategorySwitch, EventData, KeepTrack
 
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
-
+import db_utils
 import datetime
 import json
 
-from utils import check_qs
+import utils
 
 # Status codes
 NOT_ACCEPTED = 0
@@ -37,72 +37,41 @@ def index():
 def start_exp():
     """ Serves up the experiment applet. """
 
-    if not check_qs(request.args, ['uniqueId', 'experimentName']):
+    if not utils.check_qs(request.args, ['uniqueId', 'experimentName']):
         raise ExperimentError('improper_inputs')
 
-    ### I think we should add a general function to do all this checking
+    ### First check if user is in db, if not add 
+    ### This is independent of finding the specific experiment
     unique_id = request.args['uniqueId']
-    experiment_name = request.args['experimentName']
-    browser = "UNKNOWN" if not request.user_agent.browser else request.user_agent.browser
-    platform = "UNKNOWN" if not request.user_agent.platform else request.user_agent.platform
+    exp_name = request.args['experimentName']
+    browser, platform = utils.check_browser_platform(request.user_agent)
 
-    debug = request.args['debug'] if 'debug' in request.args else False
+    ## Check if user is in db, if not add & commit
+    user, new_user = db_utils.get_or_create(db.session, User, gfg_id=unique_id)
 
-    current_app.logger.info("Log 002 - Subject: %s started task %s in %s platform and %s browser" %
-                            (unique_id, experiment_name, platform, browser))
+    current_app.logger.info("Subject: %s entered with %s platform and %s browser. New: %s" %
+                            (unique_id , platform, browser, new_user))
 
-
-    ## Check number of session for unique_id
-    matches = Session.query.filter(
-        (Session.gfgid == unique_id) & (Session.exp_name == experiment_name)).all()
-    current_app.logger.info(
-        "Log 003 - Sessions found on this experiment: %s", len(matches))
-
-    ## If no session found for experiment & user, allocate new session and user entry
-    if len(matches) == 0:
-        # Add gfgid to "store_user table"
-        user_info = User(gfgid=unique_id)
-        db.session.add(user_info)
-        db.session.commit()
-        current_app.logger.info("Log 005 - added it to store_user table")
-
-        # Add gfgid, browser, platform, debug, status, exp_name to "session
-        # table"
-        current_time = datetime.datetime.now()
-        sess = Session(gfgid=unique_id, browser=browser, platform=platform,
-                               status=1, debug=debug, exp_name=experiment_name, begin_session=current_time)
+    ## If any existing session that disqualify user (ongoing or completed), throw error
+    ## Otherwise, create new session and serve experiment
+    disqualifying_sessions = Session.query.filter((Session.gfg_id == unique_id) & 
+            (Session.exp_name == exp_name) & 
+            ((Session.status == 2) | (Session.status == 3))).all()
+    
+    if disqualifying_sessions:
+        current_app.logger.info("Found %d sessions in which the user quit early or completed", len(disqualifying_sessions))
+        raise ExperimentError('already_did_exp_hit')
+        
+    ## Otherwise, allow participant to re-enter
+    ## (Are quit early signals sent back during instruction phase?)
+    else:
+        sess = Session(gfg_id=unique_id, browser=browser, platform=platform,
+                               status=1, exp_name=exp_name, begin_session=datetime.datetime.now())
         db.session.add(sess)
         db.session.commit()
-        current_app.logger.info("Log 006 - added it to session table")
 
-        ### I don't think you need to re-query for this entry. Should be the same as session_info
-        # pass the session id also in the URL.
-        return render_template(experiment_name + "/exp.html", uniqueId=unique_id, 
-            experimentName=experiment_name, debug=debug, sessionid=sess.session_id)
-
-    ## Sessions for experiment and user were found
-    else:
-
-        ## If there are any session that are completed, or ongoing, do not allow re-entry
-        n_completed_ongoing = len(Session.query.filter((Session.gfgid == unique_id) & 
-            (Session.exp_name == experiment_name) & ((Session.status == 2) | (Session.status == 3))).all())
-        if n_completed_ongoing > 0:
-            current_app.logger.info("Found %d sessions in which the user quit early or completed", 
-                n_completed_ongoing)
-
-            ## Generalize this error code
-            raise ExperimentError('already_did_exp_hit')
-        
-        ## Otherwise, allow participant to re-enter
-        ## (Are quit early signals sent back during instruction phase?)
-        else:
-            current_time = datetime.datetime.now()
-            sess = Session(gfgid=unique_id, browser=browser, platform=platform,
-                                   status=1, debug=debug, exp_name=experiment_name, begin_session=current_time)
-            db.session.add(sess)
-            db.session.commit()
-            return render_template(experiment_name + "/exp.html", uniqueId=unique_id, 
-                experimentName=experiment_name, debug=debug, sessionid=sess.session_id)
+        return render_template(exp_name + "/exp.html", uniqueId=unique_id, 
+            experimentName=exp_name, sessionid=sess.session_id)
 
 
 @experiments.route('/inexp', methods=['POST'])
@@ -115,7 +84,7 @@ def enterexp():
     refresh to start over). This changes the current sessions's status to 2.
     """
 
-    if not check_qs(request.form, ['uniqueId', 'experimentName', 'sessionid']):
+    if not utils.check_qs(request.form, ['uniqueId', 'experimentName', 'sessionid']):
         raise ExperimentError('improper_inputs')
 
     unique_id = request.form['uniqueId']
@@ -124,7 +93,7 @@ def enterexp():
 
     try:
         # Update the appropriate session with the sessionid
-        sess = Session.query.filter((Session.gfgid == unique_id) & (
+        sess = Session.query.filter((Session.gfg_id == unique_id) & (
             Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
         print "** sess: %s", sess
         sess.status = 2
@@ -157,7 +126,7 @@ def load(id_exp=None):
         unique_id, experiment_name, session_id = id_exp.split("&")
 
         ## Do we need to call. one()? Or shouldn't that be implied there's only one session?
-        sess = Session.query.filter((Session.gfgid == unique_id) & (
+        sess = Session.query.filter((Session.gfg_id == unique_id) & (
             Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
     except SQLAlchemyError:
         current_app.logger.error(
@@ -173,7 +142,7 @@ def load(id_exp=None):
     session_id_list = []
     if experiment_name == "category_switch":
         records = CategorySwitch.query.filter(
-            (CategorySwitch.gfgid == unique_id)).all()
+            (CategorySwitch.gfg_id == unique_id)).all()
         for r in records:
             if r.sess_id in session_id_list:
                 print "in list, dont add"
@@ -182,7 +151,7 @@ def load(id_exp=None):
     elif experiment_name == "keep_track":
         print "you gotta query keeptrack"
         records = KeepTrack.query.filter(
-            (KeepTrack.gfgid == unique_id)).all()
+            (KeepTrack.gfg_id == unique_id)).all()
         for r in records:
             if r.sess_id in session_id_list:
                 print "in list, dont add"
@@ -197,7 +166,7 @@ def load(id_exp=None):
         resp = json.loads(user.datastring)
     except:
         resp = {
-            "uniqueId": user.gfgid,
+            "uniqueId": user.gfg_id,
             "experimentName": user.experimentname,
             "sessionid": sess.session_id
         }
@@ -214,7 +183,7 @@ def update(id_exp=None):
     unique_id, experiment_name, session_id = id_exp.split("&")
 
     try:
-        Session.query.filter((Session.gfgid == unique_id) & (
+        Session.query.filter((Session.gfg_id == unique_id) & (
             Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user not found.")
@@ -289,7 +258,7 @@ def update(id_exp=None):
         current_app.logger.info(
             "Querying %s table" % valid_json['experimentName'])
         row_matches = CategorySwitch.query.filter(
-            (CategorySwitch.gfgid == unique_id) & (CategorySwitch.sess_id == session_id)).all()
+            (CategorySwitch.gfg_id == unique_id) & (CategorySwitch.sess_id == session_id)).all()
         trial_list = []
         for r in row_matches:
             trial_list = trial_list + [r.trial_num]
@@ -298,7 +267,7 @@ def update(id_exp=None):
         print "Parsing the JSON CS..........."
         for d in valid_json['data']:
             if d['current_trial'] in trial_list:
-                rec = CategorySwitch.query.filter((CategorySwitch.gfgid == unique_id) & (
+                rec = CategorySwitch.query.filter((CategorySwitch.gfg_id == unique_id) & (
                     CategorySwitch.sess_id == session_id) & (CategorySwitch.trial_num == d['current_trial'])).one()
                 td = d['trialdata']
                 if rec.response == td['resp']:
@@ -331,7 +300,7 @@ def update(id_exp=None):
                 # need to replace special chars like - /, ',
                 block1 = block2.replace("\t", "").replace(
                     "\n", "").replace("'", "")
-                cs_info_trial = CategorySwitch(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], response=td[
+                cs_info_trial = CategorySwitch(gfg_id=unique_id, sess_id=session_id, trial_num=d['current_trial'], response=td[
                                                 'resp'], reaction_time=rt, accuracy=acc, block=block1, question="null", 
                                                 answer="null", user_answer="null", beginexp=dt)
                 db.session.add(cs_info_trial)
@@ -343,7 +312,7 @@ def update(id_exp=None):
         current_app.logger.info(
             "Querying %s table" % valid_json['experimentName'])
         row_matches = KeepTrack.query.filter(
-            (KeepTrack.gfgid == unique_id) & (KeepTrack.sess_id == session_id)).all()
+            (KeepTrack.gfg_id == unique_id) & (KeepTrack.sess_id == session_id)).all()
         trial_list = []
         for r in row_matches:
             trial_list = trial_list + [r.trial_num]
@@ -412,7 +381,7 @@ def update(id_exp=None):
                 # need to replace special chars like - /, ',
                 block1 = block2.replace("\t", "").replace(
                     "\n", "").replace("'", "")
-                kt_info_trial = KeepTrack(gfgid=unique_id, sess_id=session_id, trial_num=d['current_trial'], 
+                kt_info_trial = KeepTrack(gfg_id=unique_id, sess_id=session_id, trial_num=d['current_trial'], 
                                            reaction_time=rt, accuracy=acc, block=block1, beginexp=dt, target_word1=tw1,
                                            target_word2=tw2, target_word3=tw3, target_word4=tw4, target_word5=tw5, 
                                            input_word1=iw1, input_word2=iw2, input_word3=iw3, input_word4=iw4, input_word5=iw5)
@@ -432,7 +401,7 @@ def update(id_exp=None):
     # list to store the timestamps of all the events in the table
     event_list = []
     current_app.logger.info("Log 019 - Querying Event_data table")
-    e_matches = EventData.query.filter((EventData.gfgid == unique_id) & (
+    e_matches = EventData.query.filter((EventData.gfg_id == unique_id) & (
         EventData.sess_id == session_id) & (EventData.exp_name == experiment_name)).all()
     for row in e_matches:
         # row.timestamp will be in datetime format.
@@ -455,7 +424,7 @@ def update(id_exp=None):
                 val2 = str(e['value'][1])
             else:
                 val3 = str(e['value'])
-            e_trial = EventData(gfgid=unique_id, sess_id=session_id, exp_name=experiment_name, event_type=e[
+            e_trial = EventData(gfg_id=unique_id, sess_id=session_id, exp_name=experiment_name, event_type=e[
                                  'eventtype'], interval=e['interval'], timestamp=dtime, value_1=val1, value_2=val2, value_3=val3)
             db.session.add(e_trial)
             db.session.commit()
@@ -488,7 +457,7 @@ def quitter():
     else:"""
     try:
         # pull records from Session table to update
-        sess = Session.query.filter((Session.gfgid == unique_id) & (
+        sess = Session.query.filter((Session.gfg_id == unique_id) & (
             Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
         print "** sess: ", sess
         sess.status = 6
@@ -525,7 +494,7 @@ def worker_complete():
             "Completed experiment %s, %s, %s" % (unique_id, experiment_name, session_id))
         try:
             # pull records from Session table to update
-            sess = Session.query.filter((Session.gfgid == unique_id) & (
+            sess = Session.query.filter((Session.gfg_id == unique_id) & (
                 Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
             print "** sess: ", sess
             sess.status = 3

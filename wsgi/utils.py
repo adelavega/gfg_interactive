@@ -17,3 +17,10 @@ def check_qs(qs, required):
 	        error = True
 
 	return error
+
+
+def check_browser_platform(user_agent):
+    browser = "Unknown" if not user_agent.browser else user_agent.browser
+    platform = "Unknown" if not user_agent.platform else user_agent.platform
+
+    return browser, platform
