@@ -36,7 +36,13 @@ def index():
 @experiments.route('/task', methods=['GET'])
 @nocache
 def start_exp():
-    """ Serves up the experiment applet. """
+    """ Serves up the experiment applet. 
+    If experiment is ongoing or completed, will not serve. 
+    
+    Querystring args (required):
+    uniqueid: External gfg_id
+    experimentname: Which experiment to serve
+    """
 
     if not utils.check_qs(request.args, ['uniqueId', 'experimentName']):
         raise ExperimentError('improper_inputs')
