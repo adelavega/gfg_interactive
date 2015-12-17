@@ -26,6 +26,7 @@ experiments = Blueprint('experiments', __name__,
 experiment_list = [
     ('keep_track', "Keep Track"), ('category_switch', "Category Switch")]
 
+
 @experiments.route('/', methods=['GET'])
 def index():
     """ Welcome page, but there is none so right now its blank"""
@@ -40,38 +41,39 @@ def start_exp():
     if not utils.check_qs(request.args, ['uniqueId', 'experimentName']):
         raise ExperimentError('improper_inputs')
 
-    ### First check if user is in db, if not add 
-    ### This is independent of finding the specific experiment
+    # First check if user is in db, if not add
+    # This is independent of finding the specific experiment
     unique_id = request.args['uniqueId']
     exp_name = request.args['experimentName']
     browser, platform = utils.check_browser_platform(request.user_agent)
 
-    ## Check if user is in db, if not add & commit
+    # Check if user is in db, if not add & commit
     user, new_user = db_utils.get_or_create(db.session, User, gfg_id=unique_id)
 
     current_app.logger.info("Subject: %s entered with %s platform and %s browser. New: %s" %
-                            (unique_id , platform, browser, new_user))
+                            (unique_id, platform, browser, new_user))
 
-    ## If any existing session that disqualify user (ongoing or completed), throw error
-    ## Otherwise, create new session and serve experiment
-    disqualifying_sessions = Session.query.filter((Session.gfg_id == unique_id) & 
-            (Session.exp_name == exp_name) & 
-            ((Session.status == 2) | (Session.status == 3))).all()
-    
+    # If any existing session that disqualify user (ongoing or completed), throw error
+    # Otherwise, create new session and serve experiment
+    disqualifying_sessions = Session.query.filter((Session.gfg_id == unique_id) &
+                                                  (Session.exp_name == exp_name) &
+                                                  ((Session.status == 2) | (Session.status == 3))).all()
+
     if disqualifying_sessions:
-        current_app.logger.info("Found %d sessions in which the user quit early or completed", len(disqualifying_sessions))
+        current_app.logger.info(
+            "Found %d sessions in which the user quit early or completed", len(disqualifying_sessions))
         raise ExperimentError('already_did_exp_hit')
-        
-    ## Otherwise, allow participant to re-enter
-    ## (Are quit early signals sent back during instruction phase?)
+
+    # Otherwise, allow participant to re-enter
+    # (Are quit early signals sent back during instruction phase?)
     else:
         sess = Session(gfg_id=unique_id, browser=browser, platform=platform,
-                               status=1, exp_name=exp_name, begin_session=datetime.datetime.now())
+                       status=1, exp_name=exp_name, begin_session=datetime.datetime.now())
         db.session.add(sess)
         db.session.commit()
 
-        return render_template(exp_name + "/exp.html", uniqueId=unique_id, 
-            experimentName=exp_name, sessionid=sess.session_id)
+        return render_template(exp_name + "/exp.html", uniqueId=unique_id,
+                               experimentName=exp_name, sessionid=sess.session_id)
 
 
 @experiments.route('/inexp', methods=['POST'])
@@ -89,7 +91,7 @@ def enterexp():
 
     unique_id = request.form['uniqueId']
     experiment_name = request.form['experimentName']
-    session_id = request.form['sessionid']     ## Change to use same case
+    session_id = request.form['sessionid']  # Change to use same case
 
     try:
         # Update the appropriate session with the sessionid
@@ -98,7 +100,7 @@ def enterexp():
         print "** sess: %s", sess
         sess.status = 2
 
-        ## I'm not sure that we should be replacing the begin_session time
+        # I'm not sure that we should be replacing the begin_session time
         sess.begin_session = datetime.datetime.now()
         db.session.add(sess)
         db.session.commit()
@@ -125,17 +127,17 @@ def load(id_exp=None):
     try:
         unique_id, experiment_name, session_id = id_exp.split("&")
 
-        ## Do we need to call. one()? Or shouldn't that be implied there's only one session?
+        # Do we need to call. one()? Or shouldn't that be implied there's only
+        # one session?
         sess = Session.query.filter((Session.gfg_id == unique_id) & (
             Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
     except SQLAlchemyError:
         current_app.logger.error(
             "DB error: Unique user /experiment combo not found.")
 
-    ## What's going on here?
-    ## I kinda forgot what the get function was for... I think it's rarely used in practice 
-
-
+    # What's going on here?
+    # I kinda forgot what the get function was for... I think it's rarely used
+    # in practice
 
     # lets try to find all the session ids associated with the unique_id &
     # exp_name combo
@@ -208,7 +210,7 @@ def update(id_exp=None):
     # 5. Now we will parse the recieved jSON and store each trial in the
     # Category_Switch table
 
-    ### Can we do this once? And save into a variable?
+    # Can we do this once? And save into a variable?
     jsont = request.get_data()
     json_obj = json.dumps(jsont)
 
@@ -217,9 +219,9 @@ def update(id_exp=None):
         json.loads(json_obj)
     except ValueError, e:
         print "Not valid"
-        ### throw an error here and return out TBD
+        # throw an error here and return out TBD
 
-    ## Why the dumps? and loads?
+    # Why the dumps? and loads?
     valid_json = json.loads(jsont)
    # test code
     print "------------------- JSON PARSING Begins here -----------------------------"
@@ -230,7 +232,7 @@ def update(id_exp=None):
 
     s = valid_json['sessionid']
 
-    ### I'm not sure if we need to worry about these fringe cases too much
+    # I'm not sure if we need to worry about these fringe cases too much
     # 7. Extract session_id, experiment_name, uniqueid from JSON and compare
     # it with request data
     if unique_id != valid_json['uniqueId']:
@@ -249,7 +251,7 @@ def update(id_exp=None):
             "Log 013 - All the ids match between JSON and request")
 
     # 8. Query the appropriate table based on experiment name
-    #### Separate each task to their own function
+    # Separate each task to their own function
 
     if valid_json['experimentName'] == "category_switch":
         # Query CategorySwitch table
@@ -301,8 +303,8 @@ def update(id_exp=None):
                 block1 = block2.replace("\t", "").replace(
                     "\n", "").replace("'", "")
                 cs_info_trial = CategorySwitch(gfg_id=unique_id, sess_id=session_id, trial_num=d['current_trial'], response=td[
-                                                'resp'], reaction_time=rt, accuracy=acc, block=block1, question="null", 
-                                                answer="null", user_answer="null", beginexp=dt)
+                    'resp'], reaction_time=rt, accuracy=acc, block=block1, question="null",
+                    answer="null", user_answer="null", beginexp=dt)
                 db.session.add(cs_info_trial)
                 db.session.commit()
                 current_app.logger.info(
@@ -381,10 +383,10 @@ def update(id_exp=None):
                 # need to replace special chars like - /, ',
                 block1 = block2.replace("\t", "").replace(
                     "\n", "").replace("'", "")
-                kt_info_trial = KeepTrack(gfg_id=unique_id, sess_id=session_id, trial_num=d['current_trial'], 
-                                           reaction_time=rt, accuracy=acc, block=block1, beginexp=dt, target_word1=tw1,
-                                           target_word2=tw2, target_word3=tw3, target_word4=tw4, target_word5=tw5, 
-                                           input_word1=iw1, input_word2=iw2, input_word3=iw3, input_word4=iw4, input_word5=iw5)
+                kt_info_trial = KeepTrack(gfg_id=unique_id, sess_id=session_id, trial_num=d['current_trial'],
+                                          reaction_time=rt, accuracy=acc, block=block1, beginexp=dt, target_word1=tw1,
+                                          target_word2=tw2, target_word3=tw3, target_word4=tw4, target_word5=tw5,
+                                          input_word1=iw1, input_word2=iw2, input_word3=iw3, input_word4=iw4, input_word5=iw5)
                 db.session.add(kt_info_trial)
                 db.session.commit()
                 current_app.logger.info(
@@ -396,8 +398,8 @@ def update(id_exp=None):
         # throw an error here and return out TBD
 
     # Populate EventData Table
-    ### Separate into own function
-    ### I think these function should be attached to the datamodel int models.py
+    # Separate into own function
+    # I think these function should be attached to the datamodel int models.py
     # list to store the timestamps of all the events in the table
     event_list = []
     current_app.logger.info("Log 019 - Querying Event_data table")
@@ -425,7 +427,7 @@ def update(id_exp=None):
             else:
                 val3 = str(e['value'])
             e_trial = EventData(gfg_id=unique_id, sess_id=session_id, exp_name=experiment_name, event_type=e[
-                                 'eventtype'], interval=e['interval'], timestamp=dtime, value_1=val1, value_2=val2, value_3=val3)
+                'eventtype'], interval=e['interval'], timestamp=dtime, value_1=val1, value_2=val2, value_3=val3)
             db.session.add(e_trial)
             db.session.commit()
             current_app.logger.info(
@@ -462,7 +464,8 @@ def quitter():
         print "** sess: ", sess
         sess.status = 6
 
-        ### Again I'm not sure its appropriate to do this since this is not the true start
+        # Again I'm not sure its appropriate to do this since this is not the
+        # true start
         sess.begin_session = datetime.datetime.now()
         db.session.add(sess)
         db.session.commit()
@@ -499,7 +502,7 @@ def worker_complete():
             print "** sess: ", sess
             sess.status = 3
 
-            ## Again not sure if we need to do this
+            # Again not sure if we need to do this
             sess.begin_session = datetime.datetime.now()
             db.session.add(sess)
             db.session.commit()
