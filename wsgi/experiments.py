@@ -104,6 +104,7 @@ def enterexp():
 
     if session:
         session.status = 2
+        session.begin_experiment = datetime.datetime.now()
         db.session.commit()
 
         current_app.logger.info(
@@ -118,65 +119,32 @@ def enterexp():
     return jsonify(**resp)
 
 
-# called to retrieve the JSON object for returning users
 @experiments.route('/sync/<id_exp>', methods=['GET'])
 def load(id_exp=None):
     """
-    Load experiment data, which should be a JSON object and will be storedafter converting to string """
+    Return a few attributed of session back to Backbone.js.
+    This is forced by Backbone, and doesn't do much.  """
 
     current_app.logger.info("GET /sync route with id: %s" % id_exp)
     try:
         unique_id, experiment_name, session_id = id_exp.split("&")
 
-        # Do we need to call. one()? Or shouldn't that be implied there's only
-        # one session?
-        session = Session.query.filter((Session.gfg_id == unique_id) & (
-            Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
+        session = Session.query.filter((Session.session_id == session_id)).one()
     except SQLAlchemyError:
         current_app.logger.error(
-            "DB error: Unique user /experiment combo not found.")
-
-    # What's going on here?
-    # I kinda forgot what the get function was for... I think it's rarely used
-    # in practice
-
-    # lets try to find all the session ids associated with the unique_id &
-    # exp_name combo
-    session_id_list = []
-    if experiment_name == "category_switch":
-        records = CategorySwitch.query.filter(
-            (CategorySwitch.gfg_id == unique_id)).all()
-        for r in records:
-            if r.sess_id in session_id_list:
-                print "in list, dont add"
-            else:
-                session_id_list = session_id_list + [r.sess_id]
-    elif experiment_name == "keep_track":
-        print "you gotta query keeptrack"
-        records = KeepTrack.query.filter(
-            (KeepTrack.gfg_id == unique_id)).all()
-        for r in records:
-            if r.sess_id in session_id_list:
-                print "in list, dont add"
-            else:
-                session_id_list = session_id_list + [r.sess_id]
-    else:
-        print "table name incorrect/not found"
-
-    current_app.logger.info("%s session ids associated with %s unique_id for %s experiment" % (
-        session_id_list, unique_id, experiment_name))
+            "DB error: Session not found.")
     try:
-        resp = json.loads(user.datastring)
+        resp = json.loads(session.datastring)
     except:
+        ### Need to check if we need to send other stuff. Might have to .
         resp = {
-            "uniqueId": user.gfg_id,
-            "experimentName": user.experimentname,
+            "uniqueId": session.gfg_id,
+            "experimentName": session.exp_name,
             "sessionid": session.session_id
         }
     return jsonify(**resp)
 
 
-# called to updated the JSON everytime and push it back to the table
 @experiments.route('/sync/<id_exp>', methods=['PUT'])
 def update(id_exp=None):
     """
@@ -441,41 +409,23 @@ def update(id_exp=None):
 @experiments.route('/quitter', methods=['POST'])
 def quitter():
     """ Mark quitter as such. """
-    if not ('uniqueId' in request.form) or not ('experimentName' in request.form) or not ('sessionid' in request.form):
+    if not utils.check_qs(request.form, ['sessionid']):
         resp = {"status": "bad request"}
-        return jsonify(**resp)
-
-    unique_id = request.form['uniqueId']
-    experiment_name = request.form['experimentName']
-    session_id = request.form['sessionid']
-
-    if unique_id[:5] == "debug":
-        debug_mode = True
+        
     else:
-        debug_mode = False
+        session_id = request.form['sessionid']
 
-    """if debug_mode:
-        resp = {"status": "didn't mark as quitter since this is debugging"}
-        return jsonify(**resp)
-    else:"""
-    try:
-        # pull records from Session table to update
-        session = Session.query.filter((Session.gfg_id == unique_id) & (
-            Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
-        print "** session: ", session
-        session.status = 6
+        try:
+            # pull records from Session table to update
+            session = Session.query.filter((Session.session_id == session_id)).one()
+            session.status = 6
+            db.session.commit() ## Need to add?
+            resp = {"status": "marked as quitter"}
 
-        # Again I'm not sure its appropriate to do this since this is not the
-        # true start
-        session.begin_session = datetime.datetime.now()
-        db.session.add(session)
-        db.session.commit()
+        except SQLAlchemyError:
+            raise ExperimentError('tried_to_quit')
 
-    except SQLAlchemyError:
-        raise ExperimentError('tried_to_quit')
-    else:
-        resp = {"status": "marked as quitter"}
-        return jsonify(**resp)
+    return jsonify(**resp)
 
 
 @experiments.route('/worker_complete', methods=['GET'])

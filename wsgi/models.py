@@ -21,6 +21,8 @@ class Session(db.Model):
     status = db.Column(db.Integer(), nullable=False)   #needs discussion after refactoring
     exp_name = db.Column(db.String(), nullable=False)
     begin_session = db.Column(db.DateTime, nullable=False)
+    begin_experiment = db.Column(db.DateTime)
+    datastring = db.Column(db.sring())
 
     # Return each row just like that
     def __repr__(self):
