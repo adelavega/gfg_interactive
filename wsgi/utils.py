@@ -11,12 +11,12 @@ def nocache(func):
     return update_wrapper(new_func, func)
 
 def check_qs(qs, required):
-	error = False
+	valid = True
 	for arg in required:
 	    if arg not in qs:
-	        error = True
+	        valid = False
 
-	return error
+	return valid
 
 
 def check_browser_platform(user_agent):
