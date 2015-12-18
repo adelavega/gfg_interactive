@@ -205,7 +205,8 @@ def update(id_exp=None):
     # For each event, pass to parser, if not in db
     for json_event in valid_json['eventdata']:
         db_event, new = db_utils.get_or_create(db.session, EventData,
-            gfg_id=gfg_id, session_id=session_id, exp_name=exp_name)
+            gfg_id=gfg_id, session_id=session_id, exp_name=exp_name, 
+            timestamp = utils.convert_timestamp(json_event['timestamp']))
 
         if new:
             db_event.add_json_data(json_event)

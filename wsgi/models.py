@@ -1,7 +1,7 @@
 from database import db
-import datetime
 from flask import current_app
 from db_utils import clean_db_string
+from utils import convert_timestamp
 
 
 class User(db.Model):
@@ -82,7 +82,7 @@ class CategorySwitch(db.Model):
 
         # Datetime conversion
         jsts = json_trial['dateTime']  # Javscript timestamp
-        self.timestamp = datetime.datetime.fromtimestamp(jsts/1000.0)
+        self.timestamp = convert_timestamp(jsts)
 
         # Remove invalid charachters from block name (e.g. "\n")
         self.block = clean_db_string(trial_data['block'])
@@ -131,7 +131,7 @@ class KeepTrack(db.Model):
         self.input_words = trial_data['input_words']
 
         # Datetime conversion
-        self.timestamp= datetime.datetime.fromtimestamp(json_trial['dateTime']/1000.0)
+        self.timestamp= convert_timestamp(json_trial['dateTime'])
         self.block = clean_db_string(trial_data['block'])
 
         current_app.logger.info(
@@ -148,7 +148,7 @@ class EventData(db.Model):
     event_type = db.Column(db.String())
     value = db.Column(db.String()) ## Why split into three?
     interval = db.Column(db.Float)
-    timestamp = db.Column(db.DateTime)  # to store the timestamp.
+    timestamp = db.Column(db.DateTime, nullable=False)  # to store the timestamp.
 
     def __repr__(self):
         pass
@@ -163,7 +163,7 @@ class EventData(db.Model):
         #     self.value_2 = str(json_event['value'][1])
         #     self.value_3 = str(json_event['value'])
         # self.interval = 
-        self.timestamp = datetime.datetime.fromtimestamp(json_event['timestamp']/1000.0)
+        self.timestamp = convert_timestamp(json_event['timestamp'])
 
         current_app.logger.info(
             "%s added to EventData for session id %s " % (self.ev_id, self.session_id))

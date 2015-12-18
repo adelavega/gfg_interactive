@@ -35,3 +35,7 @@ def check_valid_json(json_input):
         valid = False
 
     return valid
+
+def convert_timestamp(json_timestamp):
+    import datetime
+    return datetime.datetime.fromtimestamp(json_timestamp/1000.0)
