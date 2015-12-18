@@ -74,7 +74,7 @@ def start_exp():
     # (Are quit early signals sent back during instruction phase?)
     else:
         session = Session(gfg_id=gfg_id, browser=browser, platform=platform,
-                       status=1, exp_name=exp_name, begin_session=datetime.datetime.now())
+                          status=1, exp_name=exp_name, begin_session=datetime.datetime.now())
         db.session.add(session)
         db.session.commit()
 
@@ -100,7 +100,7 @@ def enterexp():
     session_id = request.form['sessionid']  # Change to use same case
 
     session = Session.query.filter((Session.gfg_id == gfg_id) & (
-            Session.exp_name == experiment_name) & (Session.session_id == session_id)).first()
+        Session.exp_name == experiment_name) & (Session.session_id == session_id)).first()
 
     if session:
         session.status = 2
@@ -136,7 +136,7 @@ def load(id_exp=None):
     try:
         resp = json.loads(session.datastring)
     except:
-        ### Need to check if we need to send other stuff. Might have to .
+        # Need to check if we need to send other stuff. Might have to .
         resp = {
             "uniqueId": session.gfg_id,
             "experimentName": session.exp_name,
@@ -147,38 +147,41 @@ def load(id_exp=None):
 
 @experiments.route('/sync/<id_exp>', methods=['PUT'])
 def update(id_exp=None):
-    """
-    Save experiment data, which should be a JSON object and will be stored after converting to string. """
+    """ Sync backbone model with appropriate database.  """
 
     current_app.logger.info("PUT /sync route with id: %s" % id_exp)
 
+    # Parse incoming ID
     try:
         gfg_id, exp_name, session_id = id_exp.split("&")
     except ValueError:
         resp = {"status": "bad request"}
         current_app.logger.error("Could not parse id")
 
+    # Check if session exists and add complete datastring
     try:
-        Session.query.filter_by(session_id = session_id).one()
+        session = Session.query.filter_by(session_id=session_id).one()
     except SQLAlchemyError:
         resp = {"status": "bad request"}
         current_app.logger.error("DB error: Unique user not found.")
 
-    jsont = request.get_data()
-
-    # Check JSON valid
-    try:
-        json.loads(json.dumps(jsont))
-    except ValueError:
+    # Check JSON validity
+    if utils.check_valid_json(request.get_data()):
+        valid_json = json.loads(request.get_data())
+        session.datastring = valid_json
+    else:
         resp = {"status": "bad request"}
         current_app.logger.error("Invalid JSON")
 
-    valid_json = json.loads(jsont)
-
     current_app.logger.info(
-            "Current trial: %s, unique_id: %s, experiment name: %s, session id: %s " % (valid_json['currenttrial'], 
-                valid_json['uniqueId'], valid_json['experimentName'], valid_json['sessionid']))
+        "Current trial: %s, unique_id: %s, experiment name: %s, session id: %s " % (valid_json['currenttrial'],
+            valid_json['uniqueId'], valid_json['experimentName'], valid_json['sessionid']))
 
+    # Store full raw datastringin session table
+
+
+
+    # For each trial, pass to appropriate parser, if not in db
     for json_trial in valid_json['data']:
         if exp_name == "category_switch":
             experiment_class = CategorySwitch
@@ -188,18 +191,19 @@ def update(id_exp=None):
             current_app.logger.error("%s does not exist" % (exp_name))
             resp = {"status": "bad request"}
 
-        db_trial, new = db_utils.get_or_create(db.session, 
-                experiment_class, gfg_id = gfg_id, session_id = session_id, 
-                trial_num = json_trial['current_trial'])
+        db_trial, new = db_utils.get_or_create(db.session,
+            experiment_class, gfg_id=gfg_id, session_id=session_id,
+            trial_num=json_trial['current_trial'])
 
         # If the trial is new, add data
         if new:
             db_trial.add_json_data(json_trial)
             db.session.commit()
 
+    # For each event, pass to parser, if not in db
     for json_event in valid_json['eventdata']:
         db_event, new = db_utils.get_or_create(db.session, EventData,
-            gfg_id = gfg_id, session_id = session_id, exp_name = exp_name)
+            gfg_id=gfg_id, session_id=session_id, exp_name=exp_name)
 
         if new:
             db_event.add_json_data(json_event)
@@ -215,15 +219,16 @@ def quitter():
     """ Mark quitter as such. """
     if not utils.check_qs(request.form, ['sessionid']):
         resp = {"status": "bad request"}
-        
+
     else:
         session_id = request.form['sessionid']
 
         try:
             # pull records from Session table to update
-            session = Session.query.filter(Session.session_id == session_id).one()
+            session = Session.query.filter(
+                Session.session_id == session_id).one()
             session.status = 6
-            db.session.commit() ## Need to add?
+            db.session.commit()  # Need to add?
             resp = {"status": "marked as quitter"}
 
         except SQLAlchemyError:
@@ -245,14 +250,16 @@ def worker_complete():
             "Completed experiment %s" % (session_id))
         try:
             # pull records from Session table to update
-            session = Session.query.filter(Session.session_id == session_id).one()
+            session = Session.query.filter(
+                Session.session_id == session_id).one()
             session.status = 3
             db.session.commit()
 
         except SQLAlchemyError:
             raise ExperimentError('unknown_error')
 
-        ## This needs to be updated because I'm not sure where to route when all is done. 
+        # This needs to be updated because I'm not sure where to route when all
+        # is done.
         return redirect(url_for(".index", uniqueId=gfg_id, new=False))
 
 

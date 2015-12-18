@@ -24,3 +24,13 @@ def check_browser_platform(user_agent):
     platform = "Unknown" if not user_agent.platform else user_agent.platform
 
     return browser, platform
+
+def check_valid_json(json):
+    # Check JSON valid
+    try:
+        json.loads(json.dumps(json))
+        valid = True
+    except ValueError:
+        valid = False
+
+    return valid
