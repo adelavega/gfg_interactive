@@ -151,49 +151,32 @@ def update(id_exp=None):
     Save experiment data, which should be a JSON object and will be stored after converting to string. """
 
     current_app.logger.info("PUT /sync route with id: %s" % id_exp)
-    unique_id, experiment_name, session_id = id_exp.split("&")
 
     try:
-        Session.query.filter((Session.gfg_id == unique_id) & (
-            Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
+        unique_id, experiment_name, session_id = id_exp.split("&")
+    except ValueError:
+        resp = {"status": "bad request"}
+        return jsonify(**resp)
+
+    try:
+        Session.query.filter_by(session_id = session_id).one()
     except SQLAlchemyError:
         current_app.logger.error("DB error: Unique user not found.")
 
-    # 1. get the JSON from the request
-    if hasattr(request, 'json'):
-        datastring = request.get_data().decode(
-            'utf-8').encode('ascii', 'xmlcharrefreplace')  # encoding the json
-
-    # 3.Now try to load the "datastring" from the participant table
-    try:
-        data = json.loads(datastring)
-    except:
-        data = {}
-
-    # 4. Now extract the latest trial from this freshly saved data
-    trial = data.get("currenttrial", None)
-    # print "trial is - ", trial
-    current_app.logger.info("Saved Trial data for %s, experiment %s and trial# %s in Participant table" % (
-        unique_id, experiment_name, trial))
-
-    # 5. Now we will parse the recieved jSON and store each trial in the
-    # Category_Switch table
+    # Parse JSON
 
     # Can we do this once? And save into a variable?
     jsont = request.get_data()
-    json_obj = json.dumps(jsont)
 
-    # 6. Check if the json is valid
+    # Check JSON valid
     try:
-        json.loads(json_obj)
-    except ValueError, e:
-        print "Not valid"
+        json.loads(json.dumps(jsont))
+    except ValueError:
+        current_app.logger.error("Invalid JSON")
         # throw an error here and return out TBD
 
-    # Why the dumps? and loads?
     valid_json = json.loads(jsont)
-   # test code
-    print "------------------- JSON PARSING Begins here -----------------------------"
+
     print "currenttrial of JSON :", valid_json['currenttrial']
     print "unique id  of JSON :", valid_json['uniqueId']
     print "Experiment Name of JSON :", valid_json['experimentName']

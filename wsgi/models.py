@@ -1,4 +1,5 @@
 from database import db
+import datetime 
 
 ########################################### STORE USER ##################################
 #Store_user Table - central table for user ids (same as Particpant(old))
@@ -43,12 +44,40 @@ class CategorySwitch(db.Model):
     question = db.Column(db.Unicode)	# TBD
     answer = db.Column(db.Unicode)		# TBD
     user_answer = db.Column(db.Unicode)	# TBD
-    beginexp = db.Column(db.DateTime)
+    timestamp = db.Column(db.DateTime)
 
     # Return each row just like that
-    """def __repr__(self):
+    def __repr__(self):
         return "CS Values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" %(self.cs_id, self.gfg_id, self.sess_id, self.response, self.reaction_time, 
-        	self.accuracy, self.block, self.question, self.answer, self.user_answer, self.beginexp, self.trial_num)"""
+        	self.accuracy, self.block, self.question, self.answer, self.user_answer, self.beginexp, self.trial_num)
+
+    def add_json_data(self, json_trial):
+        ## Parse nested JSON data to extract, acc, RT
+        trial_data = json_trial['trialdata']
+
+        # Special case for accuracy
+        if trial_data['acc'] == "FORWARD":
+            self.accuracy = 11
+        elif trial_data['acc'] == "BACK":
+            self.accuracy = 22
+        elif trial_data['acc'] == "NA":
+            self.accuracy = 99
+        else:
+            self.accuracy = trial_data['acc']
+
+        # Special case for reaction time
+        if trial_data['rt'] == "NA":
+            self.reaction_time = 00
+        else:
+            self.reaction_tiome = trial_data['rt']
+
+        # Datetime conversion
+        jsts = json_trial['dateTime']  # Javscript timestamp
+        self.timestamp = datetime.datetime.fromtimestamp(jsts/1000.0)
+
+        # Remove invalid charachters from block name (e.g. "\n")
+        self.block = trial_data['block'].replace("\t", "").replace(
+            "\n", "").replace("'", "")
 
 ###########################################  CATEGORY SWITCH ##################################
 #Experiment - Category Switch
