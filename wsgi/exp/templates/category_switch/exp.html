@@ -15,9 +15,8 @@
 
 	<script type="text/javascript">
 		// These fields are coming from the "/task" start_exp() in experiments.py
-		var uniqueId = "{{ uniqueId }}";  // a unique string identifying the worker/task
-		var experimentName = "{{ experimentName }}"
-		var debug = "{{ debug }}"
+		var uniqueid = "{{ uniqueid }}";  // a unique string identifying the worker/task
+		var experimentname = "{{ experimentname }}"
 		var sessionid = "{{ sessionid }}"
 	</script>
 
@@ -58,6 +57,6 @@
 	<!-- J-key -->
 	<button disabled id = "rightButton" class="btn btn-default" style="position:absolute;left: 50%; z-index:2; top:385px;margin-left:50px;font:21px Arial; opacity:1"><img src="static/img/j_key.png" style="width:45px; height:45px" > <span id="rightText">Continue</div> </button>
 
-	<script src="static/{{ experimentName }}/js/CStask.js"></script>
+	<script src="static/{{ experimentname }}/js/CStask.js"></script>
 </body>
 </html>

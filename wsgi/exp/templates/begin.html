@@ -17,12 +17,12 @@
 			// These fields are coming from experiments.py 
 			var newstatus = "{{ new }}"; 
 			var debug = "{{ debug }}"; 
-			var uniqueId = "{{ uniqueId }}"; 
+			var uniqueid = "{{ uniqueid }}"; 
 			//var experiment_list = {'keep_track':"Keep Track", 'category_switch':"Category Switch"};
 			(function() {
 				  jQuery(function() {
 				    return $("body").on('click', 'button', function(event) {
-				      var whereto = 'task?uniqueId=' + uniqueId + '&experimentName=' + event.target.id + '&debug=' + debug;
+				      var whereto = 'task?uniqueid=' + uniqueid + '&experimentname=' + event.target.id + '&debug=' + debug;
 				      return window.location = whereto;
 				       });
 				  });

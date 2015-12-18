@@ -4,9 +4,9 @@
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
-  dataHandler = DataHandler(uniqueId, experimentName, sessionid); //added the sessionid
+  dataHandler = DataHandler(uniqueid, experimentname, sessionid); //added the sessionid
 
-  dataHandler.preloadPages(['postquestionnaire.html', experimentName + '/kt_debriefing.html']);
+  dataHandler.preloadPages(['postquestionnaire.html', experimentname + '/kt_debriefing.html']);
 
   all_stim = {
     "living_real": [["marble", "nonliv"], ["oak", "living"], ["lizard", "living"], ["coat", "nonliv"], ["sparrow", "living"], ["goldfish", "living"], ["lion", "living"], ["alligator", "living"], ["pebble", "nonliv"], ["shark", "living"], ["knob", "nonliv"], ["table", "nonliv"], ["shark", "living"], ["bicycle", "nonliv"], ["cloud", "nonliv"], ["marble", "nonliv"], ["cloud", "nonliv"], ["alligator", "living"], ["sparrow", "living"], ["lizard", "living"], ["snowflake", "nonliv"], ["mushroom", "living"], ["lion", "living"], ["pebble", "nonliv"], ["bicycle", "nonliv"], ["table", "nonliv"], ["oak", "living"], ["mushroom", "living"], ["knob", "nonliv"], ["marble", "nonliv"], ["coat", "nonliv"], ["goldfish", "living"], ["snowflake", "nonliv"], ["oak", "living"]],

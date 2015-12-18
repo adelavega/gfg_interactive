@@ -90,6 +90,11 @@ def enterexp():
     receives this signal, it will no longer allow them to re-access the
     experiment applet (meaning they can't do part of the experiment and
     refresh to start over). This changes the current sessions's status to 2.
+
+    Querystring args (required):
+    uniqueid: External gfg_id
+    experimentname: Which experiment to serve
+    sessionid: session identifier
     """
 
     if not utils.check_qs(request.form, ['uniqueId', 'experimentName', 'sessionid']):
@@ -97,7 +102,7 @@ def enterexp():
 
     gfg_id = request.form['uniqueId']
     experiment_name = request.form['experimentName']
-    session_id = request.form['sessionid']  # Change to use same case
+    session_id = request.form['sessionid']
 
     session = Session.query.filter((Session.gfg_id == gfg_id) & (
         Session.exp_name == experiment_name) & (Session.session_id == session_id)).first()
@@ -108,7 +113,8 @@ def enterexp():
         db.session.commit()
 
         current_app.logger.info(
-            "User has finished the instructions in session id: %s, experiment name: %s", session_id, session.exp_name)
+            "User has finished the instructions in session id: %s, experiment name: %s", 
+            session_id, session.exp_name)
         resp = {"status": "success"}
     else:
         current_app.logger.error(
@@ -176,10 +182,6 @@ def update(id_exp=None):
     current_app.logger.info(
         "Current trial: %s, unique_id: %s, experiment name: %s, session id: %s " % (valid_json['currenttrial'],
             valid_json['uniqueId'], valid_json['experimentName'], valid_json['sessionid']))
-
-    # Store full raw datastringin session table
-
-
 
     # For each trial, pass to appropriate parser, if not in db
     for json_trial in valid_json['data']:
@@ -287,4 +289,4 @@ def handle_exp_error(exception):
     """Handle errors by sending an error page."""
     current_app.logger.error(
         "%s (%s) %s", exception.value, exception.errornum, str(dict(request.args)))
-    return exception.error_page(request, "delavega@colorado.edu")
+    return exception.error_page(request, "gfgemail@gfg.edu") ## Update this email

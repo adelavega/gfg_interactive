@@ -1,13 +1,13 @@
 ## Common functions
 
 ## Set up PsiTurk and preload the pages that will be shown after task is done
-# dataHandler = PsiTurk(uniqueId, adServerLoc)
+# dataHandler = PsiTurk(uniqueid, adServerLoc)
 
 ## Alternatively set this up for local server hosting using dataHandler.js
 
-dataHandler = DataHandler(uniqueId, experimentName)
+dataHandler = DataHandler(uniqueid, experimentname)
 
-dataHandler.preloadPages(['postquestionnaire.html', experimentName + '/debriefing.html'])
+dataHandler.preloadPages(['postquestionnaire.html', experimentname + '/debriefing.html'])
 
 # Calculates the mean of a numeric array (for feedback)
 mean = (numericArray) ->
@@ -47,7 +47,7 @@ class Questionnaire
 # Displays debriefing and when button is clicked ends
 class Debriefing
 	start: (@exitTrial) ->
-		$('body').html(dataHandler.getPage(experimentName + '/debriefing.html'))
+		$('body').html(dataHandler.getPage(experimentname + '/debriefing.html'))
 
 	buttonClick: ->
 		@exitTrial()	

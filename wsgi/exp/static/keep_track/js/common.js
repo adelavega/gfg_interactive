@@ -2,9 +2,9 @@
 (function() {
   var Debriefing, FinishInstructions, Questionnaire, dataHandler, mean;
 
-  dataHandler = DataHandler(uniqueId, experimentName, sessionid); //added the sessionid
+  dataHandler = DataHandler(uniqueid, experimentname, sessionid); //added the sessionid
 
-  dataHandler.preloadPages(['postquestionnaire.html', experimentName + '/debriefing.html']);
+  dataHandler.preloadPages(['postquestionnaire.html', experimentname + '/debriefing.html']);
 
   mean = function(numericArray) {
     var avg, sum;
@@ -53,7 +53,7 @@
 
     Debriefing.prototype.start = function(exitTrial) {
       this.exitTrial = exitTrial;
-      return $('body').html(dataHandler.getPage(experimentName + '/debriefing.html'));
+      return $('body').html(dataHandler.getPage(experimentname + '/debriefing.html'));
     };
 
     Debriefing.prototype.buttonClick = function() {
