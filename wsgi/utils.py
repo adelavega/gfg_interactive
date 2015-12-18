@@ -1,5 +1,6 @@
 from functools import update_wrapper
 from flask import make_response
+import json
 
 def nocache(func):
     """Stop caching for pages wrapped in nocache decorator."""
@@ -25,10 +26,10 @@ def check_browser_platform(user_agent):
 
     return browser, platform
 
-def check_valid_json(json):
+def check_valid_json(json_input):
     # Check JSON valid
     try:
-        json.loads(json.dumps(json))
+        json.loads(json.dumps(json_input))
         valid = True
     except ValueError:
         valid = False

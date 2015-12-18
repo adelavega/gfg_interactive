@@ -159,6 +159,7 @@ def load(id_exp=None):
             "experimentname": session.exp_name,
             "sessionid": session.session_id
         }
+
     return jsonify(**resp)
 
 
@@ -173,7 +174,7 @@ def update(id_exp=None):
     # Check JSON validity
     if utils.check_valid_json(request.get_data()):
         valid_json = json.loads(request.get_data())
-        session.datastring = valid_json
+        # session.datastring = valid_json
     else:
         resp = {"status": "bad request"}
         current_app.logger.error("Invalid JSON")

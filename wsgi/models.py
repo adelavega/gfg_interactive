@@ -26,9 +26,8 @@ class Session(db.Model):
     datastring = db.Column(db.String())
 
     def __repr__(self):
-        return "Session values (%s, %s, %s, %s, %s, %s, %s, %s)" % (self.session_id,
-            self.gfg_id, self.browser, self.platform, self.exp_name, self.status,
-            self.debug, self.begin_session)
+        return "Session values (%s, %s, %s, %s, %s)" % (self.session_id,
+            self.gfg_id,self.exp_name, self.status, self.begin_session)
 
 
 class CategorySwitch(db.Model):
@@ -47,11 +46,9 @@ class CategorySwitch(db.Model):
     user_answer = db.Column(db.Unicode)  # TBD
     timestamp = db.Column(db.DateTime)
 
-    # Return each row just like that
     def __repr__(self):
-        return "CS Values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" % (self.cs_id, self.gfg_id,
-            self.session_id, self.response, self.reaction_time, self.accuracy, self.block,
-            self.question, self.answer, self.user_answer, self.beginexp, self.trial_num)
+        return "CS Values (%s, %s, %s, %s)" % (self.cs_id, self.gfg_id,
+            self.session_id, self.trial_num)
 
     def add_json_data(self, json_trial):
         """ Parse and add backbone.js json data for a trial """
@@ -137,6 +134,9 @@ class KeepTrack(db.Model):
         self.timestamp= datetime.datetime.fromtimestamp(json_trial['dateTime']/1000.0)
         self.block = clean_db_string(trial_data['block'])
 
+        current_app.logger.info(
+            "%s added to KeepTrack for session id %s " % (self.trial_num, self.session_id))
+
 
 class EventData(db.Model):
     """ EventData for all experiments """
@@ -145,10 +145,8 @@ class EventData(db.Model):
     session_id = db.Column(
         db.Integer, db.ForeignKey('session.session_id'))
     exp_name = db.Column(db.String(), nullable=False)
-    event_type = db.Column(db.String(), nullable=False)
-    value_1 = db.Column(db.String())
-    value_2 = db.Column(db.String())
-    value_3 = db.Column(db.String())
+    event_type = db.Column(db.String())
+    value = db.Column(db.String()) ## Why split into three?
     interval = db.Column(db.Float)
     timestamp = db.Column(db.DateTime)  # to store the timestamp.
 
@@ -157,11 +155,15 @@ class EventData(db.Model):
 
     def add_json_data(self, json_event):
         """ Parse and add backbone.js json data for a event """
-        # self.event_type = 
+        self.event_type = json_event['eventtype']
+        self.value = json_event['value']
 
-        if isinstance(['value'], list):
-            self.value_1 = str(json_event['value'][0])
-            self.value_2 = str(json_event['value'][1])
-            self.value_3 = str(json_event['value'])
+        # if isinstance(['value'], list):
+        #     self.value_1 = str(json_event['value'][0])
+        #     self.value_2 = str(json_event['value'][1])
+        #     self.value_3 = str(json_event['value'])
         # self.interval = 
         self.timestamp = datetime.datetime.fromtimestamp(json_event['timestamp']/1000.0)
+
+        current_app.logger.info(
+            "%s added to EventData for session id %s " % (self.ev_id, self.session_id))
