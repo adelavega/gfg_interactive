@@ -156,12 +156,13 @@ def update(id_exp=None):
         gfg_id, exp_name, session_id = id_exp.split("&")
     except ValueError:
         resp = {"status": "bad request"}
+        current_app.logger.error("Could not parse id")
 
     try:
         Session.query.filter_by(session_id = session_id).one()
     except SQLAlchemyError:
-        current_app.logger.error("DB error: Unique user not found.")
         resp = {"status": "bad request"}
+        current_app.logger.error("DB error: Unique user not found.")
 
     jsont = request.get_data()
 
@@ -169,8 +170,8 @@ def update(id_exp=None):
     try:
         json.loads(json.dumps(jsont))
     except ValueError:
+        resp = {"status": "bad request"}
         current_app.logger.error("Invalid JSON")
-        # throw an error here and return out TBD
 
     valid_json = json.loads(jsont)
 
@@ -184,8 +185,7 @@ def update(id_exp=None):
         elif exp_name == "keep_track":
             experiment_class = KeepTrack
         else:
-            current_app.logger.info(
-                "%s not found in db" % (exp_name))
+            current_app.logger.error("%s does not exist" % (exp_name))
             resp = {"status": "bad request"}
 
         db_trial, new = db_utils.get_or_create(db.session, 
