@@ -129,7 +129,7 @@ def load(id_exp=None):
     try:
         unique_id, experiment_name, session_id = id_exp.split("&")
 
-        session = Session.query.filter((Session.session_id == session_id)).one()
+        session = Session.query.filter(Session.session_id == session_id).one()
     except SQLAlchemyError:
         current_app.logger.error(
             "DB error: Session not found.")
@@ -417,7 +417,7 @@ def quitter():
 
         try:
             # pull records from Session table to update
-            session = Session.query.filter((Session.session_id == session_id)).one()
+            session = Session.query.filter(Session.session_id == session_id).one()
             session.status = 6
             db.session.commit() ## Need to add?
             resp = {"status": "marked as quitter"}
@@ -432,36 +432,24 @@ def quitter():
 def worker_complete():
     """Complete worker."""
 
-    if 'debug' in request.args:
-        debug = request.args['debug']
-    else:
-        debug = False
-
-    if not ('uniqueId' in request.args) or not ('experimentName' in request.args) or not ('sessionid' in request.args):
+    if not utils.check_qs(request.args, ['sessionid', 'uniqueid']):
         raise ExperimentError('improper_inputs')
-
     else:
-        unique_id = request.args['uniqueId']
-        experiment_name = request.args['experimentName']
         session_id = request.args['sessionid']
+        unique_id = request.args['uniqueid']
         current_app.logger.info(
-            "Completed experiment %s, %s, %s" % (unique_id, experiment_name, session_id))
+            "Completed experiment %s" % (session_id))
         try:
             # pull records from Session table to update
-            session = Session.query.filter((Session.gfg_id == unique_id) & (
-                Session.exp_name == experiment_name) & (Session.session_id == session_id)).one()
-            print "** session: ", session
+            session = Session.query.filter(Session.session_id == session_id).one()
             session.status = 3
-
-            # Again not sure if we need to do this
-            session.begin_session = datetime.datetime.now()
-            db.session.add(session)
             db.session.commit()
 
         except SQLAlchemyError:
             raise ExperimentError('unknown_error')
 
-        return redirect(url_for(".index", uniqueId=unique_id, new=False, debug=debug))
+        ## This needs to be updated because I'm not sure where to route when all is done. 
+        return redirect(url_for(".index", uniqueId=unique_id, new=False))
 
 
 # Generic route
