@@ -17,3 +17,10 @@ def get_or_create(session, model, **kwargs):
 		session.add(instance)
 		session.commit()
 		return instance, True
+
+
+def clean_db_string(string):
+	string.replace("\t", "").replace(
+            "\n", "").replace("'", "")
+
+	return string
