@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
-from utils import nocache
 from errors import ExperimentError
 from models import Session, User, CategorySwitch, EventData, KeepTrack
 
@@ -13,9 +12,7 @@ import utils
 
 # Status codes
 NOT_ACCEPTED = 0
-ALLOCATED = 1       # given when the user has entered the instructions phase
-# given when the user has entered the actual experiment (and at this point
-# the trials need to be recorded )
+ALLOCATED = 1
 STARTED = 2
 COMPLETED = 3
 QUITEARLY = 6
@@ -34,7 +31,7 @@ def index():
 
 
 @experiments.route('/task', methods=['GET'])
-@nocache
+@utils.nocache
 def start_exp():
     """ Serves up the experiment applet. 
     If experiment is ongoing or completed, will not serve. 
@@ -143,6 +140,7 @@ def parse_id_exp(id_exp):
 
     return (gfg_id, exp_name, session_id), session, resp
 
+
 @experiments.route('/sync/<id_exp>', methods=['GET'])
 def load(id_exp=None):
     """
@@ -231,11 +229,11 @@ def quitter():
             session = Session.query.filter(
                 Session.session_id == session_id).one()
             session.status = 6
-            db.session.commit()  # Need to add?
+            db.session.commit() 
             resp = {"status": "marked as quitter"}
 
         except SQLAlchemyError:
-            raise ExperimentError('tried_to_quit')
+            resp = {"status": "bad request"}
 
     return jsonify(**resp)
 
