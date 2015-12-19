@@ -51,7 +51,7 @@ def start_exp():
     browser, platform = utils.check_browser_platform(request.user_agent)
 
 
-    # assert current_app.debug == False
+    # assert current_app.debug == False - interactive debugger
     # Check if user is in db, if not add & commit
     user, new_user = db_utils.get_or_create(db.session, User, gfg_id=gfg_id)
 
@@ -103,8 +103,8 @@ def enterexp():
     experiment_name = request.form['experimentname']
     session_id = request.form['sessionid']
 
-    session = Session.query.filter((Session.gfg_id == gfg_id) & (
-        Session.exp_name == experiment_name) & (Session.session_id == session_id)).first()
+    session = Session.query.filter_by(gfg_id=gfg_id, exp_name=experiment_name, 
+        session_id=session_id).first()
 
     if session:
         session.status = 2
