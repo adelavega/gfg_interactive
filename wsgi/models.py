@@ -102,8 +102,8 @@ class KeepTrack(db.Model):
     accuracy = db.Column(db.String)
     block = db.Column(db.Unicode)
     timestamp = db.Column(db.DateTime)
-    target_words = db.Column(db.String)
-    input_words = db.Column(db.String)
+    target_words = db.Column(db.Unicode)
+    input_words = db.Column(db.Unicode)
 
     ### FIX
     def __repr__(self):
@@ -127,8 +127,15 @@ class KeepTrack(db.Model):
         else:
             self.accuracy = trial_data['acc']
 
-        self.target_words = trial_data['target_words']
-        self.input_words = trial_data['input_words']
+        if 'target_words' not in trial_data:
+        	self.target_words = "null"
+        else:
+        	self.target_words = trial_data['target_words']
+
+        if 'input_words' not in trial_data:
+        	self.input_words = "null"
+        else:
+        	self.input_words = trial_data['input_words']
 
         # Datetime conversion
         self.timestamp= convert_timestamp(json_trial['dateTime'])
@@ -146,7 +153,7 @@ class EventData(db.Model):
         db.Integer, db.ForeignKey('session.session_id'))
     exp_name = db.Column(db.String(), nullable=False)
     event_type = db.Column(db.String())
-    value = db.Column(db.String()) ## Why split into three?
+    value = db.Column(db.Unicode()) ## Why split into three?
     interval = db.Column(db.Float)
     timestamp = db.Column(db.DateTime, nullable=False)  # to store the timestamp.
 
@@ -167,3 +174,29 @@ class EventData(db.Model):
 
         current_app.logger.info(
             "%s added to EventData for session id %s " % (self.ev_id, self.session_id))
+
+class QuestionData(db.Model):
+    """ QuestionData for all experiments """
+    q_id = db.Column(db.Integer, primary_key=True) 
+    gfg_id = db.Column(db.String(), nullable=False)
+    session_id = db.Column(
+        db.Integer, db.ForeignKey('session.session_id'))
+    exp_name = db.Column(db.String(), nullable=False)
+    engagement = db.Column(db.String) 
+    difficulty = db.Column(db.String) 
+    informative = db.Column(db.String) 
+    openended = db.Column(db.Unicode)
+
+    def __repr__(self):
+        pass
+
+    def add_json_data(self, json_event):
+        """ Parse and add backbone.js json data for a questionnaire """
+        self.engagement = json_event['engagement']
+        self.difficulty = json_event['difficulty']
+        self.informative = json_event['informative']
+        self.openended = clean_db_string(json_event['openended'])	
+
+        current_app.logger.info(
+            "%s added to QuestionData for session id %s " % (self.q_id, self.session_id))
+       
