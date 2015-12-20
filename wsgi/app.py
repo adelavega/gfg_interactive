@@ -12,7 +12,6 @@ from database import db
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.register_blueprint(experiments, url_prefix='/exp')
-#app.register_blueprint(dashboard, url_prefix='/dashboard')
 
 db.init_app(app)
 
