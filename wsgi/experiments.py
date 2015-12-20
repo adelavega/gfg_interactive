@@ -27,7 +27,7 @@ experiment_list = [
 @experiments.route('/', methods=['GET'])
 def index():
     """ Welcome page, but there is none so right now its blank"""
-    return render_template("begin.html")
+    return render_template("postquestionnaire.html")
 
 
 @experiments.route('/task', methods=['GET'])
@@ -62,12 +62,10 @@ def start_exp():
     # Otherwise, create new session and serve experiment
     disqualifying_sessions = Session.query.filter((Session.gfg_id == gfg_id) &
                                                   (Session.exp_name == exp_name) &
-                                                  ((Session.status == 3))).all()
+                                                  ((Session.status == 3))).first()
 
     if disqualifying_sessions:
-        current_app.logger.info(
-            "Found %d sessions in which the user quit early or completed", len(disqualifying_sessions))
-        raise ExperimentError('already_did_exp')
+        raise ExperimentError('already_did_exp', session_id=disqualifying_sessions.session_id)
 
     # Otherwise, allow participant to re-enter
     # (Are quit early signals sent back during instruction phase?)
@@ -266,7 +264,7 @@ def worker_complete():
             db.session.commit()
 
         except SQLAlchemyError:
-            raise ExperimentError('unknown_error')
+            raise ExperimentError('unknown_error', session_id=request.args['sessionid'])
 
         # This needs to be updated because I'm not sure where to route when all
         # is done.

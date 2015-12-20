@@ -10,7 +10,7 @@ class ExperimentError(Exception):
     Error class for experimental errors, such as subject not being found in
     the database.
     """
-    def __init__(self, value):
+    def __init__(self, value, **kwargs):
         experiment_errors = dict(
             already_started_exp = 1001,
             already_did_exp = 1002, 
@@ -23,6 +23,7 @@ class ExperimentError(Exception):
         )
         self.value = value
         self.errornum = experiment_errors[self.value]
+        self.kwargs = kwargs
 
     def __str__(self):
         return repr(self.value)
@@ -30,5 +31,5 @@ class ExperimentError(Exception):
     def error_page(self, request, contact_on_error):
         return render_template("error.html",
                                errornum = self.errornum,
-                               contact_address = contact_on_error,
-                               **request.args)
+                               contact_address = contact_on_error, 
+                               **self.kwargs)
