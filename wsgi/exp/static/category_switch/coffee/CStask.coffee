@@ -532,7 +532,6 @@ blocks = [
 	new Instruction instructions[16], null, "Start!", null, 'white', '#66FF99'
 	new Block "mixedReal2", "Get ready for 68 words!", (new FeedbackTrial(n[0], n[1]) for n in all_stim['mixed_real_2'])
 	new Questionnaire
-	new Debriefing
 ]
 
 currSession = new Session(blocks)
