@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from errors import ExperimentError
-from models import Session, User, CategorySwitch, EventData, KeepTrack
+from models import Session, User, CategorySwitch, EventData, KeepTrack, QuestionData
 
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
@@ -51,7 +51,7 @@ def start_exp():
     browser, platform = utils.check_browser_platform(request.user_agent)
 
 
-    # assert current_app.debug == False
+    # assert current_app.debug == False - interactive debugger
     # Check if user is in db, if not add & commit
     user, new_user = db_utils.get_or_create(db.session, User, gfg_id=gfg_id)
 
@@ -103,8 +103,8 @@ def enterexp():
     experiment_name = request.form['experimentname']
     session_id = request.form['sessionid']
 
-    session = Session.query.filter((Session.gfg_id == gfg_id) & (
-        Session.exp_name == experiment_name) & (Session.session_id == session_id)).first()
+    session = Session.query.filter_by(gfg_id=gfg_id, exp_name=experiment_name, 
+        session_id=session_id).first()
 
     if session:
         session.status = 2
@@ -208,6 +208,15 @@ def update(id_exp=None):
 
         if new:
             db_event.add_json_data(json_event)
+            db.session.commit()
+
+    # For the QuestionData, pass to parser, if not in db
+    for json_ques in valid_json['questiondata']:
+        db_ques, new = db_utils.get_or_create(db.session, QuestionData,
+            gfg_id=gfg_id, session_id=session_id, exp_name=exp_name)
+
+        if new:
+            db_ques.add_json_data(json_ques)
             db.session.commit()
 
     if resp is None:
