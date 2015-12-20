@@ -62,12 +62,12 @@ def start_exp():
     # Otherwise, create new session and serve experiment
     disqualifying_sessions = Session.query.filter((Session.gfg_id == gfg_id) &
                                                   (Session.exp_name == exp_name) &
-                                                  ((Session.status == 2) | (Session.status == 3))).all()
+                                                  ((Session.status == 3))).all()
 
     if disqualifying_sessions:
         current_app.logger.info(
             "Found %d sessions in which the user quit early or completed", len(disqualifying_sessions))
-        raise ExperimentError('already_did_exp_hit')
+        raise ExperimentError('already_did_exp')
 
     # Otherwise, allow participant to re-enter
     # (Are quit early signals sent back during instruction phase?)
