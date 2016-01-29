@@ -4,6 +4,7 @@
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
+
   <script>
   $(function() {
     $( "#slider" ).slider();
@@ -14,7 +15,17 @@
 <body>
 <link rel=stylesheet href="/static/css/bootstrap.min.css" type="text/css">
 <link rel=stylesheet href="/static/css/style.css" type="text/css">
-
+<script>
+	$('.nstSlider').nstSlider({
+    "left_grip_selector": ".leftGrip",
+    "right_grip_selector": ".rightGrip",
+    "value_bar_selector": ".bar",
+    "value_changed_callback": function(cause, leftValue, rightValue) {
+        $(this).parent().find('.leftLabel').text(leftValue);
+        $(this).parent().find('.rightLabel').text(rightValue);
+    }
+});
+</script
 <div id="container-questionnaire">
     <h3>You are finished!  </h3>
     <p class='lead'>Please answers these questions so we can improve this study.</p>
@@ -47,6 +58,15 @@
                         <option value="0">0 - Not engaged</option>
                     </select> -->
                     <p> Engagement slider here </p>
+                    <div class="nstSlider" data-range_min="-10" data-range_max="100" 
+                       data-cur_min="20"    data-cur_max="80">
+
+					    <div class="bar"></div>
+					    <div class="leftGrip"></div>
+					    <div class="rightGrip"></div>
+					</div>
+						<div class="leftLabel" />
+					<div class="rightLabel" />
                 </div>
             </div>
             <!-- end of a question -->
