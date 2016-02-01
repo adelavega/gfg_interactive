@@ -31,8 +31,9 @@ strong {
     bottom: 0px; /* Footer Height */
     left: 0px;
     right: 0px;
-    padding: 100px;
-    padding-top: 5%;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 10px;
     border: 18px solid #f3f3f3;
     background: white;
 }
