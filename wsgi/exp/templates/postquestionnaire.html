@@ -41,8 +41,8 @@
 
     <script>
     $(function() {
-        //ENGAGEMENT SLIDER
-        $("#engagement_slider").ionRangeSlider({
+        //LIKE SLIDER
+        $("#like_slider").ionRangeSlider({
             hide_min_max: true,
             //keyboard: true,
             min: 0,
@@ -138,16 +138,15 @@
 
         <form id="postquiz" action="debrief" method="post">
 
-
             <!-- beginning of a question -->
-            <div class="row">
-                <div class="col-md-6">
-                    <p>Rate how <b>ENGAGING</b> you found this test:</p>
+            <div class="row question">
+                <div class="col-md-5">
+                    <h4>How would you rate this test?</h4>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div>
-                        <input type="text" id="engagement_slider" name="engagement" value="" />
+                        <p> put the stars here </p>
                     </div>
                 </div>
             </div>
@@ -155,10 +154,10 @@
 
             <!-- beginning of a question -->
             <div class="row question">
-                <div class="col-md-6">
-                    Rate how <b>DIFFICULT</b> you found this test:
+                <div class="col-md-5">
+                    <h4>How difficult did you find this test?</h4>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div>
                         <input type="text" id="difficulty_slider" name="difficulty" value="" />
                     </div>
@@ -168,10 +167,25 @@
 
             <!-- beginning of a question -->
             <div class="row question">
-                <div class="col-md-6">
-                    Rate how <b>INFORMATIVE</b> the instructions were:
+                <div class="col-md-5">
+                    <h4>Did you like it?</h4>
                 </div>
-                <div class="col-md-4">
+
+                <div class="col-md-5">
+                    <div>
+                        <input type="text" id="like_slider" name="like" value="" />
+                    </div>
+                </div>
+            </div>
+            <!-- end of a question -->
+            
+
+            <!-- beginning of a question -->
+            <div class="row question">
+                <div class="col-md-5">
+                    <h4>Did you feel you understood the instructions?</h4>
+                </div>
+                <div class="col-md-5">
                     <div>
                         <input type="text" id="informative_slider" name="informative" value="" />
                     </div>
@@ -181,10 +195,10 @@
            
             <!-- beginning of a question -->
             <div class="row question">
-                <div class="col-md-6">
-                    Rate how <b>DISTRACTING</b> your environment was during the test:
+                <div class="col-md-5">
+                    <h4>How distracting was your environment? </h4>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div>
                         <input type="text" id="distraction_slider" name="distraction" value="" />
                     </div>
@@ -194,12 +208,24 @@
 
             <!-- beginning of a question -->
             <div class="row question">
-                <div class="col-md-6">
-                    Please leave any other comments you may have.
+                <div class="col-md-5">
+                    <h4>Did anyone help you?</h4>
                 </div>
-                <div class="col-md-4">
-                    <textarea id="openended" cols="45" rows="2">
-                    </textarea>
+                <div class="col-md-5">
+                    <div>
+                        <p> Yes or No toggle </p>
+                    </div>
+                </div>
+            </div>
+            <!-- end of a question -->
+
+            <!-- beginning of a question -->
+            <div class="row question">
+                <div class="col-md-5">
+                    <h4>Please provide any other comments to help us improve this test</h4>
+                </div>
+                <div class="col-md-5">
+                    <textarea id="openended" cols="60" rows="4"></textarea>
                 </div>
             </div>
             <!-- end of a question -->
