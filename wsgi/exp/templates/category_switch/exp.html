@@ -35,11 +35,54 @@
 	</script>
 
 	<script src="static/js/dataHandler.js"></script>
+  <style>
+  	/* Custom styling for sticky footer at bottom of page*/
+	html, body {
+	  height: 100%;
+	}
 
-   
+	#wrap {
+	  min-height: 100%;
+	  height: auto !important;
+	  height: 100%;
+	  margin: 0 auto -155px; /* the bottom margin is the negative value of the footer's height */
+	  overflow-x: hidden;
+	}
+
+	#main {
+	  height: 100%;
+	  overflow: auto;
+	  overflow-x: hidden;
+	  overflow-y: auto;
+	  padding-bottom:150px; /* this needs to be bigger than footer height*/
+	}
+
+	.footer {
+		clear:both;
+		padding-top: 1.5em;
+		padding-bottom: 1.5em;
+		background-color: #00294F;
+		font-size: 110%;
+		position: fixed;
+		width: 100%;
+		bottom: 0;
+		left: 0;
+		padding: 1rem;
+		text-align: center;
+		color: #efefef;
+		/*-webkit-box-sizing: border-box;
+		   -moz-box-sizing: border-box;
+		        box-sizing: border-box;*/
+		}
+
+	.footer a {
+	    color: #AEC4D9;
+	}  
+</style>
 
 </head>
 <body>
+<div id = "wrap">
 	<div class="modal fade"  id="error" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -59,29 +102,40 @@
 	      </div>
 	    </div>
 	  </div>
-	</div>
+	
 
 	<!-- New addition for banner -->
 	<header>
-      <nav class="nav nav-gfg-header">
-      <div class="container-fluid hidden-sm hidden-xs">
-        <div class="row">
-          <div class="col-md-6 col-sm-12 col-xs-12">
-            <a class="logo" rel="home" title="Home" ><img alt="Home" src="/static/img/header_logo.png"></a>
-          </div>
-        </div>	<!-- end of class="row"-->
-      </div> <!-- end of class="container"-->
-      </nav>
-    </header>
-
+		<nav class="nav nav-gfg-header">
+	      <div class="container-fluid hidden-sm hidden-xs">
+	        <div class="row">
+	          <div class="col-md-6 col-sm-12 col-xs-12">
+	            <a class="logo" rel="home" title="Home" ><img alt="Home" src="/static/img/header_logo.png"></a>
+	          </div>
+	        </div>	<!-- end of class="row"-->
+	      </div> <!-- end of class="container"-->
+	      </nav>
+   	</header>
+<div id = "main">
 	<br><br>
-
+	
 	<canvas id="canvas" width = 740 height = 500 style="position:absolute;padding-left: 0;left:50%; margin-left:-370px;z-index: 1"></canvas>
 	<!-- F-key -->
-	<button disabled id = "leftButton" class="btn btn-default" style="position:absolute;left: 50%; z-index:2; top:420px;margin-left:-380px;font:21px Arial; opacity:1"><img src="static/img/f_key.png" style="width:45px; height:45px" > <span id="leftText">Go back</div> </button>
+	<button disabled id = "leftButton" class="btn btn-default" style="position:absolute;left: 50%; z-index:2; top:420px;margin-left:-380px;font:21px Arial; opacity:1"><img src="static/img/f_key.png" style="width:45px; height:45px" > <span id="leftText">Go back</span> </button>
 	<!-- J-key -->
-	<button disabled id = "rightButton" class="btn btn-default" style="position:absolute;left: 50%; z-index:2; top:420px;margin-left:50px;font:21px Arial; opacity:1"><img src="static/img/j_key.png" style="width:45px; height:45px" > <span id="rightText">Continue</div> </button>
-
+	<button disabled id = "rightButton" class="btn btn-default" style="position:absolute;left: 50%; z-index:2; top:420px;margin-left:50px;font:21px Arial; opacity:1"><img src="static/img/j_key.png" style="width:45px; height:45px" > <span id="rightText">Continue</span> </button>
+	
 	<script src="static/{{ experimentname }}/js/CStask.js"></script>
+	</div> <!-- end of main -->
+</div> <!-- end of wrap -->
+	
+<!-- New addition footer -->
+<div class="footer">	
+    <div class="row" >
+      <div class="col-xs-12" align="center">&COPY; 2016 The Regents of the University of Michigan www.umich.edu. <a href="http://genesforgood.sph.umich.edu" target="_BLANK">Click here to learn more about this study</a></div>
+    </div>
+ </div> <!-- end of footer -->  
+    <!-- / footer -->
+
 </body>
 </html>

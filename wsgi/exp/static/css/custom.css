@@ -1,4 +1,6 @@
-/* Custom dialog/modal headers */
+/* 
+Module specific custom.css
+Custom dialog/modal headers for Category Switch */
 
 .dialog-header-error { background-color: #d2322d; }
 .dialog-header-correct { background-color: #5cb85c; }
@@ -10,6 +12,7 @@
 	.dialog-header-correct h4,
 	.dialog-header-wait span, .dialog-header-wait h4,
 	.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
+
 
 /* Ease Display */
 
@@ -60,4 +63,14 @@
 .btn-label {
 	width: 5em;
 	float: left;
+}
+/* footer */
+.footerz {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
 }
