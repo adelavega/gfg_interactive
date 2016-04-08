@@ -5,7 +5,7 @@
 
 ## Alternatively set this up for local server hosting using dataHandler.js
 
-dataHandler = DataHandler(uniqueid, experimentname)
+dataHandler = DataHandler(uniqueid, experimentname, sessionid)
 
 dataHandler.preloadPages(['postquestionnaire.html', experimentname + '/debriefing.html'])
 

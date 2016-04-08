@@ -7,6 +7,7 @@ jQuery ->
 # This is where you set the order of your blocks
 # Simply an array that will get passed down to the Session
 blocks = [
+	new kTrack.Instruction warning
 	new kTrack.Instruction kTrackInst[0]
 	new kTrack.InstGrid kTrackInst[1]
 	new kTrack.Instruction kTrackInst[2]
