@@ -176,15 +176,16 @@ class EventData(db.Model):
             "%s added to EventData for session id %s " % (self.ev_id, self.session_id))
 
 class QuestionData(db.Model):
-    """ QuestionData for all experiments """
+    """ Feedback-form question-data for all experiments """
     q_id = db.Column(db.Integer, primary_key=True) 
     gfg_id = db.Column(db.String(), nullable=False)
     session_id = db.Column(
         db.Integer, db.ForeignKey('session.session_id'))
     exp_name = db.Column(db.String(), nullable=False)
-    engagement = db.Column(db.String) 
+    rating = db.Column(db.String)           #engagement
     difficulty = db.Column(db.String) 
-    informative = db.Column(db.String) 
+    distraction = db.Column(db.String)      #informative
+    extrahelp = db.Column(db.String)        #added new
     openended = db.Column(db.Unicode)
 
     def __repr__(self):
@@ -192,9 +193,10 @@ class QuestionData(db.Model):
 
     def add_json_data(self, json_event):
         """ Parse and add backbone.js json data for a questionnaire """
-        self.engagement = json_event['engagement']
+        self.rating = json_event['engagement']
         self.difficulty = json_event['difficulty']
-        self.informative = json_event['informative']
+        self.distraction = json_event['informative']
+        self.extrahelp = "NEED TO ADD" 
         self.openended = clean_db_string(json_event['openended'])	
 
         current_app.logger.info(
