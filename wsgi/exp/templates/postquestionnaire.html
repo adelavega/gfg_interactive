@@ -112,8 +112,7 @@
 
                     <div class="col-md-7">
                         <div>
-
-                            <input id="input-4" value="" type="number" class="rating rating-loading" min=0 max=5 step=1 data-stars="5" data-size="sm" data-show-clear="false" data-show-caption="true">
+                             <input id="rating" value="" type="number" class="select rating rating-loading" min=0 max=5 step=1 data-stars="5" data-size="sm" data-show-clear="false" data-show-caption="true">
                         </div>
                     </div>
                      <div class="col-md-1">
@@ -128,22 +127,10 @@
                     <div class="col-md-4">
                         <h4>How difficult did you find this test?</h4>
                     </div>
-                    <!--  <div class="col-md-1">
-                        
-                    </div> -->
                     <div class="col-md-7">
-                        <!-- <div class="row">
-                            <div class="col-md-1">
-                                <i class="fa fa-minus-circle fa-2x minus1" aria-hidden="true" title="Clear"></i>
-                            </div>
-                            <div class="col-md-11"> -->
-                        <input type="text" id="difficulty_slider" name="difficulty" value="" />
-                            <!-- </div>
-                        </div> -->
+                        <input class="select" type="text" id="difficulty" name="difficulty" value="" />
                     </div>
-                    <div class="col-md-1">
-                    </div>
-
+                    <div class="col-md-1"></div>
                 </div>
                 <!-- end of a question -->
                 <hr>
@@ -152,19 +139,11 @@
                     <div class="col-md-4">
                         <h4>How distracting was your environment?</h4>
                     </div>
-                   <!--  <div class="col-md-1">
-                        
-                    </div> -->
+                   
                     <div class="col-md-7">
-                        
-                    <!-- <div class="col-md-1">
-                        <i class="fa fa-minus-circle fa-2x minus2" aria-hidden="true" title="Clear"></i>
-                    </div> -->
-                        <input type="text" id="distraction_slider" name="distraction" value="" />
-                    
+                        <input class="select" type="text" id="distraction" name="distraction" value="" />
                     </div>
-                    <div class="col-md-1">
-                    </div>
+                    <div class="col-md-1"></div>
                    
                 </div>
                 <!-- end of a question -->
@@ -178,16 +157,16 @@
                         <div>
                             <!-- <input type="checkbox" checked data-toggle="toggle" data-on="Yes" data-off="No"> -->
                             <fieldset>
-                               <div class="switch-toggle well">
-                                <input id="month6" name="view3" value="no_resp"type="radio" checked>
-                                <label for="month6" onclick="">No Response</label>
+                               <div class="select switch-toggle well">
+                                <input id="extrahelp" name="view3" value="no_resp" type="radio" checked>
+                                <label for="extrahelp" onclick="">No Response</label>
 
-                                <input id="hour3" name="view3" value="yes"type="radio" >
-                                <label for="hour3" onclick="">Yes</label>
+                                <input id="extrahelp" name="view3" value="yes"type="radio" >
+                                <label for="extrahelp" onclick="">Yes</label>
                                                                
 
-                                <input id="year7" name="view3" value="no" type="radio">
-                                <label for="year7" onclick="">No</label>
+                                <input id="extrahelp" name="view3" value="no" type="radio">
+                                <label for="extrahelp" onclick="">No</label>
 
                                 <a class="btn btn-primary btn-sm"></a>
                               </div>
@@ -206,7 +185,7 @@
                         <h4>Please let us know if you have any additional comments that could help us improve your experience.</h4>
                     </div>
                     <div class="col-md-8">
-                        <textarea id="openended" cols="80" rows="4" placeholder="Please enter feedback here. Thank you!"></textarea>
+                        <textarea class= "select" id="openended" cols="80" rows="4" placeholder="Please enter feedback here. Thank you!"></textarea>
                     </div>
                 </div>
                 <!-- end of a question -->

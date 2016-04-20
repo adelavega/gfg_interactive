@@ -44,7 +44,7 @@ var DataHandler = function(uniqueid, experimentname, sessionid) {
 			Each function builds up the JSON (key-value pairs)
 			initialize - just loads data about window resize etc. [Status = 0]
 			addTrialData - 'data' gets populated with each new trial in the instructions phase [Status=1]
-			addUnstructuredData - 'questiondata' gets populatedwith the questions only once the user neters the actual experiment phase [Status = 2]
+			addUnstructuredData - 'questiondata' gets populatedwith the questions only once the user enters the actual experiment phase [Status = 2]
 									maybe empty if the user decides to quit at instructions phase itself
 			addEvent - Just like addTrialData, 'eventdata' getspopulated with every new event & its details(of coz) as and when the event 'initialized' is triggerd
 		*/

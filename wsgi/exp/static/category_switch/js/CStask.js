@@ -211,7 +211,7 @@
 
     Questionnaire.prototype.start = function(exitTrial) {
       this.exitTrial = exitTrial;
-      return $('body').html(dataHandler.getPage('postquestionnaire.html'));
+      return $('body').html(dataHandler.getPage('postquestionnaire.html')); //Returns the feedback questionnaire
     };
 
     Questionnaire.prototype.buttonClick = function() {
@@ -222,6 +222,7 @@
           return any_blank = true;
         }
       });
+      
       if (any_blank) {
         console.log("Some blank");
         return $("#noqs").removeClass("hidden");
