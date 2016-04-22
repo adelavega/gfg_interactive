@@ -31,11 +31,10 @@ blocks = [
 	new kTrack.Block "7", "Ready?", kTrack.real_stim[6]
 
 	new common.Questionnaire
-	# new common.Debriefing
 ]
 
 ## These have to be at the bottom
 # Create the session with block array above
-currSession = new kTrack.Session(blocks)
+currSession = new common.Session(blocks)
 
 currSession.start()
