@@ -198,43 +198,19 @@
             			</button>
                     </div>
                 </div>
-       
+                <!--
+                if {{ experimentname }} ==  "category_switch"
+                    <script src="static/{{ experimentname }}/js/CStask.js"></script>
+                else
+                    
+                --> 
             </form>
             
             </div>
         </div>
         </div>
-            <!-- <div class="text-right">
-                <h3><a href="old_questionnaire.html"> Old Questionnaire</a></h3>
-            </div> -->
+            
         </div>
     </body>
-
-    <script>
-       $(document).ready(function(){
-             
-             
-            //change the color on Hover
-            $(".minus1,.minus2").hover(function()
-            {
-                $(this).css("color","#4d0000");
-            },
-            function()
-            {
-                $(this).css("color","");
-            });
-            
-              
-            $(".minus1").click(function(){
-                var slider1 = $("#difficulty_slider").data("ionRangeSlider");
-                slider1.reset();
-            });
-
-            $(".minus2").click(function(){
-                var slider2 = $("#distraction_slider").data("ionRangeSlider");
-                slider2.reset();
-            });
-        });
-</script>
 
 </html>
