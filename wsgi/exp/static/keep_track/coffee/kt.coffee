@@ -57,63 +57,6 @@ all_cats = ['Distances', 'Relatives', 'Animals', 'Countries', 'Metals', 'Colors'
 
 stimLength = 2000
 
-## Global session class
-## Iterates through blocks and other events such as instructions
-class Session
-	constructor: (@blocks) ->
-		hideButtons()
-		@blockNumber = 0
-		@max_blocks = @blocks.length
-		@imgs_loaded = 0
-		
-	start: ->
-		# This ensures that the images for the two buttons are loaded
-		# Could probably be done better
-		@imgs_loaded++
-		if @imgs_loaded is 2
-			@nextBlock()
-
-	# Go to next block
-	nextBlock: ->
-		@currBlock = @blocks[@blockNumber]
-		if @blockNumber >= @max_blocks
-			@endSession()
-		else
-			@blockNumber++
-
-			# Start the next block
-			# When block ends, call exitBlock with argument
-			# Argument is whether to continue or go back (instructions)
-			$('.tasktext').html(' ')
-			@currBlock.start ((arg1) => @exitBlock arg1)
-
-	# Go back a block	
-	prevBlock: ->
-		if @blockNumber > 1
-			@blockNumber = @blockNumber - 2
-
-		@currBlock = @blocks[@blockNumber]
-
-		@blockNumber++
-		@currBlock.start ((arg1) => @exitBlock arg1)
-
-	# This gets called when block is over.
-	# Saves data and goes back or forward
-	exitBlock: (next = true) ->
-		dataHandler.saveData()
-		if next
-			@nextBlock()
-		else
-			@prevBlock()
-	
-	# Ends it all
-	endSession: ->
-		dataHandler.completeHIT()
-		
-	# Handles button clocks (mostly for questionnaires)
-	buttonClick: (e) ->
-		@currBlock.buttonClick(e)
-
 
 ## Instruction block
 ## Will display instructions in @message, and set left and right buttons to said text
@@ -328,7 +271,6 @@ class Word
 		setTimeout (=> @exitTrial()), @stimLength
 
 @kTrack = {
-	Session
 	InstGrid
 	Block
 	PracBlock

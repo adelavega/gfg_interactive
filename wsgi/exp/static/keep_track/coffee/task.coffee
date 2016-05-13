@@ -7,6 +7,7 @@ jQuery ->
 # This is where you set the order of your blocks
 # Simply an array that will get passed down to the Session
 blocks = [
+	new kTrack.Instruction warning
 	new kTrack.Instruction kTrackInst[0]
 	new kTrack.InstGrid kTrackInst[1]
 	new kTrack.Instruction kTrackInst[2]
@@ -30,11 +31,10 @@ blocks = [
 	new kTrack.Block "7", "Ready?", kTrack.real_stim[6]
 
 	new common.Questionnaire
-	# new common.Debriefing
 ]
 
 ## These have to be at the bottom
 # Create the session with block array above
-currSession = new kTrack.Session(blocks)
+currSession = new common.Session(blocks)
 
 currSession.start()
