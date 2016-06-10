@@ -7,24 +7,24 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
         <!-- CSS, Ion Slider scripts-->
-        <link rel="stylesheet" href="css/normalize.css" />
-        <link rel="stylesheet" href="css/ion.rangeSlider.css" />
-        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="static/css/normalize.css" />
+        <link rel="stylesheet" href="static/css/ion.rangeSlider.css" />
+        <link rel="stylesheet" href="static/css/style.css" />
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
-        <script src="js/star-rating.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="static/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
+        <script src="static/js/star-rating.js" type="text/javascript"></script>
         <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
             <!-- SLIDER Skins -->
         <!-- <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css"/> -->
-        <link rel="stylesheet" href="css/ion.rangeSlider.skinHTML5.css" />
+        <link rel="stylesheet" href="static/css/ion.rangeSlider.skinHTML5.css" />
         <!-- <link rel="stylesheet" href="css/ion.rangeSlider.skinModern.css" /> -->
         <!-- <link rel="stylesheet" href="css/ion.rangeSlider.skinNice.css" /> -->
         <!-- <link rel="stylesheet" href="css/ion.rangeSlider.skinSimple.css" /> -->
 
         <!-- All JS -->
-        <script src="js/jquery-1.11.3.min.js"></script>
-        <script src="js/ion.rangeSlider.js"></script>
+        <script src="static/js/jquery-1.11.3.min.js"></script>
+        <script src="static/js/ion.rangeSlider.js"></script>
         <link rel=stylesheet href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css" />
         <!-- CSS and Ion Slider scripts-->
@@ -112,7 +112,7 @@
 
                     <div class="col-md-7">
                         <div>
-                             <input id="rating" value="" type="number" class="select rating rating-loading" min=0 max=5 step=1 data-stars="5" data-size="sm" data-show-clear="false" data-show-caption="true">
+                             <input id="rating" value="" type="number" class="rating" min=0 max=5 step=1 data-stars="5" data-size="sm" data-show-clear="false" data-show-caption="true">
                         </div>
                     </div>
                      <div class="col-md-1">
@@ -128,7 +128,7 @@
                         <h4>How difficult did you find this test?</h4>
                     </div>
                     <div class="col-md-7">
-                       <input type="text" id="difficulty_slider" name="difficulty" value="" />
+                       <input type="text" id="difficulty_slider" name="difficulty" value="" class="slider" />
                     </div>
                     <div class="col-md-1"></div>
                 </div>
@@ -141,41 +141,10 @@
                     </div>
                    
                     <div class="col-md-7">
-                       <input type="text" id="distraction_slider" name="distraction" value="" />
+                       <input type="text" id="distraction_slider" name="distraction" class="slider" value="" />
                     </div>
                     <div class="col-md-1"></div>
                    
-                </div>
-                <!-- end of a question -->
-                <hr>
-                <!-- beginning of a question -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <h4>Did anyone help you?</h4>
-                    </div>
-                    <div class="col-md-4">
-                        <div>
-                            <!-- <input type="checkbox" checked data-toggle="toggle" data-on="Yes" data-off="No"> -->
-                            <fieldset>
-                               <div class="select switch-toggle well">
-                                <input id="extrahelp" name="view3" value="no_resp" type="radio" checked>
-                                <label for="extrahelp" onclick="">No Response</label>
-
-                                <input id="extrahelp" name="view3" value="yes"type="radio" >
-                                <label for="extrahelp" onclick="">Yes</label>
-                                                               
-
-                                <input id="extrahelp" name="view3" value="no" type="radio">
-                                <label for="extrahelp" onclick="">No</label>
-
-                                <a class="btn btn-primary btn-sm"></a>
-                              </div>
-                            </fieldset>
-    					</div>
-                    </div>
-                    <div class="col-md-4">
-                        
-                    </div>
                 </div>
                 <!-- end of a question -->
                 <hr>

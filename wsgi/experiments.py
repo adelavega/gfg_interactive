@@ -27,7 +27,7 @@ experiment_list = [
 @experiments.route('/', methods=['GET'])
 def index():
     """ Welcome page, but there is none so right now its blank"""
-    return render_template("postquestionnaire.html")
+    return render_template("default.html")
 
 
 @experiments.route('/task', methods=['GET'])

@@ -1,4 +1,6 @@
-/*
+/* Heavily derived by psiTurk.js
+ *
+ * 
  * Requires:
  *     jquery
  *     backbone

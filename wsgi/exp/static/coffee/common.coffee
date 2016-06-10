@@ -6,6 +6,7 @@
 ## Alternatively set this up for local server hosting using dataHandler.js
 
 dataHandler = DataHandler(uniqueid, experimentname, sessionid)
+dataHandler.preloadPages(['postquestionnaire.html'])
 
 # Calculates the mean of a numeric array (for feedback)
 mean = (numericArray) ->
@@ -89,28 +90,30 @@ class Questionnaire
 	buttonClick: ->
 			console.log 'we are into clicking button now'
 
-			r = document.getElementById('#rating')
-			dataHandler.recordUnstructuredData 'rating', r
-			console.log 'value for rating is '+ r	
+			# r = document.getElementById('#rating')
+			# dataHandler.recordUnstructuredData 'rating', r
+			# console.log 'value for rating is '+ r	
 
-			d = document.getElementById('#difficulty_slider')
-			dataHandler.recordUnstructuredData 'difficulty', d
-			console.log 'value for difficulty is '+ d
+			# d = document.getElementById('#difficulty_slider')
+			# dataHandler.recordUnstructuredData 'difficulty', d
+			# console.log 'value for difficulty is '+ d
 
-			dist = document.getElementById('#distraction_slider')
-			dataHandler.recordUnstructuredData 'distraction', dist
-			console.log 'value for distraction is '+ dist	
+			# dist = document.getElementById('#distraction_slider')
+			# dataHandler.recordUnstructuredData 'distraction', dist
+			# console.log 'value for distraction is '+ dist	
 
-			e = document.getElementById('#extrahelp')
-			dataHandler.recordUnstructuredData 'extrahelp', e
-			console.log 'value for extrahelp is ' + e
+			# e = document.getElementById('#extrahelp')
+			# dataHandler.recordUnstructuredData 'extrahelp', e
+			# console.log 'value for extrahelp is ' + e
 
-			o = document.getElementById('#openended')
-			dataHandler.recordUnstructuredData 'openended', o
-			console.log 'value for openended is '+ o 
+			# o = document.getElementById('#openended')
+			# dataHandler.recordUnstructuredData 'openended', o
+			# console.log 'value for openended is '+ o 
+
+			dataHandler.recordUnstructuredData 'rating', $('#rating').val()
 
 			dataHandler.saveData()
-			@exitTrial()
+			# @exitTrial()
 		  
 
 
