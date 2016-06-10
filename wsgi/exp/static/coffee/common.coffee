@@ -80,27 +80,35 @@ class Session
 		@currBlock.buttonClick(e)
 
 # This class simply displays the post questionnaire and 
-# collects information from it once button is clocked
+# collects information from it once button is clicked
 class Questionnaire
 	start: (@exitTrial) ->
+		console.log 'we are into questionnnaire now'
 		$('body').html(dataHandler.getPage('postquestionnaire.html'))
 
 	buttonClick: ->
+			console.log 'we are into clicking button now'
 
-		any_blank = false
-		$("select").each (i, val) ->
-			if @value == "NONE"
-				any_blank = true
+			r = document.getElementById('#rating')
+			dataHandler.recordUnstructuredData 'rating', r
+			console.log 'value for rating is '+ r	
 
-		if any_blank
-			console.log("Some blank")
-			$("#noqs").removeClass("hidden")
+			d = document.getElementById('#difficulty_slider')
+			dataHandler.recordUnstructuredData 'difficulty', d
+			console.log 'value for difficulty is '+ d
 
-		else
-			$("select").each (i, val) ->
-				dataHandler.recordUnstructuredData @id, @value
+			dist = document.getElementById('#distraction_slider')
+			dataHandler.recordUnstructuredData 'distraction', dist
+			console.log 'value for distraction is '+ dist	
 
-			dataHandler.recordUnstructuredData 'openended', $('#openended').val()
+			e = document.getElementById('#extrahelp')
+			dataHandler.recordUnstructuredData 'extrahelp', e
+			console.log 'value for extrahelp is ' + e
+
+			o = document.getElementById('#openended')
+			dataHandler.recordUnstructuredData 'openended', o
+			console.log 'value for openended is '+ o 
+
 			dataHandler.saveData()
 			@exitTrial()
 		  

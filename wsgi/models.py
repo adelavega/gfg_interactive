@@ -191,12 +191,15 @@ class QuestionData(db.Model):
     def __repr__(self):
         pass
 
+    print "Inside add_json_data util in models.py"
     def add_json_data(self, json_event):
         """ Parse and add backbone.js json data for a questionnaire """
-        self.rating = json_event['engagement']
+        self.rating = json_event['rating']
+        print "Rating --", json_event['rating']
         self.difficulty = json_event['difficulty']
-        self.distraction = json_event['informative']
-        self.extrahelp = "NEED TO ADD" 
+        print "difficulty --", json_event['difficulty']
+        self.distraction = json_event['distraction']
+        self.extrahelp = json_event['extrahelp']
         self.openended = clean_db_string(json_event['openended'])	
 
         current_app.logger.info(

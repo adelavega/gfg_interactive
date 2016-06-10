@@ -175,6 +175,8 @@ def update(id_exp=None):
         resp = {"status": "bad request"}
         current_app.logger.error("Invalid JSON")
 
+    print "1) valid json---", valid_json
+
     current_app.logger.info(
         "Current trial: %s, unique_id: %s, experiment name: %s, session id: %s " % (valid_json['currenttrial'],
             valid_json['uniqueid'], valid_json['experimentname'], valid_json['sessionid']))
@@ -208,13 +210,17 @@ def update(id_exp=None):
             db_event.add_json_data(json_event)
             db.session.commit()
 
+    print "2) valid json---", valid_json
+    print "3) valid_json['questiondata']---", valid_json['questiondata']
     # For the QuestionData, pass to parser, if not in db
     for json_ques in valid_json['questiondata']:
+        current_app.logger.info("gonna add to question_data")
         db_ques, new = db_utils.get_or_create(db.session, QuestionData,
             gfg_id=gfg_id, session_id=session_id, exp_name=exp_name)
-
+        print "JSON QUESTION --", json_ques
         if new:
-            db_ques.add_json_data(json_ques)
+            db_ques.add_json_data(json_ques) 
+            current_app.logger.info("boom done")
             db.session.commit()
 
     if resp is None:
