@@ -213,18 +213,16 @@ def update(id_exp=None):
     print "2) valid json---", valid_json
     print "3) valid_json['questiondata']---", valid_json['questiondata']
     # For the QuestionData, pass to parser, if not in db
-    for json_ques in valid_json['questiondata']:
-        current_app.logger.info("gonna add to question_data")
-        db_ques, new = db_utils.get_or_create(db.session, QuestionData,
+    current_app.logger.info("gonna add to questionData")
+    db_ques, new = db_utils.get_or_create(db.session, QuestionData,
             gfg_id=gfg_id, session_id=session_id, exp_name=exp_name)
-        print "JSON QUESTION --", json_ques
-        if new:
-            db_ques.add_json_data(json_ques) 
-            current_app.logger.info("boom done")
-            db.session.commit()
+    db_ques.add_json_data(valid_json['questiondata']) 
+    current_app.logger.info("boom done")
+    db.session.commit()
 
     if resp is None:
         resp = {"status": "user data saved"}
+
     return jsonify(**resp)
 
 

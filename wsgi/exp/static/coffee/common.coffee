@@ -90,30 +90,20 @@ class Questionnaire
 	buttonClick: ->
 			console.log 'we are into clicking button now'
 
-			# r = document.getElementById('#rating')
-			# dataHandler.recordUnstructuredData 'rating', r
-			# console.log 'value for rating is '+ r	
-
-			# d = document.getElementById('#difficulty_slider')
-			# dataHandler.recordUnstructuredData 'difficulty', d
-			# console.log 'value for difficulty is '+ d
-
-			# dist = document.getElementById('#distraction_slider')
-			# dataHandler.recordUnstructuredData 'distraction', dist
-			# console.log 'value for distraction is '+ dist	
-
-			# e = document.getElementById('#extrahelp')
-			# dataHandler.recordUnstructuredData 'extrahelp', e
-			# console.log 'value for extrahelp is ' + e
-
-			# o = document.getElementById('#openended')
-			# dataHandler.recordUnstructuredData 'openended', o
-			# console.log 'value for openended is '+ o 
-
 			dataHandler.recordUnstructuredData 'rating', $('#rating').val()
+			console.log($('#rating').val())
+
+			dataHandler.recordUnstructuredData 'difficulty', $('#difficulty_slider').val()
+			console.log($('#difficulty_slider').val())
+
+			dataHandler.recordUnstructuredData 'distraction', $('#distraction_slider').val()
+			console.log($('#distraction_slider').val())
+
+			dataHandler.recordUnstructuredData 'openended', $('#openended').val()
+			console.log($('#openended').val())
 
 			dataHandler.saveData()
-			# @exitTrial()
+			@exitTrial()
 		  
 
 
