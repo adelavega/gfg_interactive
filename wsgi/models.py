@@ -190,12 +190,9 @@ class QuestionData(db.Model):
     def __repr__(self):
         pass
 
-    print "Inside questionData"
     def add_json_data(self, json_event):
-        print "Inside add_json_data functions"
         """ Parse and add backbone.js json data for a questionnaire """
         self.rating = json_event['rating']
-        print "Rating --", json_event['rating']
         if json_event['difficulty'] == "Not difficult":
             json_event['difficulty'] = "1"
         elif json_event['difficulty'] == "Somewhat difficult":
@@ -205,8 +202,7 @@ class QuestionData(db.Model):
         elif json_event['difficulty'] == "Not rated":
             json_event['difficulty'] = "0"
         self.difficulty = json_event['difficulty']
-        print "difficulty --", json_event['difficulty']
-
+      
         if json_event['distraction'] == "No distraction":
             json_event['distraction'] = "1"
         elif json_event['distraction'] == "Some distractions":
@@ -216,8 +212,7 @@ class QuestionData(db.Model):
         elif json_event['distraction'] == "Not rated":
             json_event['distraction'] = "0"
         self.distraction = json_event['distraction']
-        print "distraction --", json_event['distraction']
-
+       
         #self.extrahelp = json_event['extrahelp']
         self.openended = clean_db_string(json_event['openended'])	
 

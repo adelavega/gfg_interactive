@@ -88,20 +88,11 @@ class Questionnaire
 		$('body').html(dataHandler.getPage('postquestionnaire.html'))
 
 	buttonClick: ->
-			console.log 'we are into clicking button now'
-
+			
 			dataHandler.recordUnstructuredData 'rating', $('#rating').val()
-			console.log($('#rating').val())
-
 			dataHandler.recordUnstructuredData 'difficulty', $('#difficulty_slider').val()
-			console.log($('#difficulty_slider').val())
-
 			dataHandler.recordUnstructuredData 'distraction', $('#distraction_slider').val()
-			console.log($('#distraction_slider').val())
-
 			dataHandler.recordUnstructuredData 'openended', $('#openended').val()
-			console.log($('#openended').val())
-
 			dataHandler.saveData()
 			@exitTrial()
 		  
