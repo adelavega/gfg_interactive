@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from errors import ExperimentError
-from models import Session, User, CategorySwitch, EventData, KeepTrack, QuestionData
+from models import Session, Participant, CategorySwitch, EventData, KeepTrack, QuestionData
 
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
@@ -53,7 +53,7 @@ def start_exp():
 
     # assert current_app.debug == False - interactive debugger
     # Check if user is in db, if not add & commit
-    user, new_user = db_utils.get_or_create(db.session, User, gfg_id=gfg_id)
+    user, new_user = db_utils.get_or_create(db.session, Participant, gfg_id=gfg_id)
 
     current_app.logger.info("Subject: %s entered with %s platform and %s browser. New user: %s" %
                             (gfg_id, platform, browser, new_user))

@@ -4,8 +4,8 @@ from db_utils import clean_db_string
 from utils import convert_timestamp
 
 
-class User(db.Model):
-    """ User id table """
+class Participant(db.Model):
+    """ Participant id table """
     id = db.Column(db.Integer, primary_key=True)
     gfg_id = db.Column(db.String(), nullable=False)
 
