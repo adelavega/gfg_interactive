@@ -4,8 +4,8 @@ from db_utils import clean_db_string
 from utils import convert_timestamp
 
 
-class User(db.Model):
-    """ User id table """
+class Participant(db.Model):
+    """ Participant id table """
     id = db.Column(db.Integer, primary_key=True)
     gfg_id = db.Column(db.String(), nullable=False)
 
@@ -149,8 +149,7 @@ class EventData(db.Model):
     """ EventData for all experiments """
     ev_id = db.Column(db.Integer, primary_key=True) 
     gfg_id = db.Column(db.String(), nullable=False)
-    session_id = db.Column(
-        db.Integer, db.ForeignKey('session.session_id'))
+    session_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))
     exp_name = db.Column(db.String(), nullable=False)
     event_type = db.Column(db.String())
     value = db.Column(db.Unicode()) ## Why split into three?
@@ -176,25 +175,45 @@ class EventData(db.Model):
             "%s added to EventData for session id %s " % (self.ev_id, self.session_id))
 
 class QuestionData(db.Model):
-    """ QuestionData for all experiments """
+    """ Feedback-form question-data for all experiments """
     q_id = db.Column(db.Integer, primary_key=True) 
     gfg_id = db.Column(db.String(), nullable=False)
     session_id = db.Column(
         db.Integer, db.ForeignKey('session.session_id'))
     exp_name = db.Column(db.String(), nullable=False)
-    engagement = db.Column(db.String) 
-    difficulty = db.Column(db.String) 
-    informative = db.Column(db.String) 
-    openended = db.Column(db.Unicode)
+    rating = db.Column(db.String())          
+    difficulty = db.Column(db.String()) 
+    distraction = db.Column(db.String())      #informative
+    #extrahelp = db.Column(db.String)        #added new
+    openended = db.Column(db.Unicode())
 
     def __repr__(self):
         pass
 
     def add_json_data(self, json_event):
         """ Parse and add backbone.js json data for a questionnaire """
-        self.engagement = json_event['engagement']
+        self.rating = json_event['rating']
+        if json_event['difficulty'] == "Not difficult":
+            json_event['difficulty'] = "1"
+        elif json_event['difficulty'] == "Somewhat difficult":
+            json_event['difficulty'] = "5"
+        elif json_event['difficulty'] == "Very difficult":
+            json_event['difficulty'] = "10"
+        elif json_event['difficulty'] == "Not rated":
+            json_event['difficulty'] = "0"
         self.difficulty = json_event['difficulty']
-        self.informative = json_event['informative']
+      
+        if json_event['distraction'] == "No distraction":
+            json_event['distraction'] = "1"
+        elif json_event['distraction'] == "Some distractions":
+            json_event['distraction'] = "5"
+        elif json_event['distraction'] == "Frequent interruptions":
+            json_event['distraction'] = "10"
+        elif json_event['distraction'] == "Not rated":
+            json_event['distraction'] = "0"
+        self.distraction = json_event['distraction']
+       
+        #self.extrahelp = json_event['extrahelp']
         self.openended = clean_db_string(json_event['openended'])	
 
         current_app.logger.info(

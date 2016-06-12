@@ -6,6 +6,7 @@
 ## Alternatively set this up for local server hosting using dataHandler.js
 
 dataHandler = DataHandler(uniqueid, experimentname, sessionid)
+dataHandler.preloadPages(['postquestionnaire.html'])
 
 # Calculates the mean of a numeric array (for feedback)
 mean = (numericArray) ->
@@ -80,26 +81,17 @@ class Session
 		@currBlock.buttonClick(e)
 
 # This class simply displays the post questionnaire and 
-# collects information from it once button is clocked
+# collects information from it once button is clicked
 class Questionnaire
 	start: (@exitTrial) ->
+		console.log 'we are into questionnnaire now'
 		$('body').html(dataHandler.getPage('postquestionnaire.html'))
 
 	buttonClick: ->
-
-		any_blank = false
-		$("select").each (i, val) ->
-			if @value == "NONE"
-				any_blank = true
-
-		if any_blank
-			console.log("Some blank")
-			$("#noqs").removeClass("hidden")
-
-		else
-			$("select").each (i, val) ->
-				dataHandler.recordUnstructuredData @id, @value
-
+			
+			dataHandler.recordUnstructuredData 'rating', $('#rating').val()
+			dataHandler.recordUnstructuredData 'difficulty', $('#difficulty_slider').val()
+			dataHandler.recordUnstructuredData 'distraction', $('#distraction_slider').val()
 			dataHandler.recordUnstructuredData 'openended', $('#openended').val()
 			dataHandler.saveData()
 			@exitTrial()

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from errors import ExperimentError
-from models import Session, User, CategorySwitch, EventData, KeepTrack, QuestionData
+from models import Session, Participant, CategorySwitch, EventData, KeepTrack, QuestionData
 
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
@@ -27,7 +27,7 @@ experiment_list = [
 @experiments.route('/', methods=['GET'])
 def index():
     """ Welcome page, but there is none so right now its blank"""
-    return render_template("postquestionnaire.html")
+    return render_template("default.html")
 
 
 @experiments.route('/task', methods=['GET'])
@@ -53,7 +53,7 @@ def start_exp():
 
     # assert current_app.debug == False - interactive debugger
     # Check if user is in db, if not add & commit
-    user, new_user = db_utils.get_or_create(db.session, User, gfg_id=gfg_id)
+    user, new_user = db_utils.get_or_create(db.session, Participant, gfg_id=gfg_id)
 
     current_app.logger.info("Subject: %s entered with %s platform and %s browser. New user: %s" %
                             (gfg_id, platform, browser, new_user))
@@ -209,16 +209,14 @@ def update(id_exp=None):
             db.session.commit()
 
     # For the QuestionData, pass to parser, if not in db
-    for json_ques in valid_json['questiondata']:
-        db_ques, new = db_utils.get_or_create(db.session, QuestionData,
-            gfg_id=gfg_id, session_id=session_id, exp_name=exp_name)
-
-        if new:
-            db_ques.add_json_data(json_ques)
-            db.session.commit()
+    db_ques, new = db_utils.get_or_create(db.session, QuestionData,
+                gfg_id=gfg_id, session_id=session_id, exp_name=exp_name)
+    db_ques.add_json_data(valid_json['questiondata']) 
+    db.session.commit()
 
     if resp is None:
         resp = {"status": "user data saved"}
+
     return jsonify(**resp)
 
 
