@@ -3,3 +3,4 @@ wsgi/migrations
 *~
 config.ini
 wsgi/config.py
+*.DS_Store
