@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """ This module provides the backend Flask server. """
-import os
-
 # Setup flask
 from flask import Flask, render_template
 from experiments import experiments
@@ -9,8 +7,14 @@ from experiments import experiments
 
 from database import db
 
+import ConfigParser
+
+# Load configuration
+Config = ConfigParser.ConfigParser()
+Config.read("../config.ini")
+
 app = Flask(__name__)
-app.config.from_object(os.environ['APP_SETTINGS'])
+app.config.from_object(Config.get("General", "config"))
 app.register_blueprint(experiments, url_prefix='/exp')
 
 db.init_app(app)
