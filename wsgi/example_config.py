@@ -16,6 +16,10 @@ class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
 
+class HomeConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
+
 class TestingConfig(Config):
     TESTING = True
 
