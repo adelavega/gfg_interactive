@@ -1,3 +1,5 @@
 *.pyc
 wsgi/migrations
 *~
+config.ini
+wsgi/config.py
