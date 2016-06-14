@@ -39,11 +39,8 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/aleph4/Dropbox/projects/genes_good/gfg_server"
+VIRTUAL_ENV="/Users/aleph4/Dropbox/projects/genes_good/gfg_colorado_server"
 export VIRTUAL_ENV
-
-export DATABASE_URL="postgresql://localhost/gfg_dev"
-export APP_SETTINGS="config.DevelopmentConfig"
 
 _OLD_VIRTUAL_PATH="$PATH"
 PATH="$VIRTUAL_ENV/bin:$PATH"

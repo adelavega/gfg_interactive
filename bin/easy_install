@@ -1,4 +1,4 @@
-#!/Users/aleph4/Dropbox/projects/genes_good/gfg_server/bin/python
+#!/Users/aleph4/Dropbox/projects/genes_good/gfg_colorado_server/bin/python2.7
 # EASY-INSTALL-ENTRY-SCRIPT: 'setuptools==0.9.8','console_scripts','easy_install'
 __requires__ = 'setuptools==0.9.8'
 import sys

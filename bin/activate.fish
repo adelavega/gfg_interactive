@@ -32,7 +32,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/aleph4/Dropbox/projects/genes_good/gfg_server"
+set -gx VIRTUAL_ENV "/Users/aleph4/Dropbox/projects/genes_good/gfg_colorado_server"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

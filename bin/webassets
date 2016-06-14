@@ -1,4 +1,4 @@
-#!/Users/aleph4/Dropbox/projects/genes_good/gfg_server/bin/python
+#!/Users/aleph4/Dropbox/projects/genes_good/gfg_colorado_server/bin/python2.7
 # EASY-INSTALL-ENTRY-SCRIPT: 'webassets==0.10.1','console_scripts','webassets'
 __requires__ = 'webassets==0.10.1'
 import sys

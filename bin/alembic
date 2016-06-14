@@ -1,4 +1,4 @@
-#!/Users/aleph4/Dropbox/projects/genes_good/gfg_server/bin/python
+#!/Users/aleph4/Dropbox/projects/genes_good/gfg_colorado_server/bin/python2.7
 # EASY-INSTALL-ENTRY-SCRIPT: 'alembic==0.7.6','console_scripts','alembic'
 __requires__ = 'alembic==0.7.6'
 import sys
