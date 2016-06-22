@@ -7,7 +7,7 @@ from utils import convert_timestamp
 class Participant(db.Model):
     """ Participant id table """
     id = db.Column(db.Integer, primary_key=True)
-    gfg_id = db.Column(db.String(), nullable=False)
+    gfg_id = db.Column(db.String(32), nullable=False)
 
     def __repr__(self):
         return "Store_user values (%s, %s)" % (self.id, self.gfg_id)
@@ -16,11 +16,11 @@ class Participant(db.Model):
 class Session(db.Model):
     """ Session table. One is allocated per new valid visit """
     session_id = db.Column(db.Integer, primary_key=True) 
-    gfg_id = db.Column(db.String(), nullable=False)
-    browser = db.Column(db.String(), nullable=False)
-    platform = db.Column(db.String(), nullable=False)
-    status = db.Column(db.Integer(), nullable=False)
-    exp_name = db.Column(db.String(), nullable=False)
+    gfg_id = db.Column(db.String(32), nullable=False)
+    browser = db.Column(db.String(32), nullable=False)
+    platform = db.Column(db.String(32), nullable=False)
+    status = db.Column(db.Integer(32), nullable=False)
+    exp_name = db.Column(db.String(32), nullable=False)
     begin_session = db.Column(db.DateTime, nullable=False)
     begin_experiment = db.Column(db.DateTime)
     datastring = db.Column(db.String())
@@ -33,7 +33,7 @@ class Session(db.Model):
 class CategorySwitch(db.Model):
     """ CategorySwitch experiment table """
     cs_id = db.Column(db.Integer, primary_key=True) 
-    gfg_id = db.Column(db.String(), nullable=False)
+    gfg_id = db.Column(db.String(32), nullable=False)
     session_id = db.Column(
         db.Integer, db.ForeignKey('session.session_id'))
     trial_num = db.Column(db.Integer)
@@ -94,7 +94,7 @@ class CategorySwitch(db.Model):
 class KeepTrack(db.Model):
     """ KeepTrack experiment table """
     kt_id = db.Column(db.Integer, primary_key=True) 
-    gfg_id = db.Column(db.String(), nullable=False)
+    gfg_id = db.Column(db.String(32), nullable=False)
     session_id = db.Column(
         db.Integer, db.ForeignKey('session.session_id')) 
     trial_num = db.Column(db.Integer)
@@ -148,10 +148,10 @@ class KeepTrack(db.Model):
 class EventData(db.Model):
     """ EventData for all experiments """
     ev_id = db.Column(db.Integer, primary_key=True) 
-    gfg_id = db.Column(db.String(), nullable=False)
+    gfg_id = db.Column(db.String(32), nullable=False)
     session_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))
     exp_name = db.Column(db.String(), nullable=False)
-    event_type = db.Column(db.String())
+    event_type = db.Column(db.String(32))
     value = db.Column(db.Unicode()) ## Why split into three?
     interval = db.Column(db.Float)
     timestamp = db.Column(db.DateTime, nullable=False)  # to store the timestamp.
@@ -177,15 +177,15 @@ class EventData(db.Model):
 class QuestionData(db.Model):
     """ Feedback-form question-data for all experiments """
     q_id = db.Column(db.Integer, primary_key=True) 
-    gfg_id = db.Column(db.String(), nullable=False)
+    gfg_id = db.Column(db.String(32), nullable=False)
     session_id = db.Column(
         db.Integer, db.ForeignKey('session.session_id'))
-    exp_name = db.Column(db.String(), nullable=False)
-    rating = db.Column(db.String())          
-    difficulty = db.Column(db.String()) 
-    distraction = db.Column(db.String())      #informative
+    exp_name = db.Column(db.String(32), nullable=False)
+    rating = db.Column(db.String(32))          
+    difficulty = db.Column(db.String(32)) 
+    distraction = db.Column(db.String(32))      #informative
     #extrahelp = db.Column(db.String)        #added new
-    openended = db.Column(db.Unicode())
+    openended = db.Column(db.Unicode(32))
 
     def __repr__(self):
         pass
