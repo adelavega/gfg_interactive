@@ -1,13 +1,7 @@
-# Vrieze Lab Server
-This is the base code that will be used for the Genes For Good extension server and the COTwin study to serve executive function tasks. This server can be easily expanded to server other javascript tasks of any kind. 
-
-To give credit where credit is due, this is a heavily modified version of the awesome psiTurk project. I stripped all the stuff I didn't need and added other functionality. 
-
-Below, I describe the organization of the project, how to add tasks to the project, and how to deploy the server. 
+# GfG Interactive Survey Module
+This module serves interactive javascript surveys (such as cognitive tasks) for GenesforGood. This module was original based on psiTurk, and uses an identical javascript API to send data back to the server (here called dataHandler). 
 
 ## Installation
-This project has a few dependencies, but  not all are necessary for serving the tasks. The more complex dependencies are for the dashboard.
-
 Basic dependencies:
 
 * Flask
@@ -15,28 +9,29 @@ Basic dependencies:
 * Flask-SQLAlchemy
 * Alembic
 * Psycopg2
-* PostgreSQL database
 
-Most of these are quite easy to install using pip. The easiest way to install a PostgreSQL database on a mac is using postgres.app. 
+To install all dependencies run the following command. It is reccomended you do this in a virtual environment (set up virtualenv one folder above this one).
 
-## Testing & Deployment
-### Local testing
-To test this app localy, install the dependencies and set the URI of your database using the 'DATABASE_URL' environment variable. E.g.:
+    pip -r requirements.txt
 
-    export DATABASE_URL="postgresql://localhost/gfg_dev"
-This is automatically set up for you if you launch the virtualenv in this repo:
+### Configuration
+The type of configuration is set using the config.ini file. By default, it is set to "HomeConfig" which is for local testing. Edit this file to match the appropriate configuration (e.g. Staging, Production).
 
-    source bin/activate
+The file wsgi/config.py specifies configuration details, such as the database URI and credentials to use. 
+COPY example_config.py to config.py and edit with the appropriate details. Ensure that you have credted a specific database to be used. 
 
-Next, you must initiate the database and migrate it for the first time using the following commands
+### Database set up and inital migration
+We use Alembic to track database migrations. To initate the db and perform the first migration, run the following commands:
 
     python manage.py db init
     python manage.py db migrate
     python manage.py db upgrade
     
-Any time you change the data model in models.py, run the last two commands again to update your SQL database. 
+    
+## Deployment and testing
+### Local testing
 
-If you've done everything right, you should be able to launch flask locally to test:
+To test locally, simply type the following:
 
     python wsgi/app.py
    
@@ -45,11 +40,9 @@ This should launch on localhost for your local testing pleasure.
 ### OpenShift deployment
 OpenShift is a great platform-as-a-service (PaaS) that enables rapid deployment using Github. The easiest way to launch this service is to create a new app on OpenShift that has both "Python 2.7" and "PostgreSQL" installed as cartridges. OpenShift allows you to use a Github repository as a starting point for your app. Simply point it to this repo and it should install everything correctly. 
 
-The PostgreSQL cartridge has a URI that includes the authentication information and is saved as a environment variable. This app will automatically read it (in accordance with config.py) as long as you tell it that you are testing on OpenShift. Do so by setting the environment variable APP_SETTINGS to config.StagingConfig using the rhc command line tools:
+The PostgreSQL cartridge has a URI that includes the authentication information and is saved as a environment variable. This app will automatically read it (in accordance with config.py) as long as you tell it that you are testing on OpenShift. Do so by setting config.ini to config.OpenShift using the rhc command line tools:
 
-    rhc env set APP_SETTINGS="config.StagingConfig" -a App_Name
-    
- If everything went well, your app should be up and running on rhcloud. 
+If everything went well, your app should be up and running on rhcloud. 
 
 ## Documentation
 Here I will document various aspects of this project in order to allow you to edit the server and deploy new assesments. 
