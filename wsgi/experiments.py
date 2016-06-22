@@ -208,11 +208,12 @@ def update(id_exp=None):
             db_event.add_json_data(json_event)
             db.session.commit()
 
-    # For the QuestionData, pass to parser, if not in db
-    db_ques, new = db_utils.get_or_create(db.session, QuestionData,
-                gfg_id=gfg_id, session_id=session_id, exp_name=exp_name)
-    db_ques.add_json_data(valid_json['questiondata']) 
-    db.session.commit()
+    if valid_json['questiondata'] != {}:
+        # For the QuestionData, pass to parser, if not in db
+        db_ques, new = db_utils.get_or_create(db.session, QuestionData,
+                    gfg_id=gfg_id, session_id=session_id, exp_name=exp_name)
+        db_ques.add_json_data(valid_json['questiondata']) 
+        db.session.commit()
 
     if resp is None:
         resp = {"status": "user data saved"}
