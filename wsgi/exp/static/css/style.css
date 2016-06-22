@@ -6,6 +6,7 @@ body {
     color: black;
     font-weight: 300; 
     font-size: 13pt;
+    overflow-x:hidden;
 }
 
 
