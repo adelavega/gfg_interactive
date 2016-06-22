@@ -23,7 +23,7 @@ class Session(db.Model):
     exp_name = db.Column(db.String(32), nullable=False)
     begin_session = db.Column(db.DateTime, nullable=False)
     begin_experiment = db.Column(db.DateTime)
-    datastring = db.Column(db.String())
+    datastring = db.Column(db.String(32))
 
     def __repr__(self):
         return "Session values (%s, %s, %s, %s, %s)" % (self.session_id,
@@ -150,7 +150,7 @@ class EventData(db.Model):
     ev_id = db.Column(db.Integer, primary_key=True) 
     gfg_id = db.Column(db.String(32), nullable=False)
     session_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))
-    exp_name = db.Column(db.String(), nullable=False)
+    exp_name = db.Column(db.String(32), nullable=False)
     event_type = db.Column(db.String(32))
     value = db.Column(db.Unicode()) ## Why split into three?
     interval = db.Column(db.Float)
