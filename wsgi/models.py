@@ -19,7 +19,7 @@ class Session(db.Model):
     gfg_id = db.Column(db.String(32), nullable=False)
     browser = db.Column(db.String(32), nullable=False)
     platform = db.Column(db.String(32), nullable=False)
-    status = db.Column(db.Integer(32), nullable=False)
+    status = db.Column(db.Integer(), nullable=False)
     exp_name = db.Column(db.String(32), nullable=False)
     begin_session = db.Column(db.DateTime, nullable=False)
     begin_experiment = db.Column(db.DateTime)
