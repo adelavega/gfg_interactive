@@ -99,7 +99,7 @@ class KeepTrack(db.Model):
         db.Integer, db.ForeignKey('session.session_id')) 
     trial_num = db.Column(db.Integer)
     reaction_time = db.Column(db.Float)
-    accuracy = db.Column(db.String)
+    accuracy = db.Column(db.String(32))
     block = db.Column(db.Unicode(32))
     timestamp = db.Column(db.DateTime)
     target_words = db.Column(db.Unicode(32))
