@@ -11,6 +11,7 @@ Basic dependencies:
 
 If using Postgres:
 * Psycopg2
+
 If using MySQL:
 * mysql-python
 
