@@ -7,4 +7,4 @@ build/
 dist/
 gfg-interactive.egg-info
 gfginteractive.egg-info/
-virtualenv/
+venv/

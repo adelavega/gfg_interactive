@@ -6,15 +6,14 @@ from experiments import experiments
 #from dashboard import dashboard
 import os
 from database import db
-
 import ConfigParser
 
 # Load configuration
 Config = ConfigParser.ConfigParser()
-Config.read(os.path.join(os.path.dirname(__file__), "config.ini"))
+Config.read("/var/www/config.ini")
 
 app = Flask(__name__)
-app.config.from_object(Config.get("General", "config"))
+app.config.from_pyfile('/var/www/config.py')
 app.register_blueprint(experiments, url_prefix='/exp')
 
 db.init_app(app)

@@ -1,4 +1,7 @@
-activate_this = '/home/alejandro/gfg_interactive/virtualenv/bin/activate_this.py'
+activate_this = '/var/www/gfginteractive/venv/bin/activate_this.py'
 execfile(activate_this, dict(__file__=activate_this))
 
-from gfginteractive import app as application
+import sys
+sys.path.insert(0, "/var/www/gfginteractive/")
+
+from gfg_interactive import app as application
