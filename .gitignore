@@ -3,3 +3,7 @@ wsgi/migrations
 *~
 wsgi/config.py
 *.DS_Store
+build/
+dist/
+gfg-interactive.egg-info
+gfg_interactive.egg-info/
