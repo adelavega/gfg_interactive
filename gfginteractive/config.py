@@ -1,0 +1,39 @@
+import os
+
+class Config(object):
+    DEBUG = False
+    TESTING = False
+    CSRF_ENABLED = True
+    PROPAGATE_EXCEPTIONS = True
+
+class ProductionConfig(Config):
+    DEBUG = False
+
+    SQLALCHEMY_DATABASE_URI = "??"
+
+class StagingConfig(Config):
+    DEVELOPMENT = False
+    DEBUG = True
+
+    SQLALCHEMY_DATABASE_URI = "??"
+
+class DevelopmentConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
+
+    SQLALCHEMY_DATABASE_URI = "mysql://gfgdev2:3dmDVYvhGR7eubQ3@localhost:3306/gfg-interactive"
+
+class HomeConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
+
+    SQLALCHEMY_DATABASE_URI = "postgresql://localhost/gfg_dev"
+
+class OpenShift(Config):
+    DEVELOPMENT = False
+    DEBUG = False
+
+    try:
+        SQLALCHEMY_DATABASE_URI = os.environ['OPENSHIFT_POSTGRESQL_DB_URL']
+    except:
+        pass

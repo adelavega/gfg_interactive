@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Cognitive Tests</title>
+        <link rel=stylesheet href="/static/css/bootstrap.min.css" type="text/css">
+        <link rel=stylesheet href="/static/css/style.css" type="text/css">
+        </head>
+    <body>
+        <div class="container-fluid">
+                <div class="row"><div class="col-md-1"><br><br> </div></div>
+                <div class="row">
+                <div class="col-md-1"></div>
+                    <div class="col-md-2"><br>
+                        <img id="adlogo" src="/static/img/GFG_cog.png" alt="Lab Logo" />
+                    </div>
+
+                    <div class="col-md-7">
+                {% if errornum == 1002 %}
+                              <h1>You have already completed this test</h1>
+                        <hr>
+                
+                <div class="alert alert-success">
+                    
+                        <p>Thank you for having already completed this test!<br><br>
+                        
+                        We will contact you if there is an opportunitiy to re-take this test in the future. 
+                        Thanks again. </p><br>
+
+                    
+
+                {% else %}
+
+                              <h1>Sorry, there was an error</h1>
+                        <hr>
+                
+                <div class="alert alert-danger">
+                        <p>Sorry, there was an unexpected error loading this page. <br><p>
+
+                {% endif %}
+
+                        <p>
+                            If you feel you
+                            have reached this page in error and want more information, please email
+                            <a href="mailto:{{contact_address}}">{{contact_address}}</a>
+                            and send the following information:
+                        </p>
+                        <p>
+                            Code: #{{ errornum }}<br>
+                            {% if session_id %} Session: #{{ session_id }}<br> {% endif %}
+                        </p>
+
+                </div>
+                           
+        </div>
+    </body>
+</html>
