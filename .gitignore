@@ -6,5 +6,5 @@ wsgi/config.py
 build/
 dist/
 gfg-interactive.egg-info
-gfg_interactive.egg-info/
+gfginteractive.egg-info/
 virtualenv/
