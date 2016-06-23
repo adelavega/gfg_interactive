@@ -8,9 +8,14 @@ Basic dependencies:
 * Flask-Migrate
 * Flask-SQLAlchemy
 * Alembic
+
+If using Postgres:
 * Psycopg2
 
-To install all dependencies run the following command. It is reccomended you do this in a virtual environment (set up virtualenv one folder above this one).
+If using MySQL:
+* mysql-python
+
+To install dependencies run the following command. It is reccomended you do this in a virtual environment (set up virtualenv one folder above this one). Make sure to also install the correct dependency for your DB manually.
 
     pip -r requirements.txt
 

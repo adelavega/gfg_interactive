@@ -1,10 +1,13 @@
-from setuptools import setup
+import setuptools
 
-setup(name='GfGServer',
-      version='1.0',
-      description='OpenShift App',
-      author='Your Name',
-      author_email='delavega@colorado.edu',
-      url='https://www.python.org/community/sigs/current/distutils-sig',
-      install_requires=['Flask>=0.7.2', 'MarkupSafe'],
-     )
+
+setuptools.setup(name='gfginteractive',
+                 version='0.2.1',
+                 description='GenesforGood interactive survey module',
+                 long_description=open('README.md').read().strip(),
+                 author='Alejandro de la Vega',
+                 author_email='delavega@colorado.edu',
+                 url='https://github.com/delavega/gfg_interactive/',
+                 packages=['gfginteractive'],
+                 install_requires=[],
+                 license='MIT License')
