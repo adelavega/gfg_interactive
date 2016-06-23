@@ -7,3 +7,4 @@ build/
 dist/
 gfg-interactive.egg-info
 gfg_interactive.egg-info/
+virtualenv/
