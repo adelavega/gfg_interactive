@@ -48,6 +48,9 @@ def start_exp():
     current_app.logger.info("Subject: %s entered with %s platform and %s browser" %
                             (gfg_id, platform, browser))
 
+    if not db_utils.gfg_user_exists(current_app.config['SQLALCHEMY_DATABASE_URI'], gfg_id):
+        raise ExperimentError('user_access_denied')
+
     # Check if user is in db, if not add & commit
     user, new_user = db_utils.get_or_create(db.session, Participant, gfg_id=gfg_id)
 

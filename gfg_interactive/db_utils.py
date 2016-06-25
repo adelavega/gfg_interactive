@@ -24,3 +24,13 @@ def clean_db_string(string):
             "\n", "").replace("'", "")
 
 	return string
+
+def gfg_user_exists(db_uri, userid):
+	db_user, db_password = db_uri.split('/')[2].split('@')[0].split(':')
+	import MySQLdb
+	db = MySQLdb.connect(host="localhost", user=db_user, passwd=db_password, db='gfg-profile')
+	cur = db.cursor()
+	cur.execute("select Id from FBApp_Users_Profile where Id = %d" % userid)
+	db.close()
+	
+	return len(cur.fetchall()) > 0
