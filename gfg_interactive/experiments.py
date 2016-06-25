@@ -20,7 +20,7 @@ QUITEARLY = 6
 experiments = Blueprint('experiments', __name__,
                         template_folder='exp/templates', static_folder='exp/static')
 
-experiment_list = {'22': 'keep_track', '23' : 'category_switch'}
+experiment_list = {'28': 'keep_track', '29' : 'category_switch'}
 
 @experiments.route('/', methods=['GET'])
 def index():
