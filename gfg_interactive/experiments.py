@@ -132,7 +132,7 @@ def parse_id_exp(id_exp):
     return (gfg_id, exp_name, session_id), session, resp
 
 
-@experiments.route('/sync/<sessionid>', methods=['GET'])
+@experiments.route('/sync/<session_id>', methods=['GET'])
 def load(session_id=None):
     """
     Return a few attributed of session back to Backbone.js.
@@ -152,7 +152,7 @@ def load(session_id=None):
     return jsonify(**resp)
 
 
-@experiments.route('/sync/<sessionid>', methods=['PUT'])
+@experiments.route('/sync/<session_id>', methods=['PUT'])
 def update(session_id=None):
     """ Sync backbone model with appropriate database.  """
 

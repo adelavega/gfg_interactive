@@ -8,3 +8,4 @@ dist/
 gfg-interactive.egg-info
 gfginteractive.egg-info/
 venv/
+config.ini

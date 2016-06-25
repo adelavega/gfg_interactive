@@ -30,7 +30,7 @@ var DataHandler = function(sessionid) {
 	 ***************/
 	var TaskData = Backbone.Model.extend({
 		urlRoot: "/exp/sync/", // Save will PUT to /sync (data obj), with mimetype 'application/JSON'
-		sessionid: sessionid,
+		id: sessionid,
 
 		defaults: {
 			currenttrial: 0,
@@ -63,7 +63,7 @@ var DataHandler = function(sessionid) {
 		//populates the "data" in JSON and appends each new trrial to it
 		// New Model -  we need to add each trail as a new row in the table - Category_switch 
 		addTrialData: function(trialdata) {
-			trialdata = {"sessionid":this.sessionid, "current_trial":this.get("currenttrial"), "dateTime":(new Date().getTime()), "trialdata":trialdata};
+			trialdata = {"sessionid":this.id, "current_trial":this.get("currenttrial"), "dateTime":(new Date().getTime()), "trialdata":trialdata};
 			var data = this.get('data');
 			data.push(trialdata);
 			this.set('data', data);
@@ -176,7 +176,7 @@ var DataHandler = function(sessionid) {
 
 		$.ajax("inexp", {
 				type: "POST",
-				data: {'sessionid': self.taskdata.sessionid}
+				data: {'sessionid': self.taskdata.id}
 		});
 		
 		if (self.taskdata.mode != 'debug') {  //don't block people from reloading in debug mode
@@ -185,7 +185,7 @@ var DataHandler = function(sessionid) {
 				self.saveData();
 				$.ajax("quitter", {
 						type: "POST",
-						data: {'sessionid': self.taskdata.sessionid}
+						data: {'sessionid': self.taskdata.id}
 				});
 				return "By leaving or reloading this page, you opt out of the experiment.  Are you sure you want to leave the experiment?";
 			});
@@ -205,7 +205,7 @@ var DataHandler = function(sessionid) {
 	self.completeHIT = function() {
 		self.teardownTask();
 
-		window.location= "/exp/worker_complete?" + "sessionid=" + sessionid;
+		window.location= "/exp/worker_complete?" + "sessionid=" + id;
 	}
 
 	// To be fleshed out with backbone views in the future.
