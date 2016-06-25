@@ -5,7 +5,7 @@ from app import app, db
 
 # Load configuration
 Config = ConfigParser.ConfigParser()
-Config.read("../config.ini")
+Config.read("config.ini")
 app.config.from_object(Config.get("General", "config"))
 
 

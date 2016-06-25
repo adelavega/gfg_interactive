@@ -1,5 +1,5 @@
 *.pyc
-wsgi/migrations
+migrations/
 *~
 wsgi/config.py
 *.DS_Store

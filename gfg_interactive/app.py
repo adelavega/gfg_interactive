@@ -29,8 +29,6 @@ def index():
 def favicon():
     ''' Serve favicon '''
     return app.send_static_file('favicon.ico')
-
-
 if __name__ == '__main__':
 	app.debug = True
 	app.run()

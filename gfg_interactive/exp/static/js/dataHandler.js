@@ -23,16 +23,13 @@ _.extend(Backbone.Notifications, Backbone.Events);
 //Called from from CStask.js or KTtask.js
 
 //Added session id as well
-var DataHandler = function(uniqueid, experimentname, sessionid) {
+var DataHandler = function(sessionid) {
 	var self = this;
 	/****************
 	 * TASK DATA    *
 	 ***************/
 	var TaskData = Backbone.Model.extend({
 		urlRoot: "/exp/sync/", // Save will PUT to /sync (data obj), with mimetype 'application/JSON'
-		id: uniqueid + "&" + experimentname + "&"+ sessionid,
-		uniqueid: uniqueid,
-		experimentname: experimentname,
 		sessionid: sessionid,
 
 		defaults: {
@@ -66,7 +63,7 @@ var DataHandler = function(uniqueid, experimentname, sessionid) {
 		//populates the "data" in JSON and appends each new trrial to it
 		// New Model -  we need to add each trail as a new row in the table - Category_switch 
 		addTrialData: function(trialdata) {
-			trialdata = {"uniqueid":this.uniqueid, "current_trial":this.get("currenttrial"), "dateTime":(new Date().getTime()), "trialdata":trialdata};
+			trialdata = {"sessionid":this.sessionid, "current_trial":this.get("currenttrial"), "dateTime":(new Date().getTime()), "trialdata":trialdata};
 			var data = this.get('data');
 			data.push(trialdata);
 			this.set('data', data);
@@ -179,7 +176,7 @@ var DataHandler = function(uniqueid, experimentname, sessionid) {
 
 		$.ajax("inexp", {
 				type: "POST",
-				data: {'uniqueid' : self.taskdata.uniqueid, 'experimentname': self.taskdata.experimentname, 'sessionid': self.taskdata.sessionid}
+				data: {'sessionid': self.taskdata.sessionid}
 		});
 		
 		if (self.taskdata.mode != 'debug') {  //don't block people from reloading in debug mode
@@ -188,7 +185,7 @@ var DataHandler = function(uniqueid, experimentname, sessionid) {
 				self.saveData();
 				$.ajax("quitter", {
 						type: "POST",
-						data: {'uniqueid' : self.taskdata.uniqueid, 'experimentname': self.taskdata.experimentname, 'sessionid': self.taskdata.sessionid}
+						data: {'sessionid': self.taskdata.sessionid}
 				});
 				return "By leaving or reloading this page, you opt out of the experiment.  Are you sure you want to leave the experiment?";
 			});
@@ -208,7 +205,7 @@ var DataHandler = function(uniqueid, experimentname, sessionid) {
 	self.completeHIT = function() {
 		self.teardownTask();
 
-		window.location= "/exp/worker_complete?" + "uniqueid=" + uniqueid + "&experimentname=" + experimentname + "&sessionid=" + sessionid;
+		window.location= "/exp/worker_complete?" + "sessionid=" + sessionid;
 	}
 
 	// To be fleshed out with backbone views in the future.

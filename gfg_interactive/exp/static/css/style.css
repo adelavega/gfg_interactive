@@ -2,7 +2,7 @@
 body {
     padding:0px;
     margin: 0px;
-    background-color: red;
+    background-color: white;
     color: black;
     font-weight: 300; 
     font-size: 13pt;
@@ -26,15 +26,14 @@ strong {
 
 /* these are all the same for now, but easy to modify individually */
 #container-ad, #container-error, #container-exp, #container-consent, #container-instructions, #container-questionnaire {
-    position: relative;
+    position: absolute;
     top: 0px; /* Header Height */
     bottom: 0px; /* Footer Height */
     left: 0px;
     right: 0px;
-    padding-left: 100px;
-    padding-right: 100px;
-    padding-top: 10px;
-    border: 15px solid #f3f3f3;
+    padding: 100px;
+    padding-top: 5%;
+    border: 18px solid #f3f3f3;
     background: white;
 }
 
@@ -86,3 +85,4 @@ strong {
   padding-right: 10px;
   padding-top: 15px;
 }
+

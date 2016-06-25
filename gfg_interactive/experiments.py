@@ -20,9 +20,7 @@ QUITEARLY = 6
 experiments = Blueprint('experiments', __name__,
                         template_folder='exp/templates', static_folder='exp/static')
 
-experiment_list = [
-    ('keep_track', "Keep Track"), ('category_switch', "Category Switch")]
-
+experiment_list = {'22': 'keep_track', '23' : 'category_switch'}
 
 @experiments.route('/', methods=['GET'])
 def index():
@@ -38,20 +36,20 @@ def start_exp():
 
     Querystring args (required):
     uniqueid: External gfg_id
-    experimentname: Which experiment to serve
+    surveyid: Which experiment to serve
     """
 
-    if not utils.check_qs(request.args, ['uniqueid', 'experimentname']):
+    if not utils.check_qs(request.args, ['uniqueid', 'surveyid']):
         raise ExperimentError('improper_inputs')
+
+    ### TODO: Validate user ID and determine experiment type
 
     # First check if user is in db, if not add
     # This is independent of finding the specific experiment
     gfg_id = request.args['uniqueid']
-    exp_name = request.args['experimentname']
+    exp_name = experiment_list[request.args['surveyid']]
     browser, platform = utils.check_browser_platform(request.user_agent)
 
-
-    # assert current_app.debug == False - interactive debugger
     # Check if user is in db, if not add & commit
     user, new_user = db_utils.get_or_create(db.session, Participant, gfg_id=gfg_id)
 
@@ -68,15 +66,13 @@ def start_exp():
         raise ExperimentError('already_did_exp', session_id=disqualifying_sessions.session_id)
 
     # Otherwise, allow participant to re-enter
-    # (Are quit early signals sent back during instruction phase?)
     else:
         session = Session(gfg_id=gfg_id, browser=browser, platform=platform,
                           status=1, exp_name=exp_name, begin_session=datetime.datetime.now())
         db.session.add(session)
         db.session.commit()
 
-        return render_template(exp_name + "/exp.html", uniqueid=gfg_id,
-                               experimentname=exp_name, sessionid=session.session_id)
+        return render_template(exp_name + "/exp.html", experimentname=exp_name, sessionid=session.session_id)
 
 
 @experiments.route('/inexp', methods=['POST'])
@@ -94,15 +90,12 @@ def enterexp():
     sessionid: session identifier
     """
 
-    if not utils.check_qs(request.form, ['uniqueid', 'experimentname', 'sessionid']):
+    if not utils.check_qs(request.form, ['sessionid']):
         raise ExperimentError('improper_inputs')
+    else:
+        session_id = request.form['sessionid']
 
-    gfg_id = request.form['uniqueid']
-    experiment_name = request.form['experimentname']
-    session_id = request.form['sessionid']
-
-    session = Session.query.filter_by(gfg_id=gfg_id, exp_name=experiment_name, 
-        session_id=session_id).first()
+    session = Session.query.filter_by(session_id=session_id).first()
 
     if session:
         session.status = 2
@@ -139,33 +132,38 @@ def parse_id_exp(id_exp):
     return (gfg_id, exp_name, session_id), session, resp
 
 
-@experiments.route('/sync/<id_exp>', methods=['GET'])
-def load(id_exp=None):
+@experiments.route('/sync/<sessionid>', methods=['GET'])
+def load(session_id=None):
     """
     Return a few attributed of session back to Backbone.js.
     This is forced by Backbone, and doesn't do much.  """
 
-    current_app.logger.info("GET /sync route with id: %s" % id_exp)
-    (gfg_id, exp_name, session_id), session, resp = parse_id_exp(id_exp)
-
-    if resp is None:
-        # Need to check if we need to send other stuff. Might have to .
+    current_app.logger.info("GET /sync route with id: %s" % session_id)
+    try:
+        session = Session.query.filter_by(session_id=session_id).one()
+    except SQLAlchemyError:
+        resp = {"status": "bad request"}
+        current_app.logger.error("DB error: Unique user not found.")
+    else:
         resp = {
-            "uniqueid": session.gfg_id,
-            "experimentname": session.exp_name,
             "sessionid": session.session_id
         }
 
     return jsonify(**resp)
 
 
-@experiments.route('/sync/<id_exp>', methods=['PUT'])
-def update(id_exp=None):
+@experiments.route('/sync/<sessionid>', methods=['PUT'])
+def update(session_id=None):
     """ Sync backbone model with appropriate database.  """
 
-    current_app.logger.info("PUT /sync route with id: %s" % id_exp)
+    current_app.logger.info("PUT /sync route with id: %s" % session_id)
+    resp = None
 
-    (gfg_id, exp_name, session_id), session, resp = parse_id_exp(id_exp)
+    try:
+        session = Session.query.filter_by(session_id=session_id).one()
+    except SQLAlchemyError:
+        resp = {"status": "bad request"}
+        current_app.logger.error("DB error: Unique user not found.")
 
     # Check JSON validity
     if utils.check_valid_json(request.get_data()):
@@ -176,21 +174,18 @@ def update(id_exp=None):
         current_app.logger.error("Invalid JSON")
 
     current_app.logger.info(
-        "Current trial: %s, unique_id: %s, experiment name: %s, session id: %s " % (valid_json['currenttrial'],
-            valid_json['uniqueid'], valid_json['experimentname'], valid_json['sessionid']))
+        "Current trial: %s, session id: %s " % (valid_json['currenttrial'],
+            valid_json['sessionid']))
 
     # For each trial, pass to appropriate parser, if not in db
     for json_trial in valid_json['data']:
-        if exp_name == "category_switch":
+        if session.exp_name == "category_switch":
             experiment_class = CategorySwitch
-        elif exp_name == "keep_track":
+        elif session.exp_name == "keep_track":
             experiment_class = KeepTrack
-        else:
-            current_app.logger.error("%s does not exist" % (exp_name))
-            resp = {"status": "bad request"}
 
         db_trial, new = db_utils.get_or_create(db.session,
-            experiment_class, gfg_id=gfg_id, session_id=session_id,
+            experiment_class, gfg_id=session.gfg_id, session_id=session.session_id,
             trial_num=json_trial['current_trial'])
 
         # If the trial is new, add data
@@ -201,7 +196,7 @@ def update(id_exp=None):
     # For each event, pass to parser, if not in db
     for json_event in valid_json['eventdata']:
         db_event, new = db_utils.get_or_create(db.session, EventData,
-            gfg_id=gfg_id, session_id=session_id, exp_name=exp_name, 
+            gfg_id=session.gfg_id, session_id=session.session_id, exp_name=session.exp_name, 
             timestamp = utils.convert_timestamp(json_event['timestamp']))
 
         if new:
@@ -211,12 +206,12 @@ def update(id_exp=None):
     if valid_json['questiondata'] != {}:
         # For the QuestionData, pass to parser, if not in db
         db_ques, new = db_utils.get_or_create(db.session, QuestionData,
-                    gfg_id=gfg_id, session_id=session_id, exp_name=exp_name)
+                    gfg_id=session.gfg_id, session_id=session.session_id, exp_name=session.exp_name)
         db_ques.add_json_data(valid_json['questiondata']) 
         db.session.commit()
 
     if resp is None:
-        resp = {"status": "user data saved"}
+        resp = {"status": "success"}
 
     return jsonify(**resp)
 
@@ -248,11 +243,10 @@ def quitter():
 def worker_complete():
     """Complete worker."""
 
-    if not utils.check_qs(request.args, ['sessionid', 'uniqueid']):
+    if not utils.check_qs(request.args, ['sessionid']):
         raise ExperimentError('improper_inputs')
     else:
         session_id = request.args['sessionid']
-        gfg_id = request.args['uniqueid']
         current_app.logger.info(
             "Completed experiment %s" % (session_id))
         try:
@@ -267,7 +261,7 @@ def worker_complete():
 
         # This needs to be updated because I'm not sure where to route when all
         # is done.
-        return redirect(url_for(".index", uniqueid=gfg_id, new=False))
+        return redirect(url_for(".index", uniqueid=session.gfg_id, new=False))
 
 
 # Generic route

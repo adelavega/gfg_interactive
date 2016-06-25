@@ -1,6 +1,4 @@
-/* 
-Module specific custom.css
-Custom dialog/modal headers for Category Switch */
+/* Custom dialog/modal headers */
 
 .dialog-header-error { background-color: #d2322d; }
 .dialog-header-correct { background-color: #5cb85c; }
@@ -12,7 +10,6 @@ Custom dialog/modal headers for Category Switch */
 	.dialog-header-correct h4,
 	.dialog-header-wait span, .dialog-header-wait h4,
 	.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
-
 
 /* Ease Display */
 
@@ -29,7 +26,7 @@ Custom dialog/modal headers for Category Switch */
 
 .instructions {
    word-wrap: break-word;
-   width: 900px;
+   width: 600px;
    position:absolute;
    padding-left: 0;
    left:50%; 
@@ -64,4 +61,3 @@ Custom dialog/modal headers for Category Switch */
 	width: 5em;
 	float: left;
 }
-

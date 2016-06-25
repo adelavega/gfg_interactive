@@ -4,7 +4,6 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    PROPAGATE_EXCEPTIONS = True
 
 class ProductionConfig(Config):
     DEBUG = False
@@ -21,7 +20,7 @@ class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
 
-    SQLALCHEMY_DATABASE_URI = "mysql://gfgdev2:3dmDVYvhGR7eubQ3@localhost:3306/gfg-interactive"
+    SQLALCHEMY_DATABASE_URI = "??"
 
 class HomeConfig(Config):
     DEVELOPMENT = True

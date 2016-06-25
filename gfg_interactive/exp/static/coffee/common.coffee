@@ -5,7 +5,7 @@
 
 ## Alternatively set this up for local server hosting using dataHandler.js
 
-dataHandler = DataHandler(uniqueid, experimentname, sessionid)
+dataHandler = DataHandler(sessionid)
 dataHandler.preloadPages(['postquestionnaire.html'])
 
 # Calculates the mean of a numeric array (for feedback)
