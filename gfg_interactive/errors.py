@@ -20,6 +20,7 @@ class ExperimentError(Exception):
             error_setting_worker_complete = 1006,
             hit_not_registered_with_ad_server = 1018,
             unknown_error = 9999,
+            user_access_denied = 1007
         )
         self.value = value
         self.errornum = experiment_errors[self.value]
