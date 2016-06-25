@@ -9,3 +9,4 @@ gfg-interactive.egg-info
 gfginteractive.egg-info/
 venv/
 config.ini
+gfg_interactive/config.py
