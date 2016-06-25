@@ -30,7 +30,7 @@ def gfg_user_exists(db_uri, userid):
 	import MySQLdb
 	db = MySQLdb.connect(host="localhost", user=db_user, passwd=db_password, db='gfg-profile')
 	cur = db.cursor()
-	cur.execute("select Id from FBApp_Users_Profile where Id = %d" % userid)
+	cur.execute("select Id from FBApp_Users_Profile where Id = %d" % int(userid))
 	db.close()
-	
+
 	return len(cur.fetchall()) > 0
