@@ -41,12 +41,7 @@ def start_exp():
     if not utils.check_qs(request.args, ['uniqueid', 'surveyid']):
         raise ExperimentError('improper_inputs')
 
-    print current_app.config['SECRET_KEY']
-    print request.args['uniqueid']
-
     gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(request.args['uniqueid']).decode( 'string-escape' ))
-    print "DECRYPTED:"
-    print gfg_id
     exp_name = experiment_list[request.args['surveyid']]
     browser, platform = utils.check_browser_platform(request.user_agent)
 
