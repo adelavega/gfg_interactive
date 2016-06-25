@@ -4,6 +4,7 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
+    SECRET_KEY = 'kjsdJDFkj2lnskdlfJOh2ih1fh9'
 
 class ProductionConfig(Config):
     DEBUG = False

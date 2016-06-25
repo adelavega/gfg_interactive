@@ -39,3 +39,8 @@ def check_valid_json(json_input):
 def convert_timestamp(json_timestamp):
     import datetime
     return datetime.datetime.fromtimestamp(json_timestamp/1000.0)
+
+def decrypt(key, msg):
+    from Crypto.Cipher import Blowfish
+    decode_cipher = Blowfish.new(key, Blowfish.MODE_CFB, msg[0:8])
+    return decode_cipher.decrypt(msg[8:])

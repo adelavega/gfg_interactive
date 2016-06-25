@@ -27,7 +27,6 @@ def index():
     """ Welcome page, but there is none so right now its blank"""
     return render_template("default.html")
 
-
 @experiments.route('/task', methods=['GET'])
 @utils.nocache
 def start_exp():
@@ -42,19 +41,21 @@ def start_exp():
     if not utils.check_qs(request.args, ['uniqueid', 'surveyid']):
         raise ExperimentError('improper_inputs')
 
-    ### TODO: Validate user ID and determine experiment type
+    print current_app.config['SECRET_KEY']
+    print request.args['uniqueid']
 
-    # First check if user is in db, if not add
-    # This is independent of finding the specific experiment
-    gfg_id = request.args['uniqueid']
+    gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(request.args['uniqueid']).decode( 'string-escape' ))
+    print "DECRYPTED:"
+    print gfg_id
     exp_name = experiment_list[request.args['surveyid']]
     browser, platform = utils.check_browser_platform(request.user_agent)
+
+    current_app.logger.info("Subject: %s entered with %s platform and %s browser" %
+                            (gfg_id, platform, browser))
 
     # Check if user is in db, if not add & commit
     user, new_user = db_utils.get_or_create(db.session, Participant, gfg_id=gfg_id)
 
-    current_app.logger.info("Subject: %s entered with %s platform and %s browser. New user: %s" %
-                            (gfg_id, platform, browser, new_user))
 
     # If any existing session that disqualify user (ongoing or completed), throw error
     # Otherwise, create new session and serve experiment
