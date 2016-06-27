@@ -1,4 +1,6 @@
-/* Custom dialog/modal headers */
+/* 
+Module specific custom.css
+Custom dialog/modal headers for Category Switch */
 
 .dialog-header-error { background-color: #d2322d; }
 .dialog-header-correct { background-color: #5cb85c; }
@@ -10,6 +12,7 @@
 	.dialog-header-correct h4,
 	.dialog-header-wait span, .dialog-header-wait h4,
 	.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
+
 
 /* Ease Display */
 
@@ -26,13 +29,27 @@
 
 .instructions {
    word-wrap: break-word;
-   width: 600px;
-   position:absolute;
-   padding-left: 0;
-   left:50%; 
-   margin-left:-325px;
+   max-width: 500vw; /*width: 800px;*/
+   max-height: 200vh;
+   position:relative;
+   margin-right: 20%;
+   margin-left: 30%;
+   /*margin-left: 20%;*/
+   /*margin: 0 auto;*/
+   /*left:50%;*/
    z-index: 1
+}
 
+#responses {
+   position:relative;
+   top: 30%;
+   margin-right: 20%;
+   margin-left: 30%;
+
+   /*margin-left: 20%;*/
+   /*margin: 0 auto;*/
+   /*left:50%;*/
+   z-index: 1
 }
 
 .topMessage {
@@ -60,4 +77,48 @@
 .btn-label {
 	width: 5em;
 	float: left;
+}
+
+@media screen and (max-width: 1200px) {
+	/*#rightButton {
+    	left: 5%;
+    }*/
+
+    #leftButton {
+    	right: 5%;
+    }
+    
+}
+
+@media screen and (max-width: 1300px) {
+    .instructions {
+        margin-left: 20%;
+    }
+    #responses {
+    	margin-left: 20%;
+    	
+    }
+    #rightButton {
+    	right: 10%;
+    }
+    
+    #leftButton {
+    	right: 10%;
+    }
+
+    .resp {
+    	width: 6.5em;
+    }
+}
+
+
+@media screen and (max-width: 1100px) {
+    #responses {
+    	margin-left: 15%;
+    	margin-right:15%;
+
+    }
+    #rightButton {
+    	left: 5%;
+    }
 }
