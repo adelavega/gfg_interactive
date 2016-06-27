@@ -238,14 +238,14 @@ def quitter():
     return jsonify(**resp)
 
 
-@experiments.route('/worker_complete', methods=['GET'])
+@experiments.route('/worker_complete', methods=['POST'])
 def worker_complete():
     """Complete worker."""
 
-    if not utils.check_qs(request.args, ['sessionid']):
-        raise ExperimentError('improper_inputs')
+    if not utils.check_qs(request.form, ['sessionid']):
+        resp = {"status": "bad request"}
     else:
-        session_id = request.args['sessionid']
+        session_id = request.form['sessionid']
         current_app.logger.info(
             "Completed experiment %s" % (session_id))
         try:
@@ -254,13 +254,13 @@ def worker_complete():
                 Session.session_id == session_id).one()
             session.status = 3
             db.session.commit()
+            resp = {"status": "marked as done"}
 
         except SQLAlchemyError:
             raise ExperimentError('unknown_error', session_id=request.args['sessionid'])
+            resp = {"status": "db error"}
 
-        # This needs to be updated because I'm not sure where to route when all
-        # is done.
-        return redirect(url_for(".index", uniqueid=session.gfg_id, new=False))
+        return jsonify(**resp)
 
 
 # Generic route

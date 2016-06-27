@@ -205,7 +205,19 @@ var DataHandler = function(sessionid) {
 	self.completeHIT = function() {
 		self.teardownTask();
 
-		window.location= "/exp/worker_complete?" + "sessionid=" + id;
+		$.ajax("worker_complete", {
+			type: "POST",
+			data: {'sessionid': self.taskdata.id}
+		});
+
+		$.ajax("https://gfg-dev-2.sph.umich.edu/gfg/lib/interactive_survey_module_handler.php", {
+			type: "POST",
+			action: "complete"
+		});
+
+		opener.completeInteractiveSurvey()
+
+		window.close()
 	}
 
 	// To be fleshed out with backbone views in the future.
