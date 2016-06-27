@@ -45,6 +45,9 @@ def start_exp():
                             (request.args['uniqueid'], str(request.args['uniqueid']).decode( 'string-escape' ), str(current_app.config['SECRET_KEY'])))
 
     gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(request.args['uniqueid']).decode( 'string-escape' ))
+
+    current_app.logger.info(gfg_id)
+
     exp_name = experiment_list[request.args['surveyid']]
     browser, platform = utils.check_browser_platform(request.user_agent)
 
