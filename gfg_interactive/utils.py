@@ -40,7 +40,13 @@ def convert_timestamp(json_timestamp):
     import datetime
     return datetime.datetime.fromtimestamp(json_timestamp/1000.0)
 
-def decrypt(key, msg):
+def decrypt(key, msg):  
+    import urllib
+    url_dec = urllib.unquote(msg)
+
+    import base64
+    base_decoded = base64.b64decode(url_dec)
+
     from Crypto.Cipher import Blowfish
-    decode_cipher = Blowfish.new(key, Blowfish.MODE_CFB, msg[0:8])
-    return decode_cipher.decrypt(msg[8:])
+    decode_cipher = Blowfish.new(key, Blowfish.MODE_CFB, base_decoded[0:8])
+    return decode_cipher.decrypt(base_decoded[8:])
