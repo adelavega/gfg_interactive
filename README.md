@@ -70,11 +70,17 @@ This should launch on localhost for your local testing pleasure.
     sudo chmod -R +755 gfg-interactive/
     sudo chmod -R +755 config.ini
    
-8) Edit apache config to enable WSGI
+8) Edit apache config to enable WSGI. Relevant section should look like:
+
+    WSGIDaemonProcess gfg-interactive user=www-data group=www-data threads=5
+    WSGIScriptAlias /gfg-interactive /var/www/gfginteractive/gfginteractive.wsgi
+    <Directory "/var/www/gfginteractive/">
+        WSGIProcessGroup gfg-interactive
+        WSGIApplicationGroup %{GLOBAL}
+        Require all granted
+    </Directory>
 
 9) Initatialize db
-
-9) Manage db
 
     sudo gfginteractive/venv/bin/python gfginteractive/gfg_interactive/manage.py db init
     sudo gfginteractive/venv/bin/python gfginteractive/gfg_interactive/manage.py db migrate
