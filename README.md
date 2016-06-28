@@ -44,23 +44,38 @@ This should launch on localhost for your local testing pleasure.
 	
 ### Devbox deployment
 1) Clone this repo into /var/www
+
 2) Install pip:
+
     curl https://bootstrap.pypa.io/get-pip.py > get-pip.py
     sudo python get-pip.py
+    
 3) Install system dependencies
+
     sudo apt-get install python-dev libmysqlclient-dev libapache2-mod-wsgi
+    
 4) Create virtual environment and activate (in /var/www/gfginteractive)
+
     virtualenv venv
     source venv/bin/activate
+    
 5) Install python dependencies
+
     pip install -r requirements.txt
+    
 6) Copy config files from example ones and add SQL credentials. Also, make sure config.ini is in /var/www
+
 7) Set permission of relevant files to +755 (check w/ Chris on this)
-   sudo chmod -R +755 gfg-interactive/
-   sudo chmod -R +755 config.ini
+
+    sudo chmod -R +755 gfg-interactive/
+    sudo chmod -R +755 config.ini
+   
 8) Edit apache config to enable WSGI
+
 9) Initatialize db
+
 9) Manage db
+
     sudo gfginteractive/venv/bin/python gfginteractive/gfg_interactive/manage.py db init
     sudo gfginteractive/venv/bin/python gfginteractive/gfg_interactive/manage.py db migrate
     sudo gfginteractive/venv/bin/python gfginteractive/gfg_interactive/manage.py db upgrade
