@@ -11,7 +11,7 @@
 		4. Overall styling - style.css
 	-->
 	<link href="static/css/bootstrap.css" rel="stylesheet" media="screen"> 
-	<!--<link rel=stylesheet href="/static/css/bootstrap.min.css" type="text/css">-->
+	<!-- <link rel=stylesheet href="/static/css/bootstrap.min.css" type="text/css">-->
    	<link rel=stylesheet href="static/css/bootstrap-theme.min.css" type="text/css">
    	<link rel=stylesheet href="static/css/genesforgood.css" type="text/css"> 
    	<link rel=stylesheet href="static/css/style.css" type="text/css"> 
@@ -83,21 +83,21 @@
 <div id = "wrap">
 	<div class="modal fade"  id="error" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header dialog-header-error">
-	        <h4 class="modal-title" id="myModalLabel">Incorrect! Try again!<br></h4>
-	      </div>
+	    <div class="modal-content dialog-header-error">
+  		<br><br>
+	        <center><h3 class="modal-title">Incorrect! Try again!</h3></center>
+  		<br><br>
 	    </div>
 	  </div>
 	</div>
 
 	<div class="modal fade"  id="correct">
 	  <div class="modal-dialog">
-	    <div class="modal-content">
+	   <!-- <div class="modal-content"> -->
 	      <div class="modal-header dialog-header-correct">
 	        <h4 class="modal-title">That's right!</h4>
 	      </div>
-	      </div>
+	      <!-- </div> --> 
 	    </div>
 	  </div>
 	
@@ -119,9 +119,9 @@
 	
 	<canvas id="canvas" width = 740 height = 500 style="position:absolute;padding-left: 0;left:50%; top:20%; margin-left:-370px;z-index: 1"></canvas>
 	<!-- F-key -->
-	<button disabled id = "leftButton" class="btn btn-default" style="position:absolute;left: 50%; z-index:2; top:500px;margin-left:-380px;font:21px Arial; opacity:1"><img src="static/img/f_key.png" style="width:45px; height:45px" > <span id="leftText">Go back</span> </button>
+	<button disabled id = "leftButton" class="btn btn-default" style="position:absolute;left: 50%; z-index:2; top:550px;margin-left:-380px;font:21px Arial; opacity:1"><img src="static/img/f_key.png" style="width:45px; height:45px" > <span id="leftText">Go back</span> </button>
 	<!-- J-key -->
-	<button disabled id = "rightButton" class="btn btn-default" style="position:absolute;left: 50%; z-index:2; top:500px;margin-left:50px;font:21px Arial; opacity:1"><img src="static/img/j_key.png" style="width:45px; height:45px" > <span id="rightText">Continue</span> </button>
+	<button disabled id = "rightButton" class="btn btn-default" style="position:absolute;left: 50%; z-index:2; top:550px;margin-left:50px;font:21px Arial; opacity:1"><img src="static/img/j_key.png" style="width:45px; height:45px" > <span id="rightText">Continue</span> </button>
 	
 	<script src="static/js/common.js"></script>
 	<script src="static/{{ experimentname }}/js/stimuli.js"></script>
