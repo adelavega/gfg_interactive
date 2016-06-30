@@ -63,7 +63,7 @@ This should launch on localhost for your local testing pleasure.
 
     pip install -r requirements.txt
     
-6) Copy config files from example ones and add SQL credentials. Also, make sure config.ini is in /var/www
+6) Copy config files from example ones and add SQL credentials. Also, make sure config.ini is in gfg_interactive/
 
 7) Set permission of relevant files to +755 (check w/ Chris on this)
 
