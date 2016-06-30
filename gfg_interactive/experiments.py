@@ -46,7 +46,9 @@ def start_exp():
     exp_name = experiment_list[request.args['surveyid']]
     browser, platform = utils.check_browser_platform(request.user_agent)
 
-    if not db_utils.gfg_user_exists(current_app.config['SQLALCHEMY_DATABASE_URI'], gfg_id):
+    if not db_utils.gfg_user_exists(gfg_id, current_app.config['RESEARCH_DB_HOST'],
+     current_app.config['RESEARCH_DB_USER'],
+        current_app.config['RESEARCH_DB_PASSWORD'], current_app.config['RESEARCH_DB_NAME']):
         raise ExperimentError('user_access_denied')
 
     # Check if user is in db, if not add & commit
