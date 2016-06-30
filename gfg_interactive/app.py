@@ -10,7 +10,7 @@ import ConfigParser
 
 # Load configuration
 Config = ConfigParser.ConfigParser()
-Config.read("config.ini")
+Config.read(os.path.join(os.path.dirname(__file__), "config.ini"))
 
 app = Flask(__name__)
 app.config.from_object(Config.get("General", "config"))
