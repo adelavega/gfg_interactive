@@ -8,6 +8,8 @@ import os
 from database import db
 import ConfigParser
 
+print os.getcwd()
+
 # Load configuration
 Config = ConfigParser.ConfigParser()
 Config.read("config.ini")
