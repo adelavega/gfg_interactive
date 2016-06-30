@@ -90,13 +90,13 @@ class Instruction
 		if @corrResp?
 			if @corrResp is key
 				$('#correct').modal('show')
-				setTimeout (=> $('#correct').modal('hide')), 1250
-				setTimeout (=> @exitTrial()), 1250
+				setTimeout (=> $('#correct').modal('hide')), 2000
+				setTimeout (=> @exitTrial()), 2000
 				acc = 1
 			else
 			## Show incorrect message
 				$('#error').modal('show')
-				setTimeout (=> $('#error').modal('hide')), 1250
+				setTimeout (=> $('#error').modal('hide')), 2000
 				acc = 0
 		else
 			if key is 'f'
