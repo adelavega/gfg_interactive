@@ -29,7 +29,7 @@ var DataHandler = function(sessionid) {
 	 * TASK DATA    *
 	 ***************/
 	var TaskData = Backbone.Model.extend({
-		urlRoot: "exp/sync/", // Save will PUT to /sync (data obj), with mimetype 'application/JSON'
+		urlRoot: "sync/", // Save will PUT to /sync (data obj), with mimetype 'application/JSON'
 		id: sessionid,
 
 		defaults: {
