@@ -85,13 +85,13 @@ class Instruction
 		if @corrResp?
 			if @corrResp is button
 				$('#correct').modal('show')
-				setTimeout (=> $('#correct').modal('hide')), 1250
-				setTimeout (=> @exitTrial()), 1250
+				setTimeout (=> $('#correct').modal('hide')), 2000
+				setTimeout (=> @exitTrial()), 2000
 				acc = 1
 			else
 			## Show incorrect message
 				$('#error').modal('show')
-				setTimeout (=> $('#error').modal('hide')), 1250
+				setTimeout (=> $('#error').modal('hide')), 2000
 				acc = 0
 		else # If there is no correct answer, just record what was pressed
 			if button.id is 'leftText' or button.id is 'leftButton'

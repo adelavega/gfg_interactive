@@ -25,12 +25,13 @@ def clean_db_string(string):
 
 	return string
 
-def gfg_user_exists(db_uri, userid):
-	db_user, db_password = db_uri.split('/')[2].split('@')[0].split(':')
+def gfg_user_exists(userid, db_host, db_user, db_password, db_name):
+	""" Check the gfg core research database for matching userid """
 	import MySQLdb
-	db = MySQLdb.connect(host="localhost", user=db_user, passwd=db_password, db='gfg-research')
+	db = MySQLdb.connect(host="localhost", user=db_user, passwd=db_password, db=db_name)
 	cur = db.cursor()
 	cur.execute("select user_id from FBApp_Users_Status where user_id = %d" % int(userid))
 	db.close()
 
+	## Did this query return anything? I.e. are there any users in the main db with this id?
 	return len(cur.fetchall()) > 0

@@ -30,7 +30,7 @@ var DataHandler = function(sessionid) {
 	 * TASK DATA    *
 	 ***************/
 	var TaskData = Backbone.Model.extend({
-		urlRoot: "/exp/sync/", // Save will PUT to /sync (data obj), with mimetype 'application/JSON'
+		urlRoot: "sync/", // Save will PUT to /sync (data obj), with mimetype 'application/JSON'
 		id: sessionid,
 
 		defaults: {
@@ -210,10 +210,14 @@ var DataHandler = function(sessionid) {
 			type: "POST",
 			data: {'sessionid': self.taskdata.id}
 		});
+
 		// https://gfg-dev-2.sph.umich.edu/gfg/lib/interactive_survey_module_handler.php
-		$.ajax("/lib/interactive_survey_module_handler.php", {
+		// $.ajax("/lib/interactive_survey_module_handler.php", {
+		$.ajax("interactive_survey_module_handler.php", {
 			type: "POST",
-			action: "complete"
+			data: {
+				action: "complete"
+		}
 		});
 
 		opener.completeInteractiveSurvey()

@@ -23,6 +23,11 @@ class DevelopmentConfig(Config):
 
     SQLALCHEMY_DATABASE_URI = "??"
 
+    RESEARCH_DB_HOST = "??" # e.g. localhost on dev server
+    RESEARCH_DB_USER = "??"
+    RESEARCH_DB_PASSWORD = "??"
+    RESEARCH_DB_NAME = "??"
+
 class HomeConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
