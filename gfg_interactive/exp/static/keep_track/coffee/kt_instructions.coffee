@@ -31,7 +31,7 @@ Ignore words from other categories.<br><br>"
 "The last Animal word was 'Cat'.  <br><br>
 Is that what you saw?<br><br> If you are confused watch that again, otherwise let's learn how to input your responses."
 
-"You'll see a grid with all of the possible words in the categories you were asked to keep track of, like this:<br><br><br><br><br>
+"You'll see a grid with all of the possible words in the categories you were asked to keep track of, like below. <br>
 
 To respond, just click on the word you thought was the last of each category. "
 
