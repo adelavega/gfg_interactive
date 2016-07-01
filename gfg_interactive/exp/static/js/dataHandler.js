@@ -1,3 +1,4 @@
+
 /* Heavily derived by psiTurk.js
  *
  * 
@@ -209,8 +210,8 @@ var DataHandler = function(sessionid) {
 			type: "POST",
 			data: {'sessionid': self.taskdata.id}
 		});
-
-		$.ajax("https://gfg-dev-2.sph.umich.edu/gfg/lib/interactive_survey_module_handler.php", {
+		// https://gfg-dev-2.sph.umich.edu/gfg/lib/interactive_survey_module_handler.php
+		$.ajax("/lib/interactive_survey_module_handler.php", {
 			type: "POST",
 			action: "complete"
 		});
