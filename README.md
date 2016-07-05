@@ -68,8 +68,7 @@ This should launch on localhost for your local testing pleasure.
 7) Set permission of relevant files to +755 (check w/ Chris on this)
 
     sudo chmod -R +755 gfg-interactive/
-    sudo chmod -R +755 config.ini
-   
+
 8) Edit apache config to enable WSGI. Relevant section should look like:
 
     WSGIDaemonProcess gfg-interactive user=www-data group=www-data threads=5
