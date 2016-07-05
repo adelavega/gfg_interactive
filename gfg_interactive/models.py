@@ -95,8 +95,7 @@ class KeepTrack(db.Model):
     """ KeepTrack experiment table """
     kt_id = db.Column(db.Integer, primary_key=True) 
     gfg_id = db.Column(db.String(32), nullable=False)
-    session_id = db.Column(
-        db.Integer, db.ForeignKey('session.session_id')) 
+    session_id = db.Column(db.Integer, db.ForeignKey('session.session_id')) 
     trial_num = db.Column(db.Integer)
     reaction_time = db.Column(db.Float)
     accuracy = db.Column(db.String(32))
@@ -107,9 +106,9 @@ class KeepTrack(db.Model):
 
     ### FIX
     def __repr__(self):
-        return "KT Values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" % (self.cs_id, self.gfg_id, 
-        self.session_id, self.response, self.reaction_time, self.accuracy, self.block, 
-        self.question, self.answer, self.user_answer, self.beginexp, self.trial_num)
+        return "KT Values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" % (self.kt_id, self.gfg_id, 
+        self.session_id, self.trial_num, self.reaction_time, self.accuracy, self.block, 
+        self.timestamp, self.target_words, self.input_words)
 
     def add_json_data(self, json_trial):
         """ Parse and add backbone.js json data for a trial """
@@ -130,12 +129,12 @@ class KeepTrack(db.Model):
         if 'target_words' not in trial_data:
         	self.target_words = "null"
         else:
-        	self.target_words = trial_data['target_words']
+        	self.target_words = ",".join(trial_data['target_words']) # [u'Mile', u'Cat', u'France']-->u'Mile,Cat,France'
 
         if 'input_words' not in trial_data:
         	self.input_words = "null"
         else:
-        	self.input_words = trial_data['input_words']
+        	self.input_words = ",".join(trial_data['input_words'])
 
         # Datetime conversion
         self.timestamp= convert_timestamp(json_trial['dateTime'])
@@ -161,18 +160,20 @@ class EventData(db.Model):
 
     def add_json_data(self, json_event):
         """ Parse and add backbone.js json data for a event """
+ 	
         self.event_type = json_event['eventtype']
-        self.value = json_event['value']
+        self.value = str(",".join(json_event['value']))
 
         # if isinstance(['value'], list):
         #     self.value_1 = str(json_event['value'][0])
         #     self.value_2 = str(json_event['value'][1])
         #     self.value_3 = str(json_event['value'])
         # self.interval = 
+	self.interval = json_event['interval']
         self.timestamp = convert_timestamp(json_event['timestamp'])
 
         current_app.logger.info(
-            "%s added to EventData for session id %s " % (self.ev_id, self.session_id))
+            "%s added to EventData for session id %s and whole eventJSON is %s " % (self.ev_id, self.session_id, json_event))
 
 class QuestionData(db.Model):
     """ Feedback-form question-data for all experiments """
