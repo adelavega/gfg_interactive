@@ -181,7 +181,7 @@ class InstGrid
 			$('#errortext').html("Try again! <br> Hint: The correct words are " + @correct.join(', '))
 
 		$('#error').modal('show')
-		setTimeout (=> $('#error').modal('hide')), 1500
+		setTimeout (=> $('#error').modal('hide')), 2000
 
 class Block
 	constructor: (@condition, @message, trial_structure) ->
