@@ -218,12 +218,12 @@
       if (allCorr) {
         closeGrid(this.exitTrial);
         $('#correct').modal('show');
-        $('#errortext').html("Try again");
-        return setTimeout(((function(_this) {
+        setTimeout(((function(_this) {
           return function() {
             return $('#correct').modal('hide');
           };
-        })(this)), 1250);
+        })(this)), 1500);
+        return $('#errortext').html("Incorrect! Try again.");
       } else {
         return this.showError();
       }
@@ -231,14 +231,14 @@
 
     InstGrid.prototype.showError = function() {
       if (this.nClicks >= this.triesBeforeHint) {
-        $('#errortext').html("The correct words are " + this.correct.join(', '));
+        $('#errortext').html("Hint: The correct words are " + this.correct.join(', '));
       }
       $('#error').modal('show');
       return setTimeout(((function(_this) {
         return function() {
           return $('#error').modal('hide');
         };
-      })(this)), 1500);
+      })(this)), 1800);
     };
 
     return InstGrid;

@@ -171,18 +171,17 @@ class InstGrid
 		if allCorr
 			closeGrid(@exitTrial)
 			$('#correct').modal('show')
-			$('#errortext').html("Try again")
-			setTimeout (=> $('#correct').modal('hide')), 1250
-
+			setTimeout (=> $('#correct').modal('hide')), 1500
+			$('#errortext').html("Incorrect! Try again.")
 		else
 			@showError()
 
 	showError: ->
 		if @nClicks >= @triesBeforeHint
-			$('#errortext').html("The correct words are " + @correct.join(', '))
+			$('#errortext').html("Hint: The correct words are " + @correct.join(', '))
 
 		$('#error').modal('show')
-		setTimeout (=> $('#error').modal('hide')), 1500
+		setTimeout (=> $('#error').modal('hide')), 1800
 
 class Block
 	constructor: (@condition, @message, trial_structure) ->
