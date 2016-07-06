@@ -231,14 +231,14 @@
 
     InstGrid.prototype.showError = function() {
       if (this.nClicks >= this.triesBeforeHint) {
-        $('#errortext').html("Try again! <br> Hint: The correct words are " + this.correct.join(', '));
+        $('#errortext').html("Hint: The correct words are " + this.correct.join(', '));
       }
       $('#error').modal('show');
       return setTimeout(((function(_this) {
         return function() {
           return $('#error').modal('hide');
         };
-      })(this)), 2000);
+      })(this)), 1800);
     };
 
     return InstGrid;
