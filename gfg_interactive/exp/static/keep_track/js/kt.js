@@ -218,12 +218,11 @@
       if (allCorr) {
         closeGrid(this.exitTrial);
         $('#correct').modal('show');
-        $('#errortext').html("Try again");
         return setTimeout(((function(_this) {
           return function() {
             return $('#correct').modal('hide');
           };
-        })(this)), 1250);
+        })(this)), 1500);
       } else {
         return this.showError();
       }
@@ -231,7 +230,7 @@
 
     InstGrid.prototype.showError = function() {
       if (this.nClicks >= this.triesBeforeHint) {
-        $('#errortext').html("The correct words are " + this.correct.join(', '));
+        $('#errortext').html("Try again! <br> Hint: The correct words are " + this.correct.join(', '));
       }
       $('#error').modal('show');
       return setTimeout(((function(_this) {

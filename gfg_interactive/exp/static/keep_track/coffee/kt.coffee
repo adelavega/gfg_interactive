@@ -171,15 +171,14 @@ class InstGrid
 		if allCorr
 			closeGrid(@exitTrial)
 			$('#correct').modal('show')
-			$('#errortext').html("Try again")
-			setTimeout (=> $('#correct').modal('hide')), 1250
+			setTimeout (=> $('#correct').modal('hide')), 1500
 
 		else
 			@showError()
 
 	showError: ->
 		if @nClicks >= @triesBeforeHint
-			$('#errortext').html("The correct words are " + @correct.join(', '))
+			$('#errortext').html("Try again! <br> Hint: The correct words are " + @correct.join(', '))
 
 		$('#error').modal('show')
 		setTimeout (=> $('#error').modal('hide')), 1500
