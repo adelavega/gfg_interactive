@@ -117,9 +117,10 @@ class KeepTrack(db.Model):
         trial_data = json_trial['trialdata']
 
         if 'rt' not in trial_data:
-            self.reaction_time = 00
+            self.reaction_time = 0
         else:
-            self.reaction_Time = trial_data['rt']
+            self.reaction_time = float(trial_data['rt'])
+	current_app.logger.info("self.reaction_time is %s") % (self.reaction_time)	
 
         if 'acc' not in trial_data:
             self.accuracy = "null"
@@ -130,7 +131,6 @@ class KeepTrack(db.Model):
         	self.target_words = "null"
         else:
         	self.target_words = ",".join(trial_data['target_words']) # [u'Mile', u'Cat', u'France']-->u'Mile,Cat,France'
-
         if 'input_words' not in trial_data:
         	self.input_words = "null"
         else:
@@ -141,7 +141,7 @@ class KeepTrack(db.Model):
         self.block = clean_db_string(trial_data['block'])
 
         current_app.logger.info(
-            "%s added to KeepTrack for session id %s " % (self.trial_num, self.session_id))
+            "%s added to KeepTrack for session id %s and whole JSON KT  %s " % (self.trial_num, self.session_id, json_trials))
 
 
 class EventData(db.Model):
@@ -158,6 +158,7 @@ class EventData(db.Model):
     def __repr__(self):
         pass
 
+
     def add_json_data(self, json_event):
         """ Parse and add backbone.js json data for a event """
  	
@@ -173,7 +174,7 @@ class EventData(db.Model):
         self.timestamp = convert_timestamp(json_event['timestamp'])
 
         current_app.logger.info(
-            "%s added to EventData for session id %s and whole eventJSON is %s " % (self.ev_id, self.session_id, json_event))
+            "%s added to EventData for session id %s " % (self.ev_id, self.session_id))
 
 class QuestionData(db.Model):
     """ Feedback-form question-data for all experiments """
