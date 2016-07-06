@@ -162,7 +162,7 @@ class EventData(db.Model):
         """ Parse and add backbone.js json data for a event """
  	
         self.event_type = json_event['eventtype']
-        self.value = str(",".join(json_event['value']))
+        self.value = str(json_event['value'])
 
         # if isinstance(['value'], list):
         #     self.value_1 = str(json_event['value'][0])
