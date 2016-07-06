@@ -237,7 +237,7 @@
         return function() {
           return $('#error').modal('hide');
         };
-      })(this)), 1500);
+      })(this)), 2000);
     };
 
     return InstGrid;
