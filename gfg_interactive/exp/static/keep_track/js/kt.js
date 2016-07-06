@@ -218,11 +218,12 @@
       if (allCorr) {
         closeGrid(this.exitTrial);
         $('#correct').modal('show');
-        return setTimeout(((function(_this) {
+        setTimeout(((function(_this) {
           return function() {
             return $('#correct').modal('hide');
           };
         })(this)), 1500);
+        return $('#errortext').html("Incorrect! Try again.");
       } else {
         return this.showError();
       }

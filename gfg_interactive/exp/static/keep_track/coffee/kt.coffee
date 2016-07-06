@@ -172,7 +172,7 @@ class InstGrid
 			closeGrid(@exitTrial)
 			$('#correct').modal('show')
 			setTimeout (=> $('#correct').modal('hide')), 1500
-
+			$('#errortext').html("Incorrect! Try again.")
 		else
 			@showError()
 
