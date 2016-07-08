@@ -120,7 +120,7 @@ class KeepTrack(db.Model):
             self.reaction_time = 0
         else:
             self.reaction_time = float(trial_data['rt'])
-	current_app.logger.info("self.reaction_time is %s") % (self.reaction_time)	
+	#current_app.logger.info("self.reaction_time is %s") % (self.reaction_time)	
 
         if 'acc' not in trial_data:
             self.accuracy = "null"
@@ -141,7 +141,7 @@ class KeepTrack(db.Model):
         self.block = clean_db_string(trial_data['block'])
 
         current_app.logger.info(
-            "%s added to KeepTrack for session id %s and whole JSON KT  %s " % (self.trial_num, self.session_id, json_trials))
+            "%s added to KeepTrack for session id %s and whole JSON KT  %s " % (self.trial_num, self.session_id, json_trial))
 
 
 class EventData(db.Model):
