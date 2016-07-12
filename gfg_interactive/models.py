@@ -76,9 +76,9 @@ class CategorySwitch(db.Model):
 
         # Special case for reaction time
         if trial_data['rt'] == "NA":
-            self.reaction_time = 00
+            self.reaction_time = 0
         else:
-            self.reaction_tiome = trial_data['rt']
+            self.reaction_time = trial_data['rt']
 
         # Datetime conversion
         jsts = json_trial['dateTime']  # Javscript timestamp
@@ -88,7 +88,7 @@ class CategorySwitch(db.Model):
         self.block = clean_db_string(trial_data['block'])
 
         current_app.logger.info(
-            "%s added to CategorySwitch for session id %s " % (self.trial_num, self.session_id))
+            "%s added to CategorySwitch for session id %s and JSON CS is %s" % (self.trial_num, self.session_id, json_trial))
 
 
 class KeepTrack(db.Model):
