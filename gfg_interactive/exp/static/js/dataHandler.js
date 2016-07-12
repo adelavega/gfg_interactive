@@ -205,7 +205,7 @@ var DataHandler = function(sessionid) {
 
 	self.completeHIT = function() {
 		self.teardownTask();
-		$(window).off("beforeunload");
+		$(window).unbind('beforeunload');
 		$.ajax("worker_complete", {
 			type: "POST",
 			data: {'sessionid': self.taskdata.id}
