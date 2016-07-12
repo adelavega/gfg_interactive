@@ -213,7 +213,7 @@ var DataHandler = function(sessionid) {
 
 		// https://gfg-dev-2.sph.umich.edu/gfg/lib/interactive_survey_module_handler.php
 		// $.ajax("/lib/interactive_survey_module_handler.php", {
-		$.ajax("interactive_survey_module_handler.php", {
+		$.ajax("/lib/interactive_survey_module_handler.php", {
 			type: "POST",
 			data: {
 				action: "complete"
