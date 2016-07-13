@@ -274,8 +274,8 @@ def results():
 
     session = Session.query.filter_by(session_id=session_id).first()
     if session.exp_name == "keep_track":
-        target_trials = KeepTrack.query.filter(CategorySwitch.session_id==session_id, 
-            CategorySwitch.block.in_(["1", "2", "3", "4", "5", "6"])).all()
+        target_trials = KeepTrack.query.filter(KeepTrack.session_id==session_id, 
+            KeepTrack.block.in_(["1", "2", "3", "4", "5", "6"])).all()
 
         current_app.logger.info("tt: %s", len(target_trials))
 
