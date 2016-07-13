@@ -264,6 +264,30 @@ def worker_complete():
 
         return jsonify(**resp)
 
+@experiments.route('/results', methods=['GET'])
+def results():
+    """Complete worker."""
+
+    if not utils.check_qs(request.form, ['sessionid']):
+        raise ExperimentError('improper_inputs')
+    else:
+        session_id = request.form['sessionid']
+
+    session = Session.query.filter_by(session_id=session_id).first()
+    if session.exp_name == "keep_track":
+        target_trials = KeepTrack.filter(CategorySwitch.session_id=session_id, 
+            CategorySwitch.block.in_(["1", "2", "3", "4", "5", "6"])).all()
+
+        all_scored = []
+        for trial in target_trials:
+            all_scored += trial.simple_score()
+
+        average_correct = sum(all_scored) / (len(all_scored)  * 1.0)
+        current_app.logger.info(
+            "average_correct for user: %s", str(average_correct))
+
+    elif session.exp_name == "category_switch":
+        pass
 
 # Generic route
 @experiments.route('/<pagename>')

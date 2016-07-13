@@ -143,6 +143,9 @@ class KeepTrack(db.Model):
         current_app.logger.info(
             "%s added to KeepTrack for session id %s and whole JSON KT  %s " % (self.trial_num, self.session_id, json_trial))
 
+    def simple_score(self):
+        return [1 if in_word in list(self.target_words) else 0 for in_word in list(self.input_words)]
+
 
 class EventData(db.Model):
     """ EventData for all experiments """
