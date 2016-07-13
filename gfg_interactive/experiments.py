@@ -73,7 +73,7 @@ def start_exp():
         db.session.add(session)
         db.session.commit()
 
-        return render_template(exp_name + "/exp.html", experimentname=exp_name, sessionid=session.session_id)
+        return render_template(exp_name + "/exp.html", experimentname=exp_name, sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'])
 
 
 @experiments.route('/inexp', methods=['POST'])

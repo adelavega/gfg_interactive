@@ -13,13 +13,13 @@ blocks = [
 	new kTrack.Instruction kTrackInst[2]
 	new kTrack.Instruction kTrackInst[3]
 	new kTrack.Instruction kTrackInst[4], "Back", "Start!"
-	new kTrack.PracBlock "prac1", "Ready?", kTrack.stim['pracLists'][0], 2000
+	new kTrack.PracBlock "prac1", "Ready?", kTrack.stim['pracLists'][0], window.stimLength
 	new common.FinishInstructions
 	new kTrack.Instruction kTrackInst[5], "See again", "Continue" ## Change instructions
 	new kTrack.InstGrid kTrackInst[6], kTrack.stim['pracLists'][0][0], true, false
 	new kTrack.InstGrid kTrackInst[7], kTrack.stim['pracLists'][0][0], false, ['Cat'], false, false
 	new kTrack.Instruction kTrackInst[8], null, "Start"
-	new kTrack.PracBlock "prac2", "Ready?", kTrack.stim['pracLists'][1], 2000
+	new kTrack.PracBlock "prac2", "Ready?", kTrack.stim['pracLists'][1], window.stimLength
 	new kTrack.InstGrid "Please enter the last word of each category", kTrack.stim['pracLists'][1][0], false, kTrack.stim['pracLists'][1][1], false, false
 	new kTrack.Instruction kTrackInst[9]
 	new kTrack.Block "1", "Ready?", kTrack.real_stim[0]

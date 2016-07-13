@@ -20,6 +20,7 @@ class StagingConfig(Config):
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
+    EXP_DEBUG = False
 
     SQLALCHEMY_DATABASE_URI = "??"
 

@@ -73,7 +73,13 @@
 
   all_cats = ['Distances', 'Relatives', 'Animals', 'Countries', 'Metals', 'Colors'];
 
-  stimLength = 2000;
+  if (debug === True) {
+    window.stimLength = 50;
+  } else {
+    window.stimLength = 2000;
+  }
+
+  stimLength = window.stimLength;
 
   Instruction = (function() {
     function Instruction(message, leftKey, rightKey, corrResp) {

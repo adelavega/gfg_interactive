@@ -55,8 +55,12 @@ categories = {"Animals": ["Dog", "Cat", "Tiger", "Horse", "Lion", "Cow"], "Relat
 
 all_cats = ['Distances', 'Relatives', 'Animals', 'Countries', 'Metals', 'Colors']
 
-stimLength = 2000
+if debug is True
+	window.stimLength = 50
+else
+	window.stimLength = 2000
 
+stimLength = window.stimLength
 
 ## Instruction block
 ## Will display instructions in @message, and set left and right buttons to said text
