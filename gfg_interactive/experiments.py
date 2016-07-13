@@ -272,7 +272,7 @@ def results():
     if not utils.check_qs(request.form, ['sessionid']):
         raise ExperimentError('improper_inputs')
     else:
-        session_id = request.form['sessionid']
+        session_id = request.args['sessionid']
 
     session = Session.query.filter_by(session_id=session_id).first()
     if session.exp_name == "keep_track":
