@@ -73,7 +73,7 @@
 
   all_cats = ['Distances', 'Relatives', 'Animals', 'Countries', 'Metals', 'Colors'];
 
-  if (debug === True) {
+  if (debug === "True") {
     window.stimLength = 50;
   } else {
     window.stimLength = 2000;
