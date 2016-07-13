@@ -265,7 +265,7 @@
         results = [];
         for (j = 0, len = ref.length; j < len; j++) {
           word = ref[j];
-          results.push(new Word(word, 2000));
+          results.push(new Word(word, stimLength));
         }
         return results;
       })();
