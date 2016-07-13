@@ -263,7 +263,7 @@ class PracBlock extends Block
 
 # A word class. Shows a word, and waits two seconds. 
 class Word
-	constructor: (@word, @stimLength=stimLength) ->
+	constructor: (@word, @stimLength) ->
 
 	show: (@exitTrial)  ->
 		$('#topText').html(@word)

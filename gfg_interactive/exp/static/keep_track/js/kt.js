@@ -385,7 +385,7 @@
   Word = (function() {
     function Word(word1, stimLength1) {
       this.word = word1;
-      this.stimLength = stimLength1 != null ? stimLength1 : stimLength;
+      this.stimLength = stimLength1;
     }
 
     Word.prototype.show = function(exitTrial) {
