@@ -182,14 +182,15 @@ var DataHandler = function(sessionid) {
 		
 		if (self.taskdata.mode != 'debug') {  //don't block people from reloading in debug mode
 			// Provide opt-out 
-			$(window).on("beforeunload", function(){
+		    window.onbeforeunload = function(e) {
 				self.saveData();
 				$.ajax("quitter", {
 						type: "POST",
 						data: {'sessionid': self.taskdata.id}
 				});
-				return "By leaving or reloading this page, you opt out of the experiment.  Are you sure you want to leave the experiment?";
-			});
+		      return "By leaving or reloading this page, you opt out of the experiment.  Are you sure you want to leave the experiment?";
+		    };
+
 		}
 
 	};
@@ -204,16 +205,13 @@ var DataHandler = function(sessionid) {
 	};
 
 	self.completeHIT = function() {
-		self.teardownTask();
 		window.onbeforeunload = null;
 		$.ajax("worker_complete", {
 			type: "POST",
 			data: {'sessionid': self.taskdata.id}
 		});
 
-		// https://gfg-dev-2.sph.umich.edu/gfg/lib/interactive_survey_module_handler.php
-		// $.ajax("/lib/interactive_survey_module_handler.php", {
-		$.ajax("/lib/interactive_survey_module_handler.php", {
+		$.ajax("/gfg/lib/interactive_survey_module_handler.php", {
 			type: "POST",
 			data: {
 				action: "complete"
@@ -221,7 +219,6 @@ var DataHandler = function(sessionid) {
 		});
 
 		opener.completeInteractiveSurvey()
-
 		window.close()
 	}
 
@@ -242,8 +239,6 @@ var DataHandler = function(sessionid) {
 
 	/* Backbone stuff */
 	Backbone.Notifications.on('_psiturk_finishedinstructions', self.startTask);
-	Backbone.Notifications.on('_psiturk_finishedtask', function(msg) { $(window).off("beforeunload"); });
-
 
 	$(window).blur( function() {
 		Backbone.Notifications.trigger('_psiturk_lostfocus');
