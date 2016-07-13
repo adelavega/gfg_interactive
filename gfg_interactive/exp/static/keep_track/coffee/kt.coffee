@@ -1,7 +1,5 @@
 ## Keep Track Task
 
-wordLength = 50
-
 # Hides left and right buttons
 hideButtons = ->
 	$("#leftButton").hide()
@@ -57,7 +55,7 @@ categories = {"Animals": ["Dog", "Cat", "Tiger", "Horse", "Lion", "Cow"], "Relat
 
 all_cats = ['Distances', 'Relatives', 'Animals', 'Countries', 'Metals', 'Colors']
 
-stimLength = 2000
+stimLength = 50
 
 
 ## Instruction block
@@ -190,7 +188,7 @@ class Block
 		@trialNumber = 0
 		@categories = trial_structure[0]
 		@target_words = trial_structure[1]
-		@words = (new Word(word, wordLength) for word in trial_structure[2])
+		@words = (new Word(word, stimLength) for word in trial_structure[2])
 		@max_trials = @words.length
 		
 		upper_cats = [cat.toUpperCase() for cat in @categories]
