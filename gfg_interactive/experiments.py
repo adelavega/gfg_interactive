@@ -267,7 +267,8 @@ def worker_complete():
 @experiments.route('/results', methods=['GET'])
 def results():
     """Complete worker."""
-
+    current_app.logger.info("Entered results")
+    
     if not utils.check_qs(request.form, ['sessionid']):
         raise ExperimentError('improper_inputs')
     else:

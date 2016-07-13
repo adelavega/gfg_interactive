@@ -1,5 +1,7 @@
 ## Keep Track Task
 
+wordLength = 50
+
 # Hides left and right buttons
 hideButtons = ->
 	$("#leftButton").hide()
@@ -188,7 +190,7 @@ class Block
 		@trialNumber = 0
 		@categories = trial_structure[0]
 		@target_words = trial_structure[1]
-		@words = (new Word(word, 2000) for word in trial_structure[2])
+		@words = (new Word(word, wordLength) for word in trial_structure[2])
 		@max_trials = @words.length
 		
 		upper_cats = [cat.toUpperCase() for cat in @categories]
