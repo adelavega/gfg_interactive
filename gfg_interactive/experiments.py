@@ -277,10 +277,12 @@ def results():
         target_trials = KeepTrack.query.filter(CategorySwitch.session_id==session_id, 
             CategorySwitch.block.in_(["1", "2", "3", "4", "5", "6"])).all()
 
+        current_app.logger.info("tt: %s", len(target_trials))
+
         all_scored = []
         for trial in target_trials:
             all_scored += trial.simple_score()
-        current_app.logger.info("all scored: %s", str(all_scored))
+
 
         average_correct = sum(all_scored) / (len(all_scored)  * 1.0)
         current_app.logger.info(
