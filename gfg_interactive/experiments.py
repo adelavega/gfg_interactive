@@ -63,7 +63,7 @@ def start_exp():
                                                   (Session.exp_name == exp_name) &
                                                   ((Session.status == 3))).first()
 
-    if disqualifying_sessions:
+    if disqualifying_sessions and current_app.config['EXP_DEBUG'] == False:
         raise ExperimentError('already_did_exp', session_id=disqualifying_sessions.session_id)
 
     # Otherwise, allow participant to re-enter
