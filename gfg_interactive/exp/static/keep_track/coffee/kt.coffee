@@ -55,7 +55,7 @@ categories = {"Animals": ["Dog", "Cat", "Tiger", "Horse", "Lion", "Cow"], "Relat
 
 all_cats = ['Distances', 'Relatives', 'Animals', 'Countries', 'Metals', 'Colors']
 
-if debug is True
+if debug is "True"
 	window.stimLength = 50
 else
 	window.stimLength = 2000
