@@ -282,6 +282,7 @@ def results():
             score = trial.simple_score()
             all_scored += score
             current_app.logger.info("trial score: %s, block: %s, inwords: %s" % (str(score), trial.block, str(trial.input_words)))
+            current_app.logged.info("score: %s" % str([word in trial.target_words for word in trial.input_words]))
 
         average_correct = sum(all_scored) / (len(all_scored)  * 1.0)
         current_app.logger.info(
