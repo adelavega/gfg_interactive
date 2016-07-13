@@ -268,7 +268,7 @@ def worker_complete():
 def results():
     """Complete worker."""
     current_app.logger.info("Entered results")
-    
+
     if not utils.check_qs(request.form, ['sessionid']):
         raise ExperimentError('improper_inputs')
     else:
@@ -276,7 +276,7 @@ def results():
 
     session = Session.query.filter_by(session_id=session_id).first()
     if session.exp_name == "keep_track":
-        target_trials = KeepTrack.filter(CategorySwitch.session_id=session_id, 
+        target_trials = KeepTrack.filter(CategorySwitch.session_id==session_id, 
             CategorySwitch.block.in_(["1", "2", "3", "4", "5", "6"])).all()
 
         all_scored = []
