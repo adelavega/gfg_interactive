@@ -274,7 +274,7 @@ def results():
 
     session = Session.query.filter_by(session_id=session_id).first()
     if session.exp_name == "keep_track":
-        target_trials = KeepTrack.filter(CategorySwitch.session_id==session_id, 
+        target_trials = KeepTrack.query.filter(CategorySwitch.session_id==session_id, 
             CategorySwitch.block.in_(["1", "2", "3", "4", "5", "6"])).all()
 
         all_scored = []
