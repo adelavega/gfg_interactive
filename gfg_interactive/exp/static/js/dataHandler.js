@@ -188,7 +188,7 @@ var DataHandler = function(sessionid) {
 						type: "POST",
 						data: {'sessionid': self.taskdata.id}
 				});
-		      return "By leaving or reloading this page, you opt out of the experiment.  Are you sure you want to leave the experiment?";
+				return "By leaving or reloading this page, you opt out of the experiment.  Are you sure you want to leave the experiment?";
 		    };
 
 		}
