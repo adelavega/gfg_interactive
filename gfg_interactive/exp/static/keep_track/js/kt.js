@@ -73,7 +73,7 @@
 
   all_cats = ['Distances', 'Relatives', 'Animals', 'Countries', 'Metals', 'Colors'];
 
-  stimLength = 2000;
+  stimLength = 50;
 
   Instruction = (function() {
     function Instruction(message, leftKey, rightKey, corrResp) {
