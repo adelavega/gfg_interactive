@@ -59,9 +59,7 @@ def start_exp():
 
     # If any existing session that disqualify user (ongoing or completed), throw error
     # Otherwise, create new session and serve experiment
-    disqualifying_sessions = Session.query.filter((Session.gfg_id == gfg_id) &
-                                                  (Session.exp_name == exp_name) &
-                                                  ((Session.status == 3))).first()
+    disqualifying_sessions = Session.query.filter_by(gfg_id = gfg_id, exp_name = exp_name, status = 3).first()
 
     if disqualifying_sessions:
         raise ExperimentError('already_did_exp', session_id=disqualifying_sessions.session_id)
@@ -257,6 +255,8 @@ def worker_complete():
             session.status = 3
             db.session.commit()
             resp = {"status": "marked as done"}
+            current_app.logger.info("Subject: %s marked as done" %
+                        str(session.gfg_id))
 
         except SQLAlchemyError:
             raise ExperimentError('unknown_error', session_id=request.args['sessionid'])
