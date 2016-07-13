@@ -281,7 +281,7 @@ def results():
         for trial in target_trials:
             score = trial.simple_score()
             all_scored += score
-            current_app.logger.info("trial score: %s, block: %s", (str(score), trial.block))
+            current_app.logger.info("trial score: %s, block: %s" % (str(score), trial.block))
 
         average_correct = sum(all_scored) / (len(all_scored)  * 1.0)
         current_app.logger.info(
