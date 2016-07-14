@@ -218,8 +218,8 @@ var DataHandler = function(sessionid) {
 		}
 		});
 
-		opener.completeInteractiveSurvey()
-		window.close()
+		// opener.completeInteractiveSurvey()
+		window.location.replace('results?sessionid=' + self.taskdata.id)
 	}
 
 	// To be fleshed out with backbone views in the future.

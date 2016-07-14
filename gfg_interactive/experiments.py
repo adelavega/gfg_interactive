@@ -9,6 +9,7 @@ import datetime
 import json
 
 import utils
+import stats
 
 # Status codes
 NOT_ACCEPTED = 0
@@ -59,9 +60,7 @@ def start_exp():
 
     # If any existing session that disqualify user (ongoing or completed), throw error
     # Otherwise, create new session and serve experiment
-    disqualifying_sessions = Session.query.filter((Session.gfg_id == gfg_id) &
-                                                  (Session.exp_name == exp_name) &
-                                                  ((Session.status == 3))).first()
+    disqualifying_sessions = Session.query.filter_by(gfg_id = gfg_id, exp_name = exp_name, status = 3).first()
 
     if disqualifying_sessions and current_app.config['EXP_DEBUG'] == False:
         raise ExperimentError('already_did_exp', session_id=disqualifying_sessions.session_id)
@@ -257,6 +256,8 @@ def worker_complete():
             session.status = 3
             db.session.commit()
             resp = {"status": "marked as done"}
+            current_app.logger.info("Subject: %s marked as done" %
+                        str(session.gfg_id))
 
         except SQLAlchemyError:
             raise ExperimentError('unknown_error', session_id=request.args['sessionid'])
@@ -264,6 +265,38 @@ def worker_complete():
 
         return jsonify(**resp)
 
+@experiments.route('/results', methods=['GET'])
+def results():
+    """Complete worker."""
+    if not utils.check_qs(request.args, ['sessionid']):
+        raise ExperimentError('improper_inputs')
+    else:
+        session_id = request.args['sessionid']
+
+    session = Session.query.filter_by(session_id=session_id).first()
+
+    if session.exp_name == "keep_track":
+        target_trials = KeepTrack.query.filter(KeepTrack.session_id==session_id, 
+            KeepTrack.block.in_(["1", "2", "3", "4", "5", "6"])).all()
+
+        all_scored = [] 
+        for trial in target_trials:
+            score = trial.simple_score()
+            all_scored += score
+            current_app.logger.info("trial score: %s, block: %s, inwords: %s" % (str(score), trial.block, str(trial.input_words)))
+
+        average_correct = sum(all_scored) / (len(all_scored)  * 1.0)
+        current_app.logger.info(
+            "average_correct for user: %s", str(average_correct))
+
+        perc_better = stats.keep_track_turknorm(average_correct)
+
+        return render_template(session.exp_name + "/results.html", 
+            average_correct="{0:.0f}".format(average_correct * 100),
+            perc_better="{0:.0f}".format(perc_better * 100))
+
+    elif session.exp_name == "category_switch":
+        return render_template(session.exp_name + "/results.html")
 
 # Generic route
 @experiments.route('/<pagename>')
