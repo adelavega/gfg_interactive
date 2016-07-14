@@ -73,7 +73,13 @@
 
   all_cats = ['Distances', 'Relatives', 'Animals', 'Countries', 'Metals', 'Colors'];
 
-  stimLength = 50;
+  if (debug === "True") {
+    window.stimLength = 50;
+  } else {
+    window.stimLength = 2000;
+  }
+
+  stimLength = window.stimLength;
 
   Instruction = (function() {
     function Instruction(message, leftKey, rightKey, corrResp) {
@@ -385,7 +391,7 @@
   Word = (function() {
     function Word(word1, stimLength1) {
       this.word = word1;
-      this.stimLength = stimLength1;
+      this.stimLength = stimLength1 != null ? stimLength1 : stimLength;
     }
 
     Word.prototype.show = function(exitTrial) {

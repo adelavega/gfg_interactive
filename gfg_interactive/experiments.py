@@ -61,7 +61,7 @@ def start_exp():
     # Otherwise, create new session and serve experiment
     disqualifying_sessions = Session.query.filter_by(gfg_id = gfg_id, exp_name = exp_name, status = 3).first()
 
-    if disqualifying_sessions:
+    if disqualifying_sessions and current_app.config['EXP_DEBUG'] == False:
         raise ExperimentError('already_did_exp', session_id=disqualifying_sessions.session_id)
 
     # Otherwise, allow participant to re-enter
@@ -71,7 +71,7 @@ def start_exp():
         db.session.add(session)
         db.session.commit()
 
-        return render_template(exp_name + "/exp.html", experimentname=exp_name, sessionid=session.session_id)
+        return render_template(exp_name + "/exp.html", experimentname=exp_name, sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'])
 
 
 @experiments.route('/inexp', methods=['POST'])

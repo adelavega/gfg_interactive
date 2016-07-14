@@ -55,9 +55,12 @@ categories = {"Animals": ["Dog", "Cat", "Tiger", "Horse", "Lion", "Cow"], "Relat
 
 all_cats = ['Distances', 'Relatives', 'Animals', 'Countries', 'Metals', 'Colors']
 
-stimLength = 50
+if debug is "True"
+	window.stimLength = 50
+else
+	window.stimLength = 2000
 
-
+stimLength = window.stimLength
 ## Instruction block
 ## Will display instructions in @message, and set left and right buttons to said text
 ## Can optionally take a correct response (if incorrect, will not allow you to advance) & button colors
@@ -263,7 +266,7 @@ class PracBlock extends Block
 
 # A word class. Shows a word, and waits two seconds. 
 class Word
-	constructor: (@word, @stimLength) ->
+	constructor: (@word, @stimLength=stimLength) ->
 
 	show: (@exitTrial)  ->
 		$('#topText').html(@word)
