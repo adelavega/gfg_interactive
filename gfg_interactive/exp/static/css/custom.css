@@ -13,6 +13,14 @@ Custom dialog/modal headers for Category Switch */
 	.dialog-header-wait span, .dialog-header-wait h4,
 	.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
 
+/* For Keep Track and CS feedback form*/
+.hr {
+	margin-top: 8px;
+	margin-bottom: 8px;
+
+}
+
+
 
 /* Ease Display */
 

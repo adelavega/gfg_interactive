@@ -90,9 +90,10 @@
 	        </div>	<!-- end of class="row"-->
 	      </div> <!-- end of class="container"-->
 	    </nav>
+
    	</header>
         <div id="container-questionnaire">
-            <h1>You have successfully completed the test! </h1><br>
+            <h2>You have successfully completed the test! </h2><br>
             <p class='lead'>Please answer these questions so we can improve this study.</p>
             <div class="alert alert-warning hidden" id="noqs" role="alert">Please answer all of the questions</div>
             <form id="postquiz" action="debrief" method="post">
@@ -138,19 +139,18 @@
                 <!-- beginning of a question -->
                 <div class="row">
                     <div class="col-md-4">
-                        <h4>Please let us know if you have any additional comments that could help us improve your experience.</h4>
+                        <h4>Please let us know if you have any additional comments.</h4>
                     </div>
                     <div class="col-md-8">
-                        <textarea class= "select" id="openended" cols="80" rows="4" placeholder="Please enter feedback here. Thank you!"></textarea>
+                        <textarea class= "select" id="openended" cols="40" rows="2" placeholder="Please enter feedback here. Thank you!"></textarea>
                     </div>
                 </div>
                 <!-- end of a question -->
                 <div class="row">
-                    <div class="col-md-4"></div>
                     <div class="col-md-7"></div>
-                    <div class="col-md-1">
-                        <button type="button" id="next" value="next" class="btn btn-primary btn-lg continue">
-                        Finish <span class="glyphicon glyphicon-arrow-right"></span>
+                    <div class="col-md-2">
+                        <button type="button" id="next" value="next" class="btn btn-success btn-lg">
+                        See My Results <span class="glyphicon glyphicon-arrow-right"></span>
             			</button>
                     </div>
                 </div>
