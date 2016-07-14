@@ -219,7 +219,7 @@ var DataHandler = function(sessionid) {
 		});
 
 		// opener.completeInteractiveSurvey()
-		window.location.replace('results?sessionid=' + self.taskdata.id)
+		window.location.replace('results?uniqueid=' + uniqueid + '&experimentname=' + experimentname)
 	}
 
 	// To be fleshed out with backbone views in the future.
