@@ -9,6 +9,7 @@ import datetime
 import json
 
 import utils
+import stats
 
 # Status codes
 NOT_ACCEPTED = 0
@@ -273,6 +274,7 @@ def results():
         session_id = request.args['sessionid']
 
     session = Session.query.filter_by(session_id=session_id).first()
+
     if session.exp_name == "keep_track":
         target_trials = KeepTrack.query.filter(KeepTrack.session_id==session_id, 
             KeepTrack.block.in_(["1", "2", "3", "4", "5", "6"])).all()
@@ -287,10 +289,14 @@ def results():
         current_app.logger.info(
             "average_correct for user: %s", str(average_correct))
 
-        return render_template(session.exp_name + "/results.html", average_correct="{0:.0f}".format(average_correct * 100))
+        perc_better = stats.keep_track_turknorm(average_correct)
+
+        return render_template(session.exp_name + "/results.html", 
+            average_correct="{0:.0f}".format(average_correct * 100),
+            perc_better="{0:.0f}".format(perc_better * 100))
 
     elif session.exp_name == "category_switch":
-        pass
+        return render_template(session.exp_name + "/results.html")
 
 # Generic route
 @experiments.route('/<pagename>')
