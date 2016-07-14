@@ -271,19 +271,19 @@ def results():
     if not utils.check_qs(request.args, ['uniqueid', 'experimentname']):
         raise ExperimentError('improper_inputs')
     else:
-        session_id = request.args['sessionid']
+        uniqueid = request.args['uniqueid']
+        exp_name = request.args['experimentname']
 
     ## Get last session with code 3 from user
-    gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(request.args['uniqueid']).decode('string-escape'))
-    exp_name = request.args['experimentname']
-
+    gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(uniqueid).decode('string-escape'))
+    
     try:
         session = Session.query.filter_by(gfg_id=gfg_id, status=3, exp_name=exp_name).order_by(Session.session_id.desc()).first()
     except SQLAlchemyError:
         raise ExperimentError('user_access_denied')
 
     if session.exp_name == "keep_track":
-        target_trials = KeepTrack.query.filter(KeepTrack.session_id==session_id, 
+        target_trials = KeepTrack.query.filter(KeepTrack.session_id==session.session_id, 
             KeepTrack.block.in_(["1", "2", "3", "4", "5", "6"])).all()
 
         all_scored = [] 
