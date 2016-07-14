@@ -278,7 +278,7 @@ def results():
         exp_name = request.args['experimentname']
 
     ## Get last session with code 3 from user
-    gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(uniqueid).decode('string-escape'))
+    gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(uniqueid))
     
     try:
         session = Session.query.filter_by(gfg_id=gfg_id, status=3, exp_name=exp_name).order_by(Session.session_id.desc()).first()
