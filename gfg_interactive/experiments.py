@@ -308,8 +308,8 @@ def results():
         #     CategorySwitch.block.in_(["sizeReal", "livingReal"], CategorySwitch.accuracy==1)).all()
 
         single_trials_avg = db.session.query(func.avg(CategorySwitch.reaction_time).label('average')).filter(
-            CategorySwitch.session_id==session.session_id, CategorySwitch.block.in_(["sizeReal", "livingReal"], 
-                CategorySwitch.accuracy==1))
+            CategorySwitch.session_id==session.session_id, CategorySwitch.block.in_(["sizeReal", "livingReal"]), 
+                CategorySwitch.accuracy==1)
 
 
         current_app.logger.info("Avg RT Single: %s", str(single_trials_avg))
