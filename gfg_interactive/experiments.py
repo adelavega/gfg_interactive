@@ -304,8 +304,13 @@ def results():
             perc_better="{0:.0f}".format(perc_better * 100))
 
     elif session.exp_name == "category_switch":
-        single_trials_avg = CategorySwitch.query(func.sum(CategorySwitch.reaction_time)).filter(CategorySwitch.session_id==session.session_id, 
-            CategorySwitch.block.in_(["sizeReal", "livingReal"], CategorySwitch.accuracy==1)).all()
+        # single_trials_avg = CategorySwitch.query(func.sum(CategorySwitch.reaction_time)).filter(CategorySwitch.session_id==session.session_id, 
+        #     CategorySwitch.block.in_(["sizeReal", "livingReal"], CategorySwitch.accuracy==1)).all()
+
+        single_trials_avg = db.session.query(func.avg(CategorySwitch.reaction_time).label('average')).filter(
+            CategorySwitch.session_id==session.session_id, CategorySwitch.block.in_(["sizeReal", "livingReal"], 
+                CategorySwitch.accuracy==1))
+
 
         current_app.logger.info("Avg RT Single: %s", str(single_trials_avg))
         # mixed_trials = CategorySwitch.query.filter(CategorySwitch.session_id==session.session_id, 
