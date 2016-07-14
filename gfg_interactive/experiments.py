@@ -41,8 +41,10 @@ def start_exp():
 
     if not utils.check_qs(request.args, ['uniqueid', 'surveyid']):
         raise ExperimentError('improper_inputs')
+    else:
+        uniqueid = request.args['uniqueid']
 
-    gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(request.args['uniqueid']).decode('string-escape'))
+    gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(uniqueid).decode('string-escape'))
 
     exp_name = experiment_list[request.args['surveyid']]
     browser, platform = utils.check_browser_platform(request.user_agent)
@@ -72,7 +74,8 @@ def start_exp():
         db.session.add(session)
         db.session.commit()
 
-        return render_template(exp_name + "/exp.html", experimentname=exp_name, sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'])
+        return render_template(exp_name + "/exp.html", experimentname=exp_name, sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'],
+            uniqueid=uniqueid)
 
 
 @experiments.route('/inexp', methods=['POST'])
