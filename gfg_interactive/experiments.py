@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from errors import ExperimentError
 from models import Session, Participant, CategorySwitch, EventData, KeepTrack, QuestionData
-
+from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
 import db_utils
@@ -295,10 +295,8 @@ def results():
             all_scored += score
             current_app.logger.info("trial score: %s, block: %s, inwords: %s" % (str(score), trial.block, str(trial.input_words)))
 
+        ## This first value should be stored
         average_correct = sum(all_scored) / (len(all_scored)  * 1.0)
-        current_app.logger.info(
-            "average_correct for user: %s", str(average_correct))
-
         perc_better = stats.keep_track_turknorm(average_correct)
 
         return render_template(session.exp_name + "/results.html", 
@@ -306,6 +304,13 @@ def results():
             perc_better="{0:.0f}".format(perc_better * 100))
 
     elif session.exp_name == "category_switch":
+        single_trials_avg = CategorySwitch.query(func.sum(CategorySwitch.reaction_time)).filter(CategorySwitch.session_id==session.session_id, 
+            CategorySwitch.block.in_(["sizeReal", "livingReal"], CategorySwitch.accuracy==1)).all()
+
+        current_app.logger.info("Avg RT Single: %s", str(single_trials_avg))
+        # mixed_trials = CategorySwitch.query.filter(CategorySwitch.session_id==session.session_id, 
+        #     KeepTrack.block.in_(["1", "2", "3", "4", "5", "6"])).all()
+
         return render_template(session.exp_name + "/results.html")
 
 # Generic route
