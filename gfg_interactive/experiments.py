@@ -287,6 +287,8 @@ def results():
         current_app.logger.info(
             "average_correct for user: %s", str(average_correct))
 
+        return render_template(session.exp_name + "/results.html")
+
     elif session.exp_name == "category_switch":
         pass
 
