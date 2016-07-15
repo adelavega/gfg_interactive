@@ -323,19 +323,14 @@ def results():
 
         print std_score
 
-        percentile = stats.z2p((average_correct - mean_score) / std_score)
+        percentile = stats.z2p((score - mean_score) / std_score)
     else:
         percentile = None
 
     return render_template(session.exp_name + "/results.html", 
-        average_correct="{0:.0f}".format(average_correct * 100),
+        score="{0:.0f}".format(score * 100),
         percentile=percentile)
 
-
-        session.results = switch_cost
-        db.session.commit()
-
-        return render_template(session.exp_name + "/results.html", switch_cost=switch_cost)
 
 # Generic route
 @experiments.route('/<pagename>')
