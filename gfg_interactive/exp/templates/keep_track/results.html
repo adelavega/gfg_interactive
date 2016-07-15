@@ -9,7 +9,7 @@
         <p>
         You remembered <srong> {{ score }}% </strong> of all relevant words correctly. Thanks for the hard work!<br>
 
-        {%- if percentile is not False -%}
+        {%- if percentile is not none-%}
         You performed better on this test than {{ percentile }}% of other Genes for Good participants your age. As more people take this test your ranking may change, so feel free to look at your results again. 
         {% endif %}
 
