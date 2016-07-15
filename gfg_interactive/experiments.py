@@ -325,7 +325,7 @@ def results():
 
         print mean_score
 
-        percentile = stats.z2p((score - mean_score[0][0]) / std_score[0][0] + 0.0000001)
+        percentile = stats.z2p((score - mean_score[0][0]) / (std_score[0][0] + 0.0000001))
     else:
         percentile = None
 
