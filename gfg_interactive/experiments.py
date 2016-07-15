@@ -311,10 +311,9 @@ def results():
             CategorySwitch.session_id==session.session_id, CategorySwitch.block.in_(["mixedReal1", "mixedReal2"]), 
                 CategorySwitch.accuracy==1).all()
 
-        current_app.logger.info("Avg RT Single: %s, mixed: %s" % (str(single_trials_avg), str(mixed_trials_avg)))
+        switch_cost = mixed_trials_avg[0][0] - single_trials_avg[0][0]
 
-
-        return render_template(session.exp_name + "/results.html")
+        return render_template(session.exp_name + "/results.html", switch_cost=switch_cost)
 
 # Generic route
 @experiments.route('/<pagename>')
