@@ -269,7 +269,7 @@ def worker_complete():
 
 @experiments.route('/results', methods=['GET'])
 def results():
-    """Complete worker."""
+    """Return results at the end."""
     if not utils.check_qs(request.args, ['uniqueid', 'experimentname']):
         raise ExperimentError('improper_inputs')
     else:
@@ -295,27 +295,7 @@ def results():
             current_app.logger.info("trial score: %s, block: %s, inwords: %s" % (str(score), trial.block, str(trial.input_words)))
 
         ## This first value should be stored
-        average_correct = sum(all_scored) / (len(all_scored)  * 1.0)
-        session.results = average_correct
-        db.session.commit()
-
-        ## Find other people in same age range. If more than 25, calculate percentile and display
-        age_matched_ids = db_utils.get_age_matched_ids(gfg_id, current_app.config['RESEARCH_DB_HOST'], current_app.config['RESEARCH_DB_USER'],
-        current_app.config['RESEARCH_DB_PASSWORD'], current_app.config['RESEARCH_DB_NAME'])
-        if age_matched_ids > 0:
-            mean_score = db.session.query(func.avg(Session.results).label('average')).filter(
-            Session.gfg_id.in_(age_matched_ids))
-
-            std_score = db.session.query(func.STD(Session.results).label('average')).filter(
-            Session.gfg_id.in_(age_matched_ids))
-
-            percentile = stats.z2p((average_correct - mean_score) / std_score)
-        else:
-            percentile = None
-
-        return render_template(session.exp_name + "/results.html", 
-            average_correct="{0:.0f}".format(average_correct * 100),
-            percentile=percentile)
+        score = sum(all_scored) / (len(all_scored)  * 1.0)
 
     elif session.exp_name == "category_switch":
         single_trials_avg = db.session.query(func.avg(CategorySwitch.reaction_time).label('average')).filter(
@@ -326,7 +306,32 @@ def results():
                 CategorySwitch.accuracy==1).all()
 
         ## This value also needs to be stored
-        switch_cost = mixed_trials_avg[0][0] - single_trials_avg[0][0]
+        score = mixed_trials_avg[0][0] - single_trials_avg[0][0]
+
+    session.results = score
+    db.session.commit()
+
+    ## Find other people in same age range. If more than 25, calculate percentile and display
+    age_matched_ids = db_utils.get_age_matched_ids(gfg_id, current_app.config['RESEARCH_DB_HOST'], current_app.config['RESEARCH_DB_USER'],
+    current_app.config['RESEARCH_DB_PASSWORD'], current_app.config['RESEARCH_DB_NAME'])
+    if age_matched_ids > 0:
+        mean_score = db.session.query(func.avg(Session.results).label('average')).filter(
+        Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name).all()
+
+        std_score = db.session.query(func.STD(Session.results).label('average')).filter(
+        Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name).all()
+
+        print std_score
+
+        percentile = stats.z2p((average_correct - mean_score) / std_score)
+    else:
+        percentile = None
+
+    return render_template(session.exp_name + "/results.html", 
+        average_correct="{0:.0f}".format(average_correct * 100),
+        percentile=percentile)
+
+
         session.results = switch_cost
         db.session.commit()
 
