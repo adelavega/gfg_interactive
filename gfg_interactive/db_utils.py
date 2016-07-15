@@ -40,7 +40,7 @@ def get_age_matched_ids(userid, db_host, db_user, db_password, db_name):
 	import MySQLdb
 	db = MySQLdb.connect(host="localhost", user=db_user, passwd=db_password, db=db_name)
 	cur = db.cursor()
-	cur.execute("select age_range from FBApp_Users_Ids where user_id = %d" % int(userid))
+	cur.execute("select age_range from FBApp_Users_Ids where id = %d" % int(userid))
 
 	age_range = cur.fetchone()
 

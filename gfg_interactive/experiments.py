@@ -304,10 +304,10 @@ def results():
         current_app.config['RESEARCH_DB_PASSWORD'], current_app.config['RESEARCH_DB_NAME'])
         if age_matched_ids > 0:
             mean_score = db.session.query(func.avg(Session.results).label('average')).filter(
-            Session.session_id.in_(age_matched_ids))
+            Session.gfg_id.in_(age_matched_ids))
 
             std_score = db.session.query(func.STD(Session.results).label('average')).filter(
-            Session.session_id.in_(age_matched_ids))
+            Session.gfg_id.in_(age_matched_ids))
 
             percentile = stats.z2p((average_correct - mean_score) / std_score)
         else:
