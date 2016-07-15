@@ -329,8 +329,9 @@ def results():
     else:
         percentile = None
 
+    print score
     return render_template(session.exp_name + "/results.html", 
-        score="{0:.0f}".format(score * 100),
+        score=score,
         percentile=percentile)
 
 
