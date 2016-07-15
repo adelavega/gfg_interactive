@@ -311,6 +311,7 @@ def results():
             CategorySwitch.session_id==session.session_id, CategorySwitch.block.in_(["mixedReal1", "mixedReal2"]), 
                 CategorySwitch.accuracy==1).all()
 
+        ## This value also needs to be stored
         switch_cost = mixed_trials_avg[0][0] - single_trials_avg[0][0]
 
         return render_template(session.exp_name + "/results.html", switch_cost=switch_cost)
