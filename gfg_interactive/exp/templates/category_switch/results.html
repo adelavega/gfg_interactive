@@ -7,9 +7,10 @@
         <h2>Your results!</h2>
 
         <p>
-        On average, you were <strong> {{ score }} milliseconds </strong> slower to respond when you had to switch between categorizing words on two dimensions (living/non-living and bigger/small than a soccer ball) than when only had to categorize words on a single dimension. <br>
+        On average, you were <strong> {{ score }} milliseconds </strong> slower to respond when you had to switch between categorizing words on two dimensions (living/non-living and bigger/small than a soccer ball) than when only had to categorize words on a single dimension. 
 
         {%- if percentile is not none-%}
+        <br>
         You performed better on this test than <strong> {{'%0.2f'| format(percentile|float)}}% </strong> of other Genes for Good participants your age. As more people take this test your ranking may change, so feel free to look at your results again. 
         {% endif %}
 
