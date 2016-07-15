@@ -13,6 +13,9 @@
         {%- if percentile is not none-%}
         <br>
         You performed better on this test than {{'%0.2f'| format(percentile|float)}}% of other Genes for Good participants your age. As more people take this test your ranking may change, so feel free to look at your results again. 
+        {% else %}
+         <br>
+        We cannot tell you how your score compared to others yet, as not enough people in your age bracket have completed the test. Please try again later.
         {% endif %}
 
         </p>
