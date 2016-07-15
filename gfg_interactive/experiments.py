@@ -171,7 +171,6 @@ def update(session_id=None):
     # Check JSON validity
     if utils.check_valid_json(request.get_data()):
         valid_json = json.loads(request.get_data())
-        # session.datastring = valid_json
     else:
         resp = {"status": "bad request"}
         current_app.logger.error("Invalid JSON")
@@ -297,11 +296,26 @@ def results():
 
         ## This first value should be stored
         average_correct = sum(all_scored) / (len(all_scored)  * 1.0)
-        perc_better = stats.keep_track_turknorm(average_correct)
+        session.results = average_correct
+        db.session.commit()
+
+        ## Find other people in same age range. If more than 25, calculate percentile and display
+        age_matched_ids = db_utils.get_age_matched_ids(gfg_id, current_app.config['RESEARCH_DB_HOST'], current_app.config['RESEARCH_DB_USER'],
+        current_app.config['RESEARCH_DB_PASSWORD'], current_app.config['RESEARCH_DB_NAME'])
+        if age_matched_ids > 0:
+            mean_score = db.session.query(func.avg(Session.results).label('average')).filter(
+            Session.session_id.in_(age_matched_ids))
+
+            std_score = db.session.query(func.STD(Session.results).label('average')).filter(
+            Session.session_id.in_(age_matched_ids))
+
+            percentile = stats.z2p((average_correct - mean_score) / std_score)
+        else:
+            percentile = None
 
         return render_template(session.exp_name + "/results.html", 
             average_correct="{0:.0f}".format(average_correct * 100),
-            perc_better="{0:.0f}".format(perc_better * 100))
+            percentile=percentile)
 
     elif session.exp_name == "category_switch":
         single_trials_avg = db.session.query(func.avg(CategorySwitch.reaction_time).label('average')).filter(
@@ -313,6 +327,8 @@ def results():
 
         ## This value also needs to be stored
         switch_cost = mixed_trials_avg[0][0] - single_trials_avg[0][0]
+        session.results = switch_cost
+        db.session.commit()
 
         return render_template(session.exp_name + "/results.html", switch_cost=switch_cost)
 

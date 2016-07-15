@@ -35,3 +35,16 @@ def gfg_user_exists(userid, db_host, db_user, db_password, db_name):
 
 	## Did this query return anything? I.e. are there any users in the main db with this id?
 	return len(cur.fetchall()) > 0
+
+def get_age_matched_ids(userid, db_host, db_user, db_password, db_name):
+	import MySQLdb
+	db = MySQLdb.connect(host="localhost", user=db_user, passwd=db_password, db=db_name)
+	cur = db.cursor()
+	cur.execute("select age_range from FBApp_Users_Ids where user_id = %d" % int(userid))
+
+	age_range = cur.fetchone()
+
+	cur.execute("select id from FBApp_Users_Ids where age_range = %d" % int(age_range))
+	db.close()
+
+	return cur.fetchall()
