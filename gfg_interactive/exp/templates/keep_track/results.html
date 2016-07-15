@@ -7,9 +7,12 @@
         <h2>Your results!</h2>
 
         <p>
-        You remembered <srong> {{ average_correct }}% </strong> of all relevant words correctly. Thanks for the hard work!<br>
+        You remembered <srong> {{ score }}% </strong> of all relevant words correctly. Thanks for the hard work!<br>
 
-        You performed better on this test than {{ perc_better }}% of other Genes for Good participants your age. As more people take this test your ranking may change, so feel free to look at your results again. 
+        {%- if percentile is not False -%}
+        You performed better on this test than {{ percentile }}% of other Genes for Good participants your age. As more people take this test your ranking may change, so feel free to look at your results again. 
+        {% endif %}
+
         </p>
 
         <h2>What do my results mean?</h2>
