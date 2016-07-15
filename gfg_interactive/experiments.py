@@ -321,9 +321,9 @@ def results():
         std_score = db.session.query(func.STD(Session.results).label('average')).filter(
         Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name).all()
 
-        print std_score
+        print mean_score
 
-        percentile = stats.z2p((score - mean_score) / std_score)
+        percentile = stats.z2p((score - mean_score[0][0]) / std_score[0][0])
     else:
         percentile = None
 
