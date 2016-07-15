@@ -314,12 +314,15 @@ def results():
     ## Find other people in same age range. If more than 25, calculate percentile and display
     age_matched_ids = db_utils.get_age_matched_ids(gfg_id, current_app.config['RESEARCH_DB_HOST'], current_app.config['RESEARCH_DB_USER'],
     current_app.config['RESEARCH_DB_PASSWORD'], current_app.config['RESEARCH_DB_NAME'])
+
+    print age_matched_ids
     if age_matched_ids > 0:
+        print age_matched_ids
         mean_score = db.session.query(func.avg(Session.results).label('average')).filter(
-        Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name).all()
+        Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name, Session.status==3).all()
 
         std_score = db.session.query(func.STD(Session.results).label('average')).filter(
-        Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name).all()
+        Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name, Session.status==3).all()
 
         print mean_score
 
