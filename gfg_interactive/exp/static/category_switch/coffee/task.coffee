@@ -112,19 +112,19 @@ class Slide1 extends Instruction
 	start: (@exitTrial) ->
 		super @exitTrial
 		multilineText("#{String.fromCharCode(9888)}", 0, 185, "80px Arial", 30, false, fillColor='red')
-		ctx.drawImage(jkey, 88, canvas.height-267, 43, 43)
+		ctx.drawImage(jkey, 88, canvas.height-67, 43, 43)
 
 class LivingKeyMap extends Instruction
 	start: (@exitTrial) ->
 		super @exitTrial
-		ctx.drawImage(fkey, 205, canvas.height-337, 50, 50)
-		ctx.drawImage(jkey, 165, canvas.height-270, 50, 50)
+		ctx.drawImage(fkey, 205, canvas.height-137, 50, 50)
+		ctx.drawImage(jkey, 165, canvas.height-70, 50, 50)
 
 class SizeKeyMap extends Instruction
 	start: (@exitTrial) ->
 		super @exitTrial
-		ctx.drawImage(fkey, 165, canvas.height-275, 50, 50)
-		ctx.drawImage(jkey, 145, canvas.height-205, 50, 50)
+		ctx.drawImage(fkey, 165, canvas.height-75, 50, 50)
+		ctx.drawImage(jkey, 145, canvas.height-5, 50, 50)
 
 class Block
 	constructor: (@condition, @message, @trials) ->
