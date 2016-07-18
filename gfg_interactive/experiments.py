@@ -171,7 +171,6 @@ def update(session_id=None):
     # Check JSON validity
     if utils.check_valid_json(request.get_data()):
         valid_json = json.loads(request.get_data())
-        # session.datastring = valid_json
     else:
         resp = {"status": "bad request"}
         current_app.logger.error("Invalid JSON")
@@ -270,7 +269,7 @@ def worker_complete():
 
 @experiments.route('/results', methods=['GET'])
 def results():
-    """Complete worker."""
+    """Return results at the end."""
     if not utils.check_qs(request.args, ['uniqueid', 'experimentname']):
         raise ExperimentError('improper_inputs')
     else:
@@ -296,22 +295,44 @@ def results():
             current_app.logger.info("trial score: %s, block: %s, inwords: %s" % (str(score), trial.block, str(trial.input_words)))
 
         ## This first value should be stored
-        average_correct = sum(all_scored) / (len(all_scored)  * 1.0)
-        perc_better = stats.keep_track_turknorm(average_correct)
-
-        return render_template(session.exp_name + "/results.html", 
-            average_correct="{0:.0f}".format(average_correct * 100),
-            perc_better="{0:.0f}".format(perc_better * 100))
+        score = sum(all_scored) / (len(all_scored)  * 1.0)
 
     elif session.exp_name == "category_switch":
-        single_trials_avg = CategorySwitch.query(func.sum(CategorySwitch.reaction_time)).filter(CategorySwitch.session_id==session.session_id, 
-            CategorySwitch.block.in_(["sizeReal", "livingReal"], CategorySwitch.accuracy==1)).all()
+        single_trials_avg = db.session.query(func.avg(CategorySwitch.reaction_time).label('average')).filter(
+            CategorySwitch.session_id==session.session_id, CategorySwitch.block.in_(["sizeReal", "livingReal"]), 
+                CategorySwitch.accuracy==1).all()
+        mixed_trials_avg = db.session.query(func.avg(CategorySwitch.reaction_time).label('average')).filter(
+            CategorySwitch.session_id==session.session_id, CategorySwitch.block.in_(["mixedReal1", "mixedReal2"]), 
+                CategorySwitch.accuracy==1).all()
 
-        current_app.logger.info("Avg RT Single: %s", str(single_trials_avg))
-        # mixed_trials = CategorySwitch.query.filter(CategorySwitch.session_id==session.session_id, 
-        #     KeepTrack.block.in_(["1", "2", "3", "4", "5", "6"])).all()
+        ## This value also needs to be stored
+        score = mixed_trials_avg[0][0] - single_trials_avg[0][0]
 
-        return render_template(session.exp_name + "/results.html")
+    session.results = score
+    db.session.commit()
+
+    ## Find other people in same age range. If more than 25, calculate percentile and display
+    age_matched_ids = db_utils.get_age_matched_ids(gfg_id, current_app.config['RESEARCH_DB_HOST'], current_app.config['RESEARCH_DB_USER'],
+    current_app.config['RESEARCH_DB_PASSWORD'], current_app.config['RESEARCH_DB_NAME'])
+
+
+    if len(age_matched_ids) > 20:
+        mean_score = db.session.query(func.avg(Session.results).label('average')).filter(
+        Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name, Session.status==3).all()
+
+        std_score = db.session.query(func.STD(Session.results).label('average')).filter(
+        Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name, Session.status==3).all()
+
+        print mean_score
+
+        percentile = stats.z2p((score - mean_score[0][0]) / (std_score[0][0] + 0.0000001))
+    else:
+        percentile = None
+
+    return render_template(session.exp_name + "/results.html", 
+        score=score,
+        percentile=percentile)
+
 
 # Generic route
 @experiments.route('/<pagename>')

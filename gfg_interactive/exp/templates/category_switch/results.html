@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<br><br>
+<div class = "container">
+    <div class="well">
+
+        <h2>Your results!</h2>
+
+        <p>
+        On average, you were <strong> {{ score }} milliseconds </strong> slower to respond when you had to switch between categorizing words on two dimensions (living/non-living and bigger/small than a soccer ball) than when only had to categorize words on a single dimension. 
+
+        {%- if percentile is not none-%}
+        <br>
+        You performed better on this test than <strong> {{'%0.2f'| format(percentile|float)}}% </strong> of other Genes for Good participants your age. As more people take this test your ranking may change, so feel free to look at your results again. 
+        {% else %}
+         <br>
+        We cannot tell you how your score compared to others yet, as not enough people in your age bracket have completed the test. Please try again later.
+        {% endif %}
+
+        </p>
+
+        <h2>What do my results mean?</h2>
+
+        <p>
+        When asked to switch between two distinct tasks, people take longer to respond than when they are able to focus on a single task entirely. This "switch cost" is thought to reflect the fact that your brain must temporarily reorganize to respond correctly. <br>
+
+        <strong>Switching</strong> ability is thought to be a critical executive function that allows us to pay attention and deal with multiple things at once. The fact that we exhibit switch costs when doing more than one thing at a time is a reason why driving and doing other activites (such as texting) can be dangerous.
+
+        <h2>Why do we measure executive functions?</h2>
+        Executive functions help us all navigate the complex world we live in. They help us multi-task, plan for the future, stay on task, complete goals, and remembering to remember ("I need to remember to go to the grocery store after work"). Executive functions are related to many health outcomes and mental health outcomes, such as decline in neurodegenerative diseases such as Alzheimer's or Parkinsons.
+        </p>
+
+    </div>
+    <button type="button" class="btn btn-primary" onclick="opener.closeInteractiveSurvey(); window.close()">Back to Genes for Good</button>
+</div>
+{% endblock %}

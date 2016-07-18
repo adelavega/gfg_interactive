@@ -4,34 +4,40 @@
 <div class = "container">
     <div class="well">
 
-        <h1>Your results!</h1>
+        <h2>Your results!</h2>
 
         <p>
-        You remembered {{ average_correct }}% of all relevant words correctly.
 
-        That is better than {{ perc_better }}% of the population. 
+        You remembered <strong> {{'%0.0f'| format(score|float)}}% </strong> of all relevant words correctly. Thanks for the hard work!
+
+        {%- if percentile is not none-%}
+        <br>
+        You performed better on this test than {{'%0.2f'| format(percentile|float)}}% of other Genes for Good participants your age. As more people take this test your ranking may change, so feel free to look at your results again. 
+        {% else %}
+         <br>
+        We cannot tell you how your score compared to others yet, as not enough people in your age bracket have completed the test. Please try again later.
+        {% endif %}
+
         </p>
 
         <h2>What do my results mean?</h2>
 
         <p>
-        We measured your ability to keep distinct items in mind from relevant categories, 
-        while ignoring those from irrelevant categories. This is thought to depend to two distinct abilities: <br><br>
+        We measured your ability to keep distinct items in mind from relevant categories. This is thought to depend to two distinct abilities: <br><br>
 
-        <strong>General executive function</strong> relates to your ability to stay focused on the task despite all of distractors in your environment, or even from your own thoughts.
-        General executive function also helps you maintain specific words in mind, in the face of distacting, irrelevant words from other categories. <br><br>
+        <strong>General executive function</strong> relates to your ability to stay focused on the test despite all of the distactions around you, or even the distractions from your own thoughts.
+        General executive function also helps you maintain specific words in mind, in the face of distacting, irrelevant words from other categories. <br>
 
         <strong>Updating</strong> is thought to reflect how accurately you can remove and replace items in working memory.
-        For example, if you were asked to keep track of animals and saw the word "Cat" followed by "Cow", you need to forget about the now irrelevant "Cat" and remember the word "Cow" to answer correctly.
+        For example, if you were asked to keep track of animals and saw the word "Cat" followed by "Cow", you need to forget about the now irrelevant "Cat" and remember the word "Cow" to answer correctly.<br>
 
-        Executive functions are critical for navigating the complex environment we navigate daily and decline in neurodegenerative diseases such as Alzheimer's or Parkinsons. <br><br>
+        Your performance depends on many factors. These include the two mental abilities described described above, but also things like how awake you were (or how much coffee you've had!), how motivated you were to perform well or how distracting your environment was. 
 
-        When looking at your results, keep in mind that it is normal for people to vary in executive functions.
-
-        As more people take this test, feel free to re-check your results under "Discover" to see how everyone in the study performed on this test.
+        <h2>Why do we measure executive functions?</h2>
+        Executive functions help us all navigate the complex world we live in. They help us multi-task, plan for the future, stay on task, complete goals, and remembering to remember ("I need to remember to go to the grocery store after work"). As you can imagine, executive functions are related to many health outcomes and mental health outcomes, such as decline in neurodegenerative diseases such as Alzheimer's or Parkinsons.
         </p>
 
     </div>
-    <button type="button" class="btn btn-primary" onclick="opener.completeInteractiveSurvey(); window.close()">Back to Genes for Good</button>
+    <button type="button" class="btn btn-primary" onclick="opener.closeInteractiveSurvey(); window.close()">Back to Genes for Good</button>
 </div>
 {% endblock %}

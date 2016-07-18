@@ -23,7 +23,7 @@ class Session(db.Model):
     exp_name = db.Column(db.String(32), nullable=False)
     begin_session = db.Column(db.DateTime, nullable=False)
     begin_experiment = db.Column(db.DateTime)
-    datastring = db.Column(db.String(32))
+    results = db.Column(db.Float(2))
 
     def __repr__(self):
         return "Session values (%s, %s, %s, %s, %s)" % (self.session_id,

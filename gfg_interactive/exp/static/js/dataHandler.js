@@ -217,6 +217,7 @@ var DataHandler = function(sessionid) {
 				action: "complete"
 		}
 		});
+		opener.completeInteractiveSurvey();
 		window.location.replace('results?uniqueid=' + uniqueid + '&experimentname=' + experimentname)
 	}
 
