@@ -9,39 +9,20 @@
 	margin-top: 8px;
 	margin-bottom: 8px;
 }
-/*---------------------------------------------------
- *		CATEGORY SWITCH CSS
- ----------------------------------------------------*/
 
-/*Custom dialog modal headers for Category Switch */
-
-.dialog-header-error { background-color: #d2322d; }
-.dialog-header-correct { background-color: #5cb85c; }
-
-.dialog-header-wait { background-color: #428bca; }
-.dialog-header-notify { background-color: #eeeeee; }
-.dialog-header-confirm { background-color: #333333; }
-        .dialog-header-error span, .dialog-header-error h4,
-        .dialog-header-correct h4,
-        .dialog-header-wait span, .dialog-header-wait h4,
-        .dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
-
-/*CS - Canvas for instructions and "j" and "F" buttons*/
-#canvas {
-   position: relative;
-   padding-left: 0;
-   left: 50%;
-   top: 25%;
-   margin-left:-370px ;
-   z-index:1 ;
-
+/* For Keep Track and CS feedback form*/
+#container-questionnaire {
+    top: 0px; /* Header Height
+    bottom: 0px; /* Footer Height
+    left: 0px;
+    right: 0px;
+    padding: 250px;
+    padding-top: 5%;
+    background: white;
+    overflow: hidden;
 }
 
-/*---------------------------------------------------
- *              KEEP TRACK CSS
- ----------------------------------------------------*/
-
-/*KT -  Custom styling for sticky footer at bottom of page | CS -?*/
+/*KT,CS - Custom styling for sticky footer at bottom of page*/
 html, body {
     height: 100%;
     overflow: auto; /*So that scrollbars appear if the window becomes too small to include all the text*/
@@ -80,7 +61,39 @@ html, body {
 .footer a {
      color: #AEC4D9;
 }
-/*KT - End of custom styling for footer| CS -? */
+/*KT,CS - End of custom styling for header,footer */
+
+/*---------------------------------------------------
+ *		CATEGORY SWITCH CSS
+ ----------------------------------------------------*/
+
+/*Custom dialog modal headers for Category Switch */
+
+.dialog-header-error { background-color: #d2322d; }
+.dialog-header-correct { background-color: #5cb85c; }
+
+.dialog-header-wait { background-color: #428bca; }
+.dialog-header-notify { background-color: #eeeeee; }
+.dialog-header-confirm { background-color: #333333; }
+        .dialog-header-error span, .dialog-header-error h4,
+        .dialog-header-correct h4,
+        .dialog-header-wait span, .dialog-header-wait h4,
+        .dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
+
+/*CS - Canvas for instructions and "j" and "F" buttons*/
+#canvas {
+   position: relative;
+   padding-left: 0;
+   left: 50%;
+   top: 25%;
+   margin-left:-370px ;
+   z-index:1 ;
+
+}
+
+/*---------------------------------------------------
+ *              KEEP TRACK CSS
+ ----------------------------------------------------*/
 
 /* Ease Display */
 .pad { padding: 25px; }
@@ -117,7 +130,7 @@ html, body {
    z-index: 1;
 }
 
-/* KT - Yes.(?) | CS - No */
+/* KT - Yes. Flashing stimuli | CS - No */
 .topMessage {
    position:absolute;
    left: 50%; 
@@ -127,7 +140,7 @@ html, body {
    transform: translate(-50%, -50%)
 }
 
-/* KT - Yes.(?) | CS -No*/
+/* KT - Yes. Flashing stimuli | CS -No*/
 .bottomMessage {
    position:absolute;
    left: 50%; 
