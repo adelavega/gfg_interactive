@@ -14,52 +14,56 @@ strong {
   font-weight: 600;         
 }
 
-.warm {
+/* KT - No |CS - NO */
+/*.warm {
   color: steelblue;
   text-align: justify;
-}
+}*/
 
-.cool {
+/*KT - No | CS - No*/
+/*.cool {
   color: #ccccff;
-}
+}*/
 
-
+/* KT -NO |CS -NO */
 /* these are all the same for now, but easy to modify individually */
-#container-ad, #container-error, #container-exp, #container-consent, #container-instructions, #container-questionnaire {
-   /* position: absolute;*/
-    top: 0px; /* Header Height */
-    bottom: 0px; /* Footer Height */
+/*#container-ad, #container-error, #container-exp, #container-consent, #container-instructions, #container-questionnaire {
+    top: 0px; /* Header Height
+    bottom: 0px; /* Footer Height
     left: 0px;
     right: 0px;
     padding: 250px;
     padding-top: 5%;
-   /* border: 18px solid #f3f3f3;*/
     background: white;
     overflow: hidden;
-}
+}*/
 
-#container-consent, #container-exp {  /* override padding to fit long consent forms and exp display*/
+/* KT -No | CS -No */
+/*#container-consent, #container-exp {  /* override padding to fit long consent forms and exp display
   padding: 10px;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 1%;
-}
+}*/
 
+/*KT -No | CS - No */
 /* ad.html  - the ad that people view first */
-#adlogo {
+/*#adlogo {
     float: right;
     width: 140px;
     padding: 2px;
     border: 1px solid #ccc;
-}
+}*/
 
+/* KT - No | CS - No*/
 /* consent.html - the consent form */
-#consent {
+/*#consent {
   margin: 0 auto;
   margin-top: 0;
   width: 800px;
   font-size: 100%;
-}
+}*/
+
 
 .legal {
   text-align: justify;
