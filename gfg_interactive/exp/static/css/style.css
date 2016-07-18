@@ -39,7 +39,7 @@ strong {
 }*/
 
 /* KT -No | CS -No */
-/*#container-consent, #container-exp {  /* override padding to fit long consent forms and exp display
+/*#container-consent, #container-exp {  
   padding: 10px;
   padding-left: 20px;
   padding-right: 20px;
@@ -64,30 +64,36 @@ strong {
   font-size: 100%;
 }*/
 
-
-.legal {
+/*KT - NO | CS -No*/
+/*.legal {
   text-align: justify;
   font-size: 11pt;
   line-height: 1.1em;
-}
+}*/
 
-#trial {
+/*KT -No | CS - No*/
+/*#trial {
   margin: 0 auto;
   width: 800px;
   text-align: center;
-}
+}*/
 
-#query {
+/*KT -No | CS -No*/
+/*#query {
   color: darkgray;
-}
+}*/
 
-.question {
+/* KT - no | CS - No */
+/*.question {
   margin-bottom: 30px;
-}
+}*/
 
+/* KT - no | CS - No */
 /* errors */
-#error img {
+/*#error img {
   padding-right: 10px;
   padding-top: 15px;
-}
+}*/
+
+
 
