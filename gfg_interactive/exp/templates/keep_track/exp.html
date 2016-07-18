@@ -1,28 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Keep Track</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Bootstrap -->
-	<!-- Overall static folder 
-		1. Bootstrap.min.css
-		2. Bootstrap-theme
-		3. genesforgood.css
-	-->
+{% extends "base.html" %}
 
-   	<link rel=stylesheet href="static/css/genesforgood.css" type="text/css">  
-        <link href="static/css/bootstrap.css" rel="stylesheet" media="screen">
-	<link rel=stylesheet href="static/css/bootstrap-theme.min.css" type="text/css">
-	<link href="static/css/custom.css" rel="stylesheet" media="screen">
-	       
-	
-	<script src="static/lib/jquery-min.js" type="text/javascript"> </script>
-	<script src="static/lib/underscore-min.js" type="text/javascript"> </script>
-	<script src="static/lib/backbone-min.js" type="text/javascript"> </script>
-	<script src="static/lib/d3.v3.min.js" type="text/javascript"> </script>
-	<script src="static/lib/bootstrap.js" type="text/javascript"> </script>
-
-
+	{% block headscripts %}
 	<script type="text/javascript">
 		// These fields are coming from the "/task" start_exp() in experiments.py
 		var uniqueid = "{{ uniqueid }}";  // a unique string identifying the worker/task
@@ -30,15 +8,10 @@
 		var sessionid = "{{ sessionid }}"
 		var debug = "{{ debug }}"
 	</script>
+	{% end block %}
 
-	<script src="static/js/dataHandler.js"></script>
-	<style>
-	  	  
-	</style> 
-
-</head>
-<body>
-<div id="wrap">
+	{% block content %}
+	<div id="wrap">
 	<div class="modal fade"  id="error" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                         <div style="background-color: #d2322d;" class="modal-content dialog-header-error">
@@ -59,18 +32,7 @@
                 </div>
 	</div>
 
-	<!-- New addition for banner:hidden-sm hidden-xs -->
-	<header>
-		<nav class="nav nav-gfg-header">
-	      <div class="container-fluid ">
-	        <div class="row">
-	          <div class="col-md-6 col-sm-12 col-xs-12">
-	            <a class="logo" rel="home" title="Home" ><img alt="Home" src="static/img/header_logo.png"></a>
-	          </div>
-	        </div>	<!-- end of class="row"-->
-	      </div> <!-- end of class="container"-->
-	    </nav>
-   	</header>
+
 	<div id = "main">
 	<br><br><br><br>
 	<p id="inst" class="instructions lead tasktext"></p>
@@ -156,15 +118,5 @@
 	<script src="static/{{ experimentname }}/js/kt.js"></script>
 	<script src="static/{{ experimentname }}/js/kt_instructions.js"></script>
 	<script src="static/{{ experimentname }}/js/task.js"></script>
-
-	<!-- which is the script for feedback questions -->
 	
-<!-- New addition footer -->
-<div class="footer">	
-    <div class="row" >
-      <!-- <div class="col-xs-12" align="center">&COPY; 2016 The Regents of the University of Michigan www.umich.edu. <a href="http://genesforgood.sph.umich.edu" target="_BLANK">Click here to learn more about this study</a></div> -->
-    </div>
- </div> <!-- end of footer -->  
-    <!-- / footer -->
-</body>
-</html>
+{% endblock %}
