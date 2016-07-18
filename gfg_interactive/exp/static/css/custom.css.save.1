@@ -1,0 +1,126 @@
+/* Module specific custom.css*/
+
+/*Custom dialog modal headers for Category Switch */
+
+.dialog-header-error { background-color: #d2322d; }
+.dialog-header-correct { background-color: #5cb85c; }
+
+.dialog-header-wait { background-color: #428bca; }
+.dialog-header-notify { background-color: #eeeeee; }
+.dialog-header-confirm { background-color: #333333; }
+	.dialog-header-error span, .dialog-header-error h4,
+	.dialog-header-correct h4,
+	.dialog-header-wait span, .dialog-header-wait h4,
+	.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
+
+/* For Keep Track and CS feedback form*/
+.hr {
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+
+
+/* Ease Display */
+.pad { padding: 25px; }
+
+/* correct,incorrect modal popups for Keep Track */
+.modal-dialog {width: 400px;} 
+
+/*KT-NO | CS-NO
+.myText {
+	position:absolute;
+	left:50%;
+	margin-left:-240px;
+	}
+*/
+
+/*KT- defines position of instructions | CS- */
+.instructions {
+   word-wrap: break-word;
+   max-width: 500vw; /*width: 800px;*/
+   max-height: 200vh;
+   position:relative;
+   margin-right: 20%;
+   margin-left: 30%;
+   z-index: 1
+}
+
+/*KT - defines */
+#responses {
+   position:relative;
+   top: 30%;
+   margin-right: 20%;
+   margin-left: 3z-index: 1
+}
+
+.topMessage {
+	position:absolute;
+	left: 50%; 
+	top:20%;
+	font:30px Arial; 
+	margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.bottomMessage {
+	position:absolute;
+	left: 50%; 
+	top:35%;
+	font:25px Arial; 
+	margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.resp {
+	width: 6.5em;
+}
+
+.btn-label {
+	width: 5em;
+	float: left;
+}
+
+@media screen and (max-width: 1200px) {
+	/*#rightButton {
+    	left: 5%;
+    }*/
+
+    #leftButton {
+    	right: 5%;
+    }
+    
+}
+
+@media screen and (max-width: 1300px) {
+    .instructions {
+        margin-left: 20%;
+    }
+    #responses {
+    	margin-left: 20%;
+    	
+    }
+    #rightButton {
+    	right: 10%;
+    }
+    
+    #leftButton {
+    	right: 10%;
+    }
+
+    .resp {
+    	width: 6.5em;
+    }
+}
+
+
+@media screen and (max-width: 1100px) {
+    #responses {
+    	margin-left: 15%;
+    	margin-right:15%;
+
+    }
+    #rightButton {
+    	left: 5%;
+    }
+}
