@@ -18,14 +18,6 @@
 
   jkey = new Image();
 
-  fkey.onload = (function() {
-    return currSession.start();
-  });
-
-  jkey.onload = (function() {
-    return currSession.start();
-  });
-
   fkey.src = "static/img/f_key.png";
 
   jkey.src = "static/img/j_key.png";

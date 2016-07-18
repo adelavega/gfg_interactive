@@ -44,8 +44,6 @@ def get_age_matched_ids(userid, db_host, db_user, db_password, db_name):
 
 	age_range = cur.fetchone()
 
-	print age_range
-
 	cur.execute("select id from FBApp_Users_Ids where age_range = %d" % int(age_range[0]))
 	db.close()
 

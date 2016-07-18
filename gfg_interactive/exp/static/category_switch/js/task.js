@@ -135,12 +135,12 @@
             return function() {
               return $('#correct').modal('hide');
             };
-          })(this)), 1250);
+          })(this)), 2000);
           setTimeout(((function(_this) {
             return function() {
               return _this.exitTrial();
             };
-          })(this)), 1250);
+          })(this)), 2000);
           acc = 1;
         } else {
           $('#error').modal('show');
@@ -148,7 +148,7 @@
             return function() {
               return $('#error').modal('hide');
             };
-          })(this)), 1250);
+          })(this)), 2000);
           acc = 0;
         }
       } else {
@@ -184,7 +184,7 @@
       this.exitTrial = exitTrial;
       Slide1.__super__.start.call(this, this.exitTrial);
       multilineText("" + (String.fromCharCode(9888)), 0, 185, "80px Arial", 30, false, fillColor = 'red');
-      return ctx.drawImage(jkey, 88, canvas.height - 267, 43, 43);
+      return ctx.drawImage(jkey, 88, canvas.height - 67, 43, 43);
     };
 
     return Slide1;
@@ -201,8 +201,8 @@
     LivingKeyMap.prototype.start = function(exitTrial) {
       this.exitTrial = exitTrial;
       LivingKeyMap.__super__.start.call(this, this.exitTrial);
-      ctx.drawImage(fkey, 205, canvas.height - 337, 50, 50);
-      return ctx.drawImage(jkey, 165, canvas.height - 270, 50, 50);
+      ctx.drawImage(fkey, 205, canvas.height - 137, 50, 50);
+      return ctx.drawImage(jkey, 165, canvas.height - 70, 50, 50);
     };
 
     return LivingKeyMap;
@@ -219,8 +219,8 @@
     SizeKeyMap.prototype.start = function(exitTrial) {
       this.exitTrial = exitTrial;
       SizeKeyMap.__super__.start.call(this, this.exitTrial);
-      ctx.drawImage(fkey, 165, canvas.height - 275, 50, 50);
-      return ctx.drawImage(jkey, 145, canvas.height - 205, 50, 50);
+      ctx.drawImage(fkey, 165, canvas.height - 75, 50, 50);
+      return ctx.drawImage(jkey, 145, canvas.height - 5, 50, 50);
     };
 
     return SizeKeyMap;
