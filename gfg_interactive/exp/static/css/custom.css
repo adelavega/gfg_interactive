@@ -1,6 +1,7 @@
-/* 
-Module specific custom.css
-Custom dialog modal headers for Category Switch */
+/*Module specific custom.css*/
+
+
+/*Custom dialog modal headers for Category Switch */
 
 .dialog-header-error { background-color: #d2322d; }
 .dialog-header-correct { background-color: #5cb85c; }
@@ -55,6 +56,7 @@ Custom dialog modal headers for Category Switch */
    z-index: 1;
 }
 
+/* KT - Yes.(?) | CS - No */
 .topMessage {
 	position:absolute;
 	left: 50%; 
@@ -64,6 +66,7 @@ Custom dialog modal headers for Category Switch */
     transform: translate(-50%, -50%)
 }
 
+/* KT - Yes.(?) | CS -No*/
 .bottomMessage {
 	position:absolute;
 	left: 50%; 
@@ -73,19 +76,19 @@ Custom dialog modal headers for Category Switch */
     transform: translate(-50%, -50%)
 }
 
+/* KT - Yes (For width of each button in the table) | CS - No */
 .resp {
 	width: 6.5em;
 }
 
+/*KT - Yes(For category names in response table) | CS - No*/
 .btn-label {
 	width: 5em;
 	float: left;
 }
 
-@media screen and (max-width: 1200px) {
-	/*#rightButton {
-    	left: 5%;
-    }*/
+/*KT - Responsive design conditions*/
+@media screen and (max-width: 1200px){
 
     #leftButton {
     	right: 5%;
