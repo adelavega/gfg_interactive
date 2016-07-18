@@ -5,7 +5,7 @@ body {
     background-color: white;
     color: black;
     font-weight: 300; 
-    font-size: 13pt;
+    font-size: 13pt; /*Active - Affects the font size in KT */
 }
 
 
