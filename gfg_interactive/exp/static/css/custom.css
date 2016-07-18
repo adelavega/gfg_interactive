@@ -76,7 +76,7 @@ html, body {
 
 /* KT -defines position of instructions | CS - No */
 .instructions {
-   font-size: 13pt;
+   font-size: 13px;
    word-wrap: break-word;
    max-width: 500vw; /*width: 800px;*/
    max-height: 200vh;
