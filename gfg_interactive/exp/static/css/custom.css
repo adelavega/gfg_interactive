@@ -1,5 +1,17 @@
 /*Module specific custom.css*/
 
+/*---------------------------------------------------
+ *              COMMON CSS
+ ----------------------------------------------------*/
+
+/* For Keep Track and CS feedback form*/
+.hr {
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+/*---------------------------------------------------
+ *		CATEGORY SWITCH CSS
+ ----------------------------------------------------*/
 
 /*Custom dialog modal headers for Category Switch */
 
@@ -9,16 +21,26 @@
 .dialog-header-wait { background-color: #428bca; }
 .dialog-header-notify { background-color: #eeeeee; }
 .dialog-header-confirm { background-color: #333333; }
-	.dialog-header-error span, .dialog-header-error h4,
-	.dialog-header-correct h4,
-	.dialog-header-wait span, .dialog-header-wait h4,
-	.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
+        .dialog-header-error span, .dialog-header-error h4,
+        .dialog-header-correct h4,
+        .dialog-header-wait span, .dialog-header-wait h4,
+        .dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
 
-/* For Keep Track and CS feedback form*/
-.hr {
-	margin-top: 8px;
-	margin-bottom: 8px;
+/*CS - Canvas for instructions and "j" and "F" buttons*/
+#canvas {
+   position: absolute;
+   padding-left: 0;
+   left: 50%;
+   top: 20%;
+   margin-left:-370px ;
+   z-index:1 ;
+
 }
+
+/*---------------------------------------------------
+ *              KEEP TRACK CSS
+ ----------------------------------------------------*/
+
 /*KT -  Custom styling for sticky footer at bottom of page | CS -?*/
 html, body {
     height: 100%;
