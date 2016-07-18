@@ -1,6 +1,6 @@
 /* 
 Module specific custom.css
-Custom dialog/modal headers for Category Switch */
+Custom dialog modal headers for Category Switch */
 
 .dialog-header-error { background-color: #d2322d; }
 .dialog-header-correct { background-color: #5cb85c; }
@@ -17,16 +17,15 @@ Custom dialog/modal headers for Category Switch */
 .hr {
 	margin-top: 8px;
 	margin-bottom: 8px;
-
 }
 
 
 
 /* Ease Display */
-
 .pad { padding: 25px; }
 
-.modal-dialog {width: 400px;}
+/* correct,incorrect modal popups for Keep Track */
+.modal-dialog {width: 400px;} 
 
 
 .myText {
@@ -35,6 +34,7 @@ Custom dialog/modal headers for Category Switch */
 		margin-left:-240px;
 	}
 
+/* defines position of instructions in KT */
 .instructions {
    word-wrap: break-word;
    max-width: 500vw; /*width: 800px;*/
@@ -42,9 +42,6 @@ Custom dialog/modal headers for Category Switch */
    position:relative;
    margin-right: 20%;
    margin-left: 30%;
-   /*margin-left: 20%;*/
-   /*margin: 0 auto;*/
-   /*left:50%;*/
    z-index: 1
 }
 
