@@ -28,10 +28,10 @@
 
 /*CS - Canvas for instructions and "j" and "F" buttons*/
 #canvas {
-   position: absolute;
+   position: relative;
    padding-left: 0;
    left: 50%;
-   top: 20%;
+   top: 25%;
    margin-left:-370px ;
    z-index:1 ;
 
