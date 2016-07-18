@@ -96,22 +96,22 @@ html, body {
 
 /* KT - Yes.(?) | CS - No */
 .topMessage {
-	position:absolute;
-	left: 50%; 
-	top:30%;
-	font:30px Arial; 
-	margin-right: -50%;
-    transform: translate(-50%, -50%)
+   position:absolute;
+   left: 50%; 
+   top:30%;
+   font:30px Arial; 
+   margin-right: -50%;
+   transform: translate(-50%, -50%)
 }
 
 /* KT - Yes.(?) | CS -No*/
 .bottomMessage {
-	position:absolute;
-	left: 50%; 
-	top:45%;
-	font:25px Arial; 
-	margin-right: -50%;
-    transform: translate(-50%, -50%)
+   position:absolute;
+   left: 50%; 
+   top:45%;
+   font:25px Arial; 
+   margin-right: -50%;
+   transform: translate(-50%, -50%)
 }
 
 /* KT - Yes (For width of each button in the table) | CS - No */
@@ -123,6 +123,7 @@ html, body {
 .btn-label {
 	width: 5em;
 	float: left;
+	font-size: 16px;
 }
 
 /*KT - Responsive design conditions*/
