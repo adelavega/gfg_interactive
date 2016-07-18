@@ -19,8 +19,46 @@
 	margin-top: 8px;
 	margin-bottom: 8px;
 }
+/*KT -  Custom styling for sticky footer at bottom of page | CS -?*/
+html, body {
+    height: 100%;
+}
 
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -155px; /* the bottom margin is the negative value of the footer's height */
+    overflow-x: hidden;
+}
 
+#main {
+    height: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom:150px; /* this needs to be bigger than footer height*/
+}
+
+.footer {
+    clear:both;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    background-color: #00294F;
+    font-size: 110%;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    text-align: center;
+    color: #efefef;
+}
+
+.footer a {
+     color: #AEC4D9;
+}
+/*KT - End of custom styling for footer| CS -? */
 
 /* Ease Display */
 .pad { padding: 25px; }
