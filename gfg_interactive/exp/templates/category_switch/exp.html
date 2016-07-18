@@ -1,27 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Category Switch</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<!-- Overall static folder 
-		1. genesforgood.css
-		2. Bootstrap.css
-		3. Bootstrap-theme.min.css
-		4. custom.css
-	--> 
-	<link rel=stylesheet href="static/css/genesforgood.css" type="text/css">  
-        <link href="static/css/bootstrap.css" rel="stylesheet" media="screen">
-	<link rel=stylesheet href="static/css/bootstrap-theme.min.css" type="text/css">
-	<link href="static/css/custom.css" rel="stylesheet" media="screen">
-
-	<!--JS -->
-	<script src="static/lib/jquery-min.js" type="text/javascript"> </script>
-	<script src="static/lib/underscore-min.js" type="text/javascript"> </script>
-	<script src="static/lib/backbone-min.js" type="text/javascript"> </script>
-	<script src="static/lib/d3.v3.min.js" type="text/javascript"> </script>
-	<script src="static/lib/bootstrap.js" type="text/javascript"> </script>
-
+{% extends "base.html" %}
+{% block headscripts %}
 	<script type="text/javascript">
 		// These fields are coming from the "/task" start_exp() in experiments.py
 		var uniqueid = "{{ uniqueid }}";
@@ -29,10 +7,8 @@
 		var experimentname = "{{ experimentname }}"
 		var debug = "{{ debug }}"
 	</script>
-
-	<script src="static/js/dataHandler.js"></script>
-</head>
-<body>
+	{% endblock %}
+{% block content %}
 <div id = "wrap">
 	<div class="modal fade"  id="error" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -53,41 +29,17 @@
             		</div>
         	</div>	
 	</div>
-	
-
-	<!-- New addition for banner -->
-	<header>
-		<nav class="nav nav-gfg-header">
-	      <div class="container-fluid hidden-sm hidden-xs">
-	        <div class="row">
-	          <div class="col-md-6 col-sm-12 col-xs-12">
-	            <a class="logo" rel="home" title="Home" ><img alt="Home" src="static/img/header_logo.png"></a>
-	          </div>
-	        </div>	<!-- end of class="row"-->
-	      </div> <!-- end of class="container"-->
-	      </nav>
-   	</header>
-<div id = "main">
-	<br><br>
-	
-	<canvas id="canvas" width = 740 height = 500></canvas><br>
-	<!-- F-key -->
-	<button disabled id = "leftButton" class="btn btn-default" style="position:relative ;left: 50%; z-index:2; top:45%; margin-left:-380px;font:21px Arial; opacity:1"><img src="static/img/f_key.png" style="width:45px; height:45px" > <span id="leftText">Go back</span> </button>
-	<!-- J-key -->
-	<button disabled id = "rightButton" class="btn btn-default" style="position:relative ;left: 50%; z-index:2; top:45%; margin-left: 250px; margin-right:200px;font:21px Arial; opacity:1"><img src="static/img/j_key.png" style="width:45px; height:45px" > <span id="rightText">Continue</span> </button>
-	
-	<script src="static/js/common.js"></script>
-	<script src="static/{{ experimentname }}/js/stimuli.js"></script>
-	<script src="static/{{ experimentname }}/js/task.js"></script>
+	<div id = "main">
+		<br><br>
+		<canvas id="canvas" width = 740 height = 500></canvas><br>
+		<!-- F-key -->
+		<button disabled id = "leftButton" class="btn btn-default" style="position:relative ;left: 50%; z-index:2; top:45%; margin-left:-380px;font:21px Arial; opacity:1"><img src="static/img/f_key.png" style="width:45px; height:45px" > <span id="leftText">Go back</span> </button>
+		<!-- J-key -->
+		<button disabled id = "rightButton" class="btn btn-default" style="position:relative ;left: 50%; z-index:2; top:45%; margin-left: 250px; margin-right:200px;font:21px Arial; opacity:1"><img src="static/img/j_key.png" style="width:45px; height:45px" > <span id="rightText">Continue</span> </button>
+		<script src="static/js/common.js"></script>
+		<script src="static/{{ experimentname }}/js/stimuli.js"></script>
+		<script src="static/{{ experimentname }}/js/task.js"></script>
 	</div> <!-- end of main -->
 </div> <!-- end of wrap -->
-	
-<!-- New addition footer -->
-<div class="footer">	
-    <div class="row" >
-     </div>
- </div> <!-- end of footer -->  
+{% endblock  %}	
 
-
-</body>
-</html>
