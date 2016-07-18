@@ -45,7 +45,6 @@ html, body {
     padding-top: 1.5em;
     padding-bottom: 1.5em;
     background-color: #00294F;
-    font-size: 110%;
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -76,7 +75,7 @@ html, body {
 
 /* KT -defines position of instructions | CS - No */
 .instructions {
-   font-size: 13px;
+   font-size: 24px;
    word-wrap: break-word;
    max-width: 500vw; /*width: 800px;*/
    max-height: 200vh;
@@ -99,7 +98,7 @@ html, body {
 .topMessage {
 	position:absolute;
 	left: 50%; 
-	top:20%;
+	top:30%;
 	font:30px Arial; 
 	margin-right: -50%;
     transform: translate(-50%, -50%)
@@ -109,7 +108,7 @@ html, body {
 .bottomMessage {
 	position:absolute;
 	left: 50%; 
-	top:35%;
+	top:45%;
 	font:25px Arial; 
 	margin-right: -50%;
     transform: translate(-50%, -50%)
