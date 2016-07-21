@@ -276,15 +276,21 @@ def results():
         uniqueid = request.args['uniqueid']
         exp_name = request.args['experimentname']
 
+    current_app.logger.info("Results::Uniqueid is  %s and exp_name is" %(uniqueid, exp_name))
     ## Get last session with code 3 from user
     gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(uniqueid))
-    
+    current_app.logger.info("GFG id after decrypt is -- %s" % (gfg_id))
+
     try:
         session = Session.query.filter_by(gfg_id=gfg_id, status=3, exp_name=exp_name).order_by(Session.session_id.desc()).first()
     except SQLAlchemyError:
         raise ExperimentError('user_access_denied')
 
-    if session.exp_name == "keep_track":
+   if not session.exp_name:
+	current_app.logger.info("Session exp_name is null---%s" %(session.exp_name))
+	raise ExperimentError('user_access_denied')
+
+   elif session.exp_name == "keep_track":
         target_trials = KeepTrack.query.filter(KeepTrack.session_id==session.session_id, 
             KeepTrack.block.in_(["1", "2", "3", "4", "5", "6"])).all()
 
