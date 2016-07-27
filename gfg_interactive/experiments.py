@@ -47,6 +47,7 @@ def start_exp():
     gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(uniqueid).decode('string-escape'))
 
     exp_name = experiment_list[request.args['surveyid']]
+    survey_id = request.args['surveyid']
     browser, platform = utils.check_browser_platform(request.user_agent)
 
     if not db_utils.gfg_user_exists(gfg_id, current_app.config['RESEARCH_DB_HOST'],
@@ -74,7 +75,7 @@ def start_exp():
         db.session.add(session)
         db.session.commit()
 
-        return render_template(exp_name + "/exp.html", experimentname=exp_name, sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'],
+        return render_template(exp_name + "/exp.html", experimentname=exp_name, surveyid=survey_id, sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'],
             uniqueid=uniqueid)
 
 
