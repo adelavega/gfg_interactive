@@ -40,10 +40,10 @@ class CategorySwitch(db.Model):
     response = db.Column(db.String(2))
     reaction_time = db.Column(db.Float) 
     accuracy = db.Column(db.Integer)
-    block = db.Column(db.Unicode(32))
-    question = db.Column(db.Unicode(32))  # TBD
-    answer = db.Column(db.Unicode(32))      # TBD
-    user_answer = db.Column(db.Unicode(32))  # TBD
+    block = db.Column(db.String(200))
+    question = db.Column(db.String(100))  # TBD
+    answer = db.Column(db.String(100))      # TBD
+    user_answer = db.Column(db.String(100))  # TBD
     timestamp = db.Column(db.DateTime)
 
     def __repr__(self):
@@ -99,10 +99,10 @@ class KeepTrack(db.Model):
     trial_num = db.Column(db.Integer)
     reaction_time = db.Column(db.Float)
     accuracy = db.Column(db.String(32))
-    block = db.Column(db.Unicode(32))
+    block = db.Column(db.String(200))
     timestamp = db.Column(db.DateTime)
-    target_words = db.Column(db.Unicode(32))
-    input_words = db.Column(db.Unicode(32))
+    target_words = db.Column(db.String(100))
+    input_words = db.Column(db.String(100))
 
     ### FIX
     def __repr__(self):
@@ -154,7 +154,7 @@ class EventData(db.Model):
     session_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))
     exp_name = db.Column(db.String(32), nullable=False)
     event_type = db.Column(db.String(32))
-    value = db.Column(db.Unicode(32)) ## Why split into three?
+    value = db.Column(db.String(100)) ## Why split into three?
     interval = db.Column(db.Float)
     timestamp = db.Column(db.DateTime, nullable=False)  # to store the timestamp.
 
