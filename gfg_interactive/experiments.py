@@ -47,6 +47,7 @@ def start_exp():
     gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(uniqueid).decode('string-escape'))
 
     exp_name = experiment_list[request.args['surveyid']]
+    survey_id = request.args['surveyid']
     browser, platform = utils.check_browser_platform(request.user_agent)
 
     if not db_utils.gfg_user_exists(gfg_id, current_app.config['RESEARCH_DB_HOST'],
@@ -74,7 +75,7 @@ def start_exp():
         db.session.add(session)
         db.session.commit()
 
-        return render_template(exp_name + "/exp.html", experimentname=exp_name, sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'],
+        return render_template(exp_name + "/exp.html", experimentname=exp_name, surveyid=survey_id, sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'],
             uniqueid=uniqueid)
 
 
@@ -276,15 +277,21 @@ def results():
         uniqueid = request.args['uniqueid']
         exp_name = request.args['experimentname']
 
+    current_app.logger.info("Results::Uniqueid is  %s and exp_name is %s" %(uniqueid, exp_name))
     ## Get last session with code 3 from user
     gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(uniqueid))
-    
+    current_app.logger.info("GFG id after decrypt is -- %s" % (gfg_id))
+
     try:
         session = Session.query.filter_by(gfg_id=gfg_id, status=3, exp_name=exp_name).order_by(Session.session_id.desc()).first()
     except SQLAlchemyError:
         raise ExperimentError('user_access_denied')
 
-    if session.exp_name == "keep_track":
+    if session is None :
+	current_app.logger.info("Session is null---%s" %(session))
+	raise ExperimentError('user_access_denied')
+
+    elif session.exp_name == "keep_track":
         target_trials = KeepTrack.query.filter(KeepTrack.session_id==session.session_id, 
             KeepTrack.block.in_(["1", "2", "3", "4", "5", "6"])).all()
 

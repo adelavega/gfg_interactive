@@ -23,7 +23,7 @@ class Session(db.Model):
     exp_name = db.Column(db.String(32), nullable=False)
     begin_session = db.Column(db.DateTime, nullable=False)
     begin_experiment = db.Column(db.DateTime)
-    results = db.Column(db.Float(2))
+    datastring = db.Column(db.String(32))
 
     def __repr__(self):
         return "Session values (%s, %s, %s, %s, %s)" % (self.session_id,
@@ -40,10 +40,10 @@ class CategorySwitch(db.Model):
     response = db.Column(db.String(2))
     reaction_time = db.Column(db.Float) 
     accuracy = db.Column(db.Integer)
-    block = db.Column(db.String(200))
-    question = db.Column(db.String(100))  # TBD
-    answer = db.Column(db.String(100))      # TBD
-    user_answer = db.Column(db.String(100))  # TBD
+    block = db.Column(db.Unicode(32))
+    question = db.Column(db.Unicode(32))  # TBD
+    answer = db.Column(db.Unicode(32))      # TBD
+    user_answer = db.Column(db.Unicode(32))  # TBD
     timestamp = db.Column(db.DateTime)
 
     def __repr__(self):
@@ -76,9 +76,9 @@ class CategorySwitch(db.Model):
 
         # Special case for reaction time
         if trial_data['rt'] == "NA":
-            self.reaction_time = 0
+            self.reaction_time = 00
         else:
-            self.reaction_time = trial_data['rt']
+            self.reaction_tiome = trial_data['rt']
 
         # Datetime conversion
         jsts = json_trial['dateTime']  # Javscript timestamp
@@ -88,7 +88,7 @@ class CategorySwitch(db.Model):
         self.block = clean_db_string(trial_data['block'])
 
         current_app.logger.info(
-            "%s added to CategorySwitch for session id %s and JSON CS is %s" % (self.trial_num, self.session_id, json_trial))
+            "%s added to CategorySwitch for session id %s " % (self.trial_num, self.session_id))
 
 
 class KeepTrack(db.Model):
@@ -99,10 +99,10 @@ class KeepTrack(db.Model):
     trial_num = db.Column(db.Integer)
     reaction_time = db.Column(db.Float)
     accuracy = db.Column(db.String(32))
-    block = db.Column(db.String(200))
+    block = db.Column(db.Unicode(32))
     timestamp = db.Column(db.DateTime)
-    target_words = db.Column(db.String(100))
-    input_words = db.Column(db.String(100))
+    target_words = db.Column(db.Unicode(32))
+    input_words = db.Column(db.Unicode(32))
 
     ### FIX
     def __repr__(self):
@@ -117,10 +117,9 @@ class KeepTrack(db.Model):
         trial_data = json_trial['trialdata']
 
         if 'rt' not in trial_data:
-            self.reaction_time = 0
+            self.reaction_time = 00
         else:
-            self.reaction_time = float(trial_data['rt'])
-	#current_app.logger.info("self.reaction_time is %s") % (self.reaction_time)	
+            self.reaction_Time = trial_data['rt']
 
         if 'acc' not in trial_data:
             self.accuracy = "null"
@@ -131,6 +130,7 @@ class KeepTrack(db.Model):
         	self.target_words = "null"
         else:
         	self.target_words = ",".join(trial_data['target_words']) # [u'Mile', u'Cat', u'France']-->u'Mile,Cat,France'
+
         if 'input_words' not in trial_data:
         	self.input_words = "null"
         else:
@@ -141,10 +141,7 @@ class KeepTrack(db.Model):
         self.block = clean_db_string(trial_data['block'])
 
         current_app.logger.info(
-            "%s added to KeepTrack for session id %s and whole JSON KT  %s " % (self.trial_num, self.session_id, json_trial))
-
-    def simple_score(self):
-        return [1 if in_word in self.target_words.split(',') else 0 for in_word in self.input_words.split(',')]
+            "%s added to KeepTrack for session id %s " % (self.trial_num, self.session_id))
 
 
 class EventData(db.Model):
@@ -154,13 +151,12 @@ class EventData(db.Model):
     session_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))
     exp_name = db.Column(db.String(32), nullable=False)
     event_type = db.Column(db.String(32))
-    value = db.Column(db.String(100)) ## Why split into three?
+    value = db.Column(db.Unicode(32)) ## Why split into three?
     interval = db.Column(db.Float)
     timestamp = db.Column(db.DateTime, nullable=False)  # to store the timestamp.
 
     def __repr__(self):
         pass
-
 
     def add_json_data(self, json_event):
         """ Parse and add backbone.js json data for a event """
@@ -177,7 +173,7 @@ class EventData(db.Model):
         self.timestamp = convert_timestamp(json_event['timestamp'])
 
         current_app.logger.info(
-            "%s added to EventData for session id %s " % (self.ev_id, self.session_id))
+            "%s added to EventData for session id %s and whole eventJSON is %s " % (self.ev_id, self.session_id, json_event))
 
 class QuestionData(db.Model):
     """ Feedback-form question-data for all experiments """

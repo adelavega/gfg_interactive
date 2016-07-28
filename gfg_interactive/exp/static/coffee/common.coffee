@@ -65,7 +65,7 @@ class Session
 	
 	# Ends it all
 	endSession: ->
-		dataHandler.completeHIT()
+		dataHandler.exitTask()
 
 	keyPress: (e) ->
 		code = e.charCode || e.keyCode
@@ -84,7 +84,7 @@ class Session
 # collects information from it once button is clicked
 class Questionnaire
 	start: (@exitTrial) ->
-		console.log 'we are into questionnnaire now'
+		dataHandler.completeTask()
 		$('body').html(dataHandler.getPage('postquestionnaire.html'))
 
 	buttonClick: ->

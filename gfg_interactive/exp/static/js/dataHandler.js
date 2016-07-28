@@ -120,7 +120,7 @@ var DataHandler = function(sessionid) {
 		});
 	};
 	
-	//I dont get this :(
+
 	self.preloadPages = function(pagenames) {
 		// Synchronously preload pages.
 		$(pagenames).each(function() {
@@ -204,13 +204,15 @@ var DataHandler = function(sessionid) {
 		Backbone.Notifications.trigger('_psiturk_finishedtask', optmessage);
 	};
 
-	self.completeHIT = function() {
+	self.completeTask = function() {
 		window.onbeforeunload = null;
 		$.ajax("worker_complete", {
 			type: "POST",
 			data: {'sessionid': self.taskdata.id}
 		});
+	}
 
+	self.exitTask = function(){
 		$.ajax("/gfg/lib/interactive_survey_module_handler.php", {
 			type: "POST",
 			data: {
