@@ -276,7 +276,7 @@ def results():
     else:
         uniqueid = request.args['uniqueid']
         exp_name = request.args['experimentname']
-	survey_id = request.args['surveyid']]
+	survey_id = request.args['surveyid']
 
     current_app.logger.info("Results::Uniqueid is  %s, exp_name is %s and survey id is %s" %(uniqueid, exp_name, survey_id))
     ## Get last session with code 3 from user
