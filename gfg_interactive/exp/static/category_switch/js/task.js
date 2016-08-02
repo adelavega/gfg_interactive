@@ -184,7 +184,7 @@
       this.exitTrial = exitTrial;
       Slide1.__super__.start.call(this, this.exitTrial);
       multilineText("" + (String.fromCharCode(9888)), 0, 185, "80px Arial", 30, false, fillColor = 'red');
-      return ctx.drawImage(jkey, 88, canvas.height - 67, 43, 43);
+      return ctx.drawImage(jkey, 88, canvas.height - 127, 43, 43);
     };
 
     return Slide1;
@@ -201,8 +201,8 @@
     LivingKeyMap.prototype.start = function(exitTrial) {
       this.exitTrial = exitTrial;
       LivingKeyMap.__super__.start.call(this, this.exitTrial);
-      ctx.drawImage(fkey, 205, canvas.height - 137, 50, 50);
-      return ctx.drawImage(jkey, 165, canvas.height - 70, 50, 50);
+      ctx.drawImage(fkey, 205, canvas.height - 197, 50, 50);
+      return ctx.drawImage(jkey, 165, canvas.height - 130, 50, 50);
     };
 
     return LivingKeyMap;
@@ -219,8 +219,8 @@
     SizeKeyMap.prototype.start = function(exitTrial) {
       this.exitTrial = exitTrial;
       SizeKeyMap.__super__.start.call(this, this.exitTrial);
-      ctx.drawImage(fkey, 165, canvas.height - 95, 50, 50);
-      return ctx.drawImage(jkey, 145, canvas.height - 25, 50, 50);
+      ctx.drawImage(fkey, 165, canvas.height - 135, 50, 50);
+      return ctx.drawImage(jkey, 145, canvas.height - 65, 50, 50);
     };
 
     return SizeKeyMap;
