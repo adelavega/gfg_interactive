@@ -288,6 +288,7 @@
     Block.prototype.start = function(exitBlock) {
       this.exitBlock = exitBlock;
       hideButtons();
+      $('#inst').html();
       $('#topText').html(this.message);
       return setTimeout(((function(_this) {
         return function() {

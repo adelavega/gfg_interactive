@@ -203,6 +203,7 @@ class Block
 	start: (@exitBlock) ->
 		# Show ready message
 		hideButtons()
+		$('#inst').html()
 		$('#topText').html(@message)
 
 		setTimeout (=> 
