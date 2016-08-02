@@ -7,7 +7,7 @@ from database import db
 import db_utils
 import datetime
 import json
-
+import urllib
 import utils
 import stats
 
@@ -76,7 +76,7 @@ def start_exp():
         db.session.commit()
 
         return render_template(exp_name + "/exp.html", experimentname=exp_name, surveyid=survey_id, sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'],
-            uniqueid=uniqueid)
+            uniqueid=urllib.quote(uniqueid))
 
 
 @experiments.route('/inexp', methods=['POST'])
