@@ -123,8 +123,8 @@ class LivingKeyMap extends Instruction
 class SizeKeyMap extends Instruction
 	start: (@exitTrial) ->
 		super @exitTrial
-		ctx.drawImage(fkey, 165, canvas.height-75, 50, 50)
-		ctx.drawImage(jkey, 145, canvas.height-5, 50, 50)
+		ctx.drawImage(fkey, 165, canvas.height-95, 50, 50)
+		ctx.drawImage(jkey, 145, canvas.height-25, 50, 50)
 
 class Block
 	constructor: (@condition, @message, @trials) ->

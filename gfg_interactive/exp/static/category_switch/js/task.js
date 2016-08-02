@@ -219,8 +219,8 @@
     SizeKeyMap.prototype.start = function(exitTrial) {
       this.exitTrial = exitTrial;
       SizeKeyMap.__super__.start.call(this, this.exitTrial);
-      ctx.drawImage(fkey, 165, canvas.height - 75, 50, 50);
-      return ctx.drawImage(jkey, 145, canvas.height - 5, 50, 50);
+      ctx.drawImage(fkey, 165, canvas.height - 95, 50, 50);
+      return ctx.drawImage(jkey, 145, canvas.height - 25, 50, 50);
     };
 
     return SizeKeyMap;
