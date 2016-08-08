@@ -29,7 +29,7 @@ class Session(db.Model):
         return "Session values (%s, %s, %s, %s, %s)" % (self.session_id,
             self.gfg_id,self.exp_name, self.status, self.begin_session)
 
-
+## JAKE: Check this and the next class as examples of how to structure you model
 class CategorySwitch(db.Model):
     """ CategorySwitch experiment table """
     cs_id = db.Column(db.Integer, primary_key=True) 
@@ -146,6 +146,26 @@ class KeepTrack(db.Model):
     def simple_score(self):
         return [1 if in_word in self.target_words.split(',') else 0 for in_word in self.input_words.split(',')]
 
+## JAKE: This is an example bart model
+class BART(db.Model):
+    """ BART experiment table """
+    bart_id = db.Column(db.Integer, primary_key=True) 
+    gfg_id = db.Column(db.String(32), nullable=False)
+    session_id = db.Column(
+        db.Integer, db.ForeignKey('session.session_id'))
+    trial_num = db.Column(db.Integer)
+
+    # This is how the model prints itself
+    def __repr__(self):
+        return "BART Values (%s, %s, %s, %s)" % (self.bart_id, self.gfg_id,
+            self.session_id, self.trial_num)
+
+    ## JAKE: our class *needs* this function. This is where most of the logic of how you're going to
+    ## store your data (coming from Backbone), gets stored into the db itself
+    ## This is nice because then each model handles how data is put into it seperately, 
+    ## which allows more generalizable code in experiments.py
+    def add_json_data(self, json_trial):
+        pass
 
 class EventData(db.Model):
     """ EventData for all experiments """
