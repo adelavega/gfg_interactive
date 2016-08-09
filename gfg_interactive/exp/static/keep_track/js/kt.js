@@ -44,7 +44,7 @@
   };
 
   closeGrid = function(func) {
-    $('#responses').fadeOut();
+    $('#responses').hide();
     return setTimeout(((function(_this) {
       return function() {
         return func();
@@ -60,15 +60,15 @@
     "pracLists": [[["Animals"], ["Cat"], ["Horse", "Mile", "Steel", "Cat", "Green", "Aunt"]], [["Metals", "Countries"], ["Steel", "Mexico"], ["Red", "Blue", "Tin", "Cow", "Yellow", "England", "Lion", "Meter", "Inch", "Mexico", "Black", "Brother", "Green", "Cat", "Yard", "Aunt", "Uncle", "Steel", "Horse", "Father"]]]
   };
 
-  real_stim = [[["Distances", "Animals", "Countries"], ["Mile", "Cat", "France"], ["Father", "Mexico", "Tin", "Germany", "Platinum", "Green", "Orange", "Tiger", "Mile", "Blue", "Steel", "Cat", "France", "Black", "Aunt"]], [["Colors", "Metals", "Relatives", "Distances"], ["Blue", "Tin", "Brother", "Meter"], ["Horse", "Russia", "Mexico", "Zinc", "Father", "Canada", "Lion", "France", "Sister", "England", "Brother", "Tin", "Meter", "Blue", "Tiger"]], [["Animals", "Countries", "Colors", "Metals", "Relatives"], ["Horse", "Russia", "Orange", "Copper", "Mother"], ["Canada", "Russia", "Steel", "Platinum", "Uncle", "Centimeter", "Foot", "Copper", "Meter", "Aunt", "Mother", "Yellow", "Horse", "Orange", "Mile"]], [["Countries", "Colors", "Metals", "Relatives"], ["Mexico", "Red", "Iron", "Mother"], ["Black", "Mile", "Meter", "Aunt", "Horse", "Mexico", "Steel", "Sister", "Copper", "Red", "Inch", "Dog", "Mother", "Iron", "Foot"]], [["Relatives", "Distances", "Animals", "Countries", "Colors"], ["Uncle", "Foot", "Cat", "Russia", "Yellow"], ["Germany", "Inch", "Steel", "Blue", "Lion", "Orange", "Zinc", "Yellow", "Cat", "Canada", "Foot", "Russia", "Copper", "Uncle", "Tin"]], [["Metals", "Relatives", "Distances", "Animals"], ["Platinum", "Father", "Mile", "Cow"], ["Platinum", "Centimeter", "Yard", "France", "Mile", "Horse", "Brother", "Red", "Yellow", "Blue", "Father", "Tiger", "Cow", "Green", "Russia"]], [["Distances", "Animals", "Countries", "Colors", "Metals"], ["Yard", "Dog", "England", "Red", "Zinc"], ["Yard", "France", "Iron", "Black", "Green", "Red", "Tin", "Cow", "Brother", "Aunt", "Dog", "Zinc", "England", "Sister", "Uncle"]]];
+  real_stim = [[["Distances", "Animals", "Countries"], ["Mile", "Cat", "France"], ["Father", "Mexico", "Tin", "Germany", "Platinum", "Green", "Orange", "Tiger", "Mile", "Blue", "Steel", "Cat", "France", "Black", "Aunt"]], [["Colors", "Metals", "Relatives", "Distances"], ["Blue", "Tin", "Brother", "Meter"], ["Horse", "Russia", "Mexico", "Zinc", "Father", "Canada", "Lion", "France", "Sister", "England", "Brother", "Tin", "Meter", "Blue", "Tiger"]], [["Animals", "Countries", "Colors", "Metals", "Relatives"], ["Horse", "Russia", "Orange", "Copper", "Mother"], ["Canada", "Russia", "Steel", "Platinum", "Uncle", "Centimeter", "Foot", "Copper", "Meter", "Aunt", "Mother", "Yellow", "Horse", "Orange", "Mile"]], [["Countries", "Colors", "Metals", "Relatives"], ["Mexico", "Red", "Iron", "Mother"], ["Black", "Mile", "Meter", "Aunt", "Horse", "Mexico", "Steel", "Sister", "Copper", "Red", "Inch", "Dog", "Mother", "Iron", "Foot"]], [["Relatives", "Distances", "Animals", "Countries", "Colors"], ["Uncle", "Foot", "Cat", "Russia", "Yellow"], ["Germany", "Inch", "Steel", "Blue", "Lion", "Orange", "Zinc", "Yellow", "Cat", "Canada", "Foot", "Russia", "Copper", "Uncle", "Tin"]], [["Metals", "Relatives", "Distances", "Animals"], ["Platinum", "Father", "Mile", "Cow"], ["Platinum", "Centimeter", "Yard", "France", "Mile", "Horse", "Brother", "Red", "Yellow", "Blue", "Father", "Tiger", "Cow", "Green", "Russia"]]];
 
   categories = {
-    "Animals": ["Dog", "Cat", "Tiger", "Horse", "Lion", "Cow"],
-    "Relatives": ["Sister", "Mother", "Brother", "Aunt", "Father", "Uncle"],
-    "Distances": ["Mile", "Centimeter", "Inch", "Foot", "Meter", "Yard"],
-    "Countries": ["Germany", "Russia", "Canada", "France", "England", "Mexico"],
-    "Metals": ["Zinc", "Tin", "Steel", "Iron", "Copper", "Platinum"],
-    "Colors": ["Red", "Green", "Blue", "Yellow", "Black", "Orange"]
+    "Animals": ["Cat", "Cow", "Dog", "Horse", "Lion", "Tiger"],
+    "Relatives": ['Aunt', 'Brother', 'Father', 'Mother', 'Sister', 'Uncle'],
+    "Distances": ['Centimeter', 'Foot', 'Inch', 'Meter', 'Mile', 'Yard'],
+    "Countries": ['Canada', 'England', 'France', 'Germany', 'Mexico', 'Russia'],
+    "Metals": ['Copper', 'Iron', 'Platinum', 'Steel', 'Tin', 'Zinc'],
+    "Colors": ['Black', 'Blue', 'Green', 'Orange', 'Red', 'Yellow']
   };
 
   all_cats = ['Distances', 'Relatives', 'Animals', 'Countries', 'Metals', 'Colors'];
@@ -117,6 +117,7 @@
               return _this.exitTrial();
             };
           })(this)), 2000);
+          hideButtons();
           acc = 1;
         } else {
           $('#error').modal('show');
@@ -131,9 +132,11 @@
         if (button.id === 'leftText' || button.id === 'leftButton') {
           acc = 'BACK';
           this.exitTrial(false);
+          hideButtons();
         } else if (button.id === 'rightText' || button.id === 'rightButton') {
           acc = 'FORWARD';
           this.exitTrial();
+          hideButtons();
         }
       }
       return dataHandler.recordTrialData({
@@ -186,10 +189,12 @@
 
     InstGrid.prototype.buttonClick = function(button) {
       if (button.id === 'leftText' || button.id === 'leftButton') {
-        return closeGrid(this.exitTrial(false));
+        closeGrid(this.exitTrial(false));
+        return hideButtons();
       } else if (button.id === 'rightText' || button.id === 'rightButton') {
         if (!this.correct) {
-          return closeGrid(this.exitTrial);
+          closeGrid(this.exitTrial);
+          return hideButtons();
         } else {
           return this.checkResponses();
         }
@@ -223,6 +228,7 @@
       }
       if (allCorr) {
         closeGrid(this.exitTrial);
+        hideButtons();
         $('#correct').modal('show');
         setTimeout(((function(_this) {
           return function() {
@@ -282,7 +288,7 @@
           return results;
         }).call(this)
       ];
-      this.catText = upper_cats[0].join("&nbsp&nbsp");
+      this.catText = upper_cats[0].join("&nbsp&nbsp&nbsp&nbsp");
     }
 
     Block.prototype.start = function(exitBlock) {

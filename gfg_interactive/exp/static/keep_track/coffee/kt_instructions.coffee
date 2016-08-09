@@ -37,7 +37,7 @@ To respond, just click on the word you thought was the last of each category. "
 
 "Try entering, 'Cat', the correct answer of the example"
 
-"Good job.
+"Good job!
 <br><br>Let's do a longer example, this time with two categories.<br><br>
 Remember to pay attention to the categories and only keep track of the <i>last</i> 
 item from each category"

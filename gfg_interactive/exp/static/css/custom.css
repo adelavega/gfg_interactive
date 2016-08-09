@@ -3,6 +3,15 @@
 /*---------------------------------------------------
  *              COMMON CSS
  ----------------------------------------------------*/
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
 
 /* For Keep Track and CS feedback form*/
 .hr {
@@ -135,7 +144,7 @@ html, body {
    position:absolute;
    left: 50%; 
    top:30%;
-   font:30px Arial; 
+   font:33px Arial; 
    margin-right: -50%;
    transform: translate(-50%, -50%)
 }
@@ -145,7 +154,7 @@ html, body {
    position:absolute;
    left: 50%; 
    top:45%;
-   font:25px Arial; 
+   font:28px Arial; 
    margin-right: -50%;
    transform: translate(-50%, -50%)
 }
