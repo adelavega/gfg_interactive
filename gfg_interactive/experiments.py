@@ -333,7 +333,7 @@ def results():
         percentile = stats.z2p((score - mean_score[0][0]) / (std_score[0][0] + 0.00000001))
 
         current_app.logger.info("mean: %d, std: %d; percentile: %d" %
-                            (mean_score, std_score, percentile))
+                            (mean_score[0][0], std_score[0][0], percentile))
     else:
         percentile = None
 
