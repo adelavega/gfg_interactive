@@ -112,12 +112,12 @@
               return $('#correct').modal('hide');
             };
           })(this)), 2000);
+          hideButtons();
           setTimeout(((function(_this) {
             return function() {
               return _this.exitTrial();
             };
           })(this)), 2000);
-          hideButtons();
           acc = 1;
         } else {
           $('#error').modal('show');
@@ -131,12 +131,12 @@
       } else {
         if (button.id === 'leftText' || button.id === 'leftButton') {
           acc = 'BACK';
-          this.exitTrial(false);
           hideButtons();
+          this.exitTrial(false);
         } else if (button.id === 'rightText' || button.id === 'rightButton') {
           acc = 'FORWARD';
-          this.exitTrial();
           hideButtons();
+          this.exitTrial();
         }
       }
       return dataHandler.recordTrialData({
@@ -189,12 +189,12 @@
 
     InstGrid.prototype.buttonClick = function(button) {
       if (button.id === 'leftText' || button.id === 'leftButton') {
-        closeGrid(this.exitTrial(false));
-        return hideButtons();
+        hideButtons();
+        return closeGrid(this.exitTrial(false));
       } else if (button.id === 'rightText' || button.id === 'rightButton') {
         if (!this.correct) {
-          closeGrid(this.exitTrial);
-          return hideButtons();
+          hideButtons();
+          return closeGrid(this.exitTrial);
         } else {
           return this.checkResponses();
         }
@@ -227,8 +227,8 @@
         }
       }
       if (allCorr) {
-        closeGrid(this.exitTrial);
         hideButtons();
+        closeGrid(this.exitTrial);
         $('#correct').modal('show');
         setTimeout(((function(_this) {
           return function() {

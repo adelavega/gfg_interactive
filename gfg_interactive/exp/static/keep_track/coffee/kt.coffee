@@ -77,7 +77,6 @@ class Instruction
 		if @leftKey?
 			keyText(@leftKey, 'left')
 
-		## Show key picture and text next to it
 		keyText(@rightKey, 'right')
 
 	# Record RT, check if response is correct (if applicable), and 
@@ -88,8 +87,8 @@ class Instruction
 			if @corrResp is button
 				$('#correct').modal('show')
 				setTimeout (=> $('#correct').modal('hide')), 2000
-				setTimeout (=> @exitTrial()), 2000
 				hideButtons()
+				setTimeout (=> @exitTrial()), 2000
 				acc = 1
 			else
 			## Show incorrect message
@@ -99,12 +98,12 @@ class Instruction
 		else # If there is no correct answer, just record what was pressed
 			if button.id is 'leftText' or button.id is 'leftButton'
 				acc = 'BACK'
-				@exitTrial false
 				hideButtons()
+				@exitTrial false
 			else if button.id is 'rightText' or button.id is 'rightButton'
 				acc = 'FORWARD'
-				@exitTrial()
 				hideButtons()
+				@exitTrial()
 
 		dataHandler.recordTrialData({'block': @message, 'rt': rt, 'resp': button, 'acc': acc})
 
@@ -138,12 +137,12 @@ class InstGrid
 
 	buttonClick: (button) ->
 		if button.id is 'leftText' or button.id is 'leftButton'
-			closeGrid(@exitTrial false)
 			hideButtons()
+			closeGrid(@exitTrial false)
 		else if button.id is 'rightText' or button.id is 'rightButton'
 			if not @correct
-				closeGrid(@exitTrial)
 				hideButtons()
+				closeGrid(@exitTrial)
 			else
 				@checkResponses()
 		else  
@@ -174,8 +173,8 @@ class InstGrid
 				allCorr = false
 
 		if allCorr
-			closeGrid(@exitTrial)
 			hideButtons()
+			closeGrid(@exitTrial)
 			$('#correct').modal('show')
 			setTimeout (=> $('#correct').modal('hide')), 1500
 			$('#errortext').html("Incorrect! Try again.")
