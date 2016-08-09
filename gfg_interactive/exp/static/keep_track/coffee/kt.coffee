@@ -38,9 +38,7 @@ fillGrid = (cats) ->
 
 closeGrid = (func) ->
 	$('#responses').hide()
-	setTimeout (=> 
-		func()
-	) , 500
+	func()
 
 clearGrid = ->
 	# Reset grid before showing again

@@ -45,11 +45,7 @@
 
   closeGrid = function(func) {
     $('#responses').hide();
-    return setTimeout(((function(_this) {
-      return function() {
-        return func();
-      };
-    })(this)), 500);
+    return func();
   };
 
   clearGrid = function() {
