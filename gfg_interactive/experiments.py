@@ -321,15 +321,14 @@ def results():
     age_matched_ids = db_utils.get_age_matched_ids(gfg_id, current_app.config['RESEARCH_DB_HOST'], current_app.config['RESEARCH_DB_USER'],
     current_app.config['RESEARCH_DB_PASSWORD'], current_app.config['RESEARCH_DB_NAME'])
 
+    finished_matched_sessions = Session.query.filter(Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name, Session.status==3).all()
 
-    if len(age_matched_ids) > 20:
+    if len(finished_matched_sessions) > 2:
         mean_score = db.session.query(func.avg(Session.results).label('average')).filter(
         Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name, Session.status==3).all()
 
-        std_score = db.session.query(func.STD(Session.results).label('average')).filter(
+        std_score = db.session.query(func.STD(Session.results).label('std')).filter(
         Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name, Session.status==3).all()
-
-        print mean_score
 
         percentile = stats.z2p((score - mean_score[0][0]) / (std_score[0][0] + 0.00000001))
 
