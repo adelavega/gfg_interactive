@@ -46,10 +46,8 @@ clearGrid = ->
 	# Reset grid before showing again
 	$('.resp').removeClass('btn-primary')
 
-stim = {"pracLists": [[["Animals"], ["Cat"], ["Horse", "Mile", "Steel", "Cat", "Green", "Aunt"]]
-, [["Metals", "Countries"], ["Steel", "Mexico"], ["Red" ,"Blue" ,"Tin" ,"Cow" ,"Yellow" ,"England" ,"Lion" ,"Meter" ,"Inch" ,"Mexico" ,"Black" ,"Brother" ,"Green" ,"Cat" ,"Yard" ,"Aunt" ,"Uncle" ,"Steel" ,"Horse" ,"Father"]]]}
+stim = {"pracLists": [[["Animals"], ["Cat"], ["Horse", "Mile", "Steel", "Cat", "Green", "Aunt"]], [["Metals", "Countries"], ["Steel", "Mexico"], ["Red" ,"Blue" ,"Tin" ,"Cow" ,"Yellow" ,"England" ,"Lion" ,"Meter" ,"Inch" ,"Mexico" ,"Black" ,"Brother" ,"Green" ,"Cat" ,"Yard" ,"Aunt" ,"Uncle" ,"Steel" ,"Horse" ,"Father"]]]}
 
-# real_stim_long = [[["Distances", "Animals", "Countries"], ["Mile", "Cat", "France"], ["Father", "Mexico", "Tin", "Germany", "Platinum", "Green", "Orange", "Tiger", "Mile", "Blue", "Steel", "Cat", "France", "Black", "Aunt"]],  [["Colors", "Metals", "Relatives", "Distances"], ["Blue", "Tin", "Brother", "Meter"], ["Horse", "Russia", "Mexico", "Zinc", "Father", "Canada", "Lion", "France", "Sister", "England", "Brother", "Tin", "Meter", "Blue", "Tiger"]],  [["Animals", "Countries", "Colors", "Metals", "Relatives"], ["Horse", "Russia", "Orange", "Copper", "Mother"], ["Canada", "Russia", "Steel", "Platinum", "Uncle", "Centimeter", "Foot", "Copper", "Meter", "Aunt", "Mother", "Yellow", "Horse", "Orange", "Mile"]],  [["Countries", "Colors", "Metals", "Relatives"], ["Mexico", "Red", "Iron", "Mother"], ["Black", "Mile", "Meter", "Aunt", "Horse", "Mexico", "Steel", "Sister", "Copper", "Red", "Inch", "Dog", "Mother", "Iron", "Foot"]],  [["Relatives", "Distances", "Animals", "Countries", "Colors"], ["Uncle", "Foot", "Cat", "Russia", "Yellow"], ["Germany", "Inch", "Steel", "Blue", "Lion", "Orange", "Zinc", "Yellow", "Cat", "Canada", "Foot", "Russia", "Copper", "Uncle", "Tin"]],  [["Metals", "Relatives", "Distances", "Animals"], ["Platinum", "Father", "Mile", "Cow"], ["Platinum", "Centimeter", "Yard", "France", "Mile", "Horse", "Brother", "Red", "Yellow", "Blue", "Father", "Tiger", "Cow", "Green", "Russia"]], [["Distances", "Animals", "Countries", "Colors", "Metals"], ["Yard", "Dog", "England", "Red", "Zinc"], ["Yard", "France", "Iron", "Black", "Green", "Red", "Tin", "Cow", "Brother", "Aunt", "Dog", "Zinc", "England", "Sister", "Uncle"]]]
 real_stim = [[["Distances", "Animals", "Countries"], ["Mile", "Cat", "France"], ["Father", "Mexico", "Tin", "Germany", "Platinum", "Green", "Orange", "Tiger", "Mile", "Blue", "Steel", "Cat", "France", "Black", "Aunt"]],  [["Colors", "Metals", "Relatives", "Distances"], ["Blue", "Tin", "Brother", "Meter"], ["Horse", "Russia", "Mexico", "Zinc", "Father", "Canada", "Lion", "France", "Sister", "England", "Brother", "Tin", "Meter", "Blue", "Tiger"]],  [["Animals", "Countries", "Colors", "Metals", "Relatives"], ["Horse", "Russia", "Orange", "Copper", "Mother"], ["Canada", "Russia", "Steel", "Platinum", "Uncle", "Centimeter", "Foot", "Copper", "Meter", "Aunt", "Mother", "Yellow", "Horse", "Orange", "Mile"]],  [["Countries", "Colors", "Metals", "Relatives"], ["Mexico", "Red", "Iron", "Mother"], ["Black", "Mile", "Meter", "Aunt", "Horse", "Mexico", "Steel", "Sister", "Copper", "Red", "Inch", "Dog", "Mother", "Iron", "Foot"]],  [["Relatives", "Distances", "Animals", "Countries", "Colors"], ["Uncle", "Foot", "Cat", "Russia", "Yellow"], ["Germany", "Inch", "Steel", "Blue", "Lion", "Orange", "Zinc", "Yellow", "Cat", "Canada", "Foot", "Russia", "Copper", "Uncle", "Tin"]],  [["Metals", "Relatives", "Distances", "Animals"], ["Platinum", "Father", "Mile", "Cow"], ["Platinum", "Centimeter", "Yard", "France", "Mile", "Horse", "Brother", "Red", "Yellow", "Blue", "Father", "Tiger", "Cow", "Green", "Russia"]]]
 
 categories = {"Animals": ["Cat", "Cow", "Dog",  "Horse", "Lion",  "Tiger"], "Relatives": ['Aunt', 'Brother', 'Father', 'Mother', 'Sister', 'Uncle'], "Distances" :['Centimeter', 'Foot', 'Inch', 'Meter', 'Mile', 'Yard'], "Countries" :['Canada', 'England', 'France', 'Germany', 'Mexico', 'Russia'], "Metals" :['Copper', 'Iron', 'Platinum', 'Steel', 'Tin', 'Zinc'], "Colors" :['Black', 'Blue', 'Green', 'Orange', 'Red', 'Yellow']}
@@ -115,8 +113,6 @@ class InstGrid
 		@maxClicks = @correct.length
 		@nClicks = 0
 		@triesBeforeHint = 2
-
-
 
 	start: (@exitTrial) ->
 		fillGrid(@categories)
@@ -203,8 +199,6 @@ class Block
 		
 		upper_cats = [cat.toUpperCase() for cat in @categories]
 		@catText = upper_cats[0].join("&nbsp&nbsp&nbsp&nbsp")
-
-		
 
 	# When block starts, hide buttons, show message, and after IBI start first trial
 	start: (@exitBlock) ->
