@@ -288,10 +288,8 @@ def results():
     except SQLAlchemyError:
         raise ExperimentError('user_access_denied')
 
-    if session is None :
-	current_app.logger.info("Session is null---%s" %(session))
-	raise ExperimentError('user_access_denied')
-
+    if session is None:
+    	raise ExperimentError('user_access_denied')
     elif session.exp_name == "keep_track":
         target_trials = KeepTrack.query.filter(KeepTrack.session_id==session.session_id, 
             KeepTrack.block.in_(["1", "2", "3", "4", "5", "6"])).all()
@@ -303,7 +301,7 @@ def results():
             current_app.logger.info("trial score: %s, block: %s, inwords: %s" % (str(score), trial.block, str(trial.input_words)))
 
         ## This first value should be stored
-        score = sum(all_scored) / (len(all_scored)  * 1.0)
+        score = (sum(all_scored) / (len(all_scored)  / 100.0))
 
     elif session.exp_name == "category_switch":
         single_trials_avg = db.session.query(func.avg(CategorySwitch.reaction_time).label('average')).filter(
