@@ -339,7 +339,7 @@ def results():
 
     return render_template(session.exp_name + "/results.html", 
         score=score,
-        percentile=percentile)
+        percentile=percentile*100)
 
 
 # Generic route
