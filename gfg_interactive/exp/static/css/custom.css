@@ -110,14 +110,6 @@ html, body {
 /* correct,incorrect modal popups for Keep Track */
 .modal-dialog {width: 400px;} 
 
-/* KT- no | CS-no
-.myText {
-		position:absolute;
-		left:50%;
-		margin-left:-240px;
-	}
-*/
-
 /* KT -defines position of instructions | CS - No */
 .instructions {
    font-size: 24px;
@@ -144,7 +136,7 @@ html, body {
    position:absolute;
    left: 50%; 
    top:30%;
-   font:33px Arial; 
+   font:41px Arial; 
    margin-right: -50%;
    transform: translate(-50%, -50%)
 }
