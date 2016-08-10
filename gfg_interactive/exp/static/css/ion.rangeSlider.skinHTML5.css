@@ -116,7 +116,7 @@
 }
 
 .irs-grid-text {
-    bottom: 5px;
+    bottom: 10px	/*Increased the font size below */;
     color: #99a4ac;
 }
 
