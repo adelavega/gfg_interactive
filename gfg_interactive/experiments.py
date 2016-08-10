@@ -331,6 +331,7 @@ def results():
         Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name, Session.status==3).all()
 
         percentile = stats.z2p((score - mean_score[0][0]) / (std_score[0][0] + 0.00000001))
+        percentile = percentile * 100
 
         current_app.logger.info("mean: %d, std: %d; percentile: %d" %
                             (mean_score[0][0], std_score[0][0], percentile))
@@ -339,7 +340,7 @@ def results():
 
     return render_template(session.exp_name + "/results.html", 
         score=score,
-        percentile=percentile*100)
+        percentile=percentile)
 
 
 # Generic route
