@@ -373,9 +373,9 @@ blocks = [
 	new Instruction instructions[14], null, "Start practice!", null, 'white', '#66FF99'
 	new PracticeBlock "mixedPrac", "Get ready for 24 words!", (new PracFeedbackTrial(n[0], n[1]) for n in all_stim['mixed_prac'])
 	new Instruction instructions[15], null, "Start!", null, 'white', '#66FF99'
-	new Block "mixedReal1", "Get ready for 68 words!", (new FeedbackTrial(n[0], n[1]) for n in all_stim['mixed_real_1'])
+	new Block "mixedReal1", "Get ready for 54 words!", (new FeedbackTrial(n[0], n[1]) for n in all_stim['mixed_real_1'])
 	new Instruction instructions[16], null, "Start!", null, 'white', '#66FF99'
-	new Block "mixedReal2", "Get ready for 68 words!", (new FeedbackTrial(n[0], n[1]) for n in all_stim['mixed_real_2'])
+	new Block "mixedReal2", "Get ready for 54 words!", (new FeedbackTrial(n[0], n[1]) for n in all_stim['mixed_real_2'])
 	new common.Questionnaire
 ]
 

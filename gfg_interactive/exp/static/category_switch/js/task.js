@@ -618,7 +618,7 @@
         results.push(new PracFeedbackTrial(n[0], n[1]));
       }
       return results;
-    })()), new Instruction(instructions[15], null, "Start!", null, 'white', '#66FF99'), new Block("mixedReal1", "Get ready for 68 words!", (function() {
+    })()), new Instruction(instructions[15], null, "Start!", null, 'white', '#66FF99'), new Block("mixedReal1", "Get ready for 54 words!", (function() {
       var j, len, ref, results;
       ref = all_stim['mixed_real_1'];
       results = [];
@@ -627,7 +627,7 @@
         results.push(new FeedbackTrial(n[0], n[1]));
       }
       return results;
-    })()), new Instruction(instructions[16], null, "Start!", null, 'white', '#66FF99'), new Block("mixedReal2", "Get ready for 68 words!", (function() {
+    })()), new Instruction(instructions[16], null, "Start!", null, 'white', '#66FF99'), new Block("mixedReal2", "Get ready for 54 words!", (function() {
       var j, len, ref, results;
       ref = all_stim['mixed_real_2'];
       results = [];
