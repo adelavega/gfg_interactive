@@ -7,10 +7,10 @@
         <h2>You made it! Thank you!</h2>
 
         <p>
-        On average, you were <strong> {{ score }} milliseconds </strong> slower to respond when you had to switch between categorizing words according to two rules (living/non-living and bigger/small than a soccer ball) compared to when you had to categorize the words according to only one rule.  
+        On average, you were <strong> {{'%0.0f'| format(score|float)}}% milliseconds </strong> slower to respond when you had to switch between categorizing words according to two rules (living/non-living and bigger/small than a soccer ball) compared to when you had to categorize the words according to only one rule.  
 
-        This means that when you were forced to "switch" back and forth between the living/non-living and larger/smaller rules, your responses slowed down by 29 milliseconds. That's a measure of how much harder it was for you to switch between the rules, compared to when we asked you to categorize only according to a single rule.
-
+        This means that when you were forced to "switch" back and forth between the living/non-living and larger/smaller rules, your responses slowed down by {{'%0.0f'| format(score|float)}}% milliseconds. That's a measure of how much harder it was for you to switch between the rules, compared to when we asked you to categorize only according to a single rule.
+        <br>
         {%- if percentile is not none-%}
         <br>
         Your switch cost was greater than <strong> {{'%0.0f'| format(percentile|float)}}% </strong> of other Genes for Good participants your age. As more people take this test your ranking may change, so feel free to look at your results again. 
