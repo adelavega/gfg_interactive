@@ -146,26 +146,32 @@ class KeepTrack(db.Model):
     def simple_score(self):
         return [1 if in_word in self.target_words.split(',') else 0 for in_word in self.input_words.split(',')]
 
-## JAKE: This is an example bart model
+
 class BART(db.Model):
-    """ BART experiment table """
-    bart_id = db.Column(db.Integer, primary_key=True) 
+    bart_id = db.Column(db.Integer, primary_key=True)
     gfg_id = db.Column(db.String(32), nullable=False)
-    session_id = db.Column(
-        db.Integer, db.ForeignKey('session.session_id'))
+    session_id = db.Column(eb.Integer, db.ForeignKey('session.session.id'))
     trial_num = db.Column(db.Integer)
+    balloon_num = db.Column(db.Integer)
+    user_action = db.Column(db.Integer)  # 1 = pump, 0 = pop, 2 = cash, 3 = reset
+    pumps = db.Column(db.Integer)
+    pop_point = db.Column(db.Integer)
+    timestamp = db.Column(db.DateTime)
 
     # This is how the model prints itself
     def __repr__(self):
         return "BART Values (%s, %s, %s, %s)" % (self.bart_id, self.gfg_id,
-            self.session_id, self.trial_num)
+                                                 self.session_id, self.trial_num)
 
-    ## JAKE: our class *needs* this function. This is where most of the logic of how you're going to
-    ## store your data (coming from Backbone), gets stored into the db itself
-    ## This is nice because then each model handles how data is put into it seperately, 
-    ## which allows more generalizable code in experiments.py
     def add_json_data(self, json_trial):
-        pass
+        self.trial_num = json_trial['current_trial']
+        trial_data = json_trial['trialdata']
+        self.user_action = trial_data['action']
+        self.pumps = trial_data['pumps']
+        self.pop_point = trial_data['pop_point']
+        self.balloon_num = trial_data['balloon']
+        self.timestamp = convert_timestamp(json_trial['dateTime'])
+
 
 class EventData(db.Model):
     """ EventData for all experiments """
