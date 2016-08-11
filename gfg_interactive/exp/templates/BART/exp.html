@@ -1,4 +1,4 @@
-{ % etxtends "base.html" %}}
+{ % extends "base.html" %}
 { % block headscripts $}
     <script type="text/javascript">
 		// These fields are coming from the "/task" start_exp() in experiments.py
@@ -12,7 +12,7 @@
     <script src="static/{{ experimentname }}/lib/jquery.easing.1.3.js"></script>
     <script src="static/{{ experimentname }}/js//task.js"></script>
     <link rel="stylesheet" href="static/{{ experimentname }}/css/task_style.css">
-{ % endblock %}}
+{ % endblock %}
 
 { % block content %}
 <div id="container">
@@ -27,4 +27,4 @@
         <p id="cashText">CASH IN</p>
     </div>
 </div>
-{% endblock %}}
+{% endblock %}
