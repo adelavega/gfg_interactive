@@ -150,7 +150,7 @@ class KeepTrack(db.Model):
 class BART(db.Model):
     bart_id = db.Column(db.Integer, primary_key=True)
     gfg_id = db.Column(db.String(32), nullable=False)
-    session_id = db.Column(eb.Integer, db.ForeignKey('session.session.id'))
+    session_id = db.Column(db.Integer, db.ForeignKey('session.session.id'))
     trial_num = db.Column(db.Integer)
     balloon_num = db.Column(db.Integer)
     user_action = db.Column(db.Integer)  # 1 = pump, 0 = pop, 2 = cash, 3 = reset
