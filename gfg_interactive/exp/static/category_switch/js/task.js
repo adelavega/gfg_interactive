@@ -177,6 +177,7 @@
 
     function Slide1() {
       return Slide1.__super__.constructor.apply(this, arguments);
+      return Slide1.__super__.constructor.apply(this, arguments);
     }
 
     Slide1.prototype.start = function(exitTrial) {

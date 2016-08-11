@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from errors import ExperimentError
-from models import Session, Participant, CategorySwitch, EventData, KeepTrack, QuestionData
+from models import Session, Participant, CategorySwitch, EventData, KeepTrack, QuestionData, BART
 from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
@@ -24,7 +24,7 @@ experiments = Blueprint('experiments', __name__,
                         template_folder='exp/templates', static_folder='exp/static')
 
 ### JAKE: here you would need to pair a surveyid number (e.g. 30), and a name for your task "bart"
-experiment_list = {'28': 'keep_track', '29' : 'category_switch'}
+experiment_list = {'28': 'keep_track', '29' : 'category_switch', '30' : 'BART'}
 
 @experiments.route('/', methods=['GET'])
 def index():
@@ -177,6 +177,8 @@ def update(session_id=None):
             experiment_class = CategorySwitch
         elif session.exp_name == "keep_track":
             experiment_class = KeepTrack
+        elif session.exp_name == 'BART':
+            experiment_class = BART
 
         db_trial, new = db_utils.get_or_create(db.session,
             experiment_class, gfg_id=session.gfg_id, session_id=session.session_id,
