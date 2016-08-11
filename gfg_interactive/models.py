@@ -151,8 +151,7 @@ class BART(db.Model):
     """ BART experiment table """
     bart_id = db.Column(db.Integer, primary_key=True) 
     gfg_id = db.Column(db.String(32), nullable=False)
-    session_id = db.Column(
-        db.Integer, db.ForeignKey('session.session_id'))
+    session_id = db.Column(db.Integer, db.ForeignKey('session.session_id')) 
     trial_num = db.Column(db.Integer)
 
     # This is how the model prints itself
