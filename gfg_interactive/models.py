@@ -29,7 +29,7 @@ class Session(db.Model):
         return "Session values (%s, %s, %s, %s, %s)" % (self.session_id,
             self.gfg_id,self.exp_name, self.status, self.begin_session)
 
-
+## JAKE: Check this and the next class as examples of how to structure you model
 class CategorySwitch(db.Model):
     """ CategorySwitch experiment table """
     cs_id = db.Column(db.Integer, primary_key=True) 
@@ -145,6 +145,32 @@ class KeepTrack(db.Model):
 
     def simple_score(self):
         return [1 if in_word in self.target_words.split(',') else 0 for in_word in self.input_words.split(',')]
+
+
+class BART(db.Model):
+    bart_id = db.Column(db.Integer, primary_key=True)
+    gfg_id = db.Column(db.String(32), nullable=False)
+    session_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))
+    trial_num = db.Column(db.Integer)
+    balloon_num = db.Column(db.Integer)
+    user_action = db.Column(db.Integer)  # 1 = pump, 0 = pop, 2 = cash, 3 = reset
+    pumps = db.Column(db.Integer)
+    pop_point = db.Column(db.Integer)
+    timestamp = db.Column(db.DateTime)
+
+    # This is how the model prints itself
+    def __repr__(self):
+        return "BART Values (%s, %s, %s, %s)" % (self.bart_id, self.gfg_id,
+                                                 self.session_id, self.trial_num)
+
+    def add_json_data(self, json_trial):
+        self.trial_num = json_trial['current_trial']
+        trial_data = json_trial['trialdata']
+        self.user_action = trial_data['action']
+        self.pumps = trial_data['pumps']
+        self.pop_point = trial_data['pop_point']
+        self.balloon_num = trial_data['balloon']
+        self.timestamp = convert_timestamp(json_trial['dateTime'])
 
 
 class EventData(db.Model):

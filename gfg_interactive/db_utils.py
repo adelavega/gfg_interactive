@@ -37,6 +37,7 @@ def gfg_user_exists(userid, db_host, db_user, db_password, db_name):
 	return len(cur.fetchall()) > 0
 
 def get_age_matched_ids(userid, db_host, db_user, db_password, db_name):
+	""" Gets the gfg_ids of users that make another users age """
 	import MySQLdb
 	db = MySQLdb.connect(host="localhost", user=db_user, passwd=db_password, db=db_name)
 	cur = db.cursor()

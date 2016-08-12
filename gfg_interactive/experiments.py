@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from errors import ExperimentError
-from models import Session, Participant, CategorySwitch, EventData, KeepTrack, QuestionData
+from models import Session, Participant, CategorySwitch, EventData, KeepTrack, QuestionData, BART
 from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
@@ -18,10 +18,13 @@ STARTED = 2
 COMPLETED = 3
 QUITEARLY = 6
 
+
+### JAKE: this sets up where this file looks for the templates and static
 experiments = Blueprint('experiments', __name__,
                         template_folder='exp/templates', static_folder='exp/static')
 
-experiment_list = {'28': 'keep_track', '29' : 'category_switch'}
+### JAKE: here you would need to pair a surveyid number (e.g. 30), and a name for your task "bart"
+experiment_list = {'28': 'keep_track', '29' : 'category_switch', '30' : 'BART'}
 
 @experiments.route('/', methods=['GET'])
 def index():
@@ -39,32 +42,34 @@ def start_exp():
     surveyid: Which experiment to serve
     """
 
+    browser, platform = utils.check_browser_platform(request.user_agent)
+
+    # Check query string
     if not utils.check_qs(request.args, ['uniqueid', 'surveyid']):
         raise ExperimentError('improper_inputs')
     else:
         uniqueid = request.args['uniqueid']
+        survey_id = request.args['surveyid']
+        exp_name = experiment_list[request.args['surveyid']] # Survey id to experiment name
 
+    # Decrypt encocded uniqueid
     gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(uniqueid).decode('string-escape'))
 
-    exp_name = experiment_list[request.args['surveyid']]
-    survey_id = request.args['surveyid']
-    browser, platform = utils.check_browser_platform(request.user_agent)
-
+    # Check if user exists in main gfg db
     if not db_utils.gfg_user_exists(gfg_id, current_app.config['RESEARCH_DB_HOST'],
      current_app.config['RESEARCH_DB_USER'],
         current_app.config['RESEARCH_DB_PASSWORD'], current_app.config['RESEARCH_DB_NAME']):
         raise ExperimentError('user_access_denied')
 
-    # Check if user is in db, if not add & commit
+    # Check if user is in Participant table, if not add & commit
     user, new_user = db_utils.get_or_create(db.session, Participant, gfg_id=gfg_id)
 
     current_app.logger.info("Subject: %s entered with %s platform and %s browser" %
                             (gfg_id, platform, browser))
 
-    # If any existing session that disqualify user (ongoing or completed), throw error
+    # If any existing sessions disqualify user (ongoing or completed), throw error
     # Otherwise, create new session and serve experiment
     disqualifying_sessions = Session.query.filter_by(gfg_id = gfg_id, exp_name = exp_name, status = 3).first()
-
     if disqualifying_sessions and current_app.config['EXP_DEBUG'] == False:
         raise ExperimentError('already_did_exp', session_id=disqualifying_sessions.session_id)
 
@@ -75,10 +80,11 @@ def start_exp():
         db.session.add(session)
         db.session.commit()
 
-        return render_template(exp_name + "/exp.html", experimentname=exp_name, surveyid=survey_id, sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'],
+        return render_template(exp_name + "/exp.html", experimentname=exp_name, surveyid=survey_id, 
+            sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'],
             uniqueid=urllib.quote(uniqueid))
 
-
+### JAKE: this function is called by dataHandler.finishInstructions()
 @experiments.route('/inexp', methods=['POST'])
 def enterexp():
     """
@@ -117,23 +123,6 @@ def enterexp():
         resp = {"status": "error, session not found"}
 
     return jsonify(**resp)
-
-
-def parse_id_exp(id_exp):
-    resp = None
-    try:
-        gfg_id, exp_name, session_id = id_exp.split("&")
-    except ValueError:
-        resp = {"status": "bad request"}
-        current_app.logger.error("Could not parse id")
-    else:
-        try:
-            session = Session.query.filter_by(session_id=session_id).one()
-        except SQLAlchemyError:
-            resp = {"status": "bad request"}
-            current_app.logger.error("DB error: Unique user not found.")
-
-    return (gfg_id, exp_name, session_id), session, resp
 
 
 @experiments.route('/sync/<session_id>', methods=['GET'])
@@ -180,12 +169,16 @@ def update(session_id=None):
         "Current trial: %s, session id: %s " % (valid_json['currenttrial'],
             valid_json['sessionid']))
 
+    ## JAKE: This needs to be slightly customized to add your task
+    ## However, most of the work will be in models.py 
     # For each trial, pass to appropriate parser, if not in db
     for json_trial in valid_json['data']:
         if session.exp_name == "category_switch":
             experiment_class = CategorySwitch
         elif session.exp_name == "keep_track":
             experiment_class = KeepTrack
+        elif session.exp_name == 'BART':
+            experiment_class = BART
 
         db_trial, new = db_utils.get_or_create(db.session,
             experiment_class, gfg_id=session.gfg_id, session_id=session.session_id,
@@ -196,6 +189,8 @@ def update(session_id=None):
             db_trial.add_json_data(json_trial)
             db.session.commit()
 
+    ## JAKE: this part is for recording events that dataHandler (i.e. psiTurk),
+    ## tracks, automatically
     # For each event, pass to parser, if not in db
     for json_event in valid_json['eventdata']:
         db_event, new = db_utils.get_or_create(db.session, EventData,
@@ -206,6 +201,7 @@ def update(session_id=None):
             db_event.add_json_data(json_event)
             db.session.commit()
 
+    ## JAKE: Don't worry about this now, you won't have any question data
     if valid_json['questiondata'] != {}:
         # For the QuestionData, pass to parser, if not in db
         db_ques, new = db_utils.get_or_create(db.session, QuestionData,
@@ -218,7 +214,7 @@ def update(session_id=None):
 
     return jsonify(**resp)
 
-
+## JAKE: If someone quits, this is called by dataHandler
 @experiments.route('/quitter', methods=['POST'])
 def quitter():
     """ Mark quitter as such. """
@@ -241,7 +237,7 @@ def quitter():
 
     return jsonify(**resp)
 
-
+## JAKE: this is called by dataHandler.completeTask()
 @experiments.route('/worker_complete', methods=['POST'])
 def worker_complete():
     """Complete worker."""
@@ -268,6 +264,9 @@ def worker_complete():
 
         return jsonify(**resp)
 
+## JAKE: This part might take a bit more work since there is custom code to score 
+## and percentile rank their results. dataHandler.js automatically redirects here
+## once exitTask() is called
 @experiments.route('/results', methods=['GET'])
 def results():
     """Return results at the end."""
@@ -278,7 +277,7 @@ def results():
         survey_id = request.args['surveyid']
         exp_name = experiment_list[request.args['surveyid']]
 
-    current_app.logger.info("Results::Uniqueid is  %s, exp_name is %s and survey id is %s" %(uniqueid, exp_name, survey_id))
+    current_app.logger.info("Results: uniqueid is  %s, exp_name is %s and survey id is %s" %(uniqueid, exp_name, survey_id))
     ## Get last session with code 3 from user
     gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(uniqueid))
     current_app.logger.info("GFG id after decrypt is -- %s" % (gfg_id))
@@ -314,10 +313,14 @@ def results():
         ## This value also needs to be stored
         score = mixed_trials_avg[0][0] - single_trials_avg[0][0]
 
+    ## JAKE: You'd need to add another elif for your task. This is probably not the best way to code this but oh well
+    ## Probably would be good to have the scoring functions all in one file and just call the right function for the git
+    ## task, but lets leave that for later
+
     session.results = score
     db.session.commit()
 
-    ## Find other people in same age range. If more than 25, calculate percentile and display
+    ## Find other people in same age range. If more than 20, calculate percentile and display
     age_matched_ids = db_utils.get_age_matched_ids(gfg_id, current_app.config['RESEARCH_DB_HOST'], current_app.config['RESEARCH_DB_USER'],
     current_app.config['RESEARCH_DB_PASSWORD'], current_app.config['RESEARCH_DB_NAME'])
 
