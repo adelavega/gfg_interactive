@@ -8,10 +8,10 @@ jQuery ->
 # Simply an array that will get passed down to the Session
 blocks = [
 	new kTrack.Instruction warning
-	new kTrack.Instruction kTrackInst[0]
+	new kTrack.Instruction kTrackInst[0], "Back"
 	new kTrack.InstGrid kTrackInst[1]
-	new kTrack.Instruction kTrackInst[2]
-	new kTrack.Instruction kTrackInst[3]
+	new kTrack.Instruction kTrackInst[2], "Back"
+	new kTrack.Instruction kTrackInst[3], "Back"
 	new kTrack.Instruction kTrackInst[4], "Back", "Start!"
 	new kTrack.PracBlock "prac1", "Get ready!", kTrack.stim['pracLists'][0], window.stimLength
 	new kTrack.Instruction kTrackInst[5], "See again", "Continue" ## Change instructions
