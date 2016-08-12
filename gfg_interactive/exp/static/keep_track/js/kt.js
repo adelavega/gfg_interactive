@@ -363,11 +363,14 @@
   PracBlock = (function(superClass) {
     extend(PracBlock, superClass);
 
-    function PracBlock(condition, message, trial_structure, message2) {
+    function PracBlock(condition, message, trial_structure, message2, speed) {
       var word;
       this.condition = condition;
       this.message = message;
       this.message2 = message2 != null ? message2 : 'Keep track of the last word from each category';
+      if (speed == null) {
+        speed = 3500;
+      }
       PracBlock.__super__.constructor.call(this, this.condition, this.message, trial_structure, this.message2);
       this.words = (function() {
         var j, len, ref, results;
