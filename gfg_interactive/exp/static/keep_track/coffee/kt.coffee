@@ -223,7 +223,7 @@ class Block
 	getResponses: ->
 		$('#bottomText').html(" ")
 		$('#topText').html(" ")
-		$('#inst').html("Please enter the last word of each category")
+		$('#inst').html("Please enter the last word of each category.")
 
 		keyText('Submit', 'right')
 
@@ -258,6 +258,7 @@ class PracBlock extends Block
 	constructor: (@condition, @message, trial_structure, speed=3500) ->
 		super @condition, @message, trial_structure
 		@words = (new Word(word, speed) for word in trial_structure[2])
+		@catText = @catText + "\n Keep track of the last word from these categories"
 	getResponses: ->
 		$('#bottomText').html(" ")
 		$('#topText').html(" ")

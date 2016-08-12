@@ -1,5 +1,5 @@
-warning = "<span style='color:red; font-size:60px'> #{String.fromCharCode(9888)} </span> This task requires 10-15 minutes of your<br><tab>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; undivided attention <br><br>
-If you don't have time right now, please come back when you have can focus. <br><br>
+warning = "<span style='color:red; font-size:60px'> #{String.fromCharCode(9888)} </span> This task requires 10-15 minutes of your<br><tab>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; undivided attention. <br><br>
+If you don't have time right now, please come back when you can focus. <br><br>
 Otherwise, click continue to begin!"
 
 inst = ["
@@ -31,16 +31,16 @@ Ignore words from other categories.<br><br>"
 "The last Animal word was 'Cat'.  <br><br>
 Is that what you saw?<br><br> If you are confused watch that again, otherwise let's learn how to input your responses."
 
-"You'll see a grid with all of the possible words in the categories you were asked to keep track of, like below. <br>
+"You'll see a grid with all of the possible words in the categories you were asked to keep track of. <br><br>
 
 To respond, just click on the word you thought was the last of each category. "
 
-"Try entering, 'Cat', the correct answer of the example"
+"Try entering, 'Cat', the correct answer of the example."
 
 "Good job!
 <br><br>Let's do a longer example, this time with two categories.<br><br>
 Remember to pay attention to the categories and only keep track of the <i>last</i> 
-item from each category"
+item from each category."
 
 "Great! You're done with the practice. <br><br>
 We're now going to show you 8 more lists.<br>When you enter the answer for one trial, the next one will begin immediately after. <br><br>

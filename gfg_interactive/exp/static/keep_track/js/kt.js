@@ -321,7 +321,7 @@
     Block.prototype.getResponses = function() {
       $('#bottomText').html(" ");
       $('#topText').html(" ");
-      $('#inst').html("Please enter the last word of each category");
+      $('#inst').html("Please enter the last word of each category.");
       keyText('Submit', 'right');
       fillGrid(this.categories);
       this.maxClicks = this.categories.length;
@@ -379,6 +379,7 @@
         }
         return results;
       })();
+      this.catText = this.catText + "\n Keep track of the last word from these categories";
     }
 
     PracBlock.prototype.getResponses = function() {
