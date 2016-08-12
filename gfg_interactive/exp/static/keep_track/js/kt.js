@@ -379,7 +379,7 @@
         }
         return results;
       })();
-      this.catText = this.catText + "\n Keep track of the last word from these categories";
+      this.catText = this.catText + "<br>Keep track of the last word from these categories";
     }
 
     PracBlock.prototype.getResponses = function() {
