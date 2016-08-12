@@ -16,7 +16,7 @@ blocks = [
 	new kTrack.PracBlock "prac1", "Get ready!", kTrack.stim['pracLists'][0], window.stimLength
 	new kTrack.Instruction kTrackInst[5], "See again", "Continue" ## Change instructions
 	new common.FinishInstructions
-	new kTrack.InstGrid kTrackInst[6], kTrack.stim['pracLists'][0][0], true, false
+	new kTrack.Instruction kTrackInst[6], "Back"
 	new kTrack.InstGrid kTrackInst[7], kTrack.stim['pracLists'][0][0], false, ['Cat'], false, false
 	new kTrack.Instruction kTrackInst[8], null, "Start"
 	new kTrack.PracBlock "prac2", "Get ready!", kTrack.stim['pracLists'][1], window.stimLength
@@ -30,7 +30,7 @@ blocks = [
 	new kTrack.Block "6", "Get ready!", kTrack.real_stim[5]
 
 	new common.Questionnaire
-]
+]	
 
 ## These have to be at the bottom
 # Create the session with block array above
