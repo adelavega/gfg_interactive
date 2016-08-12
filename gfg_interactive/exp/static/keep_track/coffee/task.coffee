@@ -13,7 +13,7 @@ blocks = [
 	new kTrack.Instruction kTrackInst[2], "Back"
 	new kTrack.Instruction kTrackInst[3], "Back"
 	new kTrack.Instruction kTrackInst[4], "Back", "Start!"
-	new kTrack.PracBlock "prac1", "Get ready!", kTrack.stim['pracLists'][0], window.stimLength
+	new kTrack.PracBlock "prac1", "Get ready!<br>Keep track of the last word from each category.", kTrack.stim['pracLists'][0], window.stimLength
 	new kTrack.Instruction kTrackInst[5], "See again", "Continue" ## Change instructions
 	new common.FinishInstructions
 	new kTrack.Instruction kTrackInst[6], "Back"
