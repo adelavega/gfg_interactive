@@ -256,9 +256,8 @@ class Block
 		
 	
 class PracBlock extends Block
-	constructor: (@condition, @message, trial_structure, @message2 = 'Keep track of the last word from each category', speed=3500) ->
+	constructor: (@condition, @message, trial_structure, @message2 = 'Keep track of the last word from each category') ->
 		super @condition, @message, trial_structure, @message2
-		@words = (new Word(word, speed) for word in trial_structure[2])
 	getResponses: ->
 		$('#bottomText').html(" ")
 		$('#topText').html(" ")
