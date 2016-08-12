@@ -187,7 +187,7 @@ class InstGrid
 		setTimeout (=> $('#error').modal('hide')), 1800
 
 class Block
-	constructor: (@condition, @message, trial_structure) ->
+	constructor: (@condition, @message, trial_structure, @message2 = ' ') ->
 		@trialNumber = 0
 		@categories = trial_structure[0]
 		@target_words = trial_structure[1]
@@ -203,6 +203,7 @@ class Block
 		hideButtons()
 		$('#inst').html(' ')
 		$('#topText').html(@message)
+		$('#bottomText').html(@message2)
 
 		setTimeout (=> 
 			$('#topText').html(" ")
@@ -255,8 +256,8 @@ class Block
 		
 	
 class PracBlock extends Block
-	constructor: (@condition, @message, trial_structure, speed=3500) ->
-		super @condition, @message, trial_structure
+	constructor: (@condition, @message, trial_structure, @message2 = 'Keep track of the last word from each category') ->
+		super @condition, @message, trial_structure, @message2
 		@words = (new Word(word, speed) for word in trial_structure[2])
 	getResponses: ->
 		$('#bottomText').html(" ")

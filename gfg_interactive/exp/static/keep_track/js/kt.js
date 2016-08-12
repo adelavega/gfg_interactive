@@ -254,10 +254,11 @@
   })();
 
   Block = (function() {
-    function Block(condition, message, trial_structure) {
+    function Block(condition, message, trial_structure, message2) {
       var cat, upper_cats, word;
       this.condition = condition;
       this.message = message;
+      this.message2 = message2 != null ? message2 : ' ';
       this.trialNumber = 0;
       this.categories = trial_structure[0];
       this.target_words = trial_structure[1];
@@ -292,6 +293,7 @@
       hideButtons();
       $('#inst').html(' ');
       $('#topText').html(this.message);
+      $('#bottomText').html(this.message2);
       return setTimeout(((function(_this) {
         return function() {
           $('#topText').html(" ");
@@ -361,14 +363,12 @@
   PracBlock = (function(superClass) {
     extend(PracBlock, superClass);
 
-    function PracBlock(condition, message, trial_structure, speed) {
+    function PracBlock(condition, message, trial_structure, message2) {
       var word;
       this.condition = condition;
       this.message = message;
-      if (speed == null) {
-        speed = 3500;
-      }
-      PracBlock.__super__.constructor.call(this, this.condition, this.message, trial_structure);
+      this.message2 = message2 != null ? message2 : 'Keep track of the last word from each category';
+      PracBlock.__super__.constructor.call(this, this.condition, this.message, trial_structure, this.message2);
       this.words = (function() {
         var j, len, ref, results;
         ref = trial_structure[2];
