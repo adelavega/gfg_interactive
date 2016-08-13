@@ -573,7 +573,7 @@
   });
 
   blocks = [
-    new Slide1(instructions[0]), new Instruction(instructions[1], "Back"), new Instruction(instructions[2], "Back"), new Instruction(instructions[3], "Bigger or smaller than soccer ball", "Living or non-living", "j"), new Instruction(instructions[4], "Bigger or smaller than soccer ball", "Living or non-living", "f"), new LivingKeyMap(instructions[5], "Back"), new Instruction(instructions[6], " ", " ", "j"), new Instruction(instructions[7]), new Instruction(instructions[8], "Back", "Start practice!", null, 'white', '#66FF99'), new common.FinishInstructions, new PracticeBlock("livingPrac", "Get ready for 12 words!\nRespond as quickly as you can without making mistakes", (function() {
+    new Slide1(instructions[0]), new Instruction(instructions[1], "Back"), new Instruction(instructions[2], "Back"), new Instruction(instructions[3], "Bigger or smaller than soccer ball", "Living or non-living", "j"), new Instruction(instructions[4], "Bigger or smaller than soccer ball", "Living or non-living", "f"), new LivingKeyMap(instructions[5], "Back"), new Instruction(instructions[6], " ", " ", "j"), new Instruction(instructions[7]), new Instruction(instructions[8], "Back", "Start practice!", null, 'white', '#66FF99'), new common.FinishInstructions, new PracticeBlock("livingPrac", "Get ready for 12 words!\nRespond quickly without making mistakes", (function() {
       var j, len, ref, results;
       ref = all_stim['living_prac'];
       results = [];
