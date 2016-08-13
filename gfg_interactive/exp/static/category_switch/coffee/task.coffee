@@ -2,7 +2,7 @@
 
 trialLength = 5000
 ITI = 350
-IBI = 2000
+IBI = 3000
 
 red = '#FF6C47'
 
