@@ -13,7 +13,7 @@ come back when you have the time to focus.
 \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\thouse"
 
 "If the symbol is   #{String.fromCharCode(10084)}  decide if the word is \nsomething living or non-living.\n
-\nIf the symbol is   #{String.fromCharCode(10021)}  decide if the word is\nsmaller or bigger than a soccer ball.\n\n",
+\nIf the symbol is   #{String.fromCharCode(10021)}  decide if the word is\nsomething smaller or bigger than \na soccer ball.\n\n",
 
 
 "\nPop quiz!\n\n\nIf you see a  #{String.fromCharCode(10084)} , what do you decide about the word shown?"
