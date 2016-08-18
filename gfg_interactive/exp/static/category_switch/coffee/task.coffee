@@ -135,7 +135,7 @@ class Block
 	start: (@exitBlock) ->
 		# Show ready message
 		hideButtons()
-		multilineText(@message, "center", "center", "35px Arial", 75)
+		multilineText(@message, "center", "center", "33px Arial", 33)
 
 		setTimeout (=> @nextTrial()), IBI
 

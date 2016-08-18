@@ -240,7 +240,7 @@
     Block.prototype.start = function(exitBlock) {
       this.exitBlock = exitBlock;
       hideButtons();
-      multilineText(this.message, "center", "center", "35px Arial", 75);
+      multilineText(this.message, "center", "center", "33px Arial", 33);
       return setTimeout(((function(_this) {
         return function() {
           return _this.nextTrial();
