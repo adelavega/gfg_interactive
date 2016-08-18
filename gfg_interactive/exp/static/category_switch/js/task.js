@@ -573,7 +573,7 @@
   });
 
   blocks = [
-    new Slide1(instructions[0]), new Instruction(instructions[1], "Back"), new Instruction(instructions[2], "Back"), new Instruction(instructions[3], "Bigger or smaller than soccer ball", "Living or non-living", "j"), new Instruction(instructions[4], "Bigger or smaller than soccer ball", "Living or non-living", "f"), new LivingKeyMap(instructions[5], "Back"), new Instruction(instructions[6], " ", " ", "j"), new Instruction(instructions[7]), new Instruction(instructions[8], "Back", "Start practice!", null, 'white', '#66FF99'), new common.FinishInstructions, new PracticeBlock("livingPrac", "Get ready for 12 words!\nRespond as quickly as you can\n\nwithout making mistakes.", (function() {
+    new Slide1(instructions[0]), new Instruction(instructions[1], "Back"), new Instruction(instructions[2], "Back"), new Instruction(instructions[3], "Bigger or smaller than soccer ball", "Living or non-living", "j"), new Instruction(instructions[4], "Bigger or smaller than soccer ball", "Living or non-living", "f"), new LivingKeyMap(instructions[5], "Back"), new Instruction(instructions[6], " ", " ", "j"), new Instruction(instructions[7]), new Instruction(instructions[8], "Back", "Start practice!", null, 'white', '#66FF99'), new common.FinishInstructions, new PracticeBlock("livingPrac", "Get ready for 12 words!\n\nRespond as quickly as you can\nwithout making mistakes.", (function() {
       var j, len, ref, results;
       ref = all_stim['living_prac'];
       results = [];
@@ -591,7 +591,7 @@
         results.push(new FeedbackTrial(n[0], n[1]));
       }
       return results;
-    })()), new SizeKeyMap(instructions[10], null), new Instruction(instructions[11], " ", " ", "f"), new Instruction(instructions[12], "Back", "Start practice!", null, 'white', '#66FF99'), new PracticeBlock("sizePrac", "Get ready for 12 words!\nRespond as quickly as you can\n\nwithout making mistakes.", (function() {
+    })()), new SizeKeyMap(instructions[10], null), new Instruction(instructions[11], " ", " ", "f"), new Instruction(instructions[12], "Back", "Start practice!", null, 'white', '#66FF99'), new PracticeBlock("sizePrac", "Get ready for 12 words!\n\nRespond as quickly as you can\nwithout making mistakes.", (function() {
       var j, len, ref, results;
       ref = all_stim['size_prac'];
       results = [];
@@ -600,7 +600,7 @@
         results.push(new PracFeedbackTrial(n[0], n[1]));
       }
       return results;
-    })()), new Instruction(instructions[13], null, "Start!", null, 'white', '#66FF99'), new Block("sizeReal", "Get ready for 34 words!\nRespond as quickly as you can\n\nwithout making mistakes.", (function() {
+    })()), new Instruction(instructions[13], null, "Start!", null, 'white', '#66FF99'), new Block("sizeReal", "Get ready for 34 words!\n\nRespond as quickly as you can\nwithout making mistakes.", (function() {
       var j, len, ref, results;
       ref = all_stim['size_real'];
       results = [];
@@ -609,7 +609,7 @@
         results.push(new FeedbackTrial(n[0], n[1]));
       }
       return results;
-    })()), new Instruction(instructions[14], null, "Start practice!", null, 'white', '#66FF99'), new PracticeBlock("mixedPrac", "Get ready for 24 words!\nRespond as quickly as you can\n\nwithout making mistakes.", (function() {
+    })()), new Instruction(instructions[14], null, "Start practice!", null, 'white', '#66FF99'), new PracticeBlock("mixedPrac", "Get ready for 24 words!\n\nRespond as quickly as you can\nwithout making mistakes.", (function() {
       var j, len, ref, results;
       ref = all_stim['mixed_prac'];
       results = [];
@@ -618,7 +618,7 @@
         results.push(new PracFeedbackTrial(n[0], n[1]));
       }
       return results;
-    })()), new Instruction(instructions[15], null, "Start!", null, 'white', '#66FF99'), new Block("mixedReal1", "Get ready for 54 words!\nRespond as quickly as you can\n\nwithout making mistakes.", (function() {
+    })()), new Instruction(instructions[15], null, "Start!", null, 'white', '#66FF99'), new Block("mixedReal1", "Get ready for 54 words!\n\nRespond as quickly as you can\nwithout making mistakes.", (function() {
       var j, len, ref, results;
       ref = all_stim['mixed_real_1'];
       results = [];
@@ -627,7 +627,7 @@
         results.push(new FeedbackTrial(n[0], n[1]));
       }
       return results;
-    })()), new Instruction(instructions[16], null, "Start!", null, 'white', '#66FF99'), new Block("mixedReal2", "Get ready for 54 words!\nRespond as quickly as you can\n\nwithout making mistakes.", (function() {
+    })()), new Instruction(instructions[16], null, "Start!", null, 'white', '#66FF99'), new Block("mixedReal2", "Get ready for 54 words!\n\nRespond as quickly as you can\nwithout making mistakes.", (function() {
       var j, len, ref, results;
       ref = all_stim['mixed_real_2'];
       results = [];
