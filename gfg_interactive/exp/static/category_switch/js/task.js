@@ -582,7 +582,7 @@
         results.push(new PracFeedbackTrial(n[0], n[1]));
       }
       return results;
-    })()), new Instruction(instructions[9], null, "Continue"), new Block("livingReal", "Get ready for 34 words!", (function() {
+    })()), new Instruction(instructions[9], null, "Continue"), new Block("livingReal", "Get ready for 34 words!\n\nRespond as quickly as you can\nwithout making mistakes.", (function() {
       var j, len, ref, results;
       ref = all_stim['living_real'];
       results = [];

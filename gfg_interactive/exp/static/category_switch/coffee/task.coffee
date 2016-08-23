@@ -363,7 +363,7 @@ blocks = [
 	new common.FinishInstructions
 	new PracticeBlock "livingPrac", "Get ready for 12 words!\n\nRespond as quickly as you can\nwithout making mistakes.", (new PracFeedbackTrial(n[0], n[1]) for n in all_stim['living_prac'])
 	new Instruction instructions[9], null, "Continue"
-	new Block "livingReal", "Get ready for 34 words!", (new FeedbackTrial(n[0], n[1]) for n in all_stim['living_real'])
+	new Block "livingReal", "Get ready for 34 words!\n\nRespond as quickly as you can\nwithout making mistakes.", (new FeedbackTrial(n[0], n[1]) for n in all_stim['living_real'])
 	new SizeKeyMap instructions[10], null
 	new Instruction instructions[11], " ", " ", "f"
 	new Instruction instructions[12], "Back", "Start practice!", null, 'white', '#66FF99'
