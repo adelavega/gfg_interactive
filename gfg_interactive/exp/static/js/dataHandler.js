@@ -208,17 +208,16 @@ var DataHandler = function(sessionid) {
 		window.onbeforeunload = null;
 		$.ajax("worker_complete", {
 			type: "POST",
-			data: {'sessionid': self.taskdata.id}
-		});
+			data: { 'sessionid': self.taskdata.id }
+		}).done(function(){
+      $.ajax("/gfg/lib/interactive_survey_module_handler.php", {
+			  type: "POST",
+        data: { action: "complete" }
+      });
+    });
 	}
 
 	self.exitTask = function(){
-		$.ajax("/gfg/lib/interactive_survey_module_handler.php", {
-			type: "POST",
-			data: {
-				action: "complete"
-		}
-		});
 		opener.completeInteractiveSurvey();
 		window.location.replace('results?uniqueid=' + uniqueid + '&surveyid=' + surveyid)
 	}
