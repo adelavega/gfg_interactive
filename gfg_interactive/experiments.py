@@ -276,6 +276,7 @@ def results():
         uniqueid = request.args['uniqueid']
         survey_id = request.args['surveyid']
         exp_name = experiment_list[request.args['surveyid']]
+        content_only = request.args.has_key('content_only')
 
     current_app.logger.info("Results: uniqueid is  %s, exp_name is %s and survey id is %s" %(uniqueid, exp_name, survey_id))
     ## Get last session with code 3 from user
@@ -290,6 +291,7 @@ def results():
     if session is None:
     	raise ExperimentError('user_access_denied')
     elif session.exp_name == "keep_track":
+        exp_display_name = "Working Memory"
         target_trials = KeepTrack.query.filter(KeepTrack.session_id==session.session_id, 
             KeepTrack.block.in_(["1", "2", "3", "4", "5", "6"])).all()
 
@@ -303,6 +305,7 @@ def results():
         score = (sum(all_scored) / (len(all_scored)  / 100.0))
 
     elif session.exp_name == "category_switch":
+        exp_display_name = "Category Switch"
         single_trials_avg = db.session.query(func.avg(CategorySwitch.reaction_time).label('average')).filter(
             CategorySwitch.session_id==session.session_id, CategorySwitch.block.in_(["sizeReal", "livingReal"]), 
                 CategorySwitch.accuracy==1).all()
@@ -343,7 +346,9 @@ def results():
 
     return render_template(session.exp_name + "/results.html", 
         score=score,
-        percentile=percentile)
+        percentile=percentile,
+        exp_display_name=exp_display_name,
+        content_only=content_only)
 
 
 # Generic route
