@@ -1,10 +1,15 @@
-{% extends "base.html" %}
+{% if not content_only %}
+  {% extends "base.html" %}
+{% endif %}
+
 {% block content %}
+{% if not content_only %}
 <br><br>
 <div class = "container">
     <div class="well">
+{% endif %}
 
-        <h2>You made it! Thank you!</h2>
+        <h2>Your results for {{exp_display_name}}</h2>
 
         <p>
 
@@ -35,7 +40,9 @@
         Executive functions help us all navigate the complex world we live in. They help us multi-task, plan for the future, stay on task, complete goals, and remebering to remember ("I need to remember to go to the grocery store after work"). As you can imagine, executive functions are related to many health outcomes and mental health outcomes, such as decline in neurodegenerative diseases such as Alzheimer's or Parkinsons.
         </p>
 
+{% if not content_only %}
     </div>
     <button type="button" class="btn btn-primary" onclick="opener.closeInteractiveSurvey(); window.close()">Back to Genes for Good</button>
 </div>
+{% endif %}
 {% endblock %}
