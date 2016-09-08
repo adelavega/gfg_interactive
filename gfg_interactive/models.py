@@ -216,7 +216,7 @@ class QuestionData(db.Model):
     difficulty = db.Column(db.String(32)) 
     distraction = db.Column(db.String(32))      #informative
     #extrahelp = db.Column(db.String)        #added new
-    openended = db.Column(db.Unicode(300))
+    openended = db.Column(db.Text())
 
     def __repr__(self):
         pass
