@@ -165,7 +165,7 @@ class BART(db.Model):
 
     def add_json_data(self, json_trial):
         trial_data = json_trial['trialdata']
-        self.trial_num = trial_data['current_trial']
+        self.trial_num = json_trial['current_trial']
         self.balloon_num = trial_data['balloon_num']
         self.user_action = trial_data['action']
         self.pumps = trial_data['pumps']
