@@ -4,7 +4,7 @@
 /**
  * Created by JMP on 8/4/16.
  */
-
+var dataHandler = DataHandler(sessionid);
 function BART_experiment() {
     var trial = 0;
     var pumps, popped, cashed, popPoint;
