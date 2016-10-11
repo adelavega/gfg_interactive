@@ -96,7 +96,7 @@ function BART_experiment() {
         });
         if (trial > 0)
             dataHandler.saveData();
-        
+
         dataHandler.recordTrialData({
             'balloon_num': trial,
             'action': 3,
