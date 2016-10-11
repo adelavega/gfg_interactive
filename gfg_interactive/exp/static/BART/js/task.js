@@ -11,7 +11,6 @@ function BART_experiment() {
     reset();
     BART_trial();
     console.log(sessionid);
-    var dataHandler = DataHandler(sessionid);
     function BART_trial() {
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
