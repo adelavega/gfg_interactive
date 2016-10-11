@@ -151,8 +151,8 @@ class BART(db.Model):
     bart_id = db.Column(db.Integer, primary_key=True)
     gfg_id = db.Column(db.String(32), nullable=False)
     session_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))
-    trial_num = db.Column(db.Integer)
     balloon_num = db.Column(db.Integer)
+    trial_num = db.Column(db.Integer)
     user_action = db.Column(db.Integer)  # 1 = pump, 0 = pop, 2 = cash, 3 = reset
     pumps = db.Column(db.Integer)
     pop_point = db.Column(db.Integer)
@@ -164,12 +164,12 @@ class BART(db.Model):
                                                  self.session_id, self.trial_num)
 
     def add_json_data(self, json_trial):
-        self.trial_num = json_trial['current_trial']
         trial_data = json_trial['trialdata']
+        self.trial_num = trial_data['currenttrial']
+        self.balloon_num = trial_data['balloon_num']
         self.user_action = trial_data['action']
         self.pumps = trial_data['pumps']
         self.pop_point = trial_data['pop_point']
-        self.balloon_num = trial_data['balloon']
         self.timestamp = convert_timestamp(json_trial['dateTime'])
 
 
