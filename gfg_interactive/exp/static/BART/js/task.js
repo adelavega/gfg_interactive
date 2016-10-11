@@ -10,6 +10,7 @@ function BART_experiment() {
     var pumps, popped, cashed, popPoint;
     reset();
     BART_trial();
+    console.log(sessionid);
     var dataHandler = DataHandler(sessionid);
     function BART_trial() {
         $(document).ready(function(){
@@ -95,13 +96,14 @@ function BART_experiment() {
             left: "-100%",
             bottom: "30%"
         });
-        dataHandler.saveData();
+
         dataHandler.recordTrialData({
             'balloon_num': trial,
             'user_action': 3,
             'pumps': pumps,
             'pop_point': popPoint
         });
+        dataHandler.saveData();
         $('#pumpContainer').animate({backgroundColor: "white"}, {duration: 500, easing:"linear", queue:false});
         $("#pumpText").text("0 tokens").animate({top: "2%"}, {duration: 250, easing: 'linear', queue:false});
         $("#tokenText").animate({left: "150%"},{duration: 200, easing: "linear",queue:false});
