@@ -10,7 +10,7 @@ function BART_experiment() {
     var pumps, popped, cashed, popPoint;
     reset();
     BART_trial();
-
+    var dataHandler = DataHandler(sessionid);
     function BART_trial() {
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
