@@ -60,6 +60,39 @@
             display: flex;
         }
 
+        #cashText{
+            font: 40px Helvetica;
+            color: white;
+            margin:auto;
+        }
+
+        #pumpText {
+            font: 20px arial black;
+            left: 50%;
+            top: 2%;
+            position: absolute;
+            -webkit-transform: translate(-50%, -0%);
+            -moz-transform: translate(-50%, -0%);
+            -ms-transform: translate(-50%, -0%);
+            -o-transform: translate(-50%, -0%);
+            transform: translate(-50%, -0%);
+        }
+
+        #tokenText{
+            top: 55%;
+            left: -50%;
+            font: 40px arial black;
+            color: green;
+            position: absolute;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            white-space: nowrap;
+        }
+
+
     </style>
 {#    <link rel="stylesheet" href="static/{{ experimentname }}/css/task_style.css">#}
 {% endblock %}
