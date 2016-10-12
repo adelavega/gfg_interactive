@@ -1,6 +1,6 @@
 
 
-#container{
+#BARTcontainer{
     position: absolute;
     height:80%;
     width:50%;
@@ -16,7 +16,7 @@
     overflow: hidden;
 }
 
-img{
+.BARTim{
     position: absolute;
     bottom:30%;
     left: 50%;
