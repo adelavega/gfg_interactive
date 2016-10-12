@@ -12,19 +12,35 @@
     <script src="static/{{ experimentname }}/lib/jquery.animate-colors.js"></script>
     <script src="static/{{ experimentname }}/lib/jquery.easing.1.3.js"></script>
     <script src="static/{{ experimentname }}/js/task.js"></script>
-    <link rel="stylesheet" href="static/{{ experimentname }}/css/task_style.css">
+    <style>
+        #GameBox{
+            background-color: beige;
+            border-radius: 15px;
+        }
+    </style>
+{#    <link rel="stylesheet" href="static/{{ experimentname }}/css/task_style.css">#}
 {% endblock %}
 
 {% block content %}
-    <div id="BARTcontainer">
-        <div id="pumpContainer" class="box">
-            <p id="pumpText"> 0 tokens</p>
-            <p id="tokenText">HOLDER</p>
-            <img class='BARTim' id="balloonIm" src="static/{{ experimentname }}/images/PurpleBalloon.png"/>
-            <img class='BARTim' id="poppedIm" src="static/{{ experimentname }}/images/purplePopped.png"/>
-        </div>
-        <div id="cashContainer" class="box">
-            <p id="cashText">CASH IN</p>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3" id="GameBox">
         </div>
     </div>
+
+
+
+
+
+{##}
+{#    <div id="BARTcontainer">#}
+{#        <div id="pumpContainer" class="box">#}
+{#            <p id="pumpText"> 0 tokens</p>#}
+{#            <p id="tokenText">HOLDER</p>#}
+{#            <img class='BARTim' id="balloonIm" src="static/{{ experimentname }}/images/PurpleBalloon.png"/>#}
+{#            <img class='BARTim' id="poppedIm" src="static/{{ experimentname }}/images/purplePopped.png"/>#}
+{#        </div>#}
+{#        <div id="cashContainer" class="box">#}
+{#            <p id="cashText">CASH IN</p>#}
+{#        </div>#}
+{#    </div>#}
 {% endblock %}
