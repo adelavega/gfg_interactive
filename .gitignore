@@ -9,3 +9,4 @@ gfginteractive.egg-info/
 venv/
 config.ini
 gfg_interactive/config.py
+.idea*
