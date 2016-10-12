@@ -40,14 +40,22 @@
             height:0;
             width:0;
         }
-        #cashContainer{
-        background-color: mediumspringgreen;
-        height: 20%;
-        bottom: 0;
-        border-top: 2px dashed black;
-        align-items: center;
-        display: flex;
+
+        #pumpContainer{
+            background-color: white;
+            height: 80%;
+            top: 0;
         }
+
+        #cashContainer{
+            background-color: mediumspringgreen;
+            height: 20%;
+            bottom: 0;
+            border-top: 2px dashed black;
+            align-items: center;
+            display: flex;
+        }
+
     </style>
 {#    <link rel="stylesheet" href="static/{{ experimentname }}/css/task_style.css">#}
 {% endblock %}
@@ -56,8 +64,10 @@
     <div class="row" style="height: 50px;"></div>
     <div class="row">
         <div class="col-md-6 col-md-offset-4 col-lg-6 col-md-offset-4 col-sm-6 col-sm-offset-3" id="GameBox">
-            <img class='BARTim' id="balloonIm" src="static/{{ experimentname }}/images/PurpleBalloon.png"/>
-            <img class='BARTim' id="poppedIm" src="static/{{ experimentname }}/images/purplePopped.png"/>
+            <div id="pumpContainer" class="box">
+                <img class='BARTim' id="balloonIm" src="static/{{ experimentname }}/images/PurpleBalloon.png"/>
+                <img class='BARTim' id="poppedIm" src="static/{{ experimentname }}/images/purplePopped.png"/>
+            </div>
             <div id="cashContainer" class="box">
                 <p id="cashText">CASH IN</p>
             </div>
@@ -76,8 +86,6 @@
 {#            <img class='BARTim' id="balloonIm" src="static/{{ experimentname }}/images/PurpleBalloon.png"/>#}
 {#            <img class='BARTim' id="poppedIm" src="static/{{ experimentname }}/images/purplePopped.png"/>#}
 {#        </div>#}
-        <div id="cashContainer" class="box">
-            <p id="cashText">CASH IN</p>
-        </div>
+
 {#    </div>#}
 {% endblock %}
