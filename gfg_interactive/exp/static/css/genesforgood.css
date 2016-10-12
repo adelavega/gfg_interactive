@@ -11,7 +11,7 @@ header > nav > div.container-fluid > div.row {
 
 header > nav > div.container-fluid > div.row .logo {
     display: block;
-    margin: 12px 10px 12px 0px;
+    margin: 12px 0px 12px 0px;
 }
 
 nav ul.nav-pills {
