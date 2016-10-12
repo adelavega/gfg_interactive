@@ -7,12 +7,11 @@ header > nav > div.container-fluid {
 
 header > nav > div.container-fluid > div.row {
     background: url("../images/logo_bg.png") no-repeat scroll 0 #00294F;
-    height: 50px;
 }
 
 header > nav > div.container-fluid > div.row .logo {
     display: block;
-    margin: 12px 0px 12px 0px;
+    margin: 12px 10px 12px 0px;
 }
 
 nav ul.nav-pills {
