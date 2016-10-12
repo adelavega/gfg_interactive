@@ -4,13 +4,13 @@
 	<title>Genes for Good</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- order of stylesheets from overall static folder
-        1. genesforgood.css
+                1. genesforgood.css
 		2. Bootstrap.min.css
 		3. Bootstrap-theme
-        4. custom.css -->
+	        4. custom.css -->
  	<!-- Stylesheets -->
    	<link rel=stylesheet <link rel=stylesheet href="static/css/genesforgood.css" type="text/css">  
-    <link href="static/css/bootstrap.css" rel="stylesheet" media="screen">
+        <link href="static/css/bootstrap.css" rel="stylesheet" media="screen">
 	<link rel=stylesheet href="static/css/bootstrap-theme.min.css" type="text/css">
 	<link href="static/css/custom.css" rel="stylesheet" media="screen">
  
@@ -28,15 +28,15 @@
 <body>
 	<!-- New addition for banner:hidden-sm hidden-xs -->
 	<header>
-{#            <nav class="nav nav-gfg-header">#}
-	      <div class="container-fluid">
+            <nav class="nav nav-gfg-header">
+	      <div class="container-fluid ">
 	        <div class="row">
 	          <div class="col-md-6 col-sm-12 col-xs-12">
 	            <a class="logo" rel="home" title="Home" ><img alt="Home" src="static/img/header_logo.png"></a>
 	          </div>
 	        </div>	<!-- end of class="row"-->
 	      </div> <!-- end of class="container"-->
-{#	    </nav>#}
+	    </nav>
    	</header>
 
 	{% block content %}{% endblock %}
@@ -44,7 +44,7 @@
 	<!-- New addition footer -->
 	<div class="footer">	
     		<div class="row" >
-      			<div class="col-xs-12" align="center">&COPY; 2016 The Regents of the University of Michigan www.umich.edu. <a href="http://genesforgood.sph.umich.edu" target="_BLANK">Click here to learn more about this study</a></div>
+      			<!-- <div class="col-xs-12" align="center">&COPY; 2016 The Regents of the University of Michigan www.umich.edu. <a href="http://genesforgood.sph.umich.edu" target="_BLANK">Click here to learn more about this study</a></div> -->
     		</div>
  	</div> <!-- end of footer --> 
 </body>
