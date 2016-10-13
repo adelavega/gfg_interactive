@@ -148,11 +148,11 @@ class KeepTrack(db.Model):
 
 
 class BART(db.Model):
-    bart_id = db.Column(db.Integer, primary_key=True)
+    action_id = db.Column(db.Integer, primary_key=True)
     gfg_id = db.Column(db.String(32), nullable=False)
     session_id = db.Column(db.Integer, db.ForeignKey('session.session_id'))
-    balloon_num = db.Column(db.Integer)
     trial_num = db.Column(db.Integer)
+    trial_action_num = db.Column(db.Integer)
     user_action = db.Column(db.Integer)  # 1 = pump, 0 = pop, 2 = cash, 3 = reset
     pumps = db.Column(db.Integer)
     pop_point = db.Column(db.Integer)
@@ -165,8 +165,8 @@ class BART(db.Model):
 
     def add_json_data(self, json_trial):
         trial_data = json_trial['trialdata']
-        self.trial_num = json_trial['current_trial']
-        self.balloon_num = trial_data['balloon_num']
+        self.trial_action_num = json_trial['current_trial']
+        self.trial_num = trial_data['balloon_num']
         self.user_action = trial_data['action']
         self.pumps = trial_data['pumps']
         self.pop_point = trial_data['pop_point']
