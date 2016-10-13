@@ -1,14 +1,11 @@
 /**
- * Created by JMP on 8/11/16.
+ * Created by JMP on 10/13/16.
  */
-/**
- * Created by JMP on 8/4/16.
- */
-var dataHandler = DataHandler(sessionid);
-function BART_experiment() {
-    var trial = 0;
+
+(function() {
     var pumps, popped, cashed, popPoint;
-    while (trial < 5) {
+    var trial = 0;
+    while (trial < 41){
         reset();
         BART_trial();
     }
@@ -70,7 +67,7 @@ function BART_experiment() {
                     $('#pumpText').animate({top: "-50%"}, {duration: 250, easing: 'linear', queue:false});
                     $("#balloonIm").animate({left: "150%"},{duration: 200, easing: "linear",queue:false});
                     $("#tokenText").delay(100).animate({left: "50%"},750, "easeOutElastic").text(pumps + ' tokens');
-                    $("#cashText").text("Reset");
+                    $("#cashText").text("Next Trial");
                     $("#cashContainer").animate({backgroundColor: "#BAB5B0"},{duration: 200, easing: "linear", queue:false});
                     cashed = true;
                     dataHandler.recordTrialData({
@@ -115,5 +112,7 @@ function BART_experiment() {
         $("#pumpContainer").css("pointerEvents","auto");
         console.log(trial);
     }
-}
-BART_experiment();
+
+
+
+}).call(this);
