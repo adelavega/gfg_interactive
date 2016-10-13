@@ -5,10 +5,15 @@
 (function() {
     var pumps, popped, cashed, popPoint;
     var trial = 0;
-    while (trial < 41){
+
+
+    function run_BART() {
         reset();
-        BART_trial();
+        while (trial < 30){
+            BART_trial();
+        }
     }
+
     function BART_trial() {
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
@@ -59,7 +64,7 @@
 
             $("#cashContainer").click(function() {
                 if(popped || cashed){
-                    return true;
+                    reset();
                 }
                 else if(popped == false && cashed == false){
                     $("#tokenText").css({left: "-150%", color: "green"});

@@ -8,10 +8,15 @@ var dataHandler = DataHandler(sessionid);
 function BART_experiment() {
     var trial = 0;
     var pumps, popped, cashed, popPoint;
+
+
+    reset();
     while (trial < 5) {
-        reset();
         BART_trial();
     }
+
+
+
     function BART_trial() {
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
@@ -62,7 +67,7 @@ function BART_experiment() {
 
             $("#cashContainer").click(function() {
                 if(popped || cashed){
-                    return true;
+                    reset();
                 }
                 else if(popped == false && cashed == false){
                     $("#tokenText").css({left: "-150%", color: "green"});
