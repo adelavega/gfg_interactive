@@ -50,6 +50,18 @@
             margin:auto;
         }
 
+        #pumpText {
+            font: 20px arial black;
+            left: 50%;
+            top: 2%;
+            position: absolute;
+            -webkit-transform: translate(-50%, -0%);
+            -moz-transform: translate(-50%, -0%);
+            -ms-transform: translate(-50%, -0%);
+            -o-transform: translate(-50%, -0%);
+            transform: translate(-50%, -0%);
+        }
+
         #tokenText{
             top: 60%;
             left: -50%;
