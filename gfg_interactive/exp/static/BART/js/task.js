@@ -13,9 +13,7 @@ var pumps, popped, cashed, popPoint;
 
     function run_BART() {
         reset();
-        while (trial < 30){
-            BART_trial();
-        }
+        BART_trial();
     }
 
     function BART_trial() {
