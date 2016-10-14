@@ -118,6 +118,8 @@
         console.log(trial);
     }
 
-
+    this.BART = {
+        run: run_BART()
+    };
 
 }).call(this);
