@@ -2,12 +2,7 @@
     var run_BART, BART_trial, pumps, popped, cashed, popPoint, trial;
     trial = 0;
     var dataHandler = DataHandler(sessionid);
-    run_BART = (function(){
-        reset();
-        while (trial <= 30){
-            BART_trial();
-        }
-    })();
+
 
     BART_trial = (function(){
         $(document).ready(function(){
