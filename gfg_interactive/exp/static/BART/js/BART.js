@@ -81,7 +81,7 @@
         });
     })();
 
-    reset = (function(){
+    reset = function(){
         trial++;
         pumps = 0;
         popped = false;
@@ -111,7 +111,7 @@
         $("#cashText").text("CASH IN");
         $("#pumpContainer").css("pointerEvents","auto");
         console.log(trial);
-    })();
+    };
 
     this.BART = {
         run: run_BART
