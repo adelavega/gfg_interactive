@@ -1,5 +1,5 @@
 (function() {
-    var run_BART, BART_trial, reset, pumps, popped, cashed, popPoint, trial;
+    var run_BART, BART_trial, pumps, popped, cashed, popPoint, trial;
     trial = 0;
     var dataHandler = DataHandler(sessionid);
     run_BART = (function(){
@@ -81,7 +81,7 @@
         });
     })();
 
-    reset = function(){
+    function reset(){
         trial++;
         pumps = 0;
         popped = false;
