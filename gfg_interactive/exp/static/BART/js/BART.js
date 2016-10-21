@@ -1,20 +1,15 @@
-/**
- * Created by JMP on 10/13/16.
- */
-
 (function() {
-    var pumps, popped, cashed, popPoint;
-    var trial = 0;
-
-
-    function run_BART() {
+    var run_BART, BART_trial, reset, pumps, popped, cashed, popPoint, trial;
+    trial = 0;
+    var dataHandler = DataHandler(sessionid);
+    run_BART = (function(){
         reset();
-        while (trial < 30){
+        while (trial <= 30){
             BART_trial();
         }
-    }
+    })();
 
-    function BART_trial() {
+    BART_trial = (function(){
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
                     if(popped == false && cashed == false){
@@ -84,9 +79,9 @@
                 }
             });
         });
-    }
+    })();
 
-    function reset(){
+    reset = (function(){
         trial++;
         pumps = 0;
         popped = false;
@@ -116,10 +111,12 @@
         $("#cashText").text("CASH IN");
         $("#pumpContainer").css("pointerEvents","auto");
         console.log(trial);
-    }
+    })();
 
     this.BART = {
-        run: run_BART()
+        run: run_BART
     };
+
+
 
 }).call(this);
