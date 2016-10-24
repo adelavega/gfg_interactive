@@ -1,10 +1,14 @@
 (function() {
-    var run_BART, BART_trial, pumps, popped, cashed, popPoint, trial;
+    BART_trial, pumps, popped, cashed, popPoint, trial;
     trial = 0;
     var dataHandler = DataHandler(sessionid);
 
 
-    BART_trial = (function(){
+    function run_BART() {
+        BART_trial();
+    };
+
+    function BART_trial(){
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
                     if(popped == false && cashed == false){
@@ -74,7 +78,7 @@
                 }
             });
         });
-    })();
+    };
 
     function reset(){
         trial++;
@@ -109,7 +113,7 @@
     };
 
     this.BART = {
-        run: BART_trial
+        run: run_BART(),
     };
 
 
