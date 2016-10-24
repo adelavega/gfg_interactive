@@ -21,7 +21,7 @@
         ];
         $('#InstInfo').html(InstructionLIst[InstCount]);
         $('#rightButton').click(function(){
-            InstCount++;
+            InstCount ++;
             $('#InstInfo').html(InstructionLIst[InstCount]);
             if (InstCount >= 1){
                 $('#leftButton').show();
@@ -30,7 +30,7 @@
             }
         });
         $('#leftButton').click(function(){
-            InstCount--;
+            InstCount --;
             $('#InstInfo').html(InstructionLIst[InstCount]);
             if (InstCount >= 1){
                 $('#leftButton').show();
