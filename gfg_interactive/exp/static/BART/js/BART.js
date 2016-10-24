@@ -157,7 +157,7 @@
 
     this.BART = {
         run: BART_run(),
-        inst: StartInstructions(),
+        Instruction: StartInstructions(),
         rest: Instructions()
     };
 
