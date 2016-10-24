@@ -9,7 +9,7 @@
         $('#InstInfo').html(warning);
         $('#leftButton').hide();
         $("#rightButton").click(function(){
-            return True;
+            return true;
         });
     }
 
@@ -159,7 +159,7 @@
 
     this.BART = {
         run: BART_run(),
-        instruction: StartInstructions(),
+        inst: StartInstructions(),
         rest: Instructions()
     };
 
