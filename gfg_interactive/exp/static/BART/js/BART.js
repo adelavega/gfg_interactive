@@ -6,6 +6,7 @@
 
 
     function BART_run(){
+        reset();
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
                     if(popped == false && cashed == false){
