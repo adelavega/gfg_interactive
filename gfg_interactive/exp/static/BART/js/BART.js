@@ -10,7 +10,7 @@
         $('#leftButton').hide();
 
     }
-    
+
     function Instructions(){
         var InstCount = 0;
         var InstructionLIst = [
