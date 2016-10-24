@@ -8,11 +8,8 @@
         $('#GameBox').hide();
         $('#InstInfo').html(warning);
         $('#leftButton').hide();
-        $("#rightButton").click(function(){
-            return true;
-        });
-    }
 
+        
     function Instructions(){
         var InstCount = 0;
         var InstructionLIst = [
