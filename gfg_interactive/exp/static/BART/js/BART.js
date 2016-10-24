@@ -9,6 +9,9 @@
         $('#GameBox').hide();
         $('#InstInfo').html(warning);
         $('#leftButton').hide();
+        $('#rightButton').click(function(){
+            return true;
+        })
     });
     }
 
