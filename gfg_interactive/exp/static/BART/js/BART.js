@@ -8,6 +8,7 @@
         $('#GameBox').hide();
         $('#InstInfo').html(warning);
         $('#leftButton').hide();
+
     }
 
     function instRun(){
