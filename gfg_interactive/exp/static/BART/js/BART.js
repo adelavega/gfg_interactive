@@ -3,7 +3,7 @@
     trial = 0;
     var dataHandler = DataHandler(sessionid);
 
-    function StartInstructions(){
+    function beginTask(){
         var warning = "<span style='color:red; font-size:60px'> " + (String.fromCharCode(9888)) + " </span> This task requires 10-15 minutes of your<br><tab>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; undivided attention <br><br> If you don't have time right now, please come back when you have can focus. <br><br> Otherwise, click continue to begin!";
         $('#GameBox').hide();
         $('#InstInfo').html(warning);
@@ -156,7 +156,7 @@
 
     this.BART = {
         run: BART_run(),
-        instructions: StartInstructions(),
+        instructions: beginTask(),
         runInst: instRun()
     };
 
