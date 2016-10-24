@@ -3,7 +3,9 @@
     trial = 0;
     var dataHandler = DataHandler(sessionid);
 
+    function Instructions(){
 
+    }
 
     function BART_run(){
         reset();
