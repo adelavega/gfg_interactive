@@ -5,9 +5,6 @@
 
 
     function run_BART() {
-        reset();
-        BART_trial();
-        reset();
         BART_trial();
     };
 
