@@ -15,7 +15,8 @@
         cashed = false;
         popPoint = Math.floor((Math.random() * 64) + 1);
         $(document).ready(function(){
-            $('#GameBox').show();
+            $('#GameBox').hide();
+            // $('#GameBox').show();
             $("#pumpContainer").click(function(){
                     if(popped == false && cashed == false){
                         $("#balloonIm").animate({height: '+=3.25px', width: '+=3px'}, 50);
