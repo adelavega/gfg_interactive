@@ -11,7 +11,7 @@
         reset();
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
-                    $('#GameBox').show();
+                    $('#GameBox').show();  
                     if(popped == false && cashed == false){
                         $("#balloonIm").animate({height: '+=3.25px', width: '+=3px'}, 50);
                         pumps += 1;
