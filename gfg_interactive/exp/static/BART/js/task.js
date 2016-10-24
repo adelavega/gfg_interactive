@@ -14,7 +14,7 @@
         return currSession.start();
     });
 
-    blocks = [new BART.run(2)];
+    blocks = [new BART.run(3)];
 
     currSession = new common.Session(blocks);
 
