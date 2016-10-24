@@ -3,13 +3,15 @@
     trial = 0;
     var dataHandler = DataHandler(sessionid);
 
+    function Instruction(message,leftKey,rightKey){
+        this.message = message;
+        this.leftKey = leftKey != null ? leftKey : null;
+        this.rightKey = rightKey != null ? rightKey : "Continue";
+        this.corrResp = corrResp != null ? corrResp : null;
+    }
 
-    function run_BART() {
+    function BART_run(){
         reset();
-        BART_trial();
-    };
-
-    function BART_trial(){
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
                     if(popped == false && cashed == false){
@@ -116,7 +118,7 @@
     };
 
     this.BART = {
-        run: run_BART(),
+        run: BART_run(),
     };
 
 
