@@ -1,5 +1,5 @@
 (function() {
-    BART_trial, pumps, popped, cashed, popPoint, trial;
+    var pumps, popped, cashed, popPoint, trial;
     trial = 0;
     var dataHandler = DataHandler(sessionid);
 
