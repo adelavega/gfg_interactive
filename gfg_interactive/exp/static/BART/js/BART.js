@@ -19,7 +19,7 @@
             "It is your choice to determine how much to pump up the balloon, but be aware that at some point the balloon will explode <br><br>The explosion point varies across balloons, ranging from the first pump to enough pumps to make the balloon fill almost the entire containing box.<br><br> if the balloon explodes, you will lose all of your tokens and move on to the next balloon.",
             "At the end of the task you will view a report of your performance in the task.<br><br> To practice with a few balloons, press continue."
         ];
-        $(document).ready(function{
+        $(document).ready(function(){
             $('#InstInfo').html(InstructionLIst[InstCount]);
         $('#rightButton').click(function(){
             InstCount ++;
