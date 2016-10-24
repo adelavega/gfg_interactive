@@ -156,7 +156,7 @@
 
     this.BART = {
         run: BART_run(),
-        instructions: beginTask(),
+        inta: beginTask(),
         runInst: instRun()
     };
 
