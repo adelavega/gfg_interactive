@@ -8,6 +8,7 @@
     }
 
     function BART_run(){
+        $('#inst').show();
         reset();
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
