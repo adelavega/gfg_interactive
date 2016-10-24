@@ -59,7 +59,9 @@
 
             $("#cashContainer").click(function() {
                 if(popped || cashed){
-                    return true;
+                    if (trial < 5){
+                        reset();
+                    }
                 }
                 else if(popped == false && cashed == false){
                     $("#tokenText").css({left: "-150%", color: "green"});
