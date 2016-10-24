@@ -3,15 +3,9 @@
     trial = 0;
     var dataHandler = DataHandler(sessionid);
 
-    function Instruction(message,leftKey,rightKey){
-        this.message = message;
-        this.leftKey = leftKey != null ? leftKey : null;
-        this.rightKey = rightKey != null ? rightKey : "Continue";
-        this.corrResp = corrResp != null ? corrResp : null;
-    }
+
 
     function BART_run(){
-        reset();
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
                     if(popped == false && cashed == false){
@@ -28,6 +22,7 @@
                             popped = true;
                             pumps = 0;
                             $("#pumpContainer").css("pointerEvents","none");
+
                             dataHandler.recordTrialData({
                                 'balloon_num': trial,
                                 'action': 0,
@@ -119,7 +114,6 @@
 
     this.BART = {
         run: BART_run(),
-        Instruction: Instruction()
     };
 
 
