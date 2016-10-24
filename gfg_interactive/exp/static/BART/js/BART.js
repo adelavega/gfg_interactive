@@ -8,10 +8,10 @@
     }
 
     function BART_run(){
+        $('#GameBox').hide();
         reset();
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
-                    $('#GameBox').show();  
                     if(popped == false && cashed == false){
                         $("#balloonIm").animate({height: '+=3.25px', width: '+=3px'}, 50);
                         pumps += 1;
