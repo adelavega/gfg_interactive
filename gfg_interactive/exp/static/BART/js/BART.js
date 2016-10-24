@@ -4,14 +4,18 @@
     var dataHandler = DataHandler(sessionid);
 
     function Instructions(){
+        $('#GameBox').hide();
 
     }
 
     function BART_run(){
-        $('#GameBox').hide();
-        reset();
+        trial ++;
+        pumps = 0;
+        popped = false;
+        cashed = false;
+        popPoint = Math.floor((Math.random() * 64) + 1);
         $(document).ready(function(){
-            $('#GameBox').show();  
+            $('#GameBox').show();
             $("#pumpContainer").click(function(){
                     if(popped == false && cashed == false){
                         $("#balloonIm").animate({height: '+=3.25px', width: '+=3px'}, 50);
