@@ -4,12 +4,12 @@
     var dataHandler = DataHandler(sessionid);
 
 
-    function run_BART() {
+    function run_BART(maxNum) {
         reset();
-        BART_trial();
+        BART_trial(maxNum);
     };
 
-    function BART_trial(){
+    function BART_trial(maxNum){
         $(document).ready(function(){
             $("#pumpContainer").click(function(){
                     if(popped == false && cashed == false){
@@ -59,7 +59,7 @@
 
             $("#cashContainer").click(function() {
                 if(popped || cashed){
-                    if (trial < 5){
+                    if (trial < maxNum){
                         reset();
                     }
                 }
