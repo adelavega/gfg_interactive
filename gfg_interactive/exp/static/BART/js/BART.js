@@ -14,7 +14,7 @@
         $('#GameBox').hide();
         $('#InstInfo').html(warning);
         $('#rightButton').click(function(){
-           $('#instinfo').html(InstructionLIst[0]);
+           $('#instinfo').html(InstructionLIst[1]);
         });
     }
 
