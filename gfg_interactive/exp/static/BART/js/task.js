@@ -9,7 +9,7 @@
     var blocks, currSession;
     jQuery(function() {
         $("body").on('click', 'button', function(event) {
-            console.log(event);
+            console.log(event.target);
             return currSession.buttonClick(event.target);
         });
         return currSession.start();
