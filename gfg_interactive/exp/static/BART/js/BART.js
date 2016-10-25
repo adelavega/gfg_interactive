@@ -157,7 +157,7 @@
 
     this.BART = {
         runTask: BART_run,
-        start: beginTask
+        begin: beginTask
     };
 
 
