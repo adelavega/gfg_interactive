@@ -1,5 +1,5 @@
 (function() {
-    var pumps, popped, cashed, popPoint, trial;
+    var pumps, popped, cashed, popPoint, trial, beginTask
     trial = 0;
     var dataHandler = DataHandler(sessionid);
     var InstructionLIst = [
@@ -9,14 +9,15 @@
             "At the end of the task you will view a report of your performance in the task.<br><br> To practice with a few balloons, press continue."
         ];
 
-    function beginTask() {
+     beginTask = function() {
         var warning = "<span style='color:red; font-size:60px'> " + (String.fromCharCode(9888)) + " </span> This task requires 10-15 minutes of your undivided attention. <br><br> If you don't have time right now, please come back when you have can focus. <br><br> Otherwise, click continue to begin!";
         $('#GameBox').hide();
         $('#InstInfo').html(warning);
         $('#rightButton').click(function(){
            $('#instinfo').html(InstructionLIst[0]);
         });
-    }
+    };
+
 
     function instRun(){
         var InstCount = 0;
