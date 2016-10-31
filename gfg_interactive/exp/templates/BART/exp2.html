@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block headscripts %}
+    <script type="text/javascript">
+        // These fields are coming from the "/task" start_exp() in experiments.py
+        var uniqueid = "{{ uniqueid }}";
+        var sessionid = "{{ sessionid }}";
+        var experimentname = "{{ experimentname }}";
+        var surveyid = "{{ surveyid }}";
+        var debug = "{{ debug }}";
+
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row" style="height: 30px;"></div>
+
+    <!-- Instructions block -->
+    <p id="inst" class="instructions lead tasktext"></p>
+	<p id="topText" class="topMessage tasktext"></p>
+	<p id="bottomText" class="bottomMessage tasktext"></p>
+
+
+    <!-- Buttons for Navigating instructions -->
+    <button id="leftButton" class="btn btn-default btn-lg btn-responsive" style="position:relative;z-index:2; float: left; top:80%;margin-left:30%;font:21px Arial; opacity:1"> <span class="glyphicon glyphicon-step-backward" style="vertical-align: -2px"></span><span id="leftText">Back</span></button>
+	<button id ="rightButton" class="btn btn-success btn-lg btn-responsive" style="position:relative;z-index:2; float: right;top:65%;margin-right:24%;font:21px Arial; opacity:1"><span id="rightText">Continue</span><span class="glyphicon glyphicon-step-forward" style="vertical-align: -2px"></span> </button>
+{% endblock %}
