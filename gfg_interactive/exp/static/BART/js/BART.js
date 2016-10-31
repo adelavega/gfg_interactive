@@ -6,8 +6,6 @@ function BART(){
     this.popPoint = 0;
 }
 
-BART.prototype.instruct = Instructions();
-
 hideButtons = function() {
     $("#leftButton").hide();
     return $("#rightButton").hide();
@@ -23,7 +21,7 @@ hideButtons = function() {
     }
   };
 
-function Instructions(message,leftKey,rightKey) {
+function Instruct(message,leftKey,rightKey) {
     this.message = message;
     this.leftKey = leftKey != null ? leftKey : null;
     this.rightKey = rightKey != null ? rightKey : "Continue";
