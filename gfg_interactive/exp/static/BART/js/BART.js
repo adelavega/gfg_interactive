@@ -6,7 +6,7 @@ function BART(){
     this.popPoint = 0;
 }
 
-BART.prototype.instruct = Instructions;
+BART.prototype.instruct = Instructions();
 
 hideButtons = function() {
     $("#leftButton").hide();
