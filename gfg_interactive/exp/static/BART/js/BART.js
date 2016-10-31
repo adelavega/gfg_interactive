@@ -27,7 +27,7 @@ function Instruct(message,leftKey,rightKey) {
     this.rightKey = rightKey != null ? rightKey : "Continue";
 }
 
-Instructions.prototype.start = function(exitTrial) {
+Instruct.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
     $("#inst").html(this.message);
     $("#inst").show();
