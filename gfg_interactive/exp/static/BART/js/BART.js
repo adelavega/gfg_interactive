@@ -127,7 +127,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function pop() {
-        var popsize = pumps;
+        var popsize = pumps * 2;
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
            if (new Date().getTime() - startTime > 120){
