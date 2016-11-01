@@ -83,7 +83,6 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         popped = false;
         //maxVal = Math.floor((Math.random() * 64) + 1);
         maxVal = 30;
-        pauseTime = (Math.random() * 5) + 1;
         ctx.fillStyle = "#60c16d";
         ctx.fillRect(0,400,500,100);
         ctx.font = "30px Arial";
@@ -115,13 +114,11 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
     }
     function pump() {
-        $('#pumpCanvas').attr("disabled", 'disabled');
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
 
-            if(new Date().getTime() - startTime > 150){
+            if(new Date().getTime() - startTime > 30){
                 clearInterval(this.interval);
-                $('#pumpCanvas').removeAttr("disabled");
             }
             pumpGrow();
 
