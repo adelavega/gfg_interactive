@@ -100,7 +100,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.clearRect(0,0,500,500);
         bWidth = bWidth + 7.5;
         bHeight = bHeight + 7.5;
-        vertadd = vertadd + 3;
+        vertadd = vertadd + bHeight/5;
         console.log(bWidth,bHeight);
         ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, ((canvas.height/1.5) - bHeight/2) - vertadd , bWidth, bHeight);
 
