@@ -111,7 +111,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 475);
-        
+        console.log(timesrun);
         if (timesrun === 60){
             clearInterval(interval);
         }
