@@ -72,7 +72,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
     function reset() {
         this.trial ++; 
-        pumps = 0;
+        pumps = 5;
         cashed = false;
         popped = false;
         maxVal = Math.floor((Math.random() * 64) + 1);
