@@ -151,6 +151,9 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
            ctx.clearRect(0,0,500,500);
            var Im = document.getElementById("PoppedIm");
             opacity -= 0.5;
+            if (opacity < 0){
+                opacity = 0;
+            }
             ctx.globalAlpha = opacity;
             vertsub += 20;
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
@@ -164,7 +167,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             ctx.font = "30px Arial";
             ctx.fillStyle = 'red';
             ctx.textAlign = 'center';
-            opacity += 0.2;
+            opacity += 0.5;
             ctx.globalAlpha = opacity;
             ctx.fillText("Popped!",canvas.width/2, canvas.height/2);
         },20);
