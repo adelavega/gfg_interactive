@@ -9,17 +9,17 @@ function BART(){
 hideButtons = function() {
     $("#leftButton").hide();
     return $("#rightButton").hide();
-  };
+};
 
-  keyText = function(text, key) {
+keyText = function(text, key) {
     if (key === 'left') {
-      $("#leftText").html(text);
-      return $("#leftButton").show();
+        $("#leftText").html(text);
+        return $("#leftButton").show();
     } else {
-      $("#rightText").html(text);
-      return $("#rightButton").show();
+        $("#rightText").html(text);
+        return $("#rightButton").show();
     }
-  };
+};
 
 function Instruct(message,leftKey,rightKey) {
     this.message = message;
@@ -38,3 +38,14 @@ Instruct.prototype.start = function(exitTrial) {
     return keyText(this.rightKey,'right');
 };
 
+Instruct.prototype.buttonClick = function(button) {
+    var acc;
+    if (button.id == 'leftText' || button.id == 'leftButton') {
+        acc = 'BACK';
+        this.exitTrial(false);
+    }
+    else if (button.id === 'rightText' || button.id === 'rightButton') {
+        acc = 'FORWARD';
+        this.exitTrial();
+    }
+};
