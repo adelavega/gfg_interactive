@@ -111,13 +111,13 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 475);
-        console.log(timesrun);
+
 
     }
     function pump() {
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
-            timesrun += 1;
+            console.log(new Date().getTime() - starTime);
             if(new Date().getTime() - startTime > 30){
             clearInterval(this.interval);
             }
