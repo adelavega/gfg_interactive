@@ -57,7 +57,7 @@ PracticeBlock.prototype.start = function(exitTrial) {
     var canvas = document.getElementById("taskcanvas");
     var ctx = canvas.getContext('2d');
     ctx.fillStyle = "#FF0000";
-    ctx.fillRect(200,200,150,75);
+    ctx.fillRect(0,350,500,150);
 
 };
 
