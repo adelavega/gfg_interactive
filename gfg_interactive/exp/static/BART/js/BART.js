@@ -60,9 +60,9 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     var pumps, cashed, popped, maxVal, pauseTime;
     var canvas = document.getElementById("taskcanvas");
     var ctx = canvas.getContext('2d');
-    this.reset();
+    reset();
 
-    this.reset = function() {
+    function reset() {
         this.trial ++; 
         pumps = 0;
         cashed = false;
