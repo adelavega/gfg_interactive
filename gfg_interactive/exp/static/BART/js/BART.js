@@ -99,8 +99,8 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     function pumpGrow() {
 
         ctx.clearRect(0,0,500,500);
-        bWidth = bWidth + 1;
-        bHeight = bHeight + 1;
+        bWidth = bWidth + 0.5;
+        bHeight = bHeight + 0.5;
         vertadd = vertadd + 0.2;
         console.log(bWidth,bHeight);
         ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, ((canvas.height/1.5) - bHeight/2) - vertadd , bWidth, bHeight);
