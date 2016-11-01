@@ -66,8 +66,8 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
     function drawBalloon() {
         var bWidth, bHeight;
-        bWidth = (pumps * 10) + 1;
-        bHeight = (pumps * 12) + 1;
+        bWidth = (pumps * 10) + 10;
+        bHeight = (pumps * 12) + 10;
         ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/2) - bHeight/2, bWidth, bHeight);
     }
     function reset() {
@@ -84,7 +84,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 475);
         drawBalloon();
-        
+
 
     }
 
