@@ -51,7 +51,7 @@ function PracticeBlock() {
 
 PracticeBlock.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
-    $('#inst').hide();a
+    $('#inst').hide();
     $('#taskContainer').show();
     hideButtons();
     var canvas = document.getElementById("taskcanvas");
