@@ -57,12 +57,11 @@ PracticeBlock.prototype.start = function(exitTrial) {
 };
 
 PracticeBlock.prototype.Trial = function(exiTrial) {
-    var timesrun, elements, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight,vertadd;
+    var  pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight,vertadd;
 
     balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
-    elements = [];
 
     reset();
     $("#pumpCanvas").on('click', function() {
@@ -116,13 +115,13 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
     }
     function pump() {
-        $('#pumpCanvas').attr("disabled",true);
+        $('#pumpCanvas').prop("disabled", true);
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
 
             if(new Date().getTime() - startTime > 150){
                 clearInterval(this.interval);
-                $('#pumpCanvas').attr("disabled",false);
+                $('#pumpCanvas').prop("disabled",false);
             }
             pumpGrow();
 
