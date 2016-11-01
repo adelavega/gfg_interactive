@@ -1,11 +1,3 @@
-function BART(){
-    this.trial = 0;
-    this.pumps = 0;
-    this.cashed = false;
-    this.popped = false;
-    this.popPoint = 0;
-}
-
 hideButtons = function() {
     $("#leftButton").hide();
     return $("#rightButton").hide();
@@ -62,6 +54,25 @@ PracticeBlock.prototype.start = function(exitTrial) {
     $('#inst').hide();
     $('#taskContainer').show();
     hideButtons();
+
+};
+
+PracticeBlock.prototype.Trial = function(exiTrial) {
+    var pumps, cashed, popped, maxVal, pauseTime, trial;
+    trial = 0;
+    pumps = 0;
+    cashed = false;
+    popped = false;
+
+    this.reset = function() {
+        trial ++;
+        maxVal = Math.floor((Math.random() * 64) + 1);
+        pauseTime = (Math.random() * 5) + 1;
+
+
+    }
+
+
 };
 
 BARTTask = {
