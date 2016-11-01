@@ -50,7 +50,10 @@ function PracticeBlock() {
 
 PracticeBlock.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
+    this.canvas = document.getElementById("taskcanvas");
+    this.ctx = canvas.getContext('2d');
     $('#inst').hide();
+
     $('#taskContainer').show();
     hideButtons();
     this.Trial();
@@ -69,8 +72,10 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         popped = false;
         maxVal = Math.floor((Math.random() * 64) + 1);
         pauseTime = (Math.random() * 5) + 1;
-        ctx.fillStyle = "#60c16d";
-        ctx.fillRect(0,400,500,100);
+
+
+        this.ctx.fillStyle = "#60c16d";
+        this.ctx.fillRect(0,400,500,100);
     }
 
 
