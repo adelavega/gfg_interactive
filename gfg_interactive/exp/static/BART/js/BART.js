@@ -45,8 +45,6 @@ Instruct.prototype.buttonClick = function(button) {
 
 
 function PracticeBlock() {
-    this.canvas = document.getElementById("taskcanvas");
-    this.ctx = this.canvas.getContext('2d');
     this.trial = 0;
 };
 
@@ -60,6 +58,8 @@ PracticeBlock.prototype.start = function(exitTrial) {
 
 PracticeBlock.prototype.Trial = function(exiTrial) {
     var pumps, cashed, popped, maxVal, pauseTime;
+    var canvas = document.getElementById("taskcanvas");
+    var ctx = canvas.getContext('2d');
     this.reset();
 
     this.reset = function() {
@@ -69,8 +69,8 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         popped = false;
         maxVal = Math.floor((Math.random() * 64) + 1);
         pauseTime = (Math.random() * 5) + 1;
-        this.ctx.fillStyle = "#60c16d";
-        this.ctx.fillRect(0,400,500,100);
+        ctx.fillStyle = "#60c16d";
+        ctx.fillRect(0,400,500,100);
     }
 
 
