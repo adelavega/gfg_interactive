@@ -67,13 +67,15 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     reset();
     $("#pumpCanvas").on('click', function() {
         pumps ++;
-        growBalloon();
+        if (pumps < maxVal){
+            pump();
+        }else{
+            //pop
+        }
     });
     $("#cashCanvas").on('click', function() {
         console.log('cash');
     });
-
-
 
     function reset() {
         this.trial ++; 
@@ -94,23 +96,29 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/1.5) - bHeight/2, bWidth, bHeight);
     }
 
-
-
-    function growBalloon() {
+    function pump() {
         ctx.clearRect(0,0,500,500);
-        bWidth = bWidth + 7.5;
-        bHeight = bHeight + 7.5;
-        vertadd = vertadd + 3;
-        console.log(bWidth,bHeight);
-        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, ((canvas.height/1.5) - bHeight/2) - vertadd , bWidth, bHeight);
+        for (i = 0; i < 5; i++){
+            bWidth = bWidth + 7.5;
+            bHeight = bHeight + 7.5;
+            vertadd = vertadd + 3;
+            console.log(bWidth,bHeight);
+            ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, ((canvas.height/1.5) - bHeight/2) - vertadd , bWidth, bHeight);
 
-        ctx.fillStyle = "#60c16d";
-        ctx.fillRect(0,400,500,100);
-        ctx.font = "30px Arial";
-        ctx.fillStyle = 'white';
-        ctx.textAlign = 'center';
-        ctx.fillText("Cash In",canvas.width/2, 475);
+            ctx.fillStyle = "#60c16d";
+            ctx.fillRect(0,400,500,100);
+            ctx.font = "30px Arial";
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.fillText("Cash In",canvas.width/2, 475);
+        }
     }
+
+    function pop() {
+        ctx.clearRect(0,0,500,500);
+
+    }
+
 
 
 };
