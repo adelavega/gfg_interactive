@@ -60,8 +60,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     var pumps, cashed, popped, maxVal, pauseTime,canvas, ctx;
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
-    var img = $('<img id = "balloonIm">');
-    img.attr('src',"static/BART/images/PurpleBalloon.png");
+    var img = $('<img id = "balloonIm" src ="static/BART/images/PurpleBalloon.png" >');
     img.appendTo(document);
     var balloon = $("#balloonIm");
     reset();
