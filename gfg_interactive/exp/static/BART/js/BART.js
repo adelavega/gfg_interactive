@@ -45,8 +45,9 @@ Instruct.prototype.buttonClick = function(button) {
 
 
 function PracticeBlock() {
-    this.count = 0;
-
+    this.canvas = document.getElementById("taskcanvas");
+    this.ctx = canvas.getContext('2d');
+    this.trial = 0;
 };
 
 PracticeBlock.prototype.start = function(exitTrial) {
@@ -54,26 +55,23 @@ PracticeBlock.prototype.start = function(exitTrial) {
     $('#inst').hide();
     $('#taskContainer').show();
     hideButtons();
-    var canvas = document.getElementById("taskcanvas");
-    var ctx = canvas.getContext('2d');
-    ctx.fillStyle = "#60c16d";
-    ctx.fillRect(0,400,500,100);
+    this.Trial();
 
 };
 
 PracticeBlock.prototype.Trial = function(exiTrial) {
-    var pumps, cashed, popped, maxVal, pauseTime, trial;
-    trial = 0;
+    var pumps, cashed, popped, maxVal, pauseTime;
+    this.reset();
 
     this.reset = function() {
-        trial ++; 
+        this.trial ++; 
         pumps = 0;
         cashed = false;
         popped = false;
         maxVal = Math.floor((Math.random() * 64) + 1);
         pauseTime = (Math.random() * 5) + 1;
-
-
+        this.ctx.fillStyle = "#60c16d";
+        this.ctx.fillRect(0,400,500,100);
     }
 
 
