@@ -135,8 +135,8 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
            }
            ctx.clearRect(0,0,500,500);
            var Im = document.getElementById("PoppedIm");
-            popsize += 10;
-            ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/2) - popsize/2, popsize,popsize);
+            popsize += 100;
+            ctx.drawImage(Im, (canvas.width/2) - bWidth/2, ((canvas.height/1.5) - bHeight/2) - vertadd, popsize,popsize);
 
         },20);
 
