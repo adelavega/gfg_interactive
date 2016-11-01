@@ -57,7 +57,7 @@ PracticeBlock.prototype.start = function(exitTrial) {
 };
 
 PracticeBlock.prototype.Trial = function(exiTrial) {
-    var elements, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon;
+    var elements, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight;
 
     balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
@@ -67,7 +67,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     reset();
     $("#pumpCanvas").on('click', function() {
         pumps ++;
-        drawBalloon();
+        growBalloon();
     });
     $("#cashCanvas").on('click', function() {
         console.log('cash');
@@ -88,17 +88,20 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 475);
-        drawBalloon();
-    }
-
-
-
-    function drawBalloon() {
-        var bWidth, bHeight;
-        bWidth = ((pumps + 1) * 10) + 10;
-        bHeight = ((pumps + 1) * 12) + 10;
+        bWidth = 5;
+        bHeight = 5;
         ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/2) - bHeight/2, bWidth, bHeight);
     }
+
+
+
+    function growBalloon() {
+        ctx.clearRect(0,0,500,500);
+        bWidth = bWidth + 0.5;
+        bHeight = bHeight + 0.5;
+        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/2) - bHeight/2, bWidth, bHeight);
+    }
+
 
 };
 
