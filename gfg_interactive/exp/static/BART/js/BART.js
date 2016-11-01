@@ -91,7 +91,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         bWidth = 10;
         bHeight = 10;
         vertadd = 0;
-        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/5) - bHeight/2, bWidth, bHeight);
+        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/1.5) - bHeight/2, bWidth, bHeight);
     }
 
 
@@ -102,7 +102,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         bHeight = bHeight + 5;
         vertadd = vertadd + 2;
         console.log(bWidth,bHeight);
-        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, ((canvas.height/5) - bHeight/2) - vertadd , bWidth, bHeight);
+        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, ((canvas.height/1.5) - bHeight/2) - vertadd , bWidth, bHeight);
 
         ctx.fillStyle = "#60c16d";
         ctx.fillRect(0,400,500,100);
