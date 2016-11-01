@@ -57,7 +57,7 @@ PracticeBlock.prototype.start = function(exitTrial) {
 };
 
 PracticeBlock.prototype.Trial = function(exiTrial) {
-    var elements, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight;
+    var elements, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight,vertadd;
 
     balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
@@ -90,6 +90,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.fillText("Cash In",canvas.width/2, 475);
         bWidth = 5;
         bHeight = 5;
+        vertadd = 0;
         ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/2) - bHeight/2, bWidth, bHeight);
     }
 
@@ -99,7 +100,8 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.clearRect(0,0,500,500);
         bWidth = bWidth + 0.05;
         bHeight = bHeight + 0.05;
-        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/2) - bHeight/2, bWidth, bHeight);
+        vertadd = vertadd + 0.05;
+        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, vertadd + ((canvas.height/2) - bHeight/2), bWidth, bHeight);
     }
 
 
