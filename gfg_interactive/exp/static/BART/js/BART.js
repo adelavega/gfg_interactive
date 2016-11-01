@@ -54,21 +54,18 @@ PracticeBlock.prototype.start = function(exitTrial) {
     $('#inst').hide();
     $('#taskContainer').show();
     hideButtons();
-
+    var canvas = $('#taskcanvas');
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#FF0000";
+    ctx.fillRect(0,0,150,75);
 
 };
 
 PracticeBlock.prototype.Trial = function(exiTrial) {
     var pumps, cashed, popped, maxVal, pauseTime, trial;
     trial = 0;
-    var canvas = $('#taskcanvas');
-    var ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#FF0000";
-    ctx.fillRect(0,0,150,75);
-
 
     this.reset = function() {
-
         trial ++;
         pumps = 0;
         cashed = false;
@@ -91,5 +88,5 @@ BARTTask = {
             "At the end of the task you will view a report of your performance in the task.<br><br> To practice with a few balloons, press continue."
             ],
     Instruction: Instruct,
-    practice: PracticeBlock.Trial
+    practice: PracticeBlock
 };
