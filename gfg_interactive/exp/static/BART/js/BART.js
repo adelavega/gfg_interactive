@@ -151,7 +151,6 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
            var Im = document.getElementById("PoppedIm");
             opacity -= 0.1;
             ctx.globalAlpha = opacity;
-            vertsub -= 20;
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
         },20);
 
