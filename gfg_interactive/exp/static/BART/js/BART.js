@@ -76,8 +76,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 475);
-        balloon.
-        ctx.drawImage(balloon, (canvas.width/2) - balloon.width/2, (canvas.height/2) - balloon.height/2, height = 2, width = 2);
+        ctx.drawImage(balloon, (canvas.width/2) - balloon.width/2, (canvas.height/2) - balloon.height/2, 10, 10);
     }
 
 
