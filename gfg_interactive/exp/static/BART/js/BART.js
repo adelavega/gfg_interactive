@@ -165,7 +165,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         },20);
 
         this.interval4 = setInterval(function() {
-            if (new Date().getTime() - starttime3 > 120){
+            if (new Date().getTime() - starttime3 > 200){
                 clearInterval(this.interval4);
             }
             if (starttime3) {
