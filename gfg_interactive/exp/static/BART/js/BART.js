@@ -66,7 +66,8 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
     reset();
     $("#pumpCanvas").on('click', function() {
-        console.log('pump');
+        pumps ++;
+        drawBalloon();
     });
     $("#cashCanvas").on('click', function() {
         console.log('cash');
