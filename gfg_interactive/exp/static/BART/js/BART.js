@@ -142,8 +142,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             vertsub = popsize;
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
         },20);
-
-
+        
         this.interval = setInterval(function(){
            if (new Date().getTime() - startTime > 120){
                 clearInterval(this.interval);
@@ -156,7 +155,6 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
         },20);
 
-        startTime = new Date().getTime();
         this.interval = setInterval(function() {
             if (new Date().getTime() - startTime > 300){
                 clearInterval(this.interval);
