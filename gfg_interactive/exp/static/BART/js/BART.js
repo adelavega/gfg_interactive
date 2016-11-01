@@ -56,8 +56,8 @@ PracticeBlock.prototype.start = function(exitTrial) {
     hideButtons();
     var canvas = document.getElementById("taskcanvas");
     var ctx = canvas.getContext('2d');
-    ctx.fillStyle = "#FF0000";
-    ctx.fillRect(0,350,500,150);
+    ctx.fillStyle = "#60c16d";
+    ctx.fillRect(0,400,500,100);
 
 };
 
@@ -66,7 +66,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     trial = 0;
 
     this.reset = function() {
-        trial ++;
+        trial ++; 
         pumps = 0;
         cashed = false;
         popped = false;
