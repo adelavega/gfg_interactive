@@ -129,7 +129,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
     function pop() {
         var vertsub = 0;
-        var popsize = pumps * 2;
+        var popsize = pumps * 10;
         var opacity = 1;
         var startTime = new Date().getTime();
         var starttime2, starttime3;
