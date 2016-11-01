@@ -60,6 +60,8 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     var pumps, cashed, popped, maxVal, pauseTime,canvas, ctx;
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
+    var baloonImage = new Image();
+    baloonImage.src = "static/{{ experimentname }}/images/PurpleBalloon.png";
     reset();
 
     function reset() {
@@ -72,9 +74,10 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.fillStyle = "#60c16d";
         ctx.fillRect(0,400,500,100);
         ctx.font = "30px Arial";
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
-        ctx.fillText("Cash In",canvas.width/2, 450);
+        ctx.fillText("Cash In",canvas.width/2, 475);
+        ctx.drawImage(baloonImage, canvas.width/2, canvas.height/2);
     }
 
 
