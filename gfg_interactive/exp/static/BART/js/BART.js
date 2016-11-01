@@ -83,7 +83,8 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         pumps = 0;
         cashed = false;
         popped = false;
-        maxVal = Math.floor((Math.random() * 64) + 1);
+        // maxVal = Math.floor((Math.random() * 64) + 1);
+        maxVal = 10;
         ctx.fillStyle = "#60c16d";
         ctx.fillRect(0,400,500,100);
         ctx.font = "30px Arial";
