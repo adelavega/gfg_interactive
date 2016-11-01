@@ -149,8 +149,9 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
            }
            ctx.clearRect(0,0,500,500);
            var Im = document.getElementById("PoppedIm");
-            opacity -= 0.2;
+            opacity -= 0.1;
             ctx.globalAlpha = opacity;
+            vertsub -= 20;
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
         },20);
 
