@@ -98,9 +98,10 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
     function growBalloon() {
         ctx.clearRect(0,0,500,500);
-        bWidth = bWidth + 0.1;
-        bHeight = bHeight + 0.1;
+        bWidth = bWidth + 1;
+        bHeight = bHeight +1;
         vertadd = vertadd + 0.1;
+        console.log(bWidth,bHeight);
         ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, vertadd + ((canvas.height/2) - bHeight/2), bWidth, bHeight);
 
         ctx.fillStyle = "#60c16d";
