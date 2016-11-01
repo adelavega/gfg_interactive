@@ -127,7 +127,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function pop() {
-        var popsize = 0;
+        var popsize = pumps;
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
            if (new Date().getTime() - startTime > 120){
@@ -135,7 +135,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
            }
            ctx.clearRect(0,0,500,500);
            var Im = document.getElementById("PoppedIm");
-            popsize += 50;
+            popsize += 25;
             var vertsub = popsize;
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
 
