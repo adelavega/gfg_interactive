@@ -101,7 +101,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.clearRect(0,0,500,500);
         bWidth += 1;
         bHeight += 1;
-        vertadd += 0.05;
+        vertadd += 0.1;
         console.log(bWidth,bHeight);
         ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, ((canvas.height/1.5) - bHeight/2) - vertadd , bWidth, bHeight);
 
@@ -118,7 +118,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
             console.log(new Date().getTime() - startTime);
-            if(new Date().getTime() - startTime > 300){
+            if(new Date().getTime() - startTime > 150){
             clearInterval(this.interval);
             }
             pumpGrow();
