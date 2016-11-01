@@ -132,10 +132,12 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         var popsize = pumps * 2;
         var opacity = 1;
         var startTime = new Date().getTime();
+        var starttime2, starttime3;
 
         this.interval = setInterval(function(){
            if (new Date().getTime() - startTime > 120){
                 clearInterval(this.interval);
+               starttime2 = new Date().getTime();
            }
            ctx.clearRect(0,0,500,500);
            var Im = document.getElementById("PoppedIm");
@@ -144,10 +146,10 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
         },20);
 
-        startTime = new Date().getTime();
         this.interval3 = setInterval(function(){
-           if (new Date().getTime() - startTime > 120){
+           if (new Date().getTime() - starttime2 > 120){
                 clearInterval(this.interval3);
+                starttime3 = new Date().getTime();
            }
            ctx.clearRect(0,0,500,500);
            var Im = document.getElementById("PoppedIm");
@@ -160,9 +162,8 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
         },50);
 
-        startTime = new Date().getTime();
         this.interval4 = setInterval(function() {
-            if (new Date().getTime() - startTime > 120){
+            if (new Date().getTime() - starttime3 > 120){
                 clearInterval(this.interval4);
             }
             ctx.clearRect(0,0,500,500);
