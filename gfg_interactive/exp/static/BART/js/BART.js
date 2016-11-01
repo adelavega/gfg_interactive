@@ -158,12 +158,8 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
         startTime = new Date().getTime();
         this.interval = setInterval(function() {
-            if (new Date().getTime() - startTime > 120){
+            if (new Date().getTime() - startTime > 300){
                 clearInterval(this.interval);
-                ctx.font = "30px Arial";
-                ctx.fillStyle = 'white';
-                ctx.textAlign = 'center';
-                ctx.fillText("Cash In",canvas.width/2, 460);
             }
             ctx.clearRect(0,0,500,500);
             ctx.font = "30px Arial";
