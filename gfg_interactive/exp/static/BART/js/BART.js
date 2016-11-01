@@ -57,7 +57,7 @@ PracticeBlock.prototype.start = function(exitTrial) {
 };
 
 PracticeBlock.prototype.Trial = function(exiTrial) {
-    var elements, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight,vertadd;
+    var timesrun, elements, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight,vertadd;
 
     balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
@@ -97,6 +97,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function pumpGrow() {
+        timesrun += 1;
         ctx.clearRect(0,0,500,500);
         bWidth = bWidth + 7.5;
         bHeight = bHeight + 7.5;
@@ -110,8 +111,13 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 475);
+        
+        if (timesrun === 60){
+            clearInterval(interval);
+        }
     }
     function pump() {
+        timesrun = 0;
         this.interval = setInterval(pumpGrow, 20);
     }
 
