@@ -51,7 +51,7 @@ function PracticeBlock() {
 PracticeBlock.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
     this.canvas = document.getElementById("taskcanvas");
-    this.ctx = canvas.getContext('2d');
+    this.ctx = this.canvas.getContext('2d');
     $('#inst').hide();
 
     $('#taskContainer').show();
