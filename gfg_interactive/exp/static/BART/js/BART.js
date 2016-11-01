@@ -130,7 +130,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         var popsize = 0;
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
-           if (new Date().getTime() - startTime > 30){
+           if (new Date().getTime() - startTime > 120){
                 clearInterval(this.interval);
            }
            ctx.clearRect(0,0,500,500);
