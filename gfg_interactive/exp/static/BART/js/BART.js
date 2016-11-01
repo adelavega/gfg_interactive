@@ -70,6 +70,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             pumps ++;
             pump();
         }else{
+            $("#pumpCanvas").hide();
             pop();
         }
     });
