@@ -151,14 +151,14 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
            }
            ctx.clearRect(0,0,500,500);
            var Im = document.getElementById("PoppedIm");
-            opacity -= 0.01;
+            opacity -= 0.1;
             if (opacity < 0){
                 opacity = 0;
             }
             ctx.globalAlpha = opacity;
             vertsub += 20;
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
-        },20);
+        },50);
 
         this.interval4 = setInterval(function() {
             if (new Date().getTime() - startTime > 120){
