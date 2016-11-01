@@ -65,7 +65,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     elements = [];
 
     reset();
-    $("#taskcanvas2").click(function() {
+    $("#taskcanvas2").onclick(function() {
         console.log('hi');
     });
 
