@@ -79,7 +79,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     });
 
     function reset() {
-        this.trial ++; 
+        this.trial ++;
         pumps = 0;
         cashed = false;
         popped = false;
@@ -135,44 +135,47 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         var starttime2, starttime3;
 
         this.interval = setInterval(function(){
-           if (new Date().getTime() - startTime > 120){
+            if (new Date().getTime() - startTime > 120){
                 clearInterval(this.interval);
-               starttime2 = new Date().getTime();
-           }
-           ctx.clearRect(0,0,500,500);
-           var Im = document.getElementById("PoppedIm");
+                starttime2 = new Date().getTime();
+            }
+            ctx.clearRect(0,0,500,500);
+            var Im = document.getElementById("PoppedIm");
             popsize += 25;
             vertsub = popsize;
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
         },20);
 
         this.interval3 = setInterval(function(){
-           if (new Date().getTime() - starttime2 > 120){
+            if (new Date().getTime() - starttime2 > 120){
                 clearInterval(this.interval3);
                 starttime3 = new Date().getTime();
-           }
-           ctx.clearRect(0,0,500,500);
-           var Im = document.getElementById("PoppedIm");
-            opacity -= 0.1;
-            if (opacity < 0){
-                opacity = 0;
             }
-            ctx.globalAlpha = opacity;
-            vertsub += 20;
-            ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
+            if (starttime2) {
+                ctx.clearRect(0,0,500,500);
+                var Im = document.getElementById("PoppedIm");
+                opacity -= 0.1;
+                if (opacity < 0){
+                    opacity = 0;
+                }
+                ctx.globalAlpha = opacity;
+                vertsub += 20;
+                ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
+            }
         },50);
-
         this.interval4 = setInterval(function() {
             if (new Date().getTime() - starttime3 > 120){
                 clearInterval(this.interval4);
             }
-            ctx.clearRect(0,0,500,500);
-            ctx.font = "30px Arial";
-            ctx.fillStyle = 'red';
-            ctx.textAlign = 'center';
-            opacity += 0.5;
-            ctx.globalAlpha = opacity;
-            ctx.fillText("Popped!",canvas.width/2, canvas.height/2);
+            if (starttime3) {
+                ctx.clearRect(0, 0, 500, 500);
+                ctx.font = "30px Arial";
+                ctx.fillStyle = 'red';
+                ctx.textAlign = 'center';
+                opacity += 0.5;
+                ctx.globalAlpha = opacity;
+                ctx.fillText("Popped!", canvas.width / 2, canvas.height / 2);
+            }
         },20);
 
     }
@@ -184,11 +187,11 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 BARTTask = {
     warning : "<span style='color:red; font-size:60px'> " + (String.fromCharCode(9888)) + " </span> This task requires 10-15 minutes of your undivided attention <br><br> If you don't have time right now, please come back when you have can focus. <br><br> Otherwise, click continue to begin!",
     InstructionText : [
-            "Throughout this task, you will be presented with 30 balloons, one at a time. <br><br> You will be asked to inflate these balloons. Every time you choose to iinflate the balloon, it will grow slighty and you will receive one token.",
-            "You can choose to stop inflating a balloon at any point and collect your tokens by choosing to 'cash in'. <br><br>once you choose to cash in, you will begin again with a new balloon.",
-            "It is your choice to determine how much to pump up the balloon, but be aware that at some point the balloon will explode <br><br>The explosion point varies across balloons, ranging from the first pump to enough pumps to make the balloon fill almost the entire containing box.<br><br> if the balloon explodes, you will lose all of your tokens and move on to the next balloon.",
-            "At the end of the task you will view a report of your performance in the task.<br><br> To practice with a few balloons, press continue."
-            ],
+        "Throughout this task, you will be presented with 30 balloons, one at a time. <br><br> You will be asked to inflate these balloons. Every time you choose to iinflate the balloon, it will grow slighty and you will receive one token.",
+        "You can choose to stop inflating a balloon at any point and collect your tokens by choosing to 'cash in'. <br><br>once you choose to cash in, you will begin again with a new balloon.",
+        "It is your choice to determine how much to pump up the balloon, but be aware that at some point the balloon will explode <br><br>The explosion point varies across balloons, ranging from the first pump to enough pumps to make the balloon fill almost the entire containing box.<br><br> if the balloon explodes, you will lose all of your tokens and move on to the next balloon.",
+        "At the end of the task you will view a report of your performance in the task.<br><br> To practice with a few balloons, press continue."
+    ],
     Instruction: Instruct,
     practice: PracticeBlock
 };
