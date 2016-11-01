@@ -45,13 +45,13 @@ Instruct.prototype.buttonClick = function(button) {
 
 
 function PracticeBlock() {
+    this.canvas = document.getElementById("taskcanvas");
+    this.ctx = this.canvas.getContext('2d');
+    this.trial = 0;
 };
 
 PracticeBlock.prototype.start = function(exitTrial) {
-    this.canvas = document.getElementById("taskcanvas");
-    this.ctx = canvas.getContext('2d');
     this.exitTrial = exitTrial;
-    this.trial = 0;
     $('#inst').hide();
     $('#taskContainer').show();
     hideButtons();
