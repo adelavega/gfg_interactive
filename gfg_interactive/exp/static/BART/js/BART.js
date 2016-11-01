@@ -61,7 +61,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
     var baloonImage = new Image();
-    baloonImage.src = "static/{{ experimentname }}/images/PurpleBalloon.png";
+    baloonImage.src = "static/BART/images/PurpleBalloon.png";
     reset();
 
     function reset() {
