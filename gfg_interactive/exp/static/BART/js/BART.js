@@ -29,6 +29,7 @@ function Instruct(message,leftKey,rightKey) {
 
 Instruct.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
+    $('#taskContainer').hide();
     $("#inst").html(this.message);
     $("#inst").show();
     hideButtons();
