@@ -55,7 +55,6 @@ PracticeBlock.prototype.start = function(exitTrial) {
     $('#inst').hide();
     $('#taskContainer').show();
     hideButtons();
-    this.Trial();
 
 };
 
