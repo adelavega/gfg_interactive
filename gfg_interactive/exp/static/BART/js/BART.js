@@ -135,19 +135,19 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         var starttime2, starttime3;
 
         this.interval = setInterval(function(){
-            if (new Date().getTime() - startTime > 60){
+            if (new Date().getTime() - startTime > 30){
                 clearInterval(this.interval);
                 starttime2 = new Date().getTime();
             }
             ctx.clearRect(0,0,500,500);
             var Im = document.getElementById("PoppedIm");
-            popsize += 25;
+            popsize += 10;
             vertsub = popsize;
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
         },20);
 
         this.interval3 = setInterval(function(){
-            if (new Date().getTime() - starttime2 > 120){
+            if (new Date().getTime() - starttime2 > 60){
                 clearInterval(this.interval3);
                 starttime3 = new Date().getTime();
             }
