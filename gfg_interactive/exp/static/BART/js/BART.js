@@ -52,24 +52,24 @@ function PracticeBlock() {
 PracticeBlock.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
     $('#inst').hide();
+    $('#taskContainer').show();
+    hideButtons();
     var canvas = $('#taskcanvas');
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = "#FF0000";
     ctx.fillRect(0,0,150,75);
-    $('#taskContainer').show();
-    hideButtons();
 
 };
 
 PracticeBlock.prototype.Trial = function(exiTrial) {
     var pumps, cashed, popped, maxVal, pauseTime, trial;
     trial = 0;
-    pumps = 0;
-    cashed = false;
-    popped = false;
 
     this.reset = function() {
         trial ++;
+        pumps = 0;
+        cashed = false;
+        popped = false;
         maxVal = Math.floor((Math.random() * 64) + 1);
         pauseTime = (Math.random() * 5) + 1;
 
