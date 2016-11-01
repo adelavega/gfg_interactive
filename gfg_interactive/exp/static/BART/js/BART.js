@@ -50,19 +50,16 @@ function PracticeBlock() {
 
 PracticeBlock.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
-    this.canvas = document.getElementById("taskcanvas");
-    this.ctx = this.canvas.getContext('2d');
     $('#inst').hide();
-
     $('#taskContainer').show();
     hideButtons();
     this.Trial();
 };
 
 PracticeBlock.prototype.Trial = function(exiTrial) {
-    var pumps, cashed, popped, maxVal, pauseTime;
-    var canvas = document.getElementById("taskcanvas");
-    var ctx = canvas.getContext('2d');
+    var pumps, cashed, popped, maxVal, pauseTime,canvas, ctx;
+    canvas = document.getElementById("taskcanvas");
+    ctx = canvas.getContext('2d');
     reset();
 
     function reset() {
@@ -72,10 +69,12 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         popped = false;
         maxVal = Math.floor((Math.random() * 64) + 1);
         pauseTime = (Math.random() * 5) + 1;
-
-
-        this.ctx.fillStyle = "#60c16d";
-        this.ctx.fillRect(0,400,500,100);
+        ctx.fillStyle = "#60c16d";
+        ctx.fillRect(0,400,500,100);
+        ctx.font = "30px Arial";
+        ctx.fillStyle = 'red';
+        ctx.textAlign = 'center';
+        ctx.fillText("Cash In",canvas.width/2, 450);
     }
 
 
