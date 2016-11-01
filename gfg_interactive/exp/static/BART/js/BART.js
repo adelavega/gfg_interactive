@@ -60,7 +60,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     var pumps, cashed, popped, maxVal, pauseTime,canvas, ctx;
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
-    var balloon = $("#balloonIm");
+    var balloon = document.getElementById("balloonIm");
     reset();
 
     function reset() {
