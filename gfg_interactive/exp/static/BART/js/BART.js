@@ -57,12 +57,26 @@ PracticeBlock.prototype.start = function(exitTrial) {
 };
 
 PracticeBlock.prototype.Trial = function(exiTrial) {
-    var pumps, cashed, popped, maxVal, pauseTime,canvas, ctx;
+    var elements, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon;
+
+    balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
-    var balloon = document.getElementById("balloonIm");
-    reset();
+    elements = [];
 
+    reset();
+    canvas.addEventListener('click', function(event){
+       var x = event.pageX,
+           y = event.pageY;
+        console.log(x, y);
+        elements.forEach(function(element)){
+            if (y > element.top && y < element.top +
+                element.height && x > element.left && x < element.left +
+                element.width){
+                console.log('touched one ');
+            }
+        }
+    });
 
 
     function reset() {
@@ -79,7 +93,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 475);
         drawBalloon();
-        ctx.fillStyle = 'rgba(225,225,225,0.5)';
+        ctx.fillStyle = 'rgba(225,225,225,0)';
         ctx.fillRect(0,0,500,400);
     }
 
