@@ -102,7 +102,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         bHeight = bHeight + 5;
         vertadd = vertadd + 2;
         console.log(bWidth,bHeight);
-        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, vertadd + ((canvas.height/2) - bHeight/2), bWidth, bHeight);
+        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, vertadd - ((canvas.height/2) - bHeight/2), bWidth, bHeight);
 
         ctx.fillStyle = "#60c16d";
         ctx.fillRect(0,400,500,100);
