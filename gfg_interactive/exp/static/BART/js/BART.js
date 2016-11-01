@@ -117,7 +117,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
 
-            if(new Date().getTime() - startTime > 30){
+            if(new Date().getTime() - startTime > 100){
                 clearInterval(this.interval);
             }
             pumpGrow();
