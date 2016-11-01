@@ -65,8 +65,9 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
     reset();
     $("#pumpCanvas").on('click', function() {
-        pumps ++;
+
         if (pumps < maxVal){
+            pumps ++;
             pump();
         }else{
             pop();
