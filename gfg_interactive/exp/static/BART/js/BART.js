@@ -142,10 +142,10 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             vertsub = popsize;
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
         },20);
-        
-        this.interval = setInterval(function(){
+
+        this.interval3 = setInterval(function(){
            if (new Date().getTime() - startTime > 120){
-                clearInterval(this.interval);
+                clearInterval(this.interval3);
            }
            ctx.clearRect(0,0,500,500);
            var Im = document.getElementById("PoppedIm");
@@ -155,9 +155,9 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
         },20);
 
-        this.interval = setInterval(function() {
-            if (new Date().getTime() - startTime > 300){
-                clearInterval(this.interval);
+        this.interval4 = setInterval(function() {
+            if (new Date().getTime() - startTime > 120){
+                clearInterval(this.interval4);
             }
             ctx.clearRect(0,0,500,500);
             ctx.font = "30px Arial";
