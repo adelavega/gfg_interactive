@@ -63,6 +63,13 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     var balloon = document.getElementById("balloonIm");
     reset();
 
+
+    function drawBalloon() {
+        var bWidth, bHeight;
+        bWidth = (pumps * 10) + 1;
+        bHeight = (pumps * 12) + 1;
+        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/2) - bHeight/2, bWidth, bHeight);
+    }
     function reset() {
         this.trial ++; 
         pumps = 0;
@@ -76,7 +83,9 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 475);
-        ctx.drawImage(balloon, (canvas.width/2) - balloon.width/2, (canvas.height/2) - balloon.height/2, 10, 10);
+        drawBalloon();
+        
+
     }
 
 
