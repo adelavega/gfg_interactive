@@ -118,7 +118,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         timesrun = 0;
         this.interval = setInterval(function(){
             timesrun += 1;
-            if (timesrun === 1){
+            if(new Date().getTime() - startTime > 60000){
             clearInterval(this.interval);
             }
             pumpGrow();
