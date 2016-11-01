@@ -69,13 +69,13 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
        var x = event.pageX,
            y = event.pageY;
         console.log(x, y);
-        elements.forEach(function(element)){
+        elements.forEach(function(element){
             if (y > element.top && y < element.top +
                 element.height && x > element.left && x < element.left +
                 element.width){
                 console.log('touched one ');
             }
-        }
+        };
     });
 
 
