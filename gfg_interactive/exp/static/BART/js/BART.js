@@ -84,7 +84,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         cashed = false;
         popped = false;
         //maxVal = Math.floor((Math.random() * 64) + 1);
-        maxVal = 30;
+        maxVal = 5;
         ctx.fillStyle = "#60c16d";
         ctx.fillRect(0,400,500,100);
         ctx.font = "30px Arial";
@@ -128,7 +128,9 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function pop() {
+        var vertsub = 0;
         var popsize = pumps * 2;
+        var opacity = 1;
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
            if (new Date().getTime() - startTime > 120){
@@ -137,9 +139,19 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
            ctx.clearRect(0,0,500,500);
            var Im = document.getElementById("PoppedIm");
             popsize += 25;
-            var vertsub = popsize;
+            vertsub = popsize;
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
+        },20);
 
+        this.interval = setInterval(function(){
+           if (new Date().getTime() - startTime > 120){
+                clearInterval(this.interval);
+           }
+           ctx.clearRect(0,0,500,500);
+           var Im = document.getElementById("PoppedIm");
+            opacity -= 0.2;
+            ctx.globalAlpha = opacity;
+            ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
         },20);
 
 
