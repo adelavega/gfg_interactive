@@ -75,7 +75,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
                 element.width){
                 console.log('touched one ');
             }
-        };
+        });
     });
 
 
