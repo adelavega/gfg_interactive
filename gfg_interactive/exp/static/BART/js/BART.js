@@ -65,18 +65,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     elements = [];
 
     reset();
-    canvas.addEventListener('click', function(event){
-       var x = event.pageX,
-           y = event.pageY;
-        console.log(x, y);
-        elements.forEach(function(element){
-            if (y > element.top && y < element.top +
-                element.height && x > element.left && x < element.left +
-                element.width){
-                console.log('touched one ');
-            }
-        });
-    });
+
 
 
     function reset() {
