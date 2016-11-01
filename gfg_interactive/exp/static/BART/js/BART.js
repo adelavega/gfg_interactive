@@ -70,7 +70,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         if (pumps < maxVal){
             pump();
         }else{
-            //pop
+            pop();
         }
     });
     $("#cashCanvas").on('click', function() {
@@ -89,7 +89,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.font = "30px Arial";
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
-        ctx.fillText("Cash In",canvas.width/2, 475);
+        ctx.fillText("Cash In",canvas.width/2, 460);
         bWidth = 10;
         bHeight = 10;
         vertadd = 0;
@@ -110,23 +110,35 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.font = "30px Arial";
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
-        ctx.fillText("Cash In",canvas.width/2, 475);
+        ctx.fillText("Cash In",canvas.width/2, 460);
 
 
     }
     function pump() {
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
-            console.log(new Date().getTime() - startTime);
+
             if(new Date().getTime() - startTime > 150){
-            clearInterval(this.interval);
+                clearInterval(this.interval);
             }
             pumpGrow();
         }, 20);
     }
 
     function pop() {
-        ctx.clearRect(0,0,500,500);
+        var popsize = 0;
+        var startTime = new Date().getTime();
+        this.interval = setInterval(function(){
+           if (new Date().getTime() - startTime > 3000){
+                clearInterval(this.interval);
+           }
+           ctx.clearRect(0,0,500,500);
+           var Im = document.getElementById("PoppedIm");
+            popsize += 1;
+            ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/2) - popsize/2, popsize,popsize);
+
+        },20);
+
 
     }
 
