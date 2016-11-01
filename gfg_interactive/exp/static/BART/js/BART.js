@@ -51,10 +51,10 @@ function PracticeBlock() {
 
 PracticeBlock.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
-    $('#inst').hide();
+    $('#inst').hide();a
     $('#taskContainer').show();
     hideButtons();
-    var canvas = $('#taskcanvas');
+    var canvas = document.getElementById("taskcanvas");
     var ctx = canvas.getContext('2d');
     ctx.fillStyle = "#FF0000";
     ctx.fillRect(200,200,150,75);
