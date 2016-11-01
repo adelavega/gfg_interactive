@@ -97,7 +97,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function pumpGrow() {
-        timesrun += 1;
+
         ctx.clearRect(0,0,500,500);
         bWidth = bWidth + 7.5;
         bHeight = bHeight + 7.5;
@@ -112,13 +112,17 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 475);
         console.log(timesrun);
-        if (timesrun === 60){
-            clearInterval(this.interval);
-        }
+
     }
     function pump() {
         timesrun = 0;
-        this.interval = setInterval(pumpGrow, 20);
+        this.interval = setInterval(function(){
+            timesrun += 1;
+            if (timesrun >= 60){
+            clearInterval(this.interval);
+            }
+            pumpGrow();
+        }, 20);
     }
 
     function pop() {
