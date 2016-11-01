@@ -60,7 +60,10 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     var pumps, cashed, popped, maxVal, pauseTime,canvas, ctx;
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
-    var baloonImage = new Image();
+    var imToUse = $("<img></img>")
+        .src('static/BART/images/PurpleBalloon.png');
+
+    $(document).append(imToUse);
     baloonImage.src = "static/BART/images/PurpleBalloon.png";
     reset();
 
@@ -77,7 +80,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 475);
-        ctx.drawImage(baloonImage, canvas.width/2, canvas.height/2);
+        ctx.drawImage(baloonImage, 10, 10);
     }
 
 
