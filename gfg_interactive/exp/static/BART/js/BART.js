@@ -116,13 +116,16 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
     }
     function pump() {
+        $('#pumpCanvas').attr("disabled",true);
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
 
             if(new Date().getTime() - startTime > 150){
                 clearInterval(this.interval);
+                $('#pumpCanvas').attr("disabled",false);
             }
             pumpGrow();
+
         }, 20);
     }
 
