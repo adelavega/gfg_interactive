@@ -98,10 +98,17 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
     function growBalloon() {
         ctx.clearRect(0,0,500,500);
-        bWidth = bWidth + 0.00;
-        bHeight = bHeight + 0.00;
-        vertadd = vertadd + 0.00;
+        bWidth = bWidth + 0.01;
+        bHeight = bHeight + 0.01;
+        vertadd = vertadd + 0.01;
         ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, vertadd + ((canvas.height/2) - bHeight/2), bWidth, bHeight);
+
+        ctx.fillStyle = "#60c16d";
+        ctx.fillRect(0,400,500,100);
+        ctx.font = "30px Arial";
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.fillText("Cash In",canvas.width/2, 475);
     }
 
 
