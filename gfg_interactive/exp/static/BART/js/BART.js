@@ -143,7 +143,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             vertsub = popsize;
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
         },20);
-        
+
         startTime = new Date().getTime();
         this.interval3 = setInterval(function(){
            if (new Date().getTime() - startTime > 120){
@@ -151,7 +151,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
            }
            ctx.clearRect(0,0,500,500);
            var Im = document.getElementById("PoppedIm");
-            opacity -= 0.5;
+            opacity -= 0.1;
             if (opacity < 0){
                 opacity = 0;
             }
