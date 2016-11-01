@@ -135,7 +135,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         var starttime2, starttime3;
 
         this.interval = setInterval(function(){
-            if (new Date().getTime() - startTime > 120){
+            if (new Date().getTime() - startTime > 60){
                 clearInterval(this.interval);
                 starttime2 = new Date().getTime();
             }
@@ -154,16 +154,16 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             if (starttime2) {
                 ctx.clearRect(0,0,500,500);
                 var Im = document.getElementById("PoppedIm");
-                opacity -= 0.3;
+                opacity -= 0.5;
                 if (opacity < 0){
                     opacity = 0;
                 }
                 ctx.globalAlpha = opacity;
-                vertsub += 20;
+                vertsub += 10;
                 ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
             }
         },20);
-        
+
         this.interval4 = setInterval(function() {
             if (new Date().getTime() - starttime3 > 120){
                 clearInterval(this.interval4);
