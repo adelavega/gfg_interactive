@@ -151,7 +151,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
            }
            ctx.clearRect(0,0,500,500);
            var Im = document.getElementById("PoppedIm");
-            opacity -= 0.1;
+            opacity -= 0.01;
             if (opacity < 0){
                 opacity = 0;
             }
