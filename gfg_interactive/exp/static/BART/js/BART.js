@@ -64,15 +64,10 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     reset();
 
 
-    function drawBalloon() {
-        var bWidth, bHeight;
-        bWidth = (pumps * 10) + 10;
-        bHeight = (pumps * 12) + 10;
-        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/2) - bHeight/2, bWidth, bHeight);
-    }
+
     function reset() {
         this.trial ++; 
-        pumps = 5;
+        pumps = 0;
         cashed = false;
         popped = false;
         maxVal = Math.floor((Math.random() * 64) + 1);
@@ -84,10 +79,18 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 475);
         drawBalloon();
-
-
+        ctx.fillStyle = "#60c16d";
+        ctx.fillRect(0,0,500,400);
     }
 
+
+
+    function drawBalloon() {
+        var bWidth, bHeight;
+        bWidth = ((pumps + 1) * 10) + 10;
+        bHeight = ((pumps + 1) * 12) + 10;
+        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/2) - bHeight/2, bWidth, bHeight);
+    }
 
 };
 
