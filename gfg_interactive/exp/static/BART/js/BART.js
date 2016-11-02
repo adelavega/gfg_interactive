@@ -100,6 +100,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.fillText("+",canvas.width/2, canvas.height/2);
 
         setTimeout(function(){
+            $("#pumpCanvas").show();
             ctx.clearRect(0,0,500,500);
             ctx.fillStyle = "#60c16d";
             ctx.fillRect(0,400,500,100);
@@ -125,7 +126,6 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function pumpGrow() {
-
         ctx.clearRect(0,0,500,500);
         bWidth += 1;
         bHeight += 1;
@@ -149,10 +149,12 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
     }
     function pump() {
+        $("#pumpCanvas").hide();
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
 
             if(new Date().getTime() - startTime > 75){
+                $("#pumpCanvas").show();
                 clearInterval(this.interval);
             }
             pumpGrow();
@@ -161,6 +163,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function cash() {
+        $("#pumpCanvas").hide();
         finished = true;
         console.log('cashed');
         cashed = true;
@@ -178,6 +181,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function pop() {
+        $("#pumpCanvas").hide();
         finished = true;
         popped = true;
         pumps = 0;
