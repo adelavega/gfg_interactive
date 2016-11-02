@@ -89,12 +89,20 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         popped = false;
         // maxVal = Math.floor((Math.random() * 64) + 1);
         maxVal = 10;
+
         ctx.fillStyle = "#60c16d";
         ctx.fillRect(0,400,500,100);
+
         ctx.font = "30px Arial";
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 460);
+
+        ctx.font = "30px Arial";
+        ctx.fillStyle = 'black';
+        ctx.textAlign = 'center';
+        ctx.fillText("0 Tokens",canvas.width/2, 50);
+
         bWidth = 10;
         bHeight = 10;
         vertadd = 0;
@@ -112,10 +120,16 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
         ctx.fillStyle = "#60c16d";
         ctx.fillRect(0,400,500,100);
+
         ctx.font = "30px Arial";
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 460);
+
+        ctx.font = "30px Arial";
+        ctx.fillStyle = 'black';
+        ctx.textAlign = 'center';
+        ctx.fillText(pumps,canvas.width/2, 50);
 
 
     }
@@ -141,11 +155,17 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.textAlign = 'center';
         ctx.globalAlpha = 1;
         ctx.fillText("Cashed In", canvas.width / 2, canvas.height / 2);
+
+        ctx.font = "30px Arial";
+        ctx.fillStyle = 'black';
+        ctx.textAlign = 'center';
+        ctx.fillText(pumps.toString(),canvas.width/2, 50);
     }
 
     function pop() {
         finished = true;
         popped = true;
+        pumps = 0;
         var vertsub = 0;
         var popsize = pumps * 10;
         var opacity = 1;
@@ -162,6 +182,11 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             popsize += 10;
             vertsub = popsize;
             ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
+
+            ctx.font = "30px Arial";
+            ctx.fillStyle = 'black';
+            ctx.textAlign = 'center';
+            ctx.fillText(pumps.toString(),canvas.width/2, 50);
         },20);
 
         this.interval3 = setInterval(function(){
@@ -171,14 +196,21 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             }
             if (starttime2) {
                 ctx.clearRect(0,0,500,500);
+
                 var Im = document.getElementById("PoppedIm");
                 opacity -= 0.5;
                 if (opacity < 0){
                     opacity = 0;
                 }
                 ctx.globalAlpha = opacity;
+
                 vertsub += 10;
                 ctx.drawImage(Im, (canvas.width/2) - popsize/2, (canvas.height/1.5) - vertsub, popsize,popsize);
+
+                ctx.font = "30px Arial";
+                ctx.fillStyle = 'black';
+                ctx.textAlign = 'center';
+                ctx.fillText(pumps.toString(),canvas.width/2, 50);
             }
         },20);
 
@@ -188,12 +220,18 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             }
             if (starttime3) {
                 ctx.clearRect(0, 0, 500, 500);
+
                 ctx.font = "30px Arial";
                 ctx.fillStyle = 'red';
                 ctx.textAlign = 'center';
                 opacity += 0.5;
                 ctx.globalAlpha = opacity;
                 ctx.fillText("Popped!", canvas.width / 2, canvas.height / 2);
+
+                ctx.font = "30px Arial";
+                ctx.fillStyle = 'black';
+                ctx.textAlign = 'center';
+                ctx.fillText(pumps.toString(),canvas.width/2, 50);
             }
         },20);
     }
