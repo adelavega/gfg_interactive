@@ -96,6 +96,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             if (new Date().getTime() - startTime > pauseTime){
                 clearInterval(this.interval);
                 console.log('Done');
+
             }
             $("#pumpCanvas").hide();
             ctx.clearRect(0,0,500,500);
@@ -104,7 +105,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             ctx.textAlign = 'center';
             ctx.fillText("+",canvas.width/2, canvas.height/2);
 
-        });
+        },20);
 
         ctx.fillStyle = "#60c16d";
         ctx.fillRect(0,400,500,100);
