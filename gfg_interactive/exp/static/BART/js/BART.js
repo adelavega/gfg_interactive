@@ -94,6 +94,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         this.interval = setInterval(function() {
             if (new Date().getTime() - startTime > pauseTime){
                 clearInterval(this.interval);
+                console.log('Done');
 
             }
             $("#pumpCanvas").hide();
