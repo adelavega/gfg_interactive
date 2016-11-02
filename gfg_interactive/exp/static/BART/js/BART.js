@@ -113,13 +113,15 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             ctx.fillStyle = 'black';
             ctx.textAlign = 'center';
             ctx.fillText("0 Tokens",canvas.width/2, 50);
+
+            bWidth = 10;
+            bHeight = 10;
+            vertadd = 0;
+            ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/1.5) - bHeight/2, bWidth, bHeight);
         }, pauseTime);
 
 
-        bWidth = 10;
-        bHeight = 10;
-        vertadd = 0;
-        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/1.5) - bHeight/2, bWidth, bHeight);
+
     }
 
     function pumpGrow() {
