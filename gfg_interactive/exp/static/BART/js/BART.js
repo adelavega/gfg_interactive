@@ -81,6 +81,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     });
 
     function reset() {
+        $("#pumpCanvas").hide();
         this.trial ++;
         pumps = 0;
         finished = false;
@@ -115,6 +116,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             bHeight = 10;
             vertadd = 0;
             ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/1.5) - bHeight/2, bWidth, bHeight);
+            $("#pumpCanvas").show();
         }, pauseTime);
 
 
