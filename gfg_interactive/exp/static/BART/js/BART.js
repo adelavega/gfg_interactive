@@ -129,7 +129,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.font = "30px Arial";
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
-        ctx.fillText(pumps.toString(),canvas.width/2, 50);
+        ctx.fillText(pumps.toString() + ' Tokens',canvas.width/2, 50);
 
 
     }
@@ -159,7 +159,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.font = "30px Arial";
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
-        ctx.fillText(pumps.toString(),canvas.width/2, 50);
+        ctx.fillText(pumps.toString() + ' Tokens',canvas.width/2, 50);
     }
 
     function pop() {
@@ -186,7 +186,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             ctx.font = "30px Arial";
             ctx.fillStyle = 'black';
             ctx.textAlign = 'center';
-            ctx.fillText(pumps.toString(),canvas.width/2, 50);
+            ctx.fillText(pumps.toString() + ' Tokens',canvas.width/2, 50);
         },20);
 
         this.interval3 = setInterval(function(){
@@ -210,7 +210,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
                 ctx.font = "30px Arial";
                 ctx.fillStyle = 'black';
                 ctx.textAlign = 'center';
-                ctx.fillText(pumps.toString(),canvas.width/2, 50);
+                ctx.fillText(pumps.toString() + ' Tokens',canvas.width/2, 50);
             }
         },20);
 
@@ -231,7 +231,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
                 ctx.font = "30px Arial";
                 ctx.fillStyle = 'black';
                 ctx.textAlign = 'center';
-                ctx.fillText(pumps.toString(),canvas.width/2, 50);
+                ctx.fillText(pumps.toString() + ' Tokens',canvas.width/2, 50);
             }
         },20);
     }
