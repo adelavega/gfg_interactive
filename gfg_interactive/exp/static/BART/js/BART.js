@@ -53,7 +53,7 @@ PracticeBlock.prototype.start = function(exitTrial) {
     $('#inst').hide();
     $('#taskContainer').show();
     hideButtons();
-    this.Trial();
+    this.Trial(this.exitTrial);
 };
 
 PracticeBlock.prototype.Trial = function(exitTrial) {
@@ -175,7 +175,7 @@ PracticeBlock.prototype.Trial = function(exitTrial) {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         ctx.fillText(pumps.toString() + ' Tokens',canvas.width/2, 50);
-        return this.exitTrial();
+        this.exitTrial();
 
     }
 
