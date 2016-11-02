@@ -53,11 +53,10 @@ PracticeBlock.prototype.start = function(exitTrial) {
     $('#inst').hide();
     $('#taskContainer').show();
     hideButtons();
-    this.Trial(this.exitTrial);
+    this.Trial();
 };
 
-PracticeBlock.prototype.Trial = function(exitTrial) {
-    this.exitTrial = exitTrial;
+PracticeBlock.prototype.Trial = function() {
     var  finished, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight,vertadd;
     balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
@@ -82,7 +81,6 @@ PracticeBlock.prototype.Trial = function(exitTrial) {
     });
 
     function reset() {
-
 
         // maxVal = Math.floor((Math.random() * 64) + 1);
         maxVal = 10;
@@ -234,7 +232,7 @@ PracticeBlock.prototype.Trial = function(exitTrial) {
         this.interval4 = setInterval(function() {
             if (new Date().getTime() - starttime3 > 200){
                 clearInterval(this.interval4);
-                return this.exitTrial();
+                this.exitTrial();
             }
             if (starttime3) {
                 ctx.clearRect(0, 0, 500, 500);
