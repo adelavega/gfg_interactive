@@ -95,6 +95,17 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             if (new Date().getTime() - startTime > pauseTime){
                 clearInterval(this.interval);
 
+            }
+            $("#pumpCanvas").hide();
+            ctx.clearRect(0,0,500,500);
+            ctx.font = "50px Arial";
+            ctx.fillStyle = 'black';
+            ctx.textAlign = 'center';
+            ctx.fillText("+",canvas.width/2, canvas.height/2);
+
+        });
+
+
                 ctx.fillStyle = "#60c16d";
                 ctx.fillRect(0,400,500,100);
 
@@ -112,17 +123,6 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
                 bHeight = 10;
                 vertadd = 0;
                 ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/1.5) - bHeight/2, bWidth, bHeight);
-            }
-            $("#pumpCanvas").hide();
-            ctx.clearRect(0,0,500,500);
-            ctx.font = "50px Arial";
-            ctx.fillStyle = 'black';
-            ctx.textAlign = 'center';
-            ctx.fillText("+",canvas.width/2, canvas.height/2);
-
-        });
-
-
     }
 
     function pumpGrow() {
