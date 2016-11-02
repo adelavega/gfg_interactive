@@ -177,6 +177,7 @@ PracticeBlock.prototype.Trial = function() {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         ctx.fillText(pumps.toString() + ' Tokens',canvas.width/2, 50);
+        setTimeout(function(){return none}, 3);
 
     }
 
