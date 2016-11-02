@@ -91,35 +91,30 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         // maxVal = Math.floor((Math.random() * 64) + 1);
         maxVal = 10;
         pauseTime = ((Math.random() * 7) + 1) * 600;
-        var startTime = new Date().getTime();
-        this.interval = setInterval(function() {
-            if (new Date().getTime() - startTime > pauseTime){
-                clearInterval(this.interval);
-                console.log('Done');
-                ctx.clearRect(0,0,500,500);
 
-            }
-            $("#pumpCanvas").hide();
-            ctx.clearRect(0,0,500,500);
-            ctx.font = "50px Arial";
-            ctx.fillStyle = 'black';
-            ctx.textAlign = 'center';
-            ctx.fillText("+",canvas.width/2, canvas.height/2);
-
-        },20);
-
-        ctx.fillStyle = "#60c16d";
-        ctx.fillRect(0,400,500,100);
-
-        ctx.font = "30px Arial";
-        ctx.fillStyle = 'white';
-        ctx.textAlign = 'center';
-        ctx.fillText("Cash In",canvas.width/2, 460);
-
-        ctx.font = "30px Arial";
+        $("#pumpCanvas").hide();
+        ctx.clearRect(0,0,500,500);
+        ctx.font = "50px Arial";
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
-        ctx.fillText("0 Tokens",canvas.width/2, 50);
+        ctx.fillText("+",canvas.width/2, canvas.height/2);
+
+        setTimeout(function(){
+            ctx.clearRect(0,0,500,500);
+            ctx.fillStyle = "#60c16d";
+            ctx.fillRect(0,400,500,100);
+
+            ctx.font = "30px Arial";
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.fillText("Cash In",canvas.width/2, 460);
+
+            ctx.font = "30px Arial";
+            ctx.fillStyle = 'black';
+            ctx.textAlign = 'center';
+            ctx.fillText("0 Tokens",canvas.width/2, 50);
+        }, pauseTime);
+
 
         bWidth = 10;
         bHeight = 10;
