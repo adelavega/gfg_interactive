@@ -49,6 +49,7 @@ function PracticeBlock() {
 }
 
 PracticeBlock.prototype.start = function(exitTrial) {
+    console.log(exitTrial);
     this.exitTrial = exitTrial;
     $('#inst').hide();
     $('#taskContainer').show();
