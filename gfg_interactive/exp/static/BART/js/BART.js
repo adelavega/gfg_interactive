@@ -90,7 +90,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
         // maxVal = Math.floor((Math.random() * 64) + 1);
         maxVal = 10;
-        pauseTime = ((Math.random() * 7) + 1) * 60;
+        pauseTime = ((Math.random() * 7) + 1) * 360;
         console.log(pauseTime);
         $("#pumpCanvas").hide();
         ctx.clearRect(0,0,500,500);
