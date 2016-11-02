@@ -56,17 +56,13 @@ PracticeBlock.prototype.start = function(exitTrial) {
     this.Trial();
 };
 
-PracticeBlock.prototype.Trial = function(exiTrial) {
+PracticeBlock.prototype.Trial = function(exitTrial) {
     this.exitTrial = exitTrial;
     var  finished, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight,vertadd;
     balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
 
-    for (i = 0; i < 5; i++) {
-        finished = false;
-        reset();
-    }
 
     $("#pumpCanvas").on('click', function() {
 
