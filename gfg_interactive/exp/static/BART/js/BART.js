@@ -146,12 +146,12 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
 
     }
     function pump() {
-        $("#pumpCanvas").hide();
+
         var startTime = new Date().getTime();
         this.interval = setInterval(function(){
 
             if(new Date().getTime() - startTime > 75){
-                $("#pumpCanvas").show();
+
                 clearInterval(this.interval);
             }
             pumpGrow();
