@@ -57,6 +57,7 @@ PracticeBlock.prototype.start = function(exitTrial) {
 };
 
 PracticeBlock.prototype.Trial = function(exiTrial) {
+    this.exitTrial = exitTrial;
     var  finished, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight,vertadd;
     balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
@@ -177,6 +178,8 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         ctx.fillText(pumps.toString() + ' Tokens',canvas.width/2, 50);
+        return this.exitTrial();
+
     }
 
     function pop() {
@@ -234,6 +237,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         this.interval4 = setInterval(function() {
             if (new Date().getTime() - starttime3 > 200){
                 clearInterval(this.interval4);
+                return this.exitTrial();
             }
             if (starttime3) {
                 ctx.clearRect(0, 0, 500, 500);
