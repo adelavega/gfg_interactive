@@ -72,7 +72,6 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
                 pumps++;
                 pump();
             } else {
-                $("#pumpCanvas").hide();
                 pop();
             }
         }
@@ -91,7 +90,6 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         // maxVal = Math.floor((Math.random() * 64) + 1);
         maxVal = 10;
         pauseTime = ((Math.random() * 7) + 1) * 360;
-        console.log(pauseTime);
         $("#pumpCanvas").hide();
         ctx.clearRect(0,0,500,500);
         ctx.font = "50px Arial";
@@ -130,7 +128,6 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         bWidth += 1;
         bHeight += 1;
         vertadd += 0.4;
-        console.log(bWidth,bHeight);
         ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, ((canvas.height/1.5) - bHeight/2) - vertadd , bWidth, bHeight);
 
         ctx.fillStyle = "#60c16d";
