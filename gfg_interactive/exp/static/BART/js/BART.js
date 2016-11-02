@@ -66,16 +66,19 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     reset();
     $("#pumpCanvas").on('click', function() {
 
-        if (pumps < maxVal){
-            pumps ++;
-            pump();
-        }else{
-            $("#pumpCanvas").hide();
-            pop();
+        if (popped == false) & (cashed == false)
+        {
+            if (pumps < maxVal) {
+                pumps++;
+                pump();
+            } else {
+                $("#pumpCanvas").hide();
+                pop();
+            }
         }
     });
     $("#cashCanvas").on('click', function() {
-        console.log('cash');
+        cash();
     });
 
     function reset() {
@@ -127,7 +130,18 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         }, 20);
     }
 
+    function cash() {
+        cashed = true;
+        ctx.clearRect(0,0,500,500);
+        ctx.font = "30px Arial";
+        ctx.fillStyle = 'green';
+        ctx.textAlign = 'center';
+        ctx.globalAlpha = 1;
+        ctx.fillText("Cashed In", canvas.width / 2, canvas.height / 2);
+    }
+
     function pop() {
+        popped = true;
         var vertsub = 0;
         var popsize = pumps * 10;
         var opacity = 1;
@@ -178,8 +192,8 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
                 ctx.fillText("Popped!", canvas.width / 2, canvas.height / 2);
             }
         },20);
-
     }
+
 
 
 
