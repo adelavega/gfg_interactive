@@ -61,7 +61,7 @@ PracticeBlock.prototype.Trial = function() {
     balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
-
+    console.log(this.exitTrial);
     reset();
 
     $("#pumpCanvas").on('click', function() {
