@@ -96,6 +96,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             if (new Date().getTime() - startTime > pauseTime){
                 clearInterval(this.interval);
                 console.log('Done');
+                ctx.clearRect(0,0,500,500);
 
             }
             $("#pumpCanvas").hide();
