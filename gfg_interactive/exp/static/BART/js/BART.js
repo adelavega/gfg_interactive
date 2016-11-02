@@ -46,7 +46,7 @@ Instruct.prototype.buttonClick = function(button) {
 
 function PracticeBlock() {
     this.trial = 0;
-};
+}
 
 PracticeBlock.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
@@ -63,6 +63,7 @@ PracticeBlock.prototype.Trial = function() {
     ctx = canvas.getContext('2d');
 
     reset();
+    this.exitTrial();
 
     $("#pumpCanvas").on('click', function() {
 
@@ -173,7 +174,7 @@ PracticeBlock.prototype.Trial = function() {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         ctx.fillText(pumps.toString() + ' Tokens',canvas.width/2, 50);
-        this.exitTrial();
+        return this.exitTrial;
 
     }
 
