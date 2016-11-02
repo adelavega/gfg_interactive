@@ -61,7 +61,7 @@ PracticeBlock.prototype.Trial = function() {
     balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
-    console.log(this.exitTrial);
+    var exitTrial = this.exitTrial;
     reset();
 
     $("#pumpCanvas").on('click', function() {
@@ -73,13 +73,13 @@ PracticeBlock.prototype.Trial = function() {
                 pump();
             } else {
                 pop();
-                console.log(this.exitTrial);
+                console.log(exitTrial);
             }
         }
     });
     $("#cashCanvas").on('click', function() {
         cash();
-        console.log(this.exitTrial);
+        console.log(exitTrial);
     });
 
     function reset() {
