@@ -57,16 +57,16 @@ PracticeBlock.prototype.start = function(exitTrial) {
 };
 
 PracticeBlock.prototype.Trial = function(exiTrial) {
-    var  pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight,vertadd;
-
+    var  finished, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight,vertadd;
     balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
 
+    finished = false;
     reset();
     $("#pumpCanvas").on('click', function() {
 
-        if (popped == false) & (cashed == false)
+        if (finished == false)
         {
             if (pumps < maxVal) {
                 pumps++;
@@ -84,6 +84,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     function reset() {
         this.trial ++;
         pumps = 0;
+        finished = false;
         cashed = false;
         popped = false;
         // maxVal = Math.floor((Math.random() * 64) + 1);
@@ -131,6 +132,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function cash() {
+        finished = true;
         console.log('cashed');
         cashed = true;
         ctx.clearRect(0,0,500,500);
@@ -142,6 +144,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function pop() {
+        finished = true;
         popped = true;
         var vertsub = 0;
         var popsize = pumps * 10;
