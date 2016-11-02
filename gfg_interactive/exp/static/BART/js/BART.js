@@ -63,6 +63,7 @@ PracticeBlock.prototype.Trial = function(exitTrial) {
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
 
+    reset();
 
     $("#pumpCanvas").on('click', function() {
 
