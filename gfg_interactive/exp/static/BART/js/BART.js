@@ -74,12 +74,14 @@ PracticeBlock.prototype.Trial = function() {
             } else {
                 pop();
                 console.log(exitTrial);
+                exitTrial();
             }
         }
     });
     $("#cashCanvas").on('click', function() {
         cash();
         console.log(exitTrial);
+        exitTrial();
     });
 
     function reset() {
