@@ -94,6 +94,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         this.interval = setInterval(function() {
             if (new Date().getTime() - startTime > pauseTime){
                 clearInterval(this.interval);
+                ctx.clearRect(0,0,500,500);
                 ctx.fillStyle = "#60c16d";
                 ctx.fillRect(0,400,500,100);
 
@@ -112,6 +113,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
                 vertadd = 0;
                 ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/1.5) - bHeight/2, bWidth, bHeight);
             }
+            ctx.clearRect(0,0,500,500);
             ctx.font = "50px Arial";
             ctx.fillStyle = 'black';
             ctx.textAlign = 'center';
