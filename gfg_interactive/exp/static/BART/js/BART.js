@@ -90,7 +90,6 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         // maxVal = Math.floor((Math.random() * 64) + 1);
         maxVal = 10;
         pauseTime = ((Math.random() * 7) + 1) * 360;
-        $("#pumpCanvas").hide();
         ctx.clearRect(0,0,500,500);
         ctx.font = "50px Arial";
         ctx.fillStyle = 'black';
@@ -98,7 +97,6 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         ctx.fillText("+",canvas.width/2, canvas.height/2);
 
         setTimeout(function(){
-            $("#pumpCanvas").show();
             ctx.clearRect(0,0,500,500);
             ctx.fillStyle = "#60c16d";
             ctx.fillRect(0,400,500,100);
@@ -160,7 +158,6 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function cash() {
-        $("#pumpCanvas").hide();
         finished = true;
         console.log('cashed');
         cashed = true;
@@ -178,7 +175,6 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function pop() {
-        $("#pumpCanvas").hide();
         finished = true;
         popped = true;
         pumps = 0;
