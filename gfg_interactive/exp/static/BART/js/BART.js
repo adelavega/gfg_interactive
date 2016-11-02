@@ -63,7 +63,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
 
-    (i = 0; i < 5; i++) {
+    for (i = 0; i < 5; i++) {
         finished = false;
         reset();
     }
