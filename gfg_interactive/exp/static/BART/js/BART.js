@@ -87,16 +87,15 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
         finished = false;
         cashed = false;
         popped = false;
+
         // maxVal = Math.floor((Math.random() * 64) + 1);
         maxVal = 10;
-        pauseTime = ((Math.random() * 7) + 1) * 10;
+        pauseTime = ((Math.random() * 7) + 1) * 60;
         var startTime = new Date().getTime();
         this.interval = setInterval(function() {
             if (new Date().getTime() - startTime > pauseTime){
                 clearInterval(this.interval);
                 console.log('Done');
-                ctx.clearRect(0,0,500,500);
-
             }
             $("#pumpCanvas").hide();
             ctx.clearRect(0,0,500,500);
