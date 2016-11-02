@@ -81,12 +81,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     });
 
     function reset() {
-        $("#pumpCanvas").hide();
-        this.trial ++;
-        pumps = 0;
-        finished = false;
-        cashed = false;
-        popped = false;
+
 
         // maxVal = Math.floor((Math.random() * 64) + 1);
         maxVal = 10;
@@ -116,7 +111,12 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
             bHeight = 10;
             vertadd = 0;
             ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/1.5) - bHeight/2, bWidth, bHeight);
-            $("#pumpCanvas").show();
+
+            this.trial ++;
+            pumps = 0;
+            finished = false;
+            cashed = false;
+            popped = false;
         }, pauseTime);
 
 
