@@ -63,7 +63,6 @@ PracticeBlock.prototype.Trial = function() {
     ctx = canvas.getContext('2d');
 
     reset();
-    this.exitTrial();
 
     $("#pumpCanvas").on('click', function() {
 
@@ -74,11 +73,13 @@ PracticeBlock.prototype.Trial = function() {
                 pump();
             } else {
                 pop();
+                this.exitTrial();
             }
         }
     });
     $("#cashCanvas").on('click', function() {
         cash();
+        this.exitTrial();
     });
 
     function reset() {
@@ -174,7 +175,6 @@ PracticeBlock.prototype.Trial = function() {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         ctx.fillText(pumps.toString() + ' Tokens',canvas.width/2, 50);
-        return this.exitTrial;
 
     }
 
@@ -233,7 +233,6 @@ PracticeBlock.prototype.Trial = function() {
         this.interval4 = setInterval(function() {
             if (new Date().getTime() - starttime3 > 200){
                 clearInterval(this.interval4);
-                this.exitTrial();
             }
             if (starttime3) {
                 ctx.clearRect(0, 0, 500, 500);
