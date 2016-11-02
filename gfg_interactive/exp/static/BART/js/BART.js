@@ -49,7 +49,6 @@ function PracticeBlock() {
 }
 
 PracticeBlock.prototype.start = function(exitTrial) {
-    console.log(exitTrial);
     this.exitTrial = exitTrial;
     $('#inst').hide();
     $('#taskContainer').show();
@@ -74,13 +73,13 @@ PracticeBlock.prototype.Trial = function() {
                 pump();
             } else {
                 pop();
-                this.exitTrial();
+                console.log(this.exitTrial);
             }
         }
     });
     $("#cashCanvas").on('click', function() {
         cash();
-        this.exitTrial();
+        console.log(this.exitTrial);
     });
 
     function reset() {
