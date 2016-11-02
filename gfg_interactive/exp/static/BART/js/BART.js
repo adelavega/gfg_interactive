@@ -131,6 +131,7 @@ PracticeBlock.prototype.Trial = function(exiTrial) {
     }
 
     function cash() {
+        console.log('cashed');
         cashed = true;
         ctx.clearRect(0,0,500,500);
         ctx.font = "30px Arial";
