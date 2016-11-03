@@ -57,7 +57,7 @@ PracticeBlock.prototype.start = function(exitTrial) {
 };
 
 PracticeBlock.prototype.Trial = function() {
-    var  finished, pumps, cashed, popped, maxVal,canvas, ctx, balloon, bWidth,bHeight,vertadd;
+    var  finished, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight,vertadd;
     balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
@@ -75,23 +75,19 @@ PracticeBlock.prototype.Trial = function() {
                 pop();
             }
         }
-        else{
-            exitTrial();
-        }
     });
-
-
-
     $("#cashCanvas").on('click', function() {
         cash();
     });
 
-
     function reset() {
 
-        maxVal = Math.floor((Math.random() * 64) + 1);
+        // maxVal = Math.floor((Math.random() * 64) + 1);
+        maxVal = 10;
+
         ctx.clearRect(0,0,500,500);
 
+        ctx.clearRect(0,0,500,500);
 
         ctx.fillStyle = "#60c16d";
         ctx.fillRect(0,400,500,100);
@@ -117,6 +113,8 @@ PracticeBlock.prototype.Trial = function() {
         cashed = false;
         popped = false;
 
+
+
     }
 
     function pumpGrow() {
@@ -141,7 +139,6 @@ PracticeBlock.prototype.Trial = function() {
 
 
     }
-
     function pump() {
 
         var startTime = new Date().getTime();
@@ -171,6 +168,8 @@ PracticeBlock.prototype.Trial = function() {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         ctx.fillText(pumps.toString() + ' Tokens',canvas.width/2, 50);
+        setTimeout(function(){return none}, 3);
+
     }
 
     function pop() {
