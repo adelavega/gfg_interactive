@@ -57,7 +57,7 @@ PracticeBlock.prototype.start = function(exitTrial) {
 };
 
 PracticeBlock.prototype.Trial = function() {
-    var  finished, pumps, cashed, popped, maxVal, pauseTime,canvas, ctx, balloon, bWidth,bHeight,vertadd;
+    var  finished, pumps, cashed, popped, maxVal,canvas, ctx, balloon, bWidth,bHeight,vertadd;
     balloon = document.getElementById("balloonIm");
     canvas = document.getElementById("taskcanvas");
     ctx = canvas.getContext('2d');
@@ -73,21 +73,29 @@ PracticeBlock.prototype.Trial = function() {
                 pump();
             } else {
                 pop();
-                console.log(exitTrial);
-                exitTrial();
             }
         }
+        else{
+            exitTrial();
+        }
     });
+
+
+
     $("#cashCanvas").on('click', function() {
         cash();
         console.log(exitTrial);
         exitTrial();
     });
 
+
     function reset() {
 
         maxVal = Math.floor((Math.random() * 64) + 1);
         ctx.clearRect(0,0,500,500);
+
+        ctx.fillStyle = "#60c16d";
+        ctx.fillRect(0,400,500,100);
 
         ctx.font = "30px Arial";
         ctx.fillStyle = 'white';
@@ -163,8 +171,6 @@ PracticeBlock.prototype.Trial = function() {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         ctx.fillText(pumps.toString() + ' Tokens',canvas.width/2, 50);
-        setTimeout(function(){return none}, 3);
-
     }
 
     function pop() {
