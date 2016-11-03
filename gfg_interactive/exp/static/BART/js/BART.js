@@ -112,7 +112,7 @@ PracticeBlock.prototype.Trial = function() {
         finished = false;
         cashed = false;
         popped = false;
-        
+
     }
 
     function pumpGrow() {
