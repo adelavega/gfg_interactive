@@ -92,6 +92,7 @@ PracticeBlock.prototype.Trial = function() {
         maxVal = Math.floor((Math.random() * 64) + 1);
         ctx.clearRect(0,0,500,500);
 
+
         ctx.fillStyle = "#60c16d";
         ctx.fillRect(0,400,500,100);
 
@@ -140,6 +141,7 @@ PracticeBlock.prototype.Trial = function() {
 
 
     }
+
     function pump() {
 
         var startTime = new Date().getTime();
