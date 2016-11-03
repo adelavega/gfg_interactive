@@ -88,42 +88,31 @@ PracticeBlock.prototype.Trial = function() {
 
         // maxVal = Math.floor((Math.random() * 64) + 1);
         maxVal = 10;
-        pauseTime = ((Math.random() * 7) + 1) * 360;
         ctx.clearRect(0,0,500,500);
-        ctx.font = "50px Arial";
+        ctx.fillStyle = "#60c16d";
+        ctx.fillRect(0,400,500,100);
+
+        ctx.font = "30px Arial";
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.fillText("Cash In",canvas.width/2, 460);
+
+        ctx.font = "30px Arial";
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
-        ctx.fillText("+",canvas.width/2, canvas.height/2);
+        ctx.fillText("0 Tokens",canvas.width/2, 50);
 
-        setTimeout(function(){
-            ctx.clearRect(0,0,500,500);
-            ctx.fillStyle = "#60c16d";
-            ctx.fillRect(0,400,500,100);
+        bWidth = 10;
+        bHeight = 10;
+        vertadd = 0;
+        ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/1.5) - bHeight/2, bWidth, bHeight);
 
-            ctx.font = "30px Arial";
-            ctx.fillStyle = 'white';
-            ctx.textAlign = 'center';
-            ctx.fillText("Cash In",canvas.width/2, 460);
-
-            ctx.font = "30px Arial";
-            ctx.fillStyle = 'black';
-            ctx.textAlign = 'center';
-            ctx.fillText("0 Tokens",canvas.width/2, 50);
-
-            bWidth = 10;
-            bHeight = 10;
-            vertadd = 0;
-            ctx.drawImage(balloon, (canvas.width/2) - bWidth/2, (canvas.height/1.5) - bHeight/2, bWidth, bHeight);
-
-            this.trial ++;
-            pumps = 0;
-            finished = false;
-            cashed = false;
-            popped = false;
-        }, pauseTime);
-
-
-
+        this.trial ++;
+        pumps = 0;
+        finished = false;
+        cashed = false;
+        popped = false;
+        
     }
 
     function pumpGrow() {
