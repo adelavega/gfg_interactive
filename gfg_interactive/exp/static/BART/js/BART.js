@@ -87,15 +87,13 @@ PracticeBlock.prototype.Trial = function() {
 
         ctx.clearRect(0,0,500,500);
 
-        ctx.clearRect(0,0,500,500);
-
-        ctx.fillStyle = "#60c16d";
-        ctx.fillRect(0,400,500,100);
-
         ctx.font = "30px Arial";
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.fillText("Cash In",canvas.width/2, 460);
+
+        ctx.fillStyle = "#60c16d";
+        ctx.fillRect(0,400,500,100);
 
         ctx.font = "30px Arial";
         ctx.fillStyle = 'black';
