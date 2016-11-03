@@ -86,11 +86,8 @@ PracticeBlock.prototype.Trial = function() {
 
     function reset() {
 
-        // maxVal = Math.floor((Math.random() * 64) + 1);
-        maxVal = 10;
+        maxVal = Math.floor((Math.random() * 64) + 1);
         ctx.clearRect(0,0,500,500);
-        ctx.fillStyle = "#60c16d";
-        ctx.fillRect(0,400,500,100);
 
         ctx.font = "30px Arial";
         ctx.fillStyle = 'white';
