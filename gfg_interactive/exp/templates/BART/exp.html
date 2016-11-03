@@ -19,13 +19,9 @@
     <p id="inst" class="instructions lead tasktext"></p>
     <div class="row"  id = 'taskContainer'>
         <div class = 'col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3' style=" position: relative; height:500px; text-align:center;">
-        <canvas id = 'taskcanvas' height="500px" width="500px" style=" -webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none; position: absolute;transform: translateX(-50%); border:5px solid #c3c3c3;"></canvas>
-        <canvas id = 'pumpCanvas' height="400px" width="500px" style=" -webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none; position: absolute;transform: translateX(-50%); opacity: 0;"></canvas>
-        <canvas id = 'cashCanvas' height="100px" width="500px" style=" -webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none; bottom: -1px; position: absolute;transform: translateX(-50%); opacity: 0;"></canvas>
+        <div id="taskContainer" style="position: absolute; background-color: #0e90d2; width: 500px; height: 500px;"> </div>
         </div>
     </div>
-    <img id = "balloonIm" src ="static/BART/images/PurpleBalloon.png" class="hidden">
-    <img id = "PoppedIm" src ="static/BART/images/purplePopped.png" class="hidden">
     <div class="row">
     <button id="leftButton" class="btn btn-default btn-lg btn-responsive" style="position:relative;z-index:2; float: left; top:80%;margin-left:30%;font:21px Arial; opacity:1"> <span class="glyphicon glyphicon-step-backward" style="vertical-align: -2px"></span><span id="leftText">Back</span></button>
     <button id ="rightButton" class="btn btn-success btn-lg btn-responsive" style="position:relative;z-index:2; float: right;top:65%;margin-right:24%;font:21px Arial; opacity:1"><span id="rightText">Continue</span><span class="glyphicon glyphicon-step-forward" style="vertical-align: -2px"></span> </button>
