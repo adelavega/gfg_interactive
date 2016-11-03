@@ -84,8 +84,6 @@ PracticeBlock.prototype.Trial = function() {
 
     $("#cashCanvas").on('click', function() {
         cash();
-        console.log(exitTrial);
-        exitTrial();
     });
 
 
