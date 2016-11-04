@@ -44,16 +44,25 @@ Instruct.prototype.buttonClick = function(button) {
 };
 
 
-function PracticeBlock() {
-    this.trial = 0;
+function Task(trial) {
+    this.trial = trial;
+    var pumps = 0;
+    var popped = false;
+    var cashed = false;
+    var popPoint = Math.floor((Math.random() * 64) + 1);
+    $('#balloonIm').css({
+         height: '10%',
+         top: '65%'
+    }).show()
 }
 
-PracticeBlock.prototype.start = function(exitTrial) {
+Task.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
     $('#inst').hide();
     $('#taskContainer').show();
     hideButtons();
 };
+
 
 
 BARTTask = {
@@ -65,5 +74,5 @@ BARTTask = {
         "At the end of the task you will view a report of your performance in the task.<br><br> To practice with a few balloons, press continue."
     ],
     Instruction: Instruct,
-    practice: PracticeBlock
+    practice: Task
 };
