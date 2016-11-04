@@ -58,13 +58,9 @@ Task.prototype.start = function(exitTrial) {
     var popped = false;
     var cashed = false;
     var popPoint = Math.floor((Math.random() * 64) + 1);
-    $('#balloonIm').css({
-         height: '10%',
-         top: '65%'
-    }).show();
-
 
     $('#pumpBox').click(function(){
+        console.log('pump');
         $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
     });
 };
