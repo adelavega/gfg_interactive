@@ -55,11 +55,10 @@ function Task(trial) {
          top: '65%'
     }).show();
 
-    if (!popped && !cashed){
-        $('#pumpBox').click(function(){
-            $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
-        });
-    }
+
+    $('#pumpBox').click(function(){
+        $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
+    });
 }
 
 Task.prototype.start = function(exitTrial) {
