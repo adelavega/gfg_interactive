@@ -60,8 +60,9 @@ Task.prototype.start = function(exitTrial) {
     var popPoint = Math.floor((Math.random() * 64) + 1);
 
     $('#pumpBox').click(function(){
-        console.log('pump');
-        $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
+        if (!popped && !cashed) {
+            $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
+        }
     });
 };
 
