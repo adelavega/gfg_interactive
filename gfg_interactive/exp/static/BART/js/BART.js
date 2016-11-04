@@ -53,7 +53,13 @@ function Task(trial) {
     $('#balloonIm').css({
          height: '10%',
          top: '65%'
-    }).show()
+    }).show();
+
+    if (!popped && !cashed){
+        $('#pumpBox').click(function(){
+            $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
+        });
+    }
 }
 
 Task.prototype.start = function(exitTrial) {
