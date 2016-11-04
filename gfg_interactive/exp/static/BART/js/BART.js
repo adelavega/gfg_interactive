@@ -46,6 +46,14 @@ Instruct.prototype.buttonClick = function(button) {
 
 function Task(trial) {
     this.trial = trial;
+
+}
+
+Task.prototype.start = function(exitTrial) {
+    this.exitTrial = exitTrial;
+    $('#inst').hide();
+    $('#taskContainer').show();
+    hideButtons();
     var pumps = 0;
     var popped = false;
     var cashed = false;
@@ -59,13 +67,6 @@ function Task(trial) {
     $('#pumpBox').click(function(){
         $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
     });
-}
-
-Task.prototype.start = function(exitTrial) {
-    this.exitTrial = exitTrial;
-    $('#inst').hide();
-    $('#taskContainer').show();
-    hideButtons();
 };
 
 
