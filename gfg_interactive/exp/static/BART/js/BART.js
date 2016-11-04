@@ -62,7 +62,24 @@ Task.prototype.start = function(exitTrial) {
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
+            pumps ++;
+            if (pumps > popPoint){
+                popped = true;
+                pumps = 0;
+                console.log('popped');
+                // TODO: add pop functionality
+            }
+        } else {
+            // TODO: add reset functionality
         }
+    });
+
+    $('#cashbox').click(function(){
+       if (!popped && !cashed) {
+           cashed = true;
+           console.log('cashed');
+           // TODO: add cash functionality
+       }
     });
 };
 
