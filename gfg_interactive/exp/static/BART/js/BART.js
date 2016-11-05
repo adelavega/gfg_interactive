@@ -74,7 +74,7 @@ Task.prototype.start = function(exitTrial) {
         }
     });
 
-    $('#cashbox').click(function(){
+    $('#cashBox').click(function(){
        if (!popped && !cashed) {
            cashed = true;
            console.log('cashed');
