@@ -70,8 +70,14 @@ Task.prototype.start = function(exitTrial) {
                 console.log('popped');
                 // TODO: add pop functionality
                 $("#balloonIm").hide();
-                var height = $("#balloonIm").css('height');
-                console.log(height);
+                var bheight = $("#balloonIm").css('height');
+                var bwidth = $('#balloonIm').css('width');
+                var btop = $('#balloonIm').css('top');
+                $("#poppedIm").css({
+                    height: bheight,
+                    width: bwidth,
+                    top: btop
+                }).show();
             }
         } else {
             // TODO: add reset functionality
