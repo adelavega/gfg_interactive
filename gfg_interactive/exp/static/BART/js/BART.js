@@ -58,8 +58,7 @@ Task.prototype.start = function(exitTrial) {
     var pumps = 0;
     var popped = false;
     var cashed = false;
-    // var popPoint = Math.floor((Math.random() * 64) + 1);
-    var popPoint = 64;
+    var popPoint = Math.floor((Math.random() * 64) + 1);
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
@@ -70,24 +69,24 @@ Task.prototype.start = function(exitTrial) {
                 pumps = 0;
                 console.log('popped');
                 // TODO: add pop functionality
-                // $("#balloonIm").hide();
-                // var bheight = $("#balloonIm").css('height');
-                // var bwidth = $('#balloonIm').css('width');
-                // var btop = $('#balloonIm').css('top');
-                // $("#poppedIm").css({
-                //     height: bheight,
-                //     width: bwidth,
-                //     top: btop
-                //     })
-                //     .show()
-                //     .delay(200)
-                //     .animate({
-                //         height:"+=25px",
-                //         width: "+=25px"
-                //     },{duration: 50, easing: "linear"})
-                //     .animate({
-                //         opacity: "0"
-                //     },{duration: 200, easing: "linear",queue:false});
+                $("#balloonIm").hide();
+                var bheight = $("#balloonIm").css('height');
+                var bwidth = $('#balloonIm').css('width');
+                var btop = $('#balloonIm').css('top');
+                $("#poppedIm").css({
+                    height: bheight,
+                    width: bwidth,
+                    top: btop
+                    })
+                    .show()
+                    .delay(200)
+                    .animate({
+                        height:"+=25px",
+                        width: "+=25px"
+                    },{duration: 50, easing: "linear"})
+                    .animate({
+                        opacity: "0"
+                    },{duration: 200, easing: "linear",queue:false});
 
 
             }
