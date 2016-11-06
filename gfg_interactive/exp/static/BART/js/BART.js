@@ -77,7 +77,15 @@ Task.prototype.start = function(exitTrial) {
                     height: bheight,
                     width: bwidth,
                     top: btop
-                }).show();
+                    })
+                    .delay(200)
+                    .animate({
+                        height:"+=25px",
+                        width: "+=25px"
+                    },{duration: 50, easing: "linear"})
+                    .animate({
+                        opacity: "0"
+                    },{duration: 200, easing: "linear",queue:false});
             }
         } else {
             // TODO: add reset functionality
@@ -85,11 +93,11 @@ Task.prototype.start = function(exitTrial) {
     });
 
     $('#cashBox').click(function(){
-       if (!popped && !cashed) {
-           cashed = true;
-           console.log('cashed');
-           // TODO: add cash functionality
-       }
+        if (!popped && !cashed) {
+            cashed = true;
+            console.log('cashed');
+            // TODO: add cash functionality
+        }
     });
 };
 
