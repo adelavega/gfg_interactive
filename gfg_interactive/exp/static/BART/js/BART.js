@@ -53,6 +53,7 @@ Task.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
     $('#inst').hide();
     $('#taskContainer').show();
+    $("#poppedIm").hide();
     hideButtons();
     var pumps = 0;
     var popped = false;
@@ -68,7 +69,8 @@ Task.prototype.start = function(exitTrial) {
                 pumps = 0;
                 console.log('popped');
                 // TODO: add pop functionality
-                $("#balloonIm").animate({bottom: "-150%"},{duration: 100, easing: "linear",queue:false});
+                $("#balloonIm").hide();
+                $('#poppedIm').show();
             }
         } else {
             // TODO: add reset functionality
