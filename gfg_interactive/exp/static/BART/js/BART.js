@@ -78,6 +78,8 @@ Task.prototype.start = function(exitTrial) {
                     width: bwidth,
                     top: btop
                 }).show();
+                console.log(bheight);
+                console.log($("#poppedIm").css('height'));
             }
         } else {
             // TODO: add reset functionality
