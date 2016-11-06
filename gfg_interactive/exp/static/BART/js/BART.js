@@ -78,6 +78,7 @@ Task.prototype.start = function(exitTrial) {
                     width: bwidth,
                     top: btop
                     })
+                    .show()
                     .delay(200)
                     .animate({
                         height:"+=25px",
