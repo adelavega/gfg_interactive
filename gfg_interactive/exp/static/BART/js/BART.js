@@ -88,7 +88,7 @@ Task.prototype.start = function(exitTrial) {
                         opacity: "0"
                     },{duration: 200, easing: "linear",queue:false});
                 $("#pumpBox").css({
-                    backgroundColor: "red"
+                    backgroundColor: "#FFB7B7"
                 });
 
             }
