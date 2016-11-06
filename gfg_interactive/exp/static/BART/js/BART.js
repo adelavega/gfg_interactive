@@ -87,7 +87,7 @@ Task.prototype.start = function(exitTrial) {
                     .animate({
                         opacity: "0"
                     },{duration: 200, easing: "linear",queue:false});
-                $("pumpBox").animate({
+                $("#mainContainer").animate({
                     backgroundColor: "#FFB7B7"
                 });
 
