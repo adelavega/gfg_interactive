@@ -59,7 +59,7 @@ Task.prototype.start = function(exitTrial) {
     var popped = false;
     var cashed = false;
     // var popPoint = Math.floor((Math.random() * 64) + 1);
-    var popPoint = 20;
+    var popPoint = 64;
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
