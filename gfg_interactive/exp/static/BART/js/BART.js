@@ -68,6 +68,7 @@ Task.prototype.start = function(exitTrial) {
                 pumps = 0;
                 console.log('popped');
                 // TODO: add pop functionality
+                $("#balloonIm").animate({bottom: "-150%"},{duration: 100, easing: "linear",queue:false});
             }
         } else {
             // TODO: add reset functionality
