@@ -70,24 +70,24 @@ Task.prototype.start = function(exitTrial) {
                 pumps = 0;
                 console.log('popped');
                 // TODO: add pop functionality
-                $("#balloonIm").hide();
-                var bheight = $("#balloonIm").css('height');
-                var bwidth = $('#balloonIm').css('width');
-                var btop = $('#balloonIm').css('top');
-                $("#poppedIm").css({
-                    height: bheight,
-                    width: bwidth,
-                    top: btop
-                    })
-                    .show()
-                    .delay(200)
-                    .animate({
-                        height:"+=25px",
-                        width: "+=25px"
-                    },{duration: 50, easing: "linear"})
-                    .animate({
-                        opacity: "0"
-                    },{duration: 200, easing: "linear",queue:false});
+                // $("#balloonIm").hide();
+                // var bheight = $("#balloonIm").css('height');
+                // var bwidth = $('#balloonIm').css('width');
+                // var btop = $('#balloonIm').css('top');
+                // $("#poppedIm").css({
+                //     height: bheight,
+                //     width: bwidth,
+                //     top: btop
+                //     })
+                //     .show()
+                //     .delay(200)
+                //     .animate({
+                //         height:"+=25px",
+                //         width: "+=25px"
+                //     },{duration: 50, easing: "linear"})
+                //     .animate({
+                //         opacity: "0"
+                //     },{duration: 200, easing: "linear",queue:false});
 
 
             }
