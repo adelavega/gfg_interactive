@@ -87,9 +87,7 @@ Task.prototype.start = function(exitTrial) {
                     .animate({
                         opacity: "0"
                     },{duration: 200, easing: "linear",queue:false});
-                $("#pumpBox").css({
-                    backgroundColor: "#FFB7B7"
-                });
+                $("#pumpText").text(String(pumps) + ' tokens');
 
             }
         } else {
