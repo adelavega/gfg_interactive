@@ -73,6 +73,7 @@ Task.prototype.start = function(exitTrial) {
                 var bheight = $("#balloonIm").css('height');
                 var bwidth = $('#balloonIm').css('width');
                 var btop = $('#balloonIm').css('top');
+                $("#pumpText").text(String(pumps) + ' tokens');
                 $("#poppedIm").css({
                     height: bheight,
                     width: bwidth,
@@ -87,7 +88,7 @@ Task.prototype.start = function(exitTrial) {
                     .animate({
                         opacity: "0"
                     },{duration: 200, easing: "linear",queue:false});
-                $("#pumpText").text(String(pumps) + ' tokens');
+
 
             }
         } else {
