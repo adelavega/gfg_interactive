@@ -115,7 +115,16 @@ Task.prototype.start = function(exitTrial) {
             $('#cashText').text('Next Balloon').css({opacity:'0'});
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '50px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
-
+        } else {
+            $("#balloonIm").css({
+                position: 'relative',
+                height: '50px',
+                top: '255px'
+            });
+            $("#pumpText").text('0 Tokens');
+            $("#cashText").css({opacity:'0'});
+            $('#resultText').css({top: '50px' ,opacity:'0'});
+            
         }
     });
 };
