@@ -110,8 +110,7 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText')
                 .text('Cashed!')
                 .css({top: '120px', color:'green'});
-            $('#balloonIm').delay(200)
-                .animate({opacity:'0'},{duration:200});
+            $('#balloonIm').animate({opacity:'0'},{duration:200});
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '100px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
 
