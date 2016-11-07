@@ -69,7 +69,7 @@ Task.prototype.start = function(exitTrial) {
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
 
-                if (trial == max){
+                if (trial == max+1){
                     $('#cashText').text('Finish task').css({opacity: '0'});
                 }else {
                     $('#cashText').text('Next Balloon').css({opacity: '0'});
@@ -90,7 +90,7 @@ Task.prototype.start = function(exitTrial) {
                 .css({top: '20px', color:'green'});
             $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').css({backgroundColor:'#CAC7CA'});
-            if (trial == max){
+            if (trial == max+1){
                 $('#cashText').text('Finish task').css({opacity: '0'});
             }else {
                 $('#cashText').text('Next Balloon').css({opacity: '0'});
@@ -100,7 +100,7 @@ Task.prototype.start = function(exitTrial) {
         } else {
             trial ++;
             console.log(trial);
-            if (trial == max){
+            if (trial == max+1){
                 exitTrial();
                 return true;
             }
@@ -127,6 +127,13 @@ function reset(){
     $('#cashText').text('CASH IN');
     $('#cashBox').css({backgroundColor:'#009201'});
 }
+
+
+
+
+
+
+
 
 BARTTask = {
     warning : "<span style='color:red; font-size:60px'> " + (String.fromCharCode(9888)) + " </span> This task requires 10-15 minutes of your undivided attention <br><br> If you don't have time right now, please come back when you have can focus. <br><br> Otherwise, click continue to begin!",
