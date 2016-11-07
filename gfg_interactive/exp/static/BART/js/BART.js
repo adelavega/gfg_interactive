@@ -49,17 +49,18 @@ function Task(trial) {
 
 }
 
+var pumps, popPoint, cashed, popped;
 Task.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
     $('#inst').hide();
     $('#taskContainer').show();
     $("#poppedIm").hide();
     hideButtons();
-    
-    var pumps = 0;
-    var popped = false;
-    var cashed = false;
-    var popPoint = Math.floor((Math.random() * 63) + 1);
+
+    pumps = 0;
+    popped = false;
+    cashed = false;
+    popPoint = Math.floor((Math.random() * 63) + 1);
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
