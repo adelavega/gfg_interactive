@@ -76,7 +76,7 @@ Task.prototype.start = function(exitTrial) {
                 $("#pumpText").text(String(pumps) + ' tokens');
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
-                $('#cashText').text('Next Balloon').css({opacity:'0.0'});
+                $('#cashText').text('Next Balloon').css({opacity:'0'});
 
                 $("#poppedIm").css({
                     height: bheight,
@@ -94,8 +94,7 @@ Task.prototype.start = function(exitTrial) {
                     },{duration: 200, easing: "linear",queue:false});
                 $('#mainContainer').delay(500)
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
-
-                $("#cashtext").delay(500).animate({opacity:'1.0'},{duration:750, queue:false});
+                $("#cashtext").delay(500).animate({opacity:'1'},{duration:750, queue:false});
 
             }
         } else {
