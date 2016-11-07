@@ -44,8 +44,8 @@ Instruct.prototype.buttonClick = function(button) {
 };
 
 
-function Task(trial) {
-    this.trial = trial;
+function Task() {
+    this.trial = 1;
 
 }
 
@@ -90,8 +90,8 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
             reset();
-
-
+            this.trial ++;
+            console.log(this.trial);
         }
     });
 };
