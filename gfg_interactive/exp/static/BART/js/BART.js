@@ -99,8 +99,10 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
             trial ++;
+
             if (trial == max){
                 exitTrial();
+                return true;
             }
             reset();
         }
