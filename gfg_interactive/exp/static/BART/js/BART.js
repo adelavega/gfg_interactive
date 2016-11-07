@@ -63,14 +63,15 @@ Task.prototype.start = function(exitTrial) {
 
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
-            $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             this.pumps ++;
+            $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             $("#pumpText").text(String(this.pumps) + ' tokens');
+
             if (this.pumps > this.popPoint){
                 this.popped = true;
                 pumps = 0;
-                console.log('popped');
-                // TODO: add pop functionality
+
+                $("#resultText").css({opacity:'1', top:'20px'});
                 $("#balloonIm").hide();
                 var bheight = $("#balloonIm").css('height');
                 var bwidth = $('#balloonIm').css('width');
