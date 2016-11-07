@@ -53,11 +53,11 @@ Task.prototype.start = function(exitTrial) {
     trial = 1;
     reset();
     $('#pumpBox').click(function(){
-        console.log(name);
         if (!popped && !cashed) {
-            $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             pumps ++;
+            $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             $("#pumpText").text(String(pumps) + ' tokens');
+
             if (pumps > popPoint){
                 popped = true;
                 pumps = 0;
@@ -72,7 +72,6 @@ Task.prototype.start = function(exitTrial) {
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                 $("#cashText").delay(500).animate({opacity:'1'},{duration:200, easing:"linear", queue:false});
                 $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
-
             }
         }
     });
@@ -91,7 +90,9 @@ Task.prototype.start = function(exitTrial) {
         } else {
             reset();
             trial ++;
-            console.log(trial);
+            if (trial == 3){
+                exitTrial();
+            }
         }
     });
 };
