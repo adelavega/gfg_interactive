@@ -110,7 +110,7 @@ function reset(){
     $("#pumpText").text(String(pumps) + ' tokens');
     $("#balloonIm").css({height: '50px',width: '50px',top:'250px'}).show();
     $("#balloonIm").animate({opacity:'1'});
-    $('#resultText').css({top: '10px'});
+    $('#resultText').css({top: '90px'});
     $('#cashText').text('CASH IN');
     $('#cashBox').css({backgroundColor:'#009201'});
 
