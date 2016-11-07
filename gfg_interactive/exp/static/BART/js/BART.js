@@ -61,7 +61,7 @@ Task.prototype.start = function(exitTrial) {
             if (pumps > popPoint){
                 popped = true;
                 pumps = 0;
-
+                $('#resultText').text('Popped');
                 $('#resultText').css({top: '20px'});
                 $("#balloonIm").css({opacity:'0'});
                 var bheight = $("#balloonIm").css('height');
