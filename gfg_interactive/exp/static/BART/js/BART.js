@@ -90,7 +90,7 @@ Task.prototype.start = function(exitTrial) {
                         opacity: "0"
                     },{duration: 200, easing: "linear",queue:false});
                 $('#mainContainer').delay(500)
-                    .animate({backgroundColor:'#f8f7ff'},{duration:200,easing:"linear"});
+                    .animate({backgroundColor:'#f8f7ff'},{duration:1000,easing:"linear"});
 
             }
         } else {
