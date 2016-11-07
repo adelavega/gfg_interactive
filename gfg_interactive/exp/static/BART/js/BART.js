@@ -116,19 +116,7 @@ Task.prototype.start = function(exitTrial) {
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '50px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
-            $('#cashBox').animate({backgroundColor:'#009201'},{duration:200});
-            $('#cashText').text('CASH IN').css({opacity:'1'});
-            $("#balloonIm").css({
-                opacity: '1',
-                position: 'relative',
-                height: '50px',
-                width: '45px',
-                top: '255px'
-            });
-            $("#pumpText").text('0 Tokens');
-            $('#resultText').css({top: '50px' ,opacity:'0'});
-            cashed = false;
-            popped = false;
+            
             exitTrial();
 
         }
