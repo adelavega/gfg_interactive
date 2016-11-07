@@ -90,6 +90,8 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').delay(500).animate({top: '100px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
             reset();
+            this.trial ++;
+            console.log(this.trial);
 
 
         }
@@ -111,7 +113,6 @@ function reset(){
     $("#balloonIm").css({height: '50px',width: '50px',top:'250px'}).show();
     $("#balloonIm").animate({opacity:'1'});
     $('#resultText').css({top: '10px'});
-
 }
 
 BARTTask = {
