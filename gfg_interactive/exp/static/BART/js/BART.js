@@ -108,8 +108,8 @@ function reset(){
     cashed = false;
     popPoint = Math.floor((Math.random() * 63) + 1);
     $("#pumpText").text(String(pumps) + ' tokens');
-    $("#balloonIm").animate({height: '50px',width: '50px',top:'250px',opacity:'1'},
-        {duration:200}).show();
+    $("#balloonIm").css({height: '50px',width: '50px',top:'250px'}).show();
+    $("#balloonIm").animate({opacity:'1'});
     $('#resultText').css({top: '10px'});
 
 }
