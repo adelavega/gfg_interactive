@@ -70,8 +70,8 @@ Task.prototype.start = function(exitTrial) {
             if (pumps > popPoint){
                 popped = true;
                 pumps = 0;
-                console.log('popped');
-                // TODO: add pop functionality
+                
+                $('#resultText').css({top: '120px'});
                 $("#balloonIm").hide();
                 var bheight = $("#balloonIm").css('height');
                 var bwidth = $('#balloonIm').css('width');
