@@ -60,9 +60,9 @@ function Task(practice) {
 
 Task.prototype.start = function(exitTrial) {
     reset();
-    console.log(max);
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
+            console.log(max);
             pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             $("#pumpText").text(String(pumps) + ' tokens');
