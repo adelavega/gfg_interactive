@@ -63,7 +63,7 @@ Task.prototype.start = function(exitTrial) {
                 pumps = 0;
                 $('#resultText').text('Popped');
                 $('#resultText').css({color:'red'});
-                $("#balloonIm").css({opacity:'0'});
+                $("#balloonIm").css({opacity:'0'}).hide();
                 $("#pumpText").text(String(pumps) + ' tokens');
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
@@ -83,7 +83,7 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText')
                 .text('Cashed!')
                 .css({top: '20px', color:'green'});
-            $('#balloonIm').animate({opacity:'0'},{duration:200});
+            $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').css({backgroundColor:'#CAC7CA'});
             $('#cashText').text('Next Balloon').css({opacity:'0'});
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
