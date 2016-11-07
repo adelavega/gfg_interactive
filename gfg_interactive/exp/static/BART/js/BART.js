@@ -54,31 +54,32 @@ Task.prototype.start = function(exitTrial) {
     $('#inst').hide();
     $('#taskContainer').show();
     $("#poppedIm").hide();
-    $("#resultText").css({opacity:'0'});
     hideButtons();
-    this.pumps = 0;
+
+    var pumps = 0;
     var popped = false;
     var cashed = false;
-    this.popPoint = Math.floor((Math.random() * 63) + 1);
-
+    var popPoint = Math.floor((Math.random() * 63) + 1);
+    
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
-            this.pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
-            $("#pumpText").text(String(this.pumps) + ' tokens');
-
-            if (this.pumps > this.popPoint){
-                this.popped = true;
+            pumps ++;
+            $("#pumpText").text(String(pumps) + ' tokens');
+            if (pumps > popPoint){
+                popped = true;
                 pumps = 0;
-
+                console.log('popped');
+                // TODO: add pop functionality
                 $("#balloonIm").hide();
                 var bheight = $("#balloonIm").css('height');
                 var bwidth = $('#balloonIm').css('width');
                 var btop = $('#balloonIm').css('top');
-                $("#pumpText").text(String(this.pumps) + ' tokens');
+                $("#pumpText").text(String(pumps) + ' tokens');
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
                 $('#cashText').text('Next Balloon').css({opacity:'0'});
+
                 $("#poppedIm").css({
                     height: bheight,
                     width: bwidth,
@@ -96,7 +97,7 @@ Task.prototype.start = function(exitTrial) {
                 $('#mainContainer').delay(500)
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                 $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
-                $("#resultText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
+
 
             }
         }
