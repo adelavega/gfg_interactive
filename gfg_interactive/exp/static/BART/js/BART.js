@@ -54,8 +54,8 @@ Task.prototype.start = function(exitTrial) {
     $('#inst').hide();
     $('#taskContainer').show();
     $("#poppedIm").hide();
+    $("#resultText").hide();
     hideButtons();
-
     this.pumps = 0;
     var popped = false;
     var cashed = false;
@@ -71,7 +71,6 @@ Task.prototype.start = function(exitTrial) {
                 this.popped = true;
                 pumps = 0;
 
-                $("#resultText").css({opacity:'1', top:'20px'});
                 $("#balloonIm").hide();
                 var bheight = $("#balloonIm").css('height');
                 var bwidth = $('#balloonIm').css('width');
