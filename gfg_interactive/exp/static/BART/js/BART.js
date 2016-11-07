@@ -120,6 +120,7 @@ Task.prototype.start = function(exitTrial) {
                 opacity: '1',
                 position: 'relative',
                 height: '50px',
+                width: '20px',
                 top: '255px'
             });
             $("#pumpText").text('0 Tokens');
