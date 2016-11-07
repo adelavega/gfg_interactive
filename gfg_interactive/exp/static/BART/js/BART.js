@@ -94,7 +94,7 @@ Task.prototype.start = function(exitTrial) {
                     },{duration: 200, easing: "linear",queue:false});
                 $('#mainContainer').delay(500)
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
-                $("#cashtext").delay(500).animate({opacity:'1'},{duration:750, queue:false});
+                $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
 
             }
         } else {
