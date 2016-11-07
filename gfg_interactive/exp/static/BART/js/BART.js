@@ -54,7 +54,7 @@ Task.prototype.start = function(exitTrial) {
     $('#inst').hide();
     $('#taskContainer').show();
     $("#poppedIm").hide();
-    $("#resultText").hide();
+    $("#resultText").css({opacity:'0'});
     hideButtons();
     this.pumps = 0;
     var popped = false;
