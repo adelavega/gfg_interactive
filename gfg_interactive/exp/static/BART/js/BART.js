@@ -55,17 +55,19 @@ Task.prototype.start = function(exitTrial) {
     $('#taskContainer').show();
     $("#poppedIm").hide();
     hideButtons();
-    var pumps = 0;
+
+    this.pumps = 0;
     var popped = false;
     var cashed = false;
     var popPoint = Math.floor((Math.random() * 63) + 1);
+
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
-            pumps ++;
-            $("#pumpText").text(String(pumps) + ' tokens');
-            if (pumps > popPoint){
-                popped = true;
+            this.pumps ++;
+            $("#pumpText").text(String(this.pumps) + ' tokens');
+            if (this.pumps > this.popPoint){
+                this.popped = true;
                 pumps = 0;
                 console.log('popped');
                 // TODO: add pop functionality
@@ -73,7 +75,7 @@ Task.prototype.start = function(exitTrial) {
                 var bheight = $("#balloonIm").css('height');
                 var bwidth = $('#balloonIm').css('width');
                 var btop = $('#balloonIm').css('top');
-                $("#pumpText").text(String(pumps) + ' tokens');
+                $("#pumpText").text(String(this.pumps) + ' tokens');
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
                 $('#cashText').text('Next Balloon').css({opacity:'0'});
@@ -96,9 +98,8 @@ Task.prototype.start = function(exitTrial) {
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                 $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
 
+
             }
-        } else {
-            // TODO: add reset functionality
         }
     });
 
@@ -106,7 +107,7 @@ Task.prototype.start = function(exitTrial) {
         if (!popped && !cashed) {
             cashed = true;
             console.log('cashed');
-            // TODO: add cash functionality
+
         }
     });
 };
