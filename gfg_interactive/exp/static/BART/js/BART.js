@@ -116,7 +116,7 @@ Task.prototype.start = function(exitTrial) {
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '50px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
-            $('#cashBox').css({backgroundColor:'#009201'});
+            $('#cashBox').animate({backgroundColor:'#009201'},{duration:200});
             $('#cashText').text('CASH IN').css({opacity:'1'});
             $("#balloonIm").css({
                 opacity: '1',
