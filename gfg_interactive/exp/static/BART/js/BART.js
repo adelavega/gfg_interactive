@@ -69,7 +69,7 @@ Task.prototype.start = function(exitTrial) {
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
 
-                if (trial == max-1){
+                if (trial == max){
                     $('#cashText').text('Finish task').css({opacity: '0'});
                 }else {
                     $('#cashText').text('Next Balloon').css({opacity: '0'});
@@ -90,7 +90,7 @@ Task.prototype.start = function(exitTrial) {
                 .css({top: '20px', color:'green'});
             $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').css({backgroundColor:'#CAC7CA'});
-            if (trial == max-1){
+            if (trial == max){
                 $('#cashText').text('Finish task').css({opacity: '0'});
             }else {
                 $('#cashText').text('Next Balloon').css({opacity: '0'});
@@ -100,7 +100,7 @@ Task.prototype.start = function(exitTrial) {
         } else {
             trial ++;
             console.log(trial);
-            if (trial == max-1){
+            if (trial == max){
                 exitTrial();
                 return true;
             }
@@ -126,8 +126,6 @@ function reset(){
     $('#resultText').css({top: '0px'});
     $('#cashText').text('CASH IN');
     $('#cashBox').css({backgroundColor:'#009201'});
-
-
 }
 
 BARTTask = {
