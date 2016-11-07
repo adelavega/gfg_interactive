@@ -48,9 +48,10 @@ function Task() {
 }
 
 
-var pumps, popPoint, cashed, popped, trial;
+var pumps, popPoint, cashed, popped, trial, max;
 Task.prototype.start = function(exitTrial) {
     trial = 1;
+    max = 5;
     reset();
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
@@ -67,7 +68,12 @@ Task.prototype.start = function(exitTrial) {
                 $("#pumpText").text(String(pumps) + ' tokens');
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
-                $('#cashText').text('Next Balloon').css({opacity:'0'});
+
+                if (trial == max-1){
+                    $('#cashText').text('Finish task').css({opacity: '0'});
+                }else {
+                    $('#cashText').text('Next Balloon').css({opacity: '0'});
+                }
                 $('#mainContainer').delay(500)
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                 $("#cashText").delay(500).animate({opacity:'1'},{duration:200, easing:"linear", queue:false});
@@ -84,15 +90,19 @@ Task.prototype.start = function(exitTrial) {
                 .css({top: '20px', color:'green'});
             $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').css({backgroundColor:'#CAC7CA'});
-            $('#cashText').text('Next Balloon').css({opacity:'0'});
+            if (trial == max-1){
+                $('#cashText').text('Finish task').css({opacity: '0'});
+            }else {
+                $('#cashText').text('Next Balloon').css({opacity: '0'});
+            }
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
-            reset();
             trial ++;
-            if (trial == 3){
+            if (trial == max){
                 exitTrial();
             }
+            reset();
         }
     });
 };
