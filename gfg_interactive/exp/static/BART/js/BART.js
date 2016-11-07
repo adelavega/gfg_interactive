@@ -72,7 +72,7 @@ Task.prototype.start = function(exitTrial) {
                 pumps = 0;
 
                 $('#resultText').css({top: '20px'});
-                $("#balloonIm").hide();
+                $("#balloonIm").css({opacity:'0'});
                 var bheight = $("#balloonIm").css('height');
                 var bwidth = $('#balloonIm').css('width');
                 var btop = $('#balloonIm').css('top');
@@ -117,6 +117,7 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').delay(500).animate({top: '50px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
             $("#balloonIm").css({
+                opacity: '1',
                 position: 'relative',
                 height: '50px',
                 top: '255px'
@@ -124,7 +125,7 @@ Task.prototype.start = function(exitTrial) {
             $("#pumpText").text('0 Tokens');
             $("#cashText").css({opacity:'0'});
             $('#resultText').css({top: '50px' ,opacity:'0'});
-            
+
         }
     });
 };
