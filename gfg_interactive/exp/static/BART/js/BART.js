@@ -76,6 +76,8 @@ Task.prototype.start = function(exitTrial) {
                 $("#pumpText").text(String(pumps) + ' tokens');
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
+                $('#cashText').text('Next Balloon').css({opacity:'0.0'});
+
                 $("#poppedIm").css({
                     height: bheight,
                     width: bwidth,
@@ -91,9 +93,10 @@ Task.prototype.start = function(exitTrial) {
                         opacity: "0"
                     },{duration: 200, easing: "linear",queue:false});
                 $('#mainContainer').delay(500)
-                    .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear"});
+                    .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
 
-                $('#cashText').delay(1500).text('Next Balloon');
+                $("#cashtext").delay(500).animate({opacity:'1.0'},{duration:750, queue:false});
+
             }
         } else {
             // TODO: add reset functionality
