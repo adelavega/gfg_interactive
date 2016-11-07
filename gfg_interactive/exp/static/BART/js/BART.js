@@ -97,7 +97,7 @@ Task.prototype.start = function(exitTrial) {
                     },{duration: 200, easing: "linear",queue:false});
                 $('#mainContainer').delay(500)
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
-                $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
+                $("#cashText").delay(500).animate({opacity:'1'},{duration:200, easing:"linear", queue:false});
                 $('#resultText').delay(500).animate({top: '100px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
 
             }
