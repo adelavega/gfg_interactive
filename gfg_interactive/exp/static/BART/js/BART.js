@@ -85,12 +85,12 @@ Task.prototype.start = function(exitTrial) {
                     .animate({
                         height:"+=25px",
                         width: "+=25px"
-                    },{duration: 50, easing: "linear"})
+                    },{duration: 50, easing: "linear", queue:false})
                     .animate({
                         opacity: "0"
                     },{duration: 200, easing: "linear",queue:false});
                 $('#mainContainer').delay(200)
-                    .animate({backgroundColor:'#f8f7ff'},{duration:200,easing:"linear"});
+                    .animate({backgroundColor:'#f8f7ff'},{duration:200,easing:"linear", queue:false});
 
             }
         } else {
