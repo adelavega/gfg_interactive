@@ -71,21 +71,6 @@ Task.prototype.start = function(exitTrial) {
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
                 $('#cashText').text('Next Balloon').css({opacity:'0'});
-
-                $("#poppedIm").css({
-                    height: bheight,
-                    width: bwidth,
-                    top: btop
-                })
-                    .show()
-                    .delay(200)
-                    .animate({
-                        height:"+=25px",
-                        width: "+=25px"
-                    },{duration: 50, easing: "linear", queue:false})
-                    .animate({
-                        opacity: "0"
-                    },{duration: 200, easing: "linear",queue:false});
                 $('#mainContainer').delay(500)
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                 $("#cashText").delay(500).animate({opacity:'1'},{duration:200, easing:"linear", queue:false});
@@ -127,7 +112,6 @@ function reset(){
     popPoint = Math.floor((Math.random() * 63) + 1);
     $("#pumpText").text(String(pumps) + ' tokens');
     $("#balloonIm").css({height: '50px',width: '35px',top:'225px',opacity:'1'});
-    $("#poppedIm").css({height: '50px',width: '35px',top:'225px',opacity:'1'});
 
 }
 
