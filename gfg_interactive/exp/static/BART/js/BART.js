@@ -129,6 +129,7 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').css({top: '50px' ,opacity:'0'});
             cashed = false;
             popped = false;
+            exitTrial();
 
         }
     });
