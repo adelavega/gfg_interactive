@@ -59,7 +59,7 @@ Task.prototype.start = function(exitTrial) {
     this.pumps = 0;
     var popped = false;
     var cashed = false;
-    var popPoint = Math.floor((Math.random() * 63) + 1);
+    this.popPoint = Math.floor((Math.random() * 63) + 1);
 
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
