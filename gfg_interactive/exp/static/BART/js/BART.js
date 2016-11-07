@@ -75,6 +75,7 @@ Task.prototype.start = function(exitTrial) {
                 var btop = $('#balloonIm').css('top');
                 $("#pumpText").text(String(pumps) + ' tokens');
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
+                $('#cashbox').css({backgroundColor:'#878383'});
                 $("#poppedIm").css({
                     height: bheight,
                     width: bwidth,
@@ -91,7 +92,8 @@ Task.prototype.start = function(exitTrial) {
                     },{duration: 200, easing: "linear",queue:false});
                 $('#mainContainer').delay(500)
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear"});
-                $('#cashText').delay(500).text('Next Balloon');
+
+                $('#cashText').delay(1500).text('Next Balloon');
             }
         } else {
             // TODO: add reset functionality
