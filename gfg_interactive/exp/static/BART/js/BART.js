@@ -98,7 +98,7 @@ Task.prototype.start = function(exitTrial) {
                 $('#mainContainer').delay(500)
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                 $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
-
+                $('#resultText').delay(500).animate({opacity:'1'},{duration:750, easing:'linear',queue:false});
 
             }
         }
