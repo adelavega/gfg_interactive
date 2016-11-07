@@ -125,6 +125,9 @@ function reset(){
     popped = false;
     cashed = false;
     popPoint = Math.floor((Math.random() * 63) + 1);
+    $("#pumpText").text(String(pumps) + ' tokens');
+    $("#balloonIm").css({height: '50px',width: '35px',top:'225px'});
+    
 }
 
 BARTTask = {
