@@ -89,7 +89,8 @@ Task.prototype.start = function(exitTrial) {
                     .animate({
                         opacity: "0"
                     },{duration: 200, easing: "linear",queue:false});
-
+                $('#mainContainer').delay(200)
+                    .animate({backgroundColor:'#f8f7ff'},{duration:200,easing:"linear"});
 
             }
         } else {
