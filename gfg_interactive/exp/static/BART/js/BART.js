@@ -45,13 +45,12 @@ Instruct.prototype.buttonClick = function(button) {
 
 
 function Task() {
-    var name = 'jake';
 }
 
 
-var pumps, popPoint, cashed, popped;
+var pumps, popPoint, cashed, popped, trial;
 Task.prototype.start = function(exitTrial) {
-    this.exitTrial = exitTrial;
+    trial = 1;
     reset();
     $('#pumpBox').click(function(){
         console.log(name);
@@ -91,8 +90,8 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
             reset();
-            this.trial ++;
-            console.log(this.trial);
+            trial ++;
+            console.log(trial);
         }
     });
 };
