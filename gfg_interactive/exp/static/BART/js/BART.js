@@ -71,7 +71,7 @@ Task.prototype.start = function(exitTrial) {
                 popped = true;
                 pumps = 0;
 
-                $('#resultText').css({top: '120px'});
+                $('#resultText').css({top: '20px'});
                 $("#balloonIm").hide();
                 var bheight = $("#balloonIm").css('height');
                 var bwidth = $('#balloonIm').css('width');
@@ -98,7 +98,7 @@ Task.prototype.start = function(exitTrial) {
                 $('#mainContainer').delay(500)
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                 $("#cashText").delay(500).animate({opacity:'1'},{duration:200, easing:"linear", queue:false});
-                $('#resultText').delay(500).animate({top: '100px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
+                $('#resultText').delay(500).animate({top: '50px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
 
             }
         }
