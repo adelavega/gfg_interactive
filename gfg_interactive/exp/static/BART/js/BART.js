@@ -127,6 +127,8 @@ Task.prototype.start = function(exitTrial) {
             });
             $("#pumpText").text('0 Tokens');
             $('#resultText').css({top: '50px' ,opacity:'0'});
+            cashed = false;
+            popped = false;
 
         }
     });
