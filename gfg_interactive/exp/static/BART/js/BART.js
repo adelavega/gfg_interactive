@@ -75,7 +75,7 @@ Task.prototype.start = function(exitTrial) {
                 var btop = $('#balloonIm').css('top');
                 $("#pumpText").text(String(pumps) + ' tokens');
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
-                $('#cashbox').css({backgroundColor:'#878383'});
+                $('#cashBox').css({backgroundColor:'#878383'});
                 $("#poppedIm").css({
                     height: bheight,
                     width: bwidth,
