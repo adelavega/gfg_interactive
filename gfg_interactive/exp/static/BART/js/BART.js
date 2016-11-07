@@ -111,6 +111,10 @@ function reset(){
     $("#balloonIm").css({height: '50px',width: '50px',top:'250px'}).show();
     $("#balloonIm").animate({opacity:'1'});
     $('#resultText').css({top: '10px'});
+    $('#cashText').text('CASH IN');
+    $('#cashBox').css({backgroundColor:'#009201'});
+
+
 }
 
 BARTTask = {
