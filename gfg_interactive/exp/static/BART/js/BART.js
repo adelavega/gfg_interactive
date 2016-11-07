@@ -60,6 +60,7 @@ function Task(practice) {
 
 Task.prototype.start = function(exitTrial) {
     reset();
+    console.log(max);
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
             pumps ++;
