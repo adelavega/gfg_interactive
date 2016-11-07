@@ -100,7 +100,7 @@ Task.prototype.start = function(exitTrial) {
         } else {
             trial ++;
             console.log(trial);
-            if (trial == max){
+            if (trial == max-1){
                 exitTrial();
                 return true;
             }
