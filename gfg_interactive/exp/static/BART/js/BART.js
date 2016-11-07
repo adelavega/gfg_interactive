@@ -43,15 +43,20 @@ Instruct.prototype.buttonClick = function(button) {
     }
 };
 
+var pumps, popPoint, cashed, popped, trial, max;
 
-function Task() {
+
+function Task(practice) {
+    if (!practice){
+        $('#InstructionSide').hide();
+        max = 10;
+    } else{
+        max = 30;
+    }
+    trial = 1;
 }
 
-
-var pumps, popPoint, cashed, popped, trial, max;
 Task.prototype.start = function(exitTrial) {
-    trial = 1;
-    max = 5;
     reset();
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
