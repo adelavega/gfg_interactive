@@ -90,8 +90,6 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').delay(500).animate({top: '100px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
             reset();
-            this.trial ++;
-            console.log(this.trial);
 
 
         }
