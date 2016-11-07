@@ -45,7 +45,7 @@ Instruct.prototype.buttonClick = function(button) {
 
 
 function Task() {
-    this.name = 'jake';
+    var name = 'jake';
 }
 
 
@@ -54,7 +54,7 @@ Task.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
     reset();
     $('#pumpBox').click(function(){
-        console.log(this.name);
+        console.log(name);
         if (!popped && !cashed) {
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             pumps ++;
