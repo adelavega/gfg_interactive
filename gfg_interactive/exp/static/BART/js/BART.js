@@ -52,16 +52,7 @@ function Task(trial) {
 var pumps, popPoint, cashed, popped;
 Task.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
-    $('#inst').hide();
-    $('#taskContainer').show();
-    $("#poppedIm").hide();
-    $('#resultText').css({opacity:'0'});
-    hideButtons();
-
-    pumps = 0;
-    popped = false;
-    cashed = false;
-    popPoint = Math.floor((Math.random() * 63) + 1);
+    reset();
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
@@ -117,13 +108,24 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').delay(500).animate({top: '50px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
 
-            
+
 
         }
     });
 };
 
+function reset(){
+    $('#inst').hide();
+    $('#taskContainer').show();
+    $("#poppedIm").hide();
+    $('#resultText').css({opacity:'0'});
+    hideButtons();
 
+    pumps = 0;
+    popped = false;
+    cashed = false;
+    popPoint = Math.floor((Math.random() * 63) + 1);
+}
 
 BARTTask = {
     warning : "<span style='color:red; font-size:60px'> " + (String.fromCharCode(9888)) + " </span> This task requires 10-15 minutes of your undivided attention <br><br> If you don't have time right now, please come back when you have can focus. <br><br> Otherwise, click continue to begin!",
