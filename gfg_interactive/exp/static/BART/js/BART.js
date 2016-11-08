@@ -67,6 +67,9 @@ Task.prototype.start = function(exitTrial) {
     var cashed = false;
     var popPoint = 0;
     var max = this.max;
+    console.log(trial);
+    console.log(max);
+
 
     var reset = function(){
         $('#inst').hide();
