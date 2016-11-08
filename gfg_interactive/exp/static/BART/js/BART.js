@@ -55,7 +55,19 @@ function Task(practice, max) {
 
 }
 
-Task.prototype.reset = function(){
+Task.prototype.start = function(exitTrial) {
+    var stepText;
+    if (this.practice){
+        stepText = 'Finish Instructions';
+    } else{
+        $("#InstructionSide").hide();
+        stepText = 'Finish Task';
+    }
+    this.pumps = 0;
+    console.log(this.trial);
+    reset();
+
+    var reset = function(){
         $('#inst').hide();
         $('#taskContainer').show();
         $("#poppedIm").hide();
@@ -77,19 +89,6 @@ Task.prototype.reset = function(){
         console.log(this.trial);
     };
 
-Task.prototype.start = function(exitTrial) {
-    var stepText;
-    if (this.practice){
-        stepText = 'Finish Instructions';
-    } else{
-        $("#InstructionSide").hide();
-        stepText = 'Finish Task';
-    }
-    this.pumps = 0;
-    console.log(this.trial);
-    Task.reset();
-
-    
 
 
     $('#pumpBox').click(function(){
@@ -139,7 +138,7 @@ Task.prototype.start = function(exitTrial) {
             if (this.trial == this.max-1){
                 return exitTrial();
             } else {
-                Task.reset();
+                reset();
             }
         }
 
