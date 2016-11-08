@@ -87,7 +87,7 @@ Task.prototype.start = function(exitTrial) {
         $('#cashBox').css({backgroundColor:'#009201'});
         this.trial ++;
         console.log(this.trial);
-    }
+    };
 
 
     $('#pumpBox').click(function(){
