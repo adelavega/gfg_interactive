@@ -51,7 +51,7 @@ function Task(practice) {
 Task.prototype.start = function(exitTrial) {
     var stepText, pumps, popPoint, cashed, popped, max, trial;
     if (this.practice){
-        max = 10;
+        max = 4;
         stepText = 'Finish Instructions'
     } else{
         $("#InstructionSide").hide();
