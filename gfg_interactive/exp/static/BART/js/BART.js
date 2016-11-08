@@ -146,7 +146,8 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
             if (trial == max){
-                return true;
+                return exitTrial();
+                console.log('hi');
             } else {
                 reset();
             }
