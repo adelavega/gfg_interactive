@@ -110,7 +110,6 @@ Task.prototype.start = function(exitTrial) {
         } else {
             if (trial == max){
                 exitTrial();
-                return true;
             }
             reset();
         }
@@ -135,6 +134,9 @@ Task.prototype.start = function(exitTrial) {
         $('#cashBox').css({backgroundColor:'#009201'});
         trial ++;
         console.log(trial);
+        if (trial == max){
+            return true;
+        }
     }
 };
 
