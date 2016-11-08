@@ -97,7 +97,7 @@ Task.prototype.start = function(exitTrial) {
             this.pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             $("#pumpText").text(String(this.pumps) + ' tokens');
-            if (pumps > this.popPoint){
+            if (this.pumps > this.popPoint){
                 this.popped = true;
                 this.pumps = 0;
                 $('#resultText').text('Popped');
