@@ -107,9 +107,10 @@ Task.prototype.start = function(exitTrial) {
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
-            var moveOn = reset();
-            if (moveOn){
-                return exitTrial();
+            if (trial == max-1){
+                return exitTrial()
+            } else {
+                reset();
             }
         }
 
@@ -125,6 +126,7 @@ Task.prototype.start = function(exitTrial) {
         popped = false;
         cashed = false;
         popPoint = Math.floor((Math.random() * 63) + 1);
+
         $("#pumpText").text(String(pumps) + ' tokens');
         $("#balloonIm").css({height: '50px',width: '50px',top:'250px'}).show();
         $("#balloonIm").animate({opacity:'1'});
@@ -132,7 +134,7 @@ Task.prototype.start = function(exitTrial) {
         $('#cashText').text('CASH IN');
         $('#cashBox').css({backgroundColor:'#009201'});
         trial ++;
-        
+
         if (trial == max){
             return true;
         } else {
