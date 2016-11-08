@@ -146,7 +146,7 @@ Task.prototype.start = function(exitTrial) {
             console.log(trial);
             console.log(max);
             if (trial == max - 1){
-                exitTrial();
+                return exitTrial;
             } else {
                 reset();
             }
