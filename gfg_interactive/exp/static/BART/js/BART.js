@@ -51,11 +51,11 @@ function Task(practice) {
 Task.prototype.start = function(exitTrial) {
     var stepText, pumps, popPoint, cashed, popped, max, trial;
     if (this.practice){
-        max = 4;
+        max = 6;
         stepText = 'Finish Instructions'
     } else{
         $("#InstructionSide").hide();
-        max = 30;
+        max = 31;
         stepText = 'Finish Task'
     }
     pumps = 0;
