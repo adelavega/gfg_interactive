@@ -67,7 +67,7 @@ Task.prototype.start = function(exitTrial) {
     var cashed = false;
     var popPoint = 0;
     var max = this.max;
-    this exitTrial = exitTrial;
+    this.exitTrial = exitTrial;
     console.log('start');
     console.log(max);
     console.log(trial);
