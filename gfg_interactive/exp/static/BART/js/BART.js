@@ -44,23 +44,24 @@ Instruct.prototype.buttonClick = function(button) {
     }
 };
 
-function Task(practice) {
+function Task(practice, max, trial) {
     this.practice = practice;
+    this.max = max;
+    this.trial = trial;
 }
 
 Task.prototype.start = function(exitTrial) {
-    var stepText, pumps, popPoint, cashed, popped, max, trial;
+    var stepText, pumps, popPoint, cashed, popped;
     if (this.practice){
-        max = 6;
+        this.max = 6;
         stepText = 'Finish Instructions';
     } else{
         $("#InstructionSide").hide();
-        max = 31;
+        this.max = 31;
         stepText = 'Finish Task';
     }
     pumps = 0;
-    trial = 0;
-    console.log(trial);
+    this.trial = 0;
     reset();
 
 
@@ -79,7 +80,7 @@ Task.prototype.start = function(exitTrial) {
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
 
-                if (trial == max-1){
+                if (this.trial == this.max-1){
                     $('#cashText').text(stepText).css({opacity: '0'});
                 }else {
                     $('#cashText').text('Next Balloon').css({opacity: '0'});
@@ -100,7 +101,7 @@ Task.prototype.start = function(exitTrial) {
                 .css({top: '20px', color:'green'});
             $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').css({backgroundColor:'#CAC7CA'});
-            if (trial == max-1){
+            if (this.trial == this.max-1){
                 $('#cashText').text(stepText).css({opacity: '0'});
             }else {
                 $('#cashText').text('Next Balloon').css({opacity: '0'});
@@ -108,8 +109,7 @@ Task.prototype.start = function(exitTrial) {
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
-            console.log(max);
-            if (trial == max-1){
+            if (this.trial == this.max-1){
                 return exitTrial();
             } else {
                 reset();
@@ -135,7 +135,7 @@ Task.prototype.start = function(exitTrial) {
         $('#resultText').css({top: '0px'});
         $('#cashText').text('CASH IN');
         $('#cashBox').css({backgroundColor:'#009201'});
-        trial ++;
+        this.trial ++;
     }
 };
 
