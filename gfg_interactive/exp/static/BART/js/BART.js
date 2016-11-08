@@ -132,7 +132,7 @@ Task.prototype.start = function(exitTrial) {
         $('#cashText').text('CASH IN');
         $('#cashBox').css({backgroundColor:'#009201'});
         trial ++;
-        console.log(trial);
+        
         if (trial == max){
             return true;
         } else {
