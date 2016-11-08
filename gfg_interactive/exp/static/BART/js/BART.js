@@ -67,7 +67,7 @@ Task.prototype.start = function(exitTrial) {
     var cashed = false;
     var popPoint = 0;
     var max = this.max;
-    this.exitTrial = exitTrial;
+    var exitTrial = exitTrial;
 
     console.log('start');
     console.log(max);
@@ -147,7 +147,7 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
             if (trial == max){
-                return this.exitTrial();
+                exitTrial();
                 console.log('hi');
             } else {
                 reset();
