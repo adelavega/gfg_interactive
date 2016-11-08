@@ -147,6 +147,7 @@ Task.prototype.start = function(exitTrial) {
         } else {
             if (trial == max){
                 return exitTrial();
+                console.log('hi');
             } else {
                 reset();
             }
