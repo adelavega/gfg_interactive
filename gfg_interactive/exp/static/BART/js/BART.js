@@ -52,21 +52,7 @@ function Task(practice, max) {
     this.popped = false;
     this.cashed = false;
     this.popPoint = 0;
-}
 
-Task.prototype.start = function(exitTrial) {
-    var stepText;
-    if (this.practice){
-        stepText = 'Finish Instructions';
-    } else{
-        $("#InstructionSide").hide();
-        stepText = 'Finish Task';
-    }
-    this.pumps = 0;
-    console.log(this.trial);
-    this.reset();
-
-    
     this.reset = function(){
         $('#inst').hide();
         $('#taskContainer').show();
@@ -88,6 +74,22 @@ Task.prototype.start = function(exitTrial) {
         this.trial ++;
         console.log(this.trial);
     };
+
+}
+
+Task.prototype.start = function(exitTrial) {
+    var stepText;
+    if (this.practice){
+        stepText = 'Finish Instructions';
+    } else{
+        $("#InstructionSide").hide();
+        stepText = 'Finish Task';
+    }
+    this.pumps = 0;
+    console.log(this.trial);
+    this.reset();
+
+    
 
 
     $('#pumpBox').click(function(){
