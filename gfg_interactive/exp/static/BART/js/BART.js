@@ -108,10 +108,9 @@ Task.prototype.start = function(exitTrial) {
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
-            if (trial == max){
+            if (reset()){
                 exitTrial();
             }
-            reset();
         }
 
     });
@@ -136,6 +135,8 @@ Task.prototype.start = function(exitTrial) {
         console.log(trial);
         if (trial == max){
             return true;
+        } else {
+            return false
         }
     }
 };
