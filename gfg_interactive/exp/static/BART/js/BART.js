@@ -47,7 +47,7 @@ var pumps, popPoint, cashed, popped, trial, max, stepText;
 
 
 function Task(practice) {
-    if (practice){
+    if (!practice){
         $('#InstructionSide').hide();
         max = 10;
         stepText = 'Finish Instructions'
@@ -152,5 +152,5 @@ BARTTask = {
         "At the end of the task you will view a report of your performance in the task.<br><br> To practice with a few balloons, press continue."
     ],
     Instruction: Instruct,
-    practice: Task
+    Tasl: Task
 };
