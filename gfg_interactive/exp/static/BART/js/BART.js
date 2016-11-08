@@ -108,6 +108,7 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
             trial ++;
+            console.log(trial);
             if (trial == max+1){
                 exitTrial();
                 return true;
