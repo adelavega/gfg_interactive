@@ -59,6 +59,7 @@ Task.prototype.start = function(exitTrial) {
         stepText = 'Finish Task'
     }
     pumps = 0;
+    trial = 0;
     reset();
 
 
