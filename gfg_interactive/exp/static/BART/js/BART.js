@@ -65,7 +65,6 @@ Task.prototype.start = function(exitTrial) {
     }
     this.pumps = 0;
     console.log(this.trial);
-    reset();
 
     var reset = function(){
         $('#inst').hide();
@@ -88,6 +87,8 @@ Task.prototype.start = function(exitTrial) {
         this.trial ++;
         console.log(this.trial);
     };
+    
+    reset();
 
 
 
