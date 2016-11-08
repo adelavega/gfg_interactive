@@ -47,6 +47,7 @@ var pumps, popPoint, cashed, popped, trial, max, stepText;
 
 
 function Task(practice) {
+    console.log(practice);
     if (practice){
         max = 10;
         stepText = 'Finish Instructions'
