@@ -79,7 +79,7 @@ Task.prototype.start = function(exitTrial) {
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
 
                 console.log(trial);
-                if (trial == max+1){
+                if (trial == max){
                     $('#cashText').text(stepText).css({opacity: '0'});
                 }else {
                     $('#cashText').text('Next Balloon').css({opacity: '0'});
@@ -101,7 +101,7 @@ Task.prototype.start = function(exitTrial) {
             $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').css({backgroundColor:'#CAC7CA'});
             console.log(trial);
-            if (trial == max+1){
+            if (trial == max){
                 $('#cashText').text(stepText).css({opacity: '0'});
             }else {
                 $('#cashText').text('Next Balloon').css({opacity: '0'});
@@ -109,9 +109,7 @@ Task.prototype.start = function(exitTrial) {
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
-            trial ++;
-            console.log(trial);
-            if (trial == max+1){
+            if (trial == max){
                 exitTrial();
                 return true;
             }
@@ -136,6 +134,8 @@ Task.prototype.start = function(exitTrial) {
         $('#resultText').css({top: '0px'});
         $('#cashText').text('CASH IN');
         $('#cashBox').css({backgroundColor:'#009201'});
+        trial ++;
+        console.log(trial);
     }
 };
 
