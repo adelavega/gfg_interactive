@@ -52,18 +52,16 @@ Task.prototype.start = function(exitTrial) {
     var stepText, pumps, popPoint, cashed, popped, max, trial;
     if (this.practice){
         max = 6;
-        stepText = 'Finish Instructions'
-        pumps = 0;
-        trial = 0;
-        reset();
+        stepText = 'Finish Instructions';
     } else{
         $("#InstructionSide").hide();
         max = 31;
-        stepText = 'Finish Task'
-        pumps = 0;
-        trial = 0;
-        reset();
+        stepText = 'Finish Task';
     }
+    pumps = 0;
+    trial = 0;
+    console.log(trial);
+    reset();
 
 
     $('#pumpBox').click(function(){
@@ -138,12 +136,6 @@ Task.prototype.start = function(exitTrial) {
         $('#cashText').text('CASH IN');
         $('#cashBox').css({backgroundColor:'#009201'});
         trial ++;
-
-        if (trial == max){
-            return true;
-        } else {
-            return false
-        }
     }
 };
 
