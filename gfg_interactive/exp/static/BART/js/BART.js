@@ -63,7 +63,7 @@ Task.prototype.start = function(exitTrial) {
         stepText = 'Finish Task';
     }
     this.pumps = 0;
-    console.log(this.pumps);
+    console.log(this.trial);
     reset();
 
 
