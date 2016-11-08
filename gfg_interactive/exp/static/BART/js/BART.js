@@ -20,7 +20,7 @@ function Instruct(message,leftKey,rightKey) {
 }
 
 Instruct.prototype.start = function(exitTrial) {
-    console.log(this.message);
+
     this.exitTrial = exitTrial;
     $('#taskContainer').hide();
     $("#inst").html(this.message);
@@ -61,7 +61,6 @@ Task.prototype.start = function(exitTrial) {
         stepText = 'Finish Task';
     }
     this.pumps = 0;
-    console.log(this.trial);
     var trial = this.trial;
     var pumps = this.pumps;
     var popped = false;
@@ -89,7 +88,7 @@ Task.prototype.start = function(exitTrial) {
         $('#cashText').text('CASH IN');
         $('#cashBox').css({backgroundColor:'#009201'});
         trial ++;
-        console.log(trial);
+
     };
 
     reset();
@@ -110,7 +109,7 @@ Task.prototype.start = function(exitTrial) {
                 $("#pumpText").text(String(this.pumps) + ' tokens');
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
-
+                console.log(trial);
                 if (trial == this.max-1){
                     $('#cashText').text(stepText).css({opacity: '0'});
                 }else {
@@ -132,6 +131,7 @@ Task.prototype.start = function(exitTrial) {
                 .css({top: '20px', color:'green'});
             $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').css({backgroundColor:'#CAC7CA'});
+            console.log(trial);
             if (trial == this.max-1){
                 $('#cashText').text(stepText).css({opacity: '0'});
             }else {
