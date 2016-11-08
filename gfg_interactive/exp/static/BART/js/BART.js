@@ -53,7 +53,9 @@ function Task(practice, max) {
     this.cashed = false;
     this.popPoint = 0;
 
-    this.reset = function(){
+}
+
+Task.prototype.reset = function(){
         $('#inst').hide();
         $('#taskContainer').show();
         $("#poppedIm").hide();
@@ -74,8 +76,6 @@ function Task(practice, max) {
         this.trial ++;
         console.log(this.trial);
     };
-
-}
 
 Task.prototype.start = function(exitTrial) {
     var stepText;
@@ -137,7 +137,6 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
             if (this.trial == this.max-1){
-                return exitTrial();
                 return exitTrial();
             } else {
                 this.reset();
