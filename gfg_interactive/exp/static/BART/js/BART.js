@@ -100,7 +100,6 @@ Task.prototype.start = function(exitTrial) {
                 .css({top: '20px', color:'green'});
             $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').css({backgroundColor:'#CAC7CA'});
-            console.log(trial);
             if (trial == max){
                 $('#cashText').text(stepText).css({opacity: '0'});
             }else {
