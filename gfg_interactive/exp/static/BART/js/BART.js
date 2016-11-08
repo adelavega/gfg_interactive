@@ -14,6 +14,7 @@ keyText = function(text, key) {
 };
 
 function Instruct(message,leftKey,rightKey) {
+    console.log(message);
     this.message = message;
     this.leftKey = leftKey != null ? leftKey : null;
     this.rightKey = rightKey != null ? rightKey : "Continue";
