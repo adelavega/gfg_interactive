@@ -50,8 +50,8 @@ function Task(practice) {
     if (practice){
         max = 10;
         stepText = 'Finish Instructions'
-    } else {
-        // $("#InstructionSide").hide();
+    } else if (!practice) {
+        $("#InstructionSide").hide();
         max = 30;
         stepText = 'Finish Task'
     }
