@@ -145,7 +145,7 @@ Task.prototype.start = function(exitTrial) {
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
-            
+
             if (trial == max){
                 return exitTrial();
             } else {
