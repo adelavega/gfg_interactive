@@ -44,24 +44,20 @@ Instruct.prototype.buttonClick = function(button) {
     }
 };
 
-var pumps, popPoint, cashed, popped, trial, max, stepText;
-
-
 function Task(practice) {
     this.practice = practice;
-    console.log(this.practice);
-    if (this.practice){
-        max = 10;
-        stepText = 'Finish Instructions'
-    } else{
-        $("#InstructionSide").hide();
-        max = 30;
-        stepText = 'Finish Task'
-    }
-    trial = 1;
 }
 
 Task.prototype.start = function(exitTrial) {
+    var stepText, pumps, popPoint, cashed, popped, max, trial;
+    if (this.practice){
+        $("#InstructionSide").hide();
+        max = 10;
+        stepText = 'Finish Instructions'
+    } else{
+        max = 30;
+        stepText = 'Finish Task'
+    }
     reset();
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
