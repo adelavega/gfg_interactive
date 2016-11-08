@@ -51,7 +51,7 @@ function Task(practice) {
         max = 10;
         stepText = 'Finish Instructions'
     } else {
-        $("#InstructionSide").hide();
+        // $("#InstructionSide").hide();
         max = 30;
         stepText = 'Finish Task'
     }
