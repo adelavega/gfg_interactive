@@ -64,7 +64,30 @@ Task.prototype.start = function(exitTrial) {
     }
     this.pumps = 0;
     console.log(this.trial);
-    reset();
+    this.reset();
+
+    
+    this.reset = function(){
+        $('#inst').hide();
+        $('#taskContainer').show();
+        $("#poppedIm").hide();
+        $('#resultText').css({opacity:'0'});
+        hideButtons();
+
+        this.pumps = 0;
+        this.popped = false;
+        this.cashed = false;
+        this.popPoint = Math.floor((Math.random() * 63) + 1);
+
+        $("#pumpText").text(String(this.pumps) + ' tokens');
+        $("#balloonIm").css({height: '50px',width: '50px',top:'250px'}).show();
+        $("#balloonIm").animate({opacity:'1'});
+        $('#resultText').css({top: '0px'});
+        $('#cashText').text('CASH IN');
+        $('#cashBox').css({backgroundColor:'#009201'});
+        this.trial ++;
+        console.log(this.trial);
+    }
 
 
     $('#pumpBox').click(function(){
@@ -113,33 +136,13 @@ Task.prototype.start = function(exitTrial) {
         } else {
             if (this.trial == this.max-1){
                 return exitTrial();
+                return exitTrial();
             } else {
-                reset();
+                this.reset();
             }
         }
 
     });
-    function reset(){
-        $('#inst').hide();
-        $('#taskContainer').show();
-        $("#poppedIm").hide();
-        $('#resultText').css({opacity:'0'});
-        hideButtons();
-
-        this.pumps = 0;
-        this.popped = false;
-        this.cashed = false;
-        this.popPoint = Math.floor((Math.random() * 63) + 1);
-
-        $("#pumpText").text(String(this.pumps) + ' tokens');
-        $("#balloonIm").css({height: '50px',width: '50px',top:'250px'}).show();
-        $("#balloonIm").animate({opacity:'1'});
-        $('#resultText').css({top: '0px'});
-        $('#cashText').text('CASH IN');
-        $('#cashBox').css({backgroundColor:'#009201'});
-        this.trial ++;
-        console.log(this.trial);
-    }
 };
 
 
