@@ -66,6 +66,7 @@ Task.prototype.start = function(exitTrial) {
     var popped = false;
     var cashed = false;
     var popPoint = 0;
+    var max = this.max;
 
 
 
@@ -110,7 +111,7 @@ Task.prototype.start = function(exitTrial) {
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
                 console.log(trial);
-                if (trial == this.max-1){
+                if (trial == max-1){
                     $('#cashText').text(stepText).css({opacity: '0'});
                 }else {
                     $('#cashText').text('Next Balloon').css({opacity: '0'});
@@ -132,8 +133,8 @@ Task.prototype.start = function(exitTrial) {
             $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').css({backgroundColor:'#CAC7CA'});
             console.log(trial);
-            console.log(this.max);
-            if (trial == this.max-1){
+            console.log(max);
+            if (trial == max-1){
                 $('#cashText').text(stepText).css({opacity: '0'});
             }else {
                 $('#cashText').text('Next Balloon').css({opacity: '0'});
@@ -141,7 +142,7 @@ Task.prototype.start = function(exitTrial) {
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
-            if (trial == this.max-1){
+            if (trial == max-1){
                 return exitTrial();
             } else {
                 reset();
