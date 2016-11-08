@@ -133,6 +133,7 @@ Task.prototype.start = function(exitTrial) {
         $('#cashText').text('CASH IN');
         $('#cashBox').css({backgroundColor:'#009201'});
         this.trial ++;
+        console.log(this.trial);
     }
 };
 
