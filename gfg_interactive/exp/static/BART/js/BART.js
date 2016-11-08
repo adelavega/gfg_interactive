@@ -46,8 +46,8 @@ Instruct.prototype.buttonClick = function(button) {
 var pumps, popPoint, cashed, popped, trial, max, stepText;
 
 
-function Task(practice) {
-    if (practice){
+function Task(MainTask) {
+    if (MainTask){
         max = 10;
         stepText = 'Finish Instructions'
     } else{
