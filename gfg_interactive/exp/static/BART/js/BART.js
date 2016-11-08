@@ -47,13 +47,13 @@ var pumps, popPoint, cashed, popped, trial, max, stepText;
 
 
 function Task(practice) {
-    if (!practice){
+    if (practice){
+        max = 10;
+        stepText = 'Finish Instructions'
+    } else{
         $("#InstructionSide").hide();
         max = 30;
         stepText = 'Finish Task'
-    } else{
-        max = 10;
-        stepText = 'Finish Instructions'
     }
     trial = 1;
 }
