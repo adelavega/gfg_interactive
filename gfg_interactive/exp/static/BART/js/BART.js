@@ -87,7 +87,7 @@ Task.prototype.start = function(exitTrial) {
     }
     this.pumps = 0;
     console.log(this.trial);
-    this.reset();
+    Task.reset();
 
     
 
@@ -139,7 +139,7 @@ Task.prototype.start = function(exitTrial) {
             if (this.trial == this.max-1){
                 return exitTrial();
             } else {
-                this.reset();
+                Task.reset();
             }
         }
 
