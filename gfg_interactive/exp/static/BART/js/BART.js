@@ -46,11 +46,11 @@ Instruct.prototype.buttonClick = function(button) {
 var pumps, popPoint, cashed, popped, trial, max, stepText;
 
 
-function Task(MainTask) {
-    if (MainTask){
+function Task(practice) {
+    if (practice){
         max = 10;
         stepText = 'Finish Instructions'
-    } else{
+    } else {
         $("#InstructionSide").hide();
         max = 30;
         stepText = 'Finish Task'
@@ -62,11 +62,9 @@ Task.prototype.start = function(exitTrial) {
     reset();
     $('#pumpBox').click(function(){
         if (!popped && !cashed) {
-            console.log(max);
             pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             $("#pumpText").text(String(pumps) + ' tokens');
-            console.log(stepText);
             if (pumps > popPoint){
                 popped = true;
                 pumps = 0;
@@ -77,6 +75,7 @@ Task.prototype.start = function(exitTrial) {
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
 
+                console.log(trial);
                 if (trial == max+1){
                     $('#cashText').text(stepText).css({opacity: '0'});
                 }else {
@@ -107,7 +106,6 @@ Task.prototype.start = function(exitTrial) {
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
             trial ++;
-            console.log(trial);
             if (trial == max+1){
                 exitTrial();
                 return true;
