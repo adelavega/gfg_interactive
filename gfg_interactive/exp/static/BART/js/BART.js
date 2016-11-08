@@ -53,14 +53,17 @@ Task.prototype.start = function(exitTrial) {
     if (this.practice){
         max = 6;
         stepText = 'Finish Instructions'
+        pumps = 0;
+        trial = 0;
+        reset();
     } else{
         $("#InstructionSide").hide();
         max = 31;
         stepText = 'Finish Task'
+        pumps = 0;
+        trial = 0;
+        reset();
     }
-    pumps = 0;
-    trial = 0;
-    reset();
 
 
     $('#pumpBox').click(function(){
@@ -109,7 +112,7 @@ Task.prototype.start = function(exitTrial) {
         } else {
             console.log(trial);
             if (trial == max-1){
-                return exitTrial()
+                return exitTrial();
             } else {
                 reset();
             }
