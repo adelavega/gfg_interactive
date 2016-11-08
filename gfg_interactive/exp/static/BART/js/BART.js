@@ -78,7 +78,6 @@ Task.prototype.start = function(exitTrial) {
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
 
-                console.log(trial);
                 if (trial == max-1){
                     $('#cashText').text(stepText).css({opacity: '0'});
                 }else {
