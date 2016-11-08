@@ -48,32 +48,36 @@ function Task(practice, max) {
     this.practice = practice;
     this.max = max;
     this.trial = 0;
+    this.pumps = 0;
+    this.popped = false;
+    this.cashed = false;
+    this.popPoint = 0;
 }
 
 Task.prototype.start = function(exitTrial) {
-    var stepText, pumps, popPoint, cashed, popped;
+    var stepText;
     if (this.practice){
         stepText = 'Finish Instructions';
     } else{
         $("#InstructionSide").hide();
         stepText = 'Finish Task';
     }
-    pumps = 0;
+    this.pumps = 0;
     reset();
 
 
     $('#pumpBox').click(function(){
-        if (!popped && !cashed) {
-            pumps ++;
+        if (!this.popped && !this.cashed) {
+            this.pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
-            $("#pumpText").text(String(pumps) + ' tokens');
-            if (pumps > popPoint){
-                popped = true;
-                pumps = 0;
+            $("#pumpText").text(String(this.pumps) + ' tokens');
+            if (pumps > this.popPoint){
+                this.popped = true;
+                this.pumps = 0;
                 $('#resultText').text('Popped');
                 $('#resultText').css({color:'red'});
                 $("#balloonIm").css({opacity:'0'}).hide();
-                $("#pumpText").text(String(pumps) + ' tokens');
+                $("#pumpText").text(String(this.pumps) + ' tokens');
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
 
@@ -91,8 +95,8 @@ Task.prototype.start = function(exitTrial) {
     });
 
     $('#cashBox').click(function(){
-        if (!popped && !cashed) {
-            cashed = true;
+        if (!this.popped && !this.cashed) {
+            this.cashed = true;
             $('#resultText')
                 .text('Cashed!')
                 .css({top: '20px', color:'green'});
@@ -121,12 +125,12 @@ Task.prototype.start = function(exitTrial) {
         $('#resultText').css({opacity:'0'});
         hideButtons();
 
-        pumps = 0;
-        popped = false;
-        cashed = false;
-        popPoint = Math.floor((Math.random() * 63) + 1);
+        this.pumps = 0;
+        this.popped = false;
+        this.cashed = false;
+        this.popPoint = Math.floor((Math.random() * 63) + 1);
 
-        $("#pumpText").text(String(pumps) + ' tokens');
+        $("#pumpText").text(String(this.pumps) + ' tokens');
         $("#balloonIm").css({height: '50px',width: '50px',top:'250px'}).show();
         $("#balloonIm").animate({opacity:'1'});
         $('#resultText').css({top: '0px'});
