@@ -69,6 +69,8 @@ Task.prototype.start = function(exitTrial) {
     var max = this.max;
     var exitTrial = exitTrial;
     console.log('start');
+    console.log(max);
+    console.log(trial);
 
 
 
@@ -143,8 +145,7 @@ Task.prototype.start = function(exitTrial) {
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
-            console.log(trial);
-            console.log(max);
+            
             if (trial == max){
                 return exitTrial();
             } else {
