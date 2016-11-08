@@ -44,24 +44,21 @@ Instruct.prototype.buttonClick = function(button) {
     }
 };
 
-function Task(practice, max, trial) {
+function Task(practice, max) {
     this.practice = practice;
     this.max = max;
-    this.trial = trial;
+    this.trial = 0;
 }
 
 Task.prototype.start = function(exitTrial) {
     var stepText, pumps, popPoint, cashed, popped;
     if (this.practice){
-        this.max = 6;
         stepText = 'Finish Instructions';
     } else{
         $("#InstructionSide").hide();
-        this.max = 31;
         stepText = 'Finish Task';
     }
     pumps = 0;
-    this.trial = 0;
     reset();
 
 
