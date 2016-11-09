@@ -61,6 +61,7 @@ Task.trial = function() {
     var stateText = this.stepText;
     $('#pumpBox').click(function(){
         if (!state) {
+            console.log('fuck this');
             console.log(this.pumps);
             pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
