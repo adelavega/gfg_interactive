@@ -19,8 +19,7 @@ function Instruct(message,leftKey,rightKey) {
     this.rightKey = rightKey != null ? rightKey : "Continue";
 }
 
-Instruct.prototype.start = function(exitTrial) {
-
+Instruct.start = function(exitTrial) {
     this.exitTrial = exitTrial;
     $('#taskContainer').hide();
     $("#inst").html(this.message);
@@ -32,7 +31,7 @@ Instruct.prototype.start = function(exitTrial) {
     return keyText(this.rightKey,'right');
 };
 
-Instruct.prototype.buttonClick = function(button) {
+Instruct.buttonClick = function(button) {
     var acc;
     if (button.id == 'leftText' || button.id == 'leftButton') {
         acc = 'BACK';
@@ -45,67 +44,29 @@ Instruct.prototype.buttonClick = function(button) {
 };
 
 function Task(practice, max) {
-    this.practice = practice;
+    this.stepText = practice ? 'Finish Instructions' : 'Finish Task';
     this.max = max;
-    this.trial = 0;
-    this.pumps = 0;
-
+    this.balloon = 0;
+    this.start = function(exitTrial) {
+        this.exitTrial = exitTrial;
+    };
 }
 
-Task.prototype.start = function(exitTrial) {
-    var stepText;
-    if (this.practice){
-        stepText = 'Finish Instructions';
-    } else{
-        $("#InstructionSide").hide();
-        stepText = 'Finish Task';
-    }
-    this.pumps = 0;
-    var trial = this.trial;
+Task.trial = function() {
+    this.reset();
+    var balloon = this.balloon;
     var pumps = this.pumps;
-    var popped = false;
-    var cashed = false;
-    var popPoint = 0;
-    var max = this.max;
-    var exitTrial = exitTrial;
-    console.log(max);
-    console.log(trial);
-
-
-    var reset = function(){
-        $('#inst').hide();
-        $('#taskContainer').show();
-        $("#poppedIm").hide();
-        $('#resultText').css({opacity:'0'});
-        hideButtons();
-
-        pumps = 0;
-        popped = false;
-        cashed = false;
-        popPoint = Math.floor((Math.random() * 63) + 1);
-
-        $("#pumpText").text(String(pumps) + ' tokens');
-        $("#balloonIm").css({height: '50px',width: '50px',top:'250px'}).show();
-        $("#balloonIm").animate({opacity:'1'});
-        $('#resultText').css({top: '0px'});
-        $('#cashText').text('CASH IN');
-        $('#cashBox').css({backgroundColor:'#009201'});
-        trial ++;
-    };
-
-
-
-
-
-    reset();
-
+    var popPoint = this.pop_point;
+    var state = this.state;
+    var stateText = this.stepText;
     $('#pumpBox').click(function(){
-        if (!popped && !cashed) {
+        if (!state) {
+            console.log(this.pumps);
             pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             $("#pumpText").text(String(pumps) + ' tokens');
-            if (pumps > popPoint){
-                popped = true;
+            if (balloon > popPoint){
+                state = 'Popped';
                 pumps = 0;
                 $('#resultText').text('Popped');
                 $('#resultText').css({color:'red'});
@@ -114,7 +75,7 @@ Task.prototype.start = function(exitTrial) {
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
                 if (trial == max){
-                    $('#cashText').text(stepText).css({opacity: '0'});
+                    $('#cashText').text(stateText).css({opacity: '0'});
                 }else {
                     $('#cashText').text('Next Balloon').css({opacity: '0'});
                 }
@@ -125,34 +86,58 @@ Task.prototype.start = function(exitTrial) {
             }
         }
     });
-
-    $('#cashBox').click(function(){
-        if (!popped && !cashed) {
-            cashed = true;
-            $('#resultText')
-                .text('Cashed!')
-                .css({top: '20px', color:'green'});
-            $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
-            $('#cashBox').css({backgroundColor:'#CAC7CA'});
-
-            if (trial == max){
-                $('#cashText').text(stepText).css({opacity: '0'});
-            }else {
-                $('#cashText').text('Next Balloon').css({opacity: '0'});
-            }
-            $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
-            $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
-        } else {
-            if (trial == max){
-                exitTrial();
-            } else {
-                reset();
-            }
-        }
-
-    });
 };
 
+Task.reset = function () {
+    this.balloon++;
+    this.pumps = 0;
+    this.state = none;
+    this.pop_point = Math.floor((Math.random() * 63) + 1);
+
+    $('#inst').hide();
+    $('#taskContainer').show();
+    $("#poppedIm").hide();
+    $('#resultText').css({opacity: '0'});
+    hideButtons();
+
+    $("#pumpText").text(String(pumps) + ' tokens');
+    $("#balloonIm").css({height: '50px', width: '50px', top: '250px'}).show();
+    $("#balloonIm").animate({opacity: '1'});
+    $('#resultText').css({top: '0px'});
+    $('#cashText').text('CASH IN');
+    $('#cashBox').css({backgroundColor: '#009201'});
+};
+
+
+
+//
+// $('#cashBox').click(function(){
+//     if (!popped && !cashed) {
+//         cashed = true;
+//         $('#resultText')
+//             .text('Cashed!')
+//             .css({top: '20px', color:'green'});
+//         $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
+//         $('#cashBox').css({backgroundColor:'#CAC7CA'});
+//
+//         if (trial == max){
+//             $('#cashText').text(stepText).css({opacity: '0'});
+//         }else {
+//             $('#cashText').text('Next Balloon').css({opacity: '0'});
+//         }
+//         $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
+//         $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
+//     } else {
+//         if (trial == max){
+//             exitTrial();
+//         } else {
+//             reset();
+//         }
+//     }
+//
+// });
+// };
+//
 
 
 
@@ -170,5 +155,5 @@ BARTTask = {
         "At the end of the task you will view a report of your performance in the task.<br><br> To practice with a few balloons, press continue."
     ],
     Instruction: Instruct,
-    Task: Task
+    Task: Task.trial
 };
