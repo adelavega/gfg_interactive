@@ -69,6 +69,7 @@ Task.prototype.start = function(exitTrial) {
     var max = this.max;
     var exitTrial = exitTrial;
     console.log(max);
+    console.log(trial);
 
 
     var reset = function(){
