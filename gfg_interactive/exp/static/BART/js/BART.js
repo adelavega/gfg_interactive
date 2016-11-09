@@ -19,7 +19,7 @@ function Instruct(message,leftKey,rightKey) {
     this.rightKey = rightKey != null ? rightKey : "Continue";
 }
 
-Instruct.start = function(exitTrial) {
+Instruct.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
     $('#taskContainer').hide();
     $("#inst").html(this.message);
@@ -31,7 +31,7 @@ Instruct.start = function(exitTrial) {
     return keyText(this.rightKey,'right');
 };
 
-Instruct.buttonClick = function(button) {
+Instruct.prototype.buttonClick = function(button) {
     var acc;
     if (button.id == 'leftText' || button.id == 'leftButton') {
         acc = 'BACK';
