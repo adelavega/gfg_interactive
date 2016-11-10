@@ -129,7 +129,7 @@ Task.prototype.trial = function() {
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
         } else {
-            if (trial == max){
+            if (balloon == max){
                 exitTrial();
             } else {
                 reset();
