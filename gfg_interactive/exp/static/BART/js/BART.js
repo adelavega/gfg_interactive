@@ -63,7 +63,7 @@ reset = function() {
     $("#poppedIm").hide();
     $('#resultText').css({opacity: '0'});
     hideButtons();
-    $('#ContinueButton').css({opacity:'0'});
+    $('#ContinueButton').css({opacity:'0'}).hide();
     $("#pumpText").text('0 tokens');
     $("#balloonIm").css({height: '50px', width: '50px', top: '250px'}).show();
     $("#balloonIm").animate({opacity: '1'});
@@ -98,6 +98,7 @@ trial = function() {
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                 $('#cashBox').delay(500).animate({opacity:'0'},{duration:200, easing:"linear", queue:false});
                 $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
+                $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
             }
         }
     });
@@ -112,7 +113,7 @@ trial = function() {
             $('#cashBox').delay(500).animate({opacity:'0'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
             console.log('bah!');
-            $('#ContinueButton').delay(200).animate({opacity: '1'}, {duration:750});
+            $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
         }
     });
 };

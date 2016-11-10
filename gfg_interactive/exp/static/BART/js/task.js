@@ -8,6 +8,7 @@ jQuery(function() {
 });
 
 blocks = [new BARTTask.Instruction(BARTTask.InstructionText[1])];
+
 for (i = 0; i <= 5; i++) {
     blocks.push(new BARTTask.Task(false,i));
 }
