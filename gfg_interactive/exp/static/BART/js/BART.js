@@ -97,11 +97,7 @@ Task.prototype.trial = function() {
                 $("#pumpText").text(String(pumps) + ' tokens');
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
-                if (balloon == max){
-                    $('#cashText').text(stateText).css({opacity: '0'});
-                }else {
-                    $('#cashText').text('Next Balloon').css({opacity: '0'});
-                }
+                $('#cashText').text('Next Balloon').css({opacity: '0'});
                 $('#mainContainer').delay(500)
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                 $("#cashText").delay(500).animate({opacity:'1'},{duration:200, easing:"linear", queue:false});
@@ -118,12 +114,7 @@ Task.prototype.trial = function() {
                 .css({top: '20px', color:'green'});
             $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').css({backgroundColor:'#CAC7CA'});
-
-            if (balloon == max){
-                $('#cashText').text(stateText).css({opacity: '0'});
-            }else {
-                $('#cashText').text('Next Balloon').css({opacity: '0'});
-            }
+            $('#cashText').text('Next Balloon').css({opacity: '0'});
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
             $('#rightButton').show();
