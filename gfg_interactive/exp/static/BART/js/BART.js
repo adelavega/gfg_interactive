@@ -47,11 +47,30 @@ function Task(practice, max) {
     this.stepText = practice ? 'Finish Instructions' : 'Finish Task';
     this.max = max;
     this.balloon = 0;
+    this.reset = function () {
+        this.balloon++;
+        this.pumps = 0;
+        this.state = none;
+        this.pop_point = Math.floor((Math.random() * 63) + 1);
+
+        $('#inst').hide();
+        $('#taskContainer').show();
+        $("#poppedIm").hide();
+        $('#resultText').css({opacity: '0'});
+        hideButtons();
+
+        $("#pumpText").text(String(pumps) + ' tokens');
+        $("#balloonIm").css({height: '50px', width: '50px', top: '250px'}).show();
+        $("#balloonIm").animate({opacity: '1'});
+        $('#resultText').css({top: '0px'});
+        $('#cashText').text('CASH IN');
+        $('#cashBox').css({backgroundColor: '#009201'});
+    };
 }
 
 Task.prototype.start = function(exitTrial) {
-        this.exitTrial = exitTrial;
-    };
+    this.exitTrial = exitTrial;
+};
 
 Task.trial = function() {
     this.reset();
@@ -90,25 +109,6 @@ Task.trial = function() {
     });
 };
 
-Task.reset = function () {
-    this.balloon++;
-    this.pumps = 0;
-    this.state = none;
-    this.pop_point = Math.floor((Math.random() * 63) + 1);
-
-    $('#inst').hide();
-    $('#taskContainer').show();
-    $("#poppedIm").hide();
-    $('#resultText').css({opacity: '0'});
-    hideButtons();
-
-    $("#pumpText").text(String(pumps) + ' tokens');
-    $("#balloonIm").css({height: '50px', width: '50px', top: '250px'}).show();
-    $("#balloonIm").animate({opacity: '1'});
-    $('#resultText').css({top: '0px'});
-    $('#cashText').text('CASH IN');
-    $('#cashBox').css({backgroundColor: '#009201'});
-};
 
 
 
