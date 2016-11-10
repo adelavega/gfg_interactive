@@ -80,8 +80,8 @@ Task.prototype.trial = function() {
     var state = this.state;
 
     $('#pumpBox').click(function(){
+        console.log(state);
         if (!state) {
-            console.log(state);
             pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             $("#pumpText").text(String(pumps) + ' tokens');
