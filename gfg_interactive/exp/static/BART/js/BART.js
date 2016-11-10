@@ -56,7 +56,7 @@ Task.prototype.start = function(exitTrial) {
 };
 
 
-Task.prototype.reset = function () {
+Task.prototype.reset = function() {
     this.balloon++;
     this.pumps = 0;
     this.state = none;
