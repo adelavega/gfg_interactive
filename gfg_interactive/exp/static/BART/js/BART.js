@@ -51,7 +51,6 @@ function Task(practice, max) {
 
 Task.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
-    this.reset();
 };
 
 
