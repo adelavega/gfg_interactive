@@ -75,7 +75,9 @@ Task.prototype.trial = function() {
     this.reset();
     this.state = null;
     this.pumps = 0;
-    this.pop_point = Math.floor((Math.random() * 63) + 1);
+
+    this.pop_point = 10;
+    // this.pop_point = Math.floor((Math.random() * 63) + 1);
     var pumps = this.pumps;
     var popPoint = this.pop_point;
     var state = this.state;
