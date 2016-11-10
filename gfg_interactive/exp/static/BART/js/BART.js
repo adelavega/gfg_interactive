@@ -82,6 +82,7 @@ Task.prototype.trial = function() {
     var popPoint = this.pop_point;
     var state = this.state;
     var stateText = this.stepText;
+    var max = this.max;
     $('#pumpBox').click(function(){
         if (!state) {
             pumps ++;
