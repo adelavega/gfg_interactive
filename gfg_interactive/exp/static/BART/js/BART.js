@@ -85,7 +85,7 @@ Task.prototype.trial = function() {
     $('#pumpBox').click(function(){
         if (!state) {
             pumps ++;
-            console.log(this.trial);
+            console.log(this.balloon);
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             $("#pumpText").text(String(pumps) + ' tokens');
             if (pumps > popPoint){
