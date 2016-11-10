@@ -57,7 +57,7 @@ Task.prototype.start = function(exitTrial) {
     this.trial();
 };
 
-Task.prototype.reset = function() {
+Task.reset = function() {
     $('#inst').hide();
     $('#taskContainer').show();
     $("#poppedIm").hide();
@@ -73,7 +73,7 @@ Task.prototype.reset = function() {
 };
 
 
-Task.prototype.trial = function() {
+Task.trial = function() {
     this.reset();
     var pumps = this.pumps;
     var popPoint = this.pop_point;
