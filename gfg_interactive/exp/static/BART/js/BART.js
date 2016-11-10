@@ -96,10 +96,10 @@ Task.prototype.trial = function() {
                 $("#balloonIm").css({opacity:'0'}).hide();
                 $("#pumpText").text(String(pumps) + ' tokens');
                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
-                $('#cashBox').css({backgroundColor:'#CAC7CA'});
+
                 $('#mainContainer').delay(500)
                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
-                $("#cashText").delay(500).animate({opacity:'0'},{duration:200, easing:"linear", queue:false});
+                $('#cashBox').delay(500).animate({opacity:'0'},{duration:200, easing:"linear", queue:false});
                 $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
             }
         }
@@ -114,7 +114,7 @@ Task.prototype.trial = function() {
             $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').delay(500).animate({opacity:'0'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
-
+            console.log('bah!');
         }
     });
 };
