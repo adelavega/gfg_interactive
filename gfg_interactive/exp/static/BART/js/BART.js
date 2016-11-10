@@ -83,8 +83,6 @@ Task.prototype.trial = function() {
     var state = this.state;
     var stateText = this.stepText;
     var max = this.max;
-    var exitTrial = this.exitTrial;
-    var reset = this.reset;
     $('#pumpBox').click(function(){
         if (!state) {
             pumps ++;
@@ -122,20 +120,14 @@ Task.prototype.trial = function() {
             $('#cashBox').css({backgroundColor:'#CAC7CA'});
 
             if (balloon == max){
-                $('#cashText').text(stepText).css({opacity: '0'});
+                $('#cashText').text(stateText).css({opacity: '0'});
             }else {
                 $('#cashText').text('Next Balloon').css({opacity: '0'});
             }
             $("#cashText").delay(500).animate({opacity:'1'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
-        } else {
-            if (balloon == max){
-                exitTrial();
-            } else {
-                reset();
-            }
+            $('#rightButton').show();
         }
-
     });
 };
 
