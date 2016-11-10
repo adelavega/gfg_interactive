@@ -78,8 +78,8 @@ Task.prototype.trial = function() {
     var pumps = this.pumps;
     var popPoint = this.pop_point;
     var state = this.state;
-    var _self = this;
-    $('#pumpBox').click({id:_self}, function(){
+    
+    $('#pumpBox').click({id:this}, function(){
         console.log(data.id.trialNum);
         if (!state) {
             pumps ++;
