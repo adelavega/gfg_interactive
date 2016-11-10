@@ -47,7 +47,7 @@ function Task(practice, trialNum) {
     this.stepText = practice ? $("#instructionside").show() : $("#instructionside").hide();
     this.trialNum = trialNum;
     this.pumps = 0;
-
+    this.state = null;
     this.pop_point = Math.floor((Math.random() * 63) + 1);
     console.log('START OVER');
 }
@@ -75,7 +75,6 @@ Task.prototype.reset = function() {
 
 Task.prototype.trial = function() {
     this.reset();
-    this.state = null;
     var pumps = this.pumps;
     var popPoint = this.pop_point;
     var state = this.state;
