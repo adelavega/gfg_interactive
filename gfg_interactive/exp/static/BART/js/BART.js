@@ -84,6 +84,7 @@ Task.prototype.trial = function() {
     var stateText = this.stepText;
     var max = this.max;
     $('#pumpBox').click(function(){
+        console.log(state);
         if (!state) {
             pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
@@ -119,7 +120,6 @@ Task.prototype.trial = function() {
         }
     });
 };
-
 
 Task.prototype.buttonClick = function() {
     if (this.balloon === this.max){
