@@ -121,7 +121,14 @@ Task.prototype.trial = function() {
 };
 
 
-
+Task.prototype.buttonClick = function() {
+    if (this.balloon === this.max){
+        this.exitTrial();
+    }
+    else{
+        this.reset();
+    }
+};
 
 
 
