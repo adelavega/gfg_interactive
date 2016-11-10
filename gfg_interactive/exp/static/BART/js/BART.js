@@ -58,7 +58,7 @@ Task.prototype.start = function(exitTrial) {
 Task.prototype.reset = function() {
     this.balloon++;
     this.pumps = 0;
-    this.state = none;
+    this.state = null;
     this.pop_point = Math.floor((Math.random() * 63) + 1);
     $('#inst').hide();
     $('#taskContainer').show();
