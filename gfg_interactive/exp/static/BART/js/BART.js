@@ -50,6 +50,8 @@ function Task(practice, trialNum) {
     this.state = null;
     this.pop_point = Math.floor((Math.random() * 63) + 1);
     console.log('START OVER');
+    this.reset = reset;
+    this.trial = trial;
 }
 
 Task.prototype.start = function(exitTrial) {
@@ -57,7 +59,7 @@ Task.prototype.start = function(exitTrial) {
     this.trial();
 };
 
-Task.reset = function() {
+reset = function() {
     $('#inst').hide();
     $('#taskContainer').show();
     $("#poppedIm").hide();
@@ -73,7 +75,7 @@ Task.reset = function() {
 };
 
 
-Task.trial = function() {
+trial = function() {
     this.reset();
     var pumps = this.pumps;
     var popPoint = this.pop_point;
