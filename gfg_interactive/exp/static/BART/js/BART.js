@@ -51,7 +51,7 @@ function Task(practice, max) {
 
 Task.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
-    this.reset();
+    this.trial();
 };
 
 
@@ -75,64 +75,42 @@ Task.prototype.reset = function() {
 };
 
 
-    //
-    //
-    //
-    // this.reset = function () {
-    //     this.balloon++;
-    //     this.pumps = 0;
-    //     this.state = none;
-    //     this.pop_point = Math.floor((Math.random() * 63) + 1);
-    //     $('#inst').hide();
-    //     $('#taskContainer').show();
-    //     $("#poppedIm").hide();
-    //     $('#resultText').css({opacity: '0'});
-    //     hideButtons();
-    //
-    //     $("#pumpText").text(String(pumps) + ' tokens');
-    //     $("#balloonIm").css({height: '50px', width: '50px', top: '250px'}).show();
-    //     $("#balloonIm").animate({opacity: '1'});
-    //     $('#resultText').css({top: '0px'});
-    //     $('#cashText').text('CASH IN');
-    //     $('#cashBox').css({backgroundColor: '#009201'});
-    // };
-    //
-    // this.trial = function() {
-    //     this.reset();
-    //     var balloon = this.balloon;
-    //     var pumps = this.pumps;
-    //     var popPoint = this.pop_point;
-    //     var state = this.state;
-    //     var stateText = this.stepText;
-    //     $('#pumpBox').click(function(){
-    //         if (!state) {
-    //             console.log('fuck this');
-    //             console.log(this.pumps);
-    //             pumps ++;
-    //             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
-    //             $("#pumpText").text(String(pumps) + ' tokens');
-    //             if (balloon > popPoint){
-    //                 state = 'Popped';
-    //                 pumps = 0;
-    //                 $('#resultText').text('Popped');
-    //                 $('#resultText').css({color:'red'});
-    //                 $("#balloonIm").css({opacity:'0'}).hide();
-    //                 $("#pumpText").text(String(pumps) + ' tokens');
-    //                 $('#mainContainer').css({backgroundColor: '#FFB7B7'});
-    //                 $('#cashBox').css({backgroundColor:'#CAC7CA'});
-    //                 if (trial == max){
-    //                     $('#cashText').text(stateText).css({opacity: '0'});
-    //                 }else {
-    //                     $('#cashText').text('Next Balloon').css({opacity: '0'});
-    //                 }
-    //                 $('#mainContainer').delay(500)
-    //                     .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
-    //                 $("#cashText").delay(500).animate({opacity:'1'},{duration:200, easing:"linear", queue:false});
-    //                 $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
-    //             }
-    //         }
-    //     });
-    // };
+Task.prototype.trial = function() {
+    this.reset();
+    var balloon = this.balloon;
+    var pumps = this.pumps;
+    var popPoint = this.pop_point;
+    var state = this.state;
+    var stateText = this.stepText;
+    $('#pumpBox').click(function(){
+        if (!state) {
+            console.log('fuck this');
+            console.log(this.pumps);
+            pumps ++;
+            $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
+            $("#pumpText").text(String(pumps) + ' tokens');
+            if (balloon > popPoint){
+                state = 'Popped';
+                pumps = 0;
+                $('#resultText').text('Popped');
+                $('#resultText').css({color:'red'});
+                $("#balloonIm").css({opacity:'0'}).hide();
+                $("#pumpText").text(String(pumps) + ' tokens');
+                $('#mainContainer').css({backgroundColor: '#FFB7B7'});
+                $('#cashBox').css({backgroundColor:'#CAC7CA'});
+                if (trial == max){
+                    $('#cashText').text(stateText).css({opacity: '0'});
+                }else {
+                    $('#cashText').text('Next Balloon').css({opacity: '0'});
+                }
+                $('#mainContainer').delay(500)
+                    .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
+                $("#cashText").delay(500).animate({opacity:'1'},{duration:200, easing:"linear", queue:false});
+                $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
+            }
+        }
+    });
+};
 //
 // $('#cashBox').click(function(){
 //     if (!popped && !cashed) {
