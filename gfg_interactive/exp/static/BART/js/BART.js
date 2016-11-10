@@ -47,10 +47,11 @@ function Task(practice, max) {
     this.stepText = practice ? 'Finish Instructions' : 'Finish Task';
     this.max = max;
     this.balloon = 0;
-    this.start = function(exitTrial) {
+}
+
+Task.prototype.start = function(exitTrial) {
         this.exitTrial = exitTrial;
     };
-}
 
 Task.trial = function() {
     this.reset();
