@@ -65,7 +65,7 @@ Task.prototype.reset = function() {
     $("#poppedIm").hide();
     $('#resultText').css({opacity: '0'});
     hideButtons();
-
+    $('#ContinueButton').css({opacity:'0'});
     $("#pumpText").text(String(this.pumps) + ' tokens');
     $("#balloonIm").css({height: '50px', width: '50px', top: '250px'}).show();
     $("#balloonIm").animate({opacity: '1'});
@@ -115,6 +115,7 @@ Task.prototype.trial = function() {
             $('#cashBox').delay(500).animate({opacity:'0'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
             console.log('bah!');
+            $('#ContinueButton').delay(200).animate({opacity: '1'}, {duration:750});
         }
     });
 };
