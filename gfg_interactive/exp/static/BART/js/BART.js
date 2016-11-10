@@ -46,7 +46,9 @@ Instruct.prototype.buttonClick = function(button) {
 function Task(practice, trialNum) {
     this.stepText = practice ? $("#instructionside").show() : $("#instructionside").hide();
     this.trialNum = trialNum;
+    this.pumps = 0;
 
+    this.pop_point = Math.floor((Math.random() * 63) + 1);
     console.log('START OVER');
 }
 
@@ -62,7 +64,7 @@ Task.prototype.reset = function() {
     $('#resultText').css({opacity: '0'});
     hideButtons();
     $('#ContinueButton').css({opacity:'0'});
-    $("#pumpText").text(String(this.pumps) + ' tokens');
+    $("#pumpText").text('0 tokens');
     $("#balloonIm").css({height: '50px', width: '50px', top: '250px'}).show();
     $("#balloonIm").animate({opacity: '1'});
     $('#resultText').css({top: '0px'});
@@ -74,10 +76,6 @@ Task.prototype.reset = function() {
 Task.prototype.trial = function() {
     this.reset();
     this.state = null;
-    this.pumps = 0;
-
-    this.pop_point = 10;
-    // this.pop_point = Math.floor((Math.random() * 63) + 1);
     var pumps = this.pumps;
     var popPoint = this.pop_point;
     var state = this.state;
