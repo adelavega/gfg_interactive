@@ -44,14 +44,12 @@ Instruct.prototype.buttonClick = function(button) {
 };
 
 function Task(practice, trialNum) {
-    this.stepText = practice ? $("#instructionside").show() : $("#instructionside").hide();
+    practice ? $("#instructionside").show() : $("#instructionside").hide();
     this.trialNum = trialNum;
-    this.pumps = 0;
-    this.state = null;
-    this.pop_point = Math.floor((Math.random() * 63) + 1);
     console.log('START OVER');
     this.reset = reset;
     this.trial = trial;
+
 }
 
 Task.prototype.start = function(exitTrial) {
@@ -77,12 +75,12 @@ reset = function() {
 
 trial = function() {
     this.reset();
-    var pumps = this.pumps;
-    var popPoint = this.pop_point;
-    var state = this.state;
-    
+    var pumps = 0;
+    var popPoint = Math.floor((Math.random() * 63) + 1);
+    var state = null;
+
     $('#pumpBox').click(function(){
-        console.log(this.trialNum);
+        console.log(state);
         if (!state) {
             pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
