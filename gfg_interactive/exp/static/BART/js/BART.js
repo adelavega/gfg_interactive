@@ -43,10 +43,9 @@ Instruct.prototype.buttonClick = function(button) {
     }
 };
 
-function Task(practice, max) {
+function Task(practice, trialNum) {
     this.stepText = practice ? 'Finish Instructions' : 'Finish Task';
-    this.max = max;
-    this.balloon = 0;
+    this.trialNum = trialNum;
 }
 
 Task.prototype.start = function(exitTrial) {
@@ -54,9 +53,7 @@ Task.prototype.start = function(exitTrial) {
     this.trial();
 };
 
-
 Task.prototype.reset = function() {
-    this.balloon++;
     this.pumps = 0;
     this.state = null;
     this.pop_point = Math.floor((Math.random() * 63) + 1);
@@ -80,8 +77,6 @@ Task.prototype.trial = function() {
     var pumps = this.pumps;
     var popPoint = this.pop_point;
     var state = this.state;
-    var stateText = this.stepText;
-    var max = this.max;
     $('#pumpBox').click(function(){
         console.log(state);
         if (!state) {
@@ -121,13 +116,7 @@ Task.prototype.trial = function() {
 };
 
 Task.prototype.buttonClick = function() {
-    if (this.balloon === this.max){
         this.exitTrial();
-    }
-    else{
-        this.reset();
-        console.log(this.state);
-    }
 };
 
 
