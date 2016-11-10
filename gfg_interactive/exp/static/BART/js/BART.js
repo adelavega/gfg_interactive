@@ -46,9 +46,7 @@ Instruct.prototype.buttonClick = function(button) {
 function Task(practice, trialNum) {
     this.stepText = practice ? $("#instructionside").show() : $("#instructionside").hide();
     this.trialNum = trialNum;
-    this.state = null;
-    this.pumps = 0;
-    this.pop_point = Math.floor((Math.random() * 63) + 1);
+
     console.log('START OVER');
 }
 
@@ -75,6 +73,9 @@ Task.prototype.reset = function() {
 
 Task.prototype.trial = function() {
     this.reset();
+    this.state = null;
+    this.pumps = 0;
+    this.pop_point = Math.floor((Math.random() * 63) + 1);
     var pumps = this.pumps;
     var popPoint = this.pop_point;
     var state = this.state;
