@@ -78,9 +78,9 @@ Task.prototype.trial = function() {
     var pumps = this.pumps;
     var popPoint = this.pop_point;
     var state = this.state;
-    
-    $('#pumpBox').click({id:this}, function(){
-        console.log(data.id.trialNum);
+
+    $('#pumpBox').click({id:12}, function(){
+        console.log(data.id);
         if (!state) {
             pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
