@@ -77,7 +77,6 @@ Task.prototype.reset = function() {
 
 Task.prototype.trial = function() {
     this.reset();
-    var balloon = this.balloon;
     var pumps = this.pumps;
     var popPoint = this.pop_point;
     var state = this.state;
@@ -127,6 +126,7 @@ Task.prototype.buttonClick = function() {
     }
     else{
         this.reset();
+        console.log(this.state);
     }
 };
 
