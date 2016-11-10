@@ -44,8 +44,12 @@ Instruct.prototype.buttonClick = function(button) {
 };
 
 function Task(practice, trialNum) {
-    this.stepText = practice ? 'Finish Instructions' : 'Finish Task';
+    this.stepText = practice ? $("#instructionside").show() : $("#instructionside").hide();
     this.trialNum = trialNum;
+    this.state = null;
+    this.pumps = 0;
+    this.pop_point = Math.floor((Math.random() * 63) + 1);
+    console.log('START OVER');
 }
 
 Task.prototype.start = function(exitTrial) {
@@ -54,10 +58,6 @@ Task.prototype.start = function(exitTrial) {
 };
 
 Task.prototype.reset = function() {
-    console.log('START OVER');
-    this.pumps = 0;
-    this.state = null;
-    this.pop_point = Math.floor((Math.random() * 63) + 1);
     $('#inst').hide();
     $('#taskContainer').show();
     $("#poppedIm").hide();
