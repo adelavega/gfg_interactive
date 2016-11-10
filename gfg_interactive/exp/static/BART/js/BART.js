@@ -66,7 +66,7 @@ Task.prototype.reset = function() {
     $('#resultText').css({opacity: '0'});
     hideButtons();
 
-    $("#pumpText").text(String(pumps) + ' tokens');
+    $("#pumpText").text(String(this.pumps) + ' tokens');
     $("#balloonIm").css({height: '50px', width: '50px', top: '250px'}).show();
     $("#balloonIm").animate({opacity: '1'});
     $('#resultText').css({top: '0px'});
@@ -84,8 +84,6 @@ Task.prototype.trial = function() {
     var stateText = this.stepText;
     $('#pumpBox').click(function(){
         if (!state) {
-            console.log('fuck this');
-            console.log(this.pumps);
             pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             $("#pumpText").text(String(pumps) + ' tokens');
