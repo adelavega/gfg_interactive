@@ -47,8 +47,6 @@ function Task(practice, max) {
     this.stepText = practice ? 'Finish Instructions' : 'Finish Task';
     this.max = max;
     this.balloon = 0;
-
-
 }
 
 Task.prototype.start = function(exitTrial) {
