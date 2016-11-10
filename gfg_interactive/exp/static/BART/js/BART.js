@@ -139,7 +139,6 @@ Task.prototype.trial = function() {
     });
 };
 
-};
 
 
 
