@@ -54,6 +54,7 @@ Task.prototype.start = function(exitTrial) {
 };
 
 Task.prototype.reset = function() {
+    console.log('START OVER');
     this.pumps = 0;
     this.state = null;
     this.pop_point = Math.floor((Math.random() * 63) + 1);
