@@ -71,7 +71,7 @@ Task.prototype.reset = function() {
     $("#balloonIm").animate({opacity: '1'});
     $('#resultText').css({top: '0px'});
     $('#cashText').text('CASH IN');
-    $('#cashBox').css({backgroundColor: '#009201'});
+    $('#cashBox').animate({opacity:'1'},{queue:false});
 };
 
 
