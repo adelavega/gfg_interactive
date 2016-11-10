@@ -113,10 +113,9 @@ Task.prototype.trial = function() {
                 .css({top: '20px', color:'green'});
             $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').css({backgroundColor:'#CAC7CA'});
-
             $("#cashText").delay(500).animate({opacity:'0'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
-            $('#rightButton').show();
+
         }
     });
 };
