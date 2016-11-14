@@ -7,11 +7,7 @@ jQuery(function() {
     return currSession.start();
 });
 
-blocks = [new BARTTask.Instruction(BARTTask.InstructionText[1])];
-
-for (i = 0; i <= 5; i++) {
-    blocks.push(new BARTTask.Task(false,i));
-}
+blocks = [new BARTTask.Instruction(BARTTask.InstructionText[1]),new BARTTask.Task(false)];
 
 currSession = new common.Session(blocks);
 
