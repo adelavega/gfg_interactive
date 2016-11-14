@@ -57,11 +57,8 @@ Task.prototype.start = function(exitTrial) {
 };
 
 Task.prototype.buttonClick = function() {
-    if (this.limit != 5){
-        $("#InstructionSide").hide();
-    }
-        this.trial();
     if (this.balloonNum >= this.limit) {
+            $("#InstructionSide").hide();
            this.exitTrial();
     }
 };
