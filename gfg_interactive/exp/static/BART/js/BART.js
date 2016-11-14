@@ -43,45 +43,26 @@ Instruct.prototype.buttonClick = function(button) {
     }
 };
 
-function PracticeTask() {
+function Task() {
     $("#instructionside").show();
     this.reset = reset;
     this.trial = trial;
     this.balloonNum = 0;
 }
 
-PracticeTask.prototype.start = function(exitTrial) {
+Task.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
     this.trial();
 };
 
-PracticeTask.prototype.buttonClick = function() {
-    if (this.balloonNum <= 5){
-        this.reset();
-        this.trial();
-    } else {
-        this.exitTrial();
+Task.prototype.buttonClick = function() {
+    if (this.balloonNum == 2){
+        $("#instructionside").hide();
     }
-};
-
-function MainTask() {
-    this.reset = reset;
-    this.trial = trial;
-    this.balloonNum = 0;
-}
-
-MainTask.prototype.start = function(exitTrial) {
-    this.exitTrial = exitTrial;
-    this.trial();
-    $("#instructionside").hide();
-};
-
-MainTask.prototype.buttonClick = function() {
-    if (this.balloonNum <= 30){
         this.reset();
         this.trial();
-    } else {
-        this.exitTrial();
+    if (this.balloonNum >= 5) {
+           this.exitTrial();
     }
 };
 
@@ -157,6 +138,5 @@ BARTTask = {
         "At the end of the task you will view a report of your performance in the task.<br><br> To practice with a few balloons, press continue."
     ],
     Instruction: Instruct,
-    Task: MainTask,
-    Practice: PracticeTask
+    Task: Task
 };
