@@ -49,7 +49,7 @@ function Task(practice, trialNum) {
     console.log('START OVER');
     this.reset = reset;
     this.trial = trial;
-
+    this.balloonNum = 0;
 }
 
 Task.prototype.start = function(exitTrial) {
@@ -70,6 +70,7 @@ reset = function() {
     $('#resultText').css({top: '0px'});
     $('#cashText').text('CASH IN');
     $('#cashBox').animate({opacity:'1'},{queue:false});
+    this.balloonNum ++;
 };
 
 
@@ -119,7 +120,11 @@ trial = function() {
 };
 
 Task.prototype.buttonClick = function() {
+    if (this.balloonNum < 5){
+        this.reset();
+    } else {
         this.exitTrial();
+    }
 };
 
 
