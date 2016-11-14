@@ -59,7 +59,6 @@ Task.prototype.buttonClick = function() {
     if (this.balloonNum == 2){
         $("#instructionside").hide();
     }
-        this.reset();
         this.trial();
     if (this.balloonNum >= 5) {
            this.exitTrial();
