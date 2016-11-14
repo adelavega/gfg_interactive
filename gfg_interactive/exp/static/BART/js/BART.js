@@ -60,7 +60,7 @@ Task.prototype.buttonClick = function() {
         $("#InstructionSide").hide();
     }
         this.trial();
-    if (this.balloonNum >= 30) {
+    if (this.balloonNum >= 6) {
            this.exitTrial();
     }
 };
