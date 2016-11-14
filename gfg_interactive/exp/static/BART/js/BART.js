@@ -65,7 +65,6 @@ PracticeTask.prototype.buttonClick = function() {
 };
 
 function MainTask() {
-    $("#instructionside").hide();
     this.reset = reset;
     this.trial = trial;
     this.balloonNum = 0;
@@ -74,6 +73,7 @@ function MainTask() {
 MainTask.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
     this.trial();
+    $("#instructionside").hide();
 };
 
 MainTask.prototype.buttonClick = function() {
