@@ -56,12 +56,11 @@ Task.prototype.start = function(exitTrial) {
 };
 
 Task.prototype.buttonClick = function() {
-    if (this.balloonNum > 2){
-        console.log('h');
+    if (this.balloonNum >= 5){
         $("#InstructionSide").hide();
     }
         this.trial();
-    if (this.balloonNum >= 5) {
+    if (this.balloonNum >= 30) {
            this.exitTrial();
     }
 };
