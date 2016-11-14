@@ -43,8 +43,10 @@ Instruct.prototype.buttonClick = function(button) {
     }
 };
 
-function Task(practice) {
+function Task(practice, trialNum) {
     practice ? $("#instructionside").show() : $("#instructionside").hide();
+    this.trialNum = trialNum;
+    console.log('START OVER');
     this.reset = reset;
     this.trial = trial;
     this.balloonNum = 0;
@@ -79,6 +81,7 @@ trial = function() {
     var state = null;
 
     $('#pumpBox').click(function(){
+        console.log(state);
         if (!state) {
             pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
@@ -104,12 +107,13 @@ trial = function() {
     $('#cashBox').click(function(){
         if (!state) {
             state = 'cashed';
-            $('#resultText');
+            $('#resultText')
                 .text('Cashed!')
                 .css({top: '20px', color:'green'});
             $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
             $('#cashBox').delay(500).animate({opacity:'0'},{duration:750, easing:"linear", queue:false});
             $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
+            console.log('bah!');
             $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
         }
     });
