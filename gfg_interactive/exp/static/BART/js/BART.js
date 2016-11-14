@@ -100,6 +100,7 @@ reset = function() {
     $('#cashText').text('CASH IN');
     $('#cashBox').animate({opacity:'1'},{queue:false});
     this.balloonNum ++;
+    console.log(this.balloonNum);
 };
 
 
