@@ -57,6 +57,7 @@ Task.prototype.start = function(exitTrial) {
 };
 
 Task.prototype.buttonClick = function() {
+    this.trial();
     if (this.balloonNum >= this.limit) {
             $("#InstructionSide").hide();
            this.exitTrial();
