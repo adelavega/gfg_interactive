@@ -12,8 +12,9 @@ blocks = [new BARTTask.Instruction(BARTTask.InstructionText[0]),
           new BARTTask.Instruction(BARTTask.InstructionText[2]),
           new BARTTask.Instruction(BARTTask.InstructionText[3]),
           new BARTTask.Task(5),
-          new BARTTask.Instruction(BARTTask.InstructionText[1]),
-          new BARTTask.Task(10)];
+          new BARTTask.Instruction(BARTTask.InstructionText[4]),
+          new BARTTask.Task(10)
+         ];
 
 currSession = new common.Session(blocks);
 
