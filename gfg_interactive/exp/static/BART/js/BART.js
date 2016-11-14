@@ -43,7 +43,8 @@ Instruct.prototype.buttonClick = function(button) {
     }
 };
 
-function Task() {
+function Task(limit) {
+    this.limit = limit;
     $("#instructionside").show();
     this.reset = reset;
     this.trial = trial;
@@ -60,7 +61,7 @@ Task.prototype.buttonClick = function() {
         $("#InstructionSide").hide();
     }
         this.trial();
-    if (this.balloonNum >= 6) {
+    if (this.balloonNum >= limit) {
            this.exitTrial();
     }
 };
