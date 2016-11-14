@@ -122,6 +122,7 @@ trial = function() {
 Task.prototype.buttonClick = function() {
     if (this.balloonNum < 5){
         this.reset();
+        this.trial();
     } else {
         this.exitTrial();
     }
