@@ -80,7 +80,7 @@ reset = function() {
     $('#resultText').css({top: '0px'});
     $('#cashText').text('CASH IN');
     $('#cashBox').animate({opacity:'1'},{queue:false});
-    this.balloonNum ++;
+    this.balloonNum = this.balloonNum + 1;
     console.log(this.balloonNum);
 };
 
