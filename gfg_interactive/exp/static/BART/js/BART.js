@@ -91,15 +91,29 @@ trial = function() {
     var pumps = 0;
     var popPoint = Math.floor((Math.random() * 63) + 1);
     var state = null;
+    var balloon = this.balloonNum;
 
     $('#pumpBox').click(function(){
         if (!state) {
             pumps ++;
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             $("#pumpText").text(String(pumps) + ' tokens');
+            dataHandler.recordTrialData({
+                        'balloon_num': balloon,
+                        'action': 1,
+                        'pumps': pumps,
+                        'pop_point': popPoint
+                    });
             if (pumps > popPoint){
                 state = 'Popped';
                 pumps = 0;
+                dataHandler.recordTrialData({
+                        'balloon_num': balloon,
+                        'action': 0,
+                        'pumps': pumps,
+                        'pop_point': popPoint
+                    });
+
                 $('#resultText').text('Popped');
                 $('#resultText').css({color:'red'});
                 $("#balloonIm").css({opacity:'0'}).hide();
@@ -117,6 +131,12 @@ trial = function() {
 
     $('#cashBox').click(function(){
         if (!state) {
+            dataHandler.recordTrialData({
+                        'balloon_num': balloon,
+                        'action': 2,
+                        'pumps': pumps,
+                        'pop_point': popPoint
+                    });
             state = 'cashed';
             $('#resultText')
                 .text('Cashed!')
@@ -137,7 +157,8 @@ BARTTask = {
         "You can choose to stop inflating a balloon at any point and collect your tokens by choosing to 'cash in'. <br><br>once you choose to cash in, you will begin again with a new balloon.",
         "It is your choice to determine how much to pump up the balloon, but be aware that at some point the balloon will explode <br><br>The explosion point varies across balloons, ranging from the first pump to enough pumps to make the balloon fill almost the entire containing box.<br><br> if the balloon explodes, you will lose all of your tokens and move on to the next balloon.",
         "At the end of the task you will view a report of your performance in the task.<br><br> To practice with a few balloons, press continue.",
-        "This ends your practice block. <br><br>You will now play 30 trials. When you are ready press the continue button."
+        "This ends your practice block. <br><br>You will now play 30 trials. When you are ready press the continue button.",
+        "You have now completed this task. <br><br> if you would like, you can now continue to the review section of this task to review your performance "
     ],
     Instruction: Instruct,
     Task: Task
