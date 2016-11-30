@@ -7,11 +7,10 @@ jQuery(function() {
     return currSession.start();
 });
 
-new Trial('yse');
 
-// blocks = [new Trial('yes')];
+blocks = [new Trial('yes')];
 
-// currSession = new common.Session(blocks);
+currSession = new common.Session(blocks);
 
-// currSession.start();
+currSession.start();
 
