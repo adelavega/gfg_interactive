@@ -113,7 +113,7 @@ Trial = (function() {
                     $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
 
                     if (this.balloonNum == this.maxTrials -1) {
-                        $('#rightText').text = 'End Section'
+                        $('#rightText').text('End Section');
                     }
                 }
             }
@@ -131,7 +131,7 @@ Trial = (function() {
                 $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
 
                 if (this.balloonNum == this.maxTrials -1) {
-                        $('#rightText').text = 'End Section'
+                        $('#rightText').text('End Section');
                     }
             }
         }
