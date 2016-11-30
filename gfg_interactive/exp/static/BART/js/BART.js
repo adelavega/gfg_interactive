@@ -78,7 +78,6 @@ Trial = (function() {
     };
 
     Trial.prototype.buttonClick = function(button) {
-        console.log(button.id);
         if (button.id === 'ContinueButton') {
             this.ended = false;
             this.balloonNum ++;
@@ -111,6 +110,7 @@ Trial = (function() {
         }
 
         else if (button.id === 'cashBox') {
+            console.log('cashed');
             if (!this.ended) {
                 $('#resultText')
                     .text('Cashed!')
