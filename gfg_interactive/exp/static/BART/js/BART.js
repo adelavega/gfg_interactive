@@ -63,7 +63,7 @@ Trial = (function() {
         if (button.id === 'ContinueButton') {
             this.ended = true;
         }
-        else if (button.id === 'pumpBox') {
+        else if (button.id === 'mainContainer') {
             if (!this.ended){
                 this.balloonNum ++;
                 console.log(this.balloonNum);
