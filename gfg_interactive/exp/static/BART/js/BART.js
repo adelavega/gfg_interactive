@@ -28,7 +28,6 @@ BART_Instructions = (function () {
         console.log('starting instructions');
         $("#inst").html(this.message);
         $("#inst").show();
-        hideButtons();
         if (this.leftKey != null) {
             keyText(this.leftKey, 'left');
         }
