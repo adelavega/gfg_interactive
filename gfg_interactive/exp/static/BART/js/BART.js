@@ -3,6 +3,20 @@ hideButtons = function() {
     return $("#rightButton").hide();
 };
 
+function TaskDisplay(show){
+    if (show) {
+        $('#taskContainer').show();
+        $('#mainContainer').show();
+        $('#instructionside').show();
+    } else {
+        $('#taskContainer').hide();
+        $('#mainContainer').hide();
+        $('#instructionside').hide();
+    }
+}
+
+
+
 keyText = function(text, key) {
     if (key === 'left') {
         $("#leftText").html(text);
@@ -23,9 +37,7 @@ BART_Instructions = (function () {
     BART_Instructions.prototype.start = function(exitTrial) {
         this.exitTrial = exitTrial;
         console.log('starting instructions');
-        $('#taskContainer').hide();
-        $('#mainContainer').hide();
-
+        TaskDisplay(false);
 
         $("#inst").html(this.message);
         $("#inst").show();
@@ -80,6 +92,7 @@ BART_Block = (function() {
     }
 
     BART_Block.prototype.start = function(exitTrial) {
+        TaskDisplay(true);
         this.exitTrial = exitTrial;
         $('#rightText').text('Next Balloon');
         if (!this.practice) {
