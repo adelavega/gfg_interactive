@@ -26,10 +26,12 @@ BART_Instructions = (function () {
     BART_Instructions.prototype.start = function(exitTrial) {
         this.exitTrial = exitTrial;
         console.log('starting instructions');
+        $('#taskContainer').hide();
+        $('#mainContainer').hide();
+        $('#InstructionSide').hide();
         $("#inst").html(this.message);
         $("#inst").show();
         hideButtons();
-        $("#InstructionSide").css({backgroundColor:'black'});
         if (this.leftKey != null) {
             keyText(this.leftKey, 'left');
         }
@@ -79,7 +81,9 @@ BART_Block = (function() {
     }
 
     BART_Block.prototype.start = function(exitTrial) {
-
+        $('#taskContainer').show();
+        $('#mainContainer').show();
+        $('#InstructionSide').show();
         this.exitTrial = exitTrial;
         if (!this.practice) {
             $('#rightText').text('Next Balloon');
