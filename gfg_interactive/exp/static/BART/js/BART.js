@@ -92,7 +92,8 @@ Trial = (function() {
                 $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
                 $("#pumpText").text(String(this.Tokens) + ' tokens');
 
-
+                console.log('te');
+                console.log('te');
                 if (this.Tokens > this.popPoint) {
                     this.Tokens = 0;
                     this.ended = true;
