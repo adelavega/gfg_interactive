@@ -60,6 +60,7 @@ Trial = (function() {
     };
 
     Trial.prototype.buttonClick = function(button) {
+        console.log(button.id);
         if (button.id === 'ContinueButton') {
             this.ended = true;
         }
