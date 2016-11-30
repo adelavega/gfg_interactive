@@ -80,6 +80,7 @@ Trial = (function() {
 
     Trial.prototype.buttonClick = function(button) {
         if (button.id === 'ContinueButton') {
+            this.Tokens = 0;
             this.ended = false;
             this.balloonNum ++;
             this.popPoint = Math.floor((Math.random() * 63) + 1);
@@ -92,7 +93,6 @@ Trial = (function() {
                 $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
                 $("#pumpText").text(String(this.Tokens) + ' tokens');
 
-                console.log(this.popPoint);
 
                 if (this.Tokens >= this.popPoint) {
                     this.Tokens = 0;
