@@ -108,10 +108,11 @@ Trial = (function() {
                 this.Tokens ++;
                 this.updateBalloonAndTokenDisplay();
                 if (this.Tokens > 10) {
+                    alert('popped');
                     this.Tokens = 0;
                     this.ended = true;
                     this.popAnimation();
-                    
+
                 }
             }
 
