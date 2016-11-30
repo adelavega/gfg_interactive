@@ -80,6 +80,7 @@ Trial = (function() {
 
     Trial.prototype.buttonClick = function(button) {
         if (button.id === 'ContinueButton') {
+            console.log('hi');
             this.Tokens = 0;
             this.ended = false;
             this.balloonNum ++;
