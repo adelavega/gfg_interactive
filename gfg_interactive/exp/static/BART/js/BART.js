@@ -53,9 +53,9 @@ Trial = (function() {
         if (!practice) {
             $("#InstructionSide").hide();
         }
-
-        this.presentTokens = function() {
-            console.log(this.Tokens);
+        this.updateBalloonAndTokenDisplay = function() {
+            $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
+            $("#pumpText").text(String(this.Tokens) + ' tokens');
         }
 
     }
@@ -74,7 +74,7 @@ Trial = (function() {
         else if (button.id === 'pumpBox') {
             if (!this.ended) {
                 this.Tokens ++;
-                this.presentTokens();
+                this.updateBalloonAndTokenDisplay();
             }
 
         }
