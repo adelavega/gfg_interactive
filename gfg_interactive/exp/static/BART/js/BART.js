@@ -54,11 +54,6 @@ Trial = (function() {
             $("#InstructionSide").hide();
         }
 
-        this.updateBalloonAndTokenDisplay = function() {
-            $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
-            $("#pumpText").text(String(this.Tokens) + ' tokens');
-        };
-
         this.resetAllDisplay = function() {
             $('#inst').hide();
             $('#taskContainer').show();
@@ -74,19 +69,6 @@ Trial = (function() {
             $('#cashBox').animate({opacity:'1'},{queue:false});
         };
 
-        this.popAnimation = function() {
-            $('#resultText').text('Popped');
-            $('#resultText').css({color:'red'});
-            $("#balloonIm").css({opacity:'0'}).hide();
-            $("#pumpText").text('0 tokens');
-            $('#mainContainer').css({backgroundColor: '#FFB7B7'});
-
-            $('#mainContainer').delay(500)
-                .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
-            $('#cashBox').delay(500).animate({opacity:'0'},{duration:200, easing:"linear", queue:false});
-            $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
-            $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
-        }
     }
 
     Trial.prototype.start = function(exitTrial) {
@@ -106,13 +88,38 @@ Trial = (function() {
         else if (button.id === 'pumpBox') {
             if (!this.ended) {
                 this.Tokens ++;
-                this.updateBalloonAndTokenDisplay();
+                $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
+                $("#pumpText").text(String(this.Tokens) + ' tokens');
+
+
                 if (this.Tokens > 10) {
                     this.Tokens = 0;
                     this.ended = true;
-                    this.popAnimation();
+                    $('#resultText').text('Popped');
+                    $('#resultText').css({color:'red'});
+                    $("#balloonIm").css({opacity:'0'}).hide();
+                    $("#pumpText").text('0 tokens');
+                    $('#mainContainer').css({backgroundColor: '#FFB7B7'});
 
+                    $('#mainContainer').delay(500)
+                        .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
+                    $('#cashBox').delay(500).animate({opacity:'0'},{duration:200, easing:"linear", queue:false});
+                    $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
+                    $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
                 }
+            }
+        }
+
+        else if (button.id === 'cashBox') {
+            if (!this.ended) {
+                $('#resultText')
+                    .text('Cashed!')
+                    .css({top: '20px', color:'green'});
+                $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
+                $('#cashBox').delay(500).animate({opacity:'0'},{duration:750, easing:"linear", queue:false});
+                $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
+                $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
+                this.ended = true;
             }
 
         }
