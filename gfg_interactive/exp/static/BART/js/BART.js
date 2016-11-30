@@ -48,6 +48,7 @@ Trial = (function() {
     function Trial(practice) {
         this.practice = practice;
         this.balloonNum = 0;
+        this.ended = false;
         if (!practice) {
             $("#InstructionSide").hide();
         }
@@ -60,10 +61,14 @@ Trial = (function() {
 
     Trial.prototype.buttonClick = function(button) {
         if (button.id === 'ContinueButton') {
-            this.balloonNum ++;
-            console.log(this.balloonNum);
+            this.ended = true;
         }
-
+        else if (button.id === 'pumpBox') {
+            if (!this.ended){
+                this.balloonNum ++;
+                console.log(this.balloonNum);
+            }
+        }
     };
     return Trial;
 })();
