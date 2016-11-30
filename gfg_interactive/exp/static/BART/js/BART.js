@@ -73,7 +73,7 @@ Trial = (function() {
     Trial.prototype.start = function(exitTrial) {
         this.exitTrial = exitTrial;
         if (!this.practice) {
-            $("#InstructionSide").hide();
+            $("#InstructionSide").css({opacity:'0'});
             this.maxTrials = 3;
         } else {
             this.maxTrials = 10;
