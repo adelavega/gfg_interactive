@@ -73,6 +73,20 @@ Trial = (function() {
             $('#cashText').text('CASH IN');
             $('#cashBox').animate({opacity:'1'},{queue:false});
         };
+
+        this.popAnimation = function() {
+            $('#resultText').text('Popped');
+            $('#resultText').css({color:'red'});
+            $("#balloonIm").css({opacity:'0'}).hide();
+            $("#pumpText").text('0 tokens');
+            $('#mainContainer').css({backgroundColor: '#FFB7B7'});
+
+            $('#mainContainer').delay(500)
+                .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
+            $('#cashBox').delay(500).animate({opacity:'0'},{duration:200, easing:"linear", queue:false});
+            $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
+            $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
+        }
     }
 
     Trial.prototype.start = function(exitTrial) {
@@ -85,6 +99,7 @@ Trial = (function() {
         console.log(button.id);
         if (button.id === 'ContinueButton') {
             this.ended = false;
+            this.balloonNum ++;
             this.resetAllDisplay();
 
         }
@@ -92,6 +107,12 @@ Trial = (function() {
             if (!this.ended) {
                 this.Tokens ++;
                 this.updateBalloonAndTokenDisplay();
+                if (this.Tokens > 10) {
+                    this.Tokens = 0;
+                    this.ended = true;
+                    this.popAnimation();
+                    
+                }
             }
 
         }
