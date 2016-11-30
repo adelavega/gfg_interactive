@@ -13,40 +13,44 @@ keyText = function(text, key) {
     }
 };
 
-function Instruct(message,leftKey,rightKey) {
-    this.message = message;
-    this.leftKey = leftKey != null ? leftKey : null;
-    this.rightKey = rightKey != null ? rightKey : "Continue";
-}
-
-Instruct.prototype.start = function(exitTrial) {
-    this.exitTrial = exitTrial;
-    $('#taskContainer').hide();
-    $("#inst").html(this.message);
-    $("#inst").show();
-    $('#rightText').text('Next Balloon');
-    hideButtons();
-    if (this.leftKey != null) {
-        keyText(this.leftKey, 'left');
+BART_Instructions = (function () {
+    function BART_Instructions(message,leftKey,rightKey) {
+        this.message = message;
+        this.leftKey = leftKey != null ? leftKey : null;
+        this.rightKey = rightKey != null ? rightKey : "Continue";
     }
-    return keyText(this.rightKey,'right');
-};
 
-Instruct.prototype.buttonClick = function(button) {
-    var acc;
-    if (button.id == 'leftText' || button.id == 'leftButton') {
-        acc = 'BACK';
-        this.exitTrial(false);
-    }
-    else if (button.id === 'rightText' || button.id === 'rightButton') {
-        acc = 'FORWARD';
-        this.exitTrial();
-    }
-};
+    BART_Instructions.prototype.start = function(exitTrial) {
+        this.exitTrial = exitTrial;
+        $('#taskContainer').hide();
+        $("#inst").html(this.message);
+        $("#inst").show();
+        $('#rightText').text('Next Balloon');
+        hideButtons();
+        if (this.leftKey != null) {
+            keyText(this.leftKey, 'left');
+        }
+        return keyText(this.rightKey,'right');
+    };
 
+    BART_Instructions.prototype.buttonClick = function(button) {
+        var acc;
+        if (button.id == 'leftText' || button.id == 'leftButton') {
+            acc = 'BACK';
+            this.exitTrial(false);
+        }
+        else if (button.id === 'rightText' || button.id === 'rightButton') {
+            acc = 'FORWARD';
+            this.exitTrial();
+        }
+    };
 
-Trial = (function() {
-    function Trial(practice) {
+    return BART_Instructions;
+
+})();
+
+BART_Block = (function() {
+    function BART_Block(practice) {
         this.practice = practice;
         this.balloonNum = 0;
         this.ended = false;
@@ -71,8 +75,9 @@ Trial = (function() {
 
     }
 
-    Trial.prototype.start = function(exitTrial) {
+    BART_Block.prototype.start = function(exitTrial) {
         this.exitTrial = exitTrial;
+        $('#rightText').text('Next Balloon');
         if (!this.practice) {
             $("#InstructionSide").css({opacity:'0'});
             this.maxTrials = 3;
@@ -84,11 +89,11 @@ Trial = (function() {
         this.resetAllDisplay();
     };
 
-    Trial.prototype.buttonClick = function(button) {
+    BART_Block.prototype.buttonClick = function(button) {
         if (button.id === 'ContinueButton') {
             if (this.balloonNum == this.maxTrials -1) {
-                     this.exitTrial();
-                    }
+                this.exitTrial();
+            }
 
             this.Tokens = 0;
             this.ended = false;
@@ -139,13 +144,13 @@ Trial = (function() {
                 $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
 
                 if (this.balloonNum == this.maxTrials -1) {
-                        $('#rightText').text('End Section');
-                    }
+                    $('#rightText').text('End Section');
+                }
             }
         }
     };
 
 
-    return Trial;
+    return BART_Block;
 
 })();
