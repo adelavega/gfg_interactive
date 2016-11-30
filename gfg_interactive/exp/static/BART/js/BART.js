@@ -24,7 +24,9 @@ BART_Instructions = (function () {
         this.exitTrial = exitTrial;
         console.log('starting instructions');
         $('#taskContainer').hide();
-        $('#InstructionSide').hide()
+        $('#mainContainer').hide();
+
+
         $("#inst").html(this.message);
         $("#inst").show();
         $('#rightText').text('Next Balloon');
