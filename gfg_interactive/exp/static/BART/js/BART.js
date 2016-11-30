@@ -64,6 +64,7 @@ Trial = (function() {
             this.ended = true;
         }
         else if (button.id === 'mainContainer') {
+            console.log('touch');
             if (!this.ended){
                 this.balloonNum ++;
                 console.log(this.balloonNum);
