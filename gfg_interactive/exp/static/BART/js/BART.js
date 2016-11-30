@@ -63,7 +63,7 @@ Trial = (function() {
         if (button.id === 'ContinueButton') {
             this.ended = true;
         }
-        else if (button.id === 'mainContainer') {
+        else if (button.id === 'pumpText') {
             console.log('touch');
             if (!this.ended){
                 this.balloonNum ++;
