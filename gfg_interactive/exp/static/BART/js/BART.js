@@ -54,4 +54,6 @@ Trial = function(practice) {
 
 Trial.prototype.start = function(exitTrial) {
     this.exitTrial = exitTrial;
+    hideButtons();
 };
+
