@@ -47,6 +47,7 @@ Instruct.prototype.buttonClick = function(button) {
 
 Trial = function(practice) {
     this.practice = practice;
+    this.balloonNum = 0;
     if (!practice) {
         $("#InstructionSide").hide();
     }
@@ -57,3 +58,10 @@ Trial.prototype.start = function(exitTrial) {
     hideButtons();
 };
 
+Trial.prototype.buttonClick = function(button) {
+    if (button.id === 'ContinueButton') {
+        this.balloonNum ++;
+        console.log(this.balloonNum);
+    }
+
+};
