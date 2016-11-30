@@ -44,12 +44,14 @@ Instruct.prototype.buttonClick = function(button) {
 };
 
 
-Trial  = function(practice) {
-    this.practice = practice;
 
-    if (practice){
-        console.log('yes practice')
-    } else {
-        console.log('no practice')
+Trial = function(practice) {
+    this.practice = practice;
+    if (!practice) {
+        $("#InstructionSide").hide();
     }
+};
+
+Trial.prototype.start = function(exitTrial) {
+    this.exitTrial = exitTrial;
 };
