@@ -49,9 +49,15 @@ Trial = (function() {
         this.practice = practice;
         this.balloonNum = 0;
         this.ended = false;
+        this.Tokens = 0;
         if (!practice) {
             $("#InstructionSide").hide();
         }
+
+        this.presentTokens = function() {
+            console.log(this.Tokens);
+        }
+
     }
 
     Trial.prototype.start = function(exitTrial) {
@@ -63,14 +69,16 @@ Trial = (function() {
         console.log(button.id);
         if (button.id === 'ContinueButton') {
             this.ended = true;
+
         }
-        else{
-            console.log('touch');
-            if (!this.ended){
-                this.balloonNum ++;
-                console.log(this.balloonNum);
+        else if (button.id === 'pumpBox') {
+            if (!this.ended) {
+                this.Tokens ++;
+                this.presentTokens();
             }
+
         }
     };
+
     return Trial;
 })();
