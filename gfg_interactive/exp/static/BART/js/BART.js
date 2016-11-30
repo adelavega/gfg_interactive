@@ -11,7 +11,7 @@ function TaskDisplay(show){
     } else {
         $('#taskContainer').hide();
         $('#mainContainer').hide();
-        $('#InstructionSide').hide();
+        $('#InstructionSide').css({opacity:'0'});
     }
 }
 
@@ -38,10 +38,8 @@ BART_Instructions = (function () {
         this.exitTrial = exitTrial;
         console.log('starting instructions');
         TaskDisplay(false);
-
         $("#inst").html(this.message);
         $("#inst").show();
-        $('#rightText').text('Next Balloon');
         hideButtons();
         if (this.leftKey != null) {
             keyText(this.leftKey, 'left');
