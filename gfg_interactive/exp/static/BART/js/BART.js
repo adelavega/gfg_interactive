@@ -24,6 +24,7 @@ Instruct.prototype.start = function(exitTrial) {
     $('#taskContainer').hide();
     $("#inst").html(this.message);
     $("#inst").show();
+    $('#rightText').text('Next Balloon');
     hideButtons();
     if (this.leftKey != null) {
         keyText(this.leftKey, 'left');
