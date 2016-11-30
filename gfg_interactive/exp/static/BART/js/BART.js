@@ -107,6 +107,7 @@ Trial = (function() {
             if (!this.ended) {
                 this.Tokens ++;
                 this.updateBalloonAndTokenDisplay();
+                console.log(this.Tokens);
                 if (this.Tokens > 10) {
                     alert('popped');
                     this.Tokens = 0;
