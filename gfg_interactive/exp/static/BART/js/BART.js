@@ -106,10 +106,8 @@ Trial = (function() {
         else if (button.id === 'pumpBox') {
             if (!this.ended) {
                 this.Tokens ++;
-                console.log(this.Tokens);
                 this.updateBalloonAndTokenDisplay();
                 if (this.Tokens > 10) {
-                    alert('popped');
                     this.Tokens = 0;
                     this.ended = true;
                     this.popAnimation();
