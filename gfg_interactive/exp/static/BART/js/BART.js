@@ -83,12 +83,17 @@ Trial = (function() {
 
     Trial.prototype.buttonClick = function(button) {
         if (button.id === 'ContinueButton') {
-            console.log('hi');
+            if (this.balloonNum == this.maxTrials -1) {
+                     this.exitTrial;
+                    }
+
             this.Tokens = 0;
             this.ended = false;
             this.balloonNum ++;
             this.popPoint = Math.floor((Math.random() * 63) + 1);
             this.resetAllDisplay();
+
+
         }
 
         else if (button.id === 'pumpBox') {
