@@ -46,5 +46,10 @@ Instruct.prototype.buttonClick = function(button) {
 
 Trial  = function(practice) {
     this.practice = practice;
-    console.log(practice);
+
+    if (practice){
+        console.log('yes practice')
+    } else {
+        console.log('no practice')
+    }
 };
