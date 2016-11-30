@@ -110,7 +110,6 @@ Trial = (function() {
         }
 
         else if (button.id === 'cashBox') {
-            console.log('cashed');
             if (!this.ended) {
                 $('#resultText')
                     .text('Cashed!')
