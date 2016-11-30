@@ -53,22 +53,39 @@ Trial = (function() {
         if (!practice) {
             $("#InstructionSide").hide();
         }
+
         this.updateBalloonAndTokenDisplay = function() {
             $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
             $("#pumpText").text(String(this.Tokens) + ' tokens');
-        }
+        };
 
+        this.resetAllDisplay = function() {
+            $('#inst').hide();
+            $('#taskContainer').show();
+            $("#poppedIm").hide();
+            $('#resultText').css({opacity: '0'});
+            hideButtons();
+            $('#ContinueButton').css({opacity:'0'}).hide();
+            $("#pumpText").text('0 tokens');
+            $("#balloonIm").css({height: '50px', width: '50px', top: '250px'}).show();
+            $("#balloonIm").animate({opacity: '1'});
+            $('#resultText').css({top: '0px'});
+            $('#cashText').text('CASH IN');
+            $('#cashBox').animate({opacity:'1'},{queue:false});
+        };
     }
 
     Trial.prototype.start = function(exitTrial) {
         this.exitTrial = exitTrial;
         hideButtons();
+        this.resetAllDisplay();
     };
 
     Trial.prototype.buttonClick = function(button) {
         console.log(button.id);
         if (button.id === 'ContinueButton') {
-            this.ended = true;
+            this.ended = false;
+            this.resetAllDisplay();
 
         }
         else if (button.id === 'pumpBox') {
