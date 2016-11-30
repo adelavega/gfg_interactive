@@ -50,6 +50,7 @@ Trial = (function() {
         this.balloonNum = 0;
         this.ended = false;
         this.Tokens = 0;
+        this.popPoint = Math.floor((Math.random() * 63) + 1);
         if (!practice) {
             $("#InstructionSide").hide();
         }
@@ -81,9 +82,10 @@ Trial = (function() {
         if (button.id === 'ContinueButton') {
             this.ended = false;
             this.balloonNum ++;
+            this.popPoint = Math.floor((Math.random() * 63) + 1);
             this.resetAllDisplay();
-
         }
+
         else if (button.id === 'pumpBox') {
             if (!this.ended) {
                 this.Tokens ++;
@@ -91,7 +93,7 @@ Trial = (function() {
                 $("#pumpText").text(String(this.Tokens) + ' tokens');
 
 
-                if (this.Tokens > 10) {
+                if (this.Tokens > this.popPoint) {
                     this.Tokens = 0;
                     this.ended = true;
                     $('#resultText').text('Popped');
@@ -120,9 +122,9 @@ Trial = (function() {
                 $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
                 this.ended = true;
             }
-
         }
     };
+
 
     return Trial;
 })();
