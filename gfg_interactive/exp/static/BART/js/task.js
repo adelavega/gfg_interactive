@@ -15,7 +15,7 @@ var InstructionText = [
         "You have now completed this task. <br><br> if you would like, you can now continue to the review section of this task to review your performance"
     ];
 
-blocks = [new BART_Instructions(InstructionText[0]),new BART_Instructions(InstructionText[1]),new BART_Instructions(InstructionText[2]),new BART_Instructions(InstructionText[3]), new Trial(true),new BART_Instructions(InstructionText[4]), new Trial(false),new BART_Instructions(InstructionText[5])];
+blocks = [new BART_Instructions(InstructionText[0]),new BART_Instructions(InstructionText[1]),new BART_Instructions(InstructionText[2]),new BART_Instructions(InstructionText[3]), new BART_Block(true),new BART_Instructions(InstructionText[4]), new BART_Block(false),new BART_Instructions(InstructionText[5])];
 
 currSession = new common.Session(blocks);
 
