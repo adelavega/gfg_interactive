@@ -78,6 +78,7 @@ Trial = (function() {
     Trial.prototype.start = function(exitTrial) {
         this.exitTrial = exitTrial;
         hideButtons();
+        console.log('hi');
         this.resetAllDisplay();
     };
 
