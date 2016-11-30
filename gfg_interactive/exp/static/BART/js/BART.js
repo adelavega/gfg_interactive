@@ -53,6 +53,9 @@ Trial = (function() {
         this.popPoint = Math.floor((Math.random() * 63) + 1);
         if (!practice) {
             $("#InstructionSide").hide();
+            this.maxTrials = 3;
+        } else {
+            this.maxTrials = 10;
         }
 
         this.resetAllDisplay = function() {
@@ -96,7 +99,6 @@ Trial = (function() {
 
 
                 if (this.Tokens >= this.popPoint) {
-                    this.Tokens = 0;
                     this.ended = true;
                     $('#resultText').text('Popped');
                     $('#resultText').css({color:'red'});
@@ -109,12 +111,17 @@ Trial = (function() {
                     $('#cashBox').delay(500).animate({opacity:'0'},{duration:200, easing:"linear", queue:false});
                     $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
                     $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
+
+                    if (this.balloonNum == this.maxTrials -1) {
+                        $('#rightText').text = 'End Section'
+                    }
                 }
             }
         }
 
         else if (button.id === 'cashBox') {
             if (!this.ended) {
+                this.ended = true;
                 $('#resultText')
                     .text('Cashed!')
                     .css({top: '20px', color:'green'});
@@ -122,11 +129,15 @@ Trial = (function() {
                 $('#cashBox').delay(500).animate({opacity:'0'},{duration:750, easing:"linear", queue:false});
                 $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
                 $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
-                this.ended = true;
+
+                if (this.balloonNum == this.maxTrials -1) {
+                        $('#rightText').text = 'End Section'
+                    }
             }
         }
     };
 
 
     return Trial;
+
 })();
