@@ -8,7 +8,7 @@ jQuery(function() {
 });
 
 
-blocks = [new Trial('yes')];
+blocks = [new Trial(false)];
 
 currSession = new common.Session(blocks);
 
