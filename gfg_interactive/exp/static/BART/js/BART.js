@@ -22,6 +22,7 @@ BART_Instructions = (function () {
 
     BART_Instructions.prototype.start = function(exitTrial) {
         this.exitTrial = exitTrial;
+        console.log('starting instructions');
         $('#taskContainer').hide();
         $("#inst").html(this.message);
         $("#inst").show();
