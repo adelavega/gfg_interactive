@@ -51,12 +51,7 @@ Trial = (function() {
         this.ended = false;
         this.Tokens = 0;
         this.popPoint = Math.floor((Math.random() * 63) + 1);
-        if (!practice) {
-            $("#InstructionSide").hide();
-            this.maxTrials = 3;
-        } else {
-            this.maxTrials = 10;
-        }
+
 
         this.resetAllDisplay = function() {
             $('#inst').hide();
@@ -77,6 +72,12 @@ Trial = (function() {
 
     Trial.prototype.start = function(exitTrial) {
         this.exitTrial = exitTrial;
+        if (!this.practice) {
+            $("#InstructionSide").hide();
+            this.maxTrials = 3;
+        } else {
+            this.maxTrials = 10;
+        }
         hideButtons();
         console.log('hi');
         this.resetAllDisplay();
