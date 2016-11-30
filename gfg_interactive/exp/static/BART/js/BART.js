@@ -85,7 +85,7 @@ Trial = (function() {
     Trial.prototype.buttonClick = function(button) {
         if (button.id === 'ContinueButton') {
             if (this.balloonNum == this.maxTrials -1) {
-                     this.exitTrial;
+                     this.exitTrial();
                     }
 
             this.Tokens = 0;
