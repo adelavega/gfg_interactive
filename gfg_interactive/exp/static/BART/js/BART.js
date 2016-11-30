@@ -7,11 +7,11 @@ function TaskDisplay(show){
     if (show) {
         $('#taskContainer').show();
         $('#mainContainer').show();
-        $('#instructionside').show();
+        $('#InstructionSide').show();
     } else {
         $('#taskContainer').hide();
         $('#mainContainer').hide();
-        $('#instructionside').hide();
+        $('#InstructionSide').hide();
     }
 }
 
