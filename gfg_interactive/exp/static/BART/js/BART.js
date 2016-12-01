@@ -91,7 +91,7 @@ BART_Block = (function() {
             $("#InstructionSide").css({opacity:'0'});
             this.maxTrials = 3;
         } else {
-            this.maxTrials = 10;
+            this.maxTrials = 2;
         }
         hideButtons();
         console.log('hi');
