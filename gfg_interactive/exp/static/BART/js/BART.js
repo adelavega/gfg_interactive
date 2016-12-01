@@ -91,7 +91,7 @@ BART_Block = (function() {
             $("#InstructionSide").css({opacity:'0'});
             this.maxTrials = 3;
         } else {
-            this.maxTrials = 2;
+            this.maxTrials = 3;
         }
         hideButtons();
         console.log('hi');
@@ -135,7 +135,7 @@ BART_Block = (function() {
                     $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
 
                     if (this.balloonNum == this.maxTrials -1) {
-                        $('#rightText').text('End Section');
+                        $('#continuetext').text('End Section');
                     }
                 }
             }
