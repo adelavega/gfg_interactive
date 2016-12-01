@@ -141,7 +141,7 @@ BART_Block = (function() {
             }
         }
 
-        else if (button.id === 'cashBox') {
+        else if (button.id === 'cashBox' || button.id === 'cashText') {
             if (!this.ended) {
                 this.ended = true;
                 $('#resultText')
