@@ -88,9 +88,9 @@ BART_Block = (function() {
         if (!this.practice) {
             $('#rightText').text('Next Balloon');
             $("#InstructionSide").css({opacity:'0'});
-            this.maxTrials = 3;
+            this.maxTrials = 30;
         } else {
-            this.maxTrials = 3;
+            this.maxTrials = 10;
         }
         hideButtons();
         console.log('hi');
