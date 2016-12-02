@@ -30,8 +30,8 @@ BART_Instructions = (function () {
         $('#mainContainer').hide();
         $('#InstructionSide').hide();
         $("#inst").html(this.message);
-        $("#inst").css({opacity:'1'});
         $("#inst").show();
+        $("#rightButton").show();
         hideButtons();
         if (this.leftKey != null) {
             keyText(this.leftKey, 'left');
