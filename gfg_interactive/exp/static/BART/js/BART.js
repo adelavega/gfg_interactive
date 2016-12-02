@@ -135,7 +135,7 @@ BART_Block = (function() {
                     $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
 
                     if (this.balloonNum == this.maxTrials -1) {
-                        $('#continuetext').text('End Section');
+                        $('#ContinueText').text('End Section');
                     }
                 }
             }
@@ -153,7 +153,7 @@ BART_Block = (function() {
                 $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
 
                 if (this.balloonNum == this.maxTrials -1) {
-                    $('#continuetext').text('End Section');
+                    $('#ContinueText').text('End Section');
                 }
             }
         }
