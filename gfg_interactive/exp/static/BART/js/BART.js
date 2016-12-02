@@ -102,7 +102,12 @@ BART_Block = (function() {
             if (this.balloonNum == this.maxTrials -1) {
                 this.exitTrial();
             } else {
-
+                dataHandler.recordTrialData({
+                        'balloon_num': this.balloonNum,
+                        'action': 3,
+                        'pumps': this.Tokens,
+                        'pop_point': this.popPoint
+                    });
                 this.Tokens = 0;
                 this.ended = false;
                 this.balloonNum++;
@@ -114,12 +119,24 @@ BART_Block = (function() {
 
         else if (button.id === 'pumpBox') {
             if (!this.ended) {
+                dataHandler.recordTrialData({
+                    'balloon_num': this.balloonNum,
+                    'action': 1,
+                    'pumps': this.Tokens,
+                    'pop_point': this.popPoint
+                });
                 this.Tokens ++;
                 $("#balloonIm").animate({height: '+=3.25px', width: '+=3px', top: '-=3px'}, 50);
                 $("#pumpText").text(String(this.Tokens) + ' tokens');
 
 
                 if (this.Tokens >= this.popPoint) {
+                    dataHandler.recordTrialData({
+                        'balloon_num': this.balloonNum,
+                        'action': 0,
+                        'pumps': this.Tokens,
+                        'pop_point': this.popPoint
+                    });
                     this.ended = true;
                     $('#resultText').text('Popped');
                     $('#resultText').css({color:'red'});
@@ -142,6 +159,12 @@ BART_Block = (function() {
 
         else if (button.id === 'cashBox' || button.id === 'cashText') {
             if (!this.ended) {
+                dataHandler.recordTrialData({
+                        'balloon_num': this.balloonNum,
+                        'action': 2,
+                        'pumps': this.Tokens,
+                        'pop_point': this.popPoint
+                    });
                 this.ended = true;
                 $('#resultText')
                     .text('Cashed!')
