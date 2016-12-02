@@ -102,14 +102,14 @@ BART_Block = (function() {
         if (button.id === 'ContinueText' || button.id === 'ContinueButton') {
             if (this.balloonNum == this.maxTrials -1) {
                 this.exitTrial();
+            } else {
+
+                this.Tokens = 0;
+                this.ended = false;
+                this.balloonNum++;
+                this.popPoint = Math.floor((Math.random() * 63) + 1);
+                this.resetAllDisplay();
             }
-
-            this.Tokens = 0;
-            this.ended = false;
-            this.balloonNum ++;
-            this.popPoint = Math.floor((Math.random() * 63) + 1);
-            this.resetAllDisplay();
-
 
         }
 
