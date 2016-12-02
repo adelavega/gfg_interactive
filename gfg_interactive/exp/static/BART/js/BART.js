@@ -25,14 +25,14 @@ BART_Instructions = (function () {
 
     BART_Instructions.prototype.start = function(exitTrial) {
         this.exitTrial = exitTrial;
-        console.log('starting instructions');
         $('#taskContainer').hide();
         $('#mainContainer').hide();
         $('#InstructionSide').hide();
         $("#inst").html(this.message);
         $("#inst").show();
+        console.log('Starting Instructions');
         $("#rightButton").show();
-        hideButtons();
+        // hideButtons();
         if (this.leftKey != null) {
             keyText(this.leftKey, 'left');
         }
