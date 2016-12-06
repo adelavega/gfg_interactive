@@ -71,13 +71,11 @@ BART_Block = (function() {
 
             hideButtons();
             $('#cashBox').delay(200).animate({backgroundColor:'#009201'}, {duration: 750});
-            $('#cashBox').text('Next Balloon')
+            $('#cashBox').text('CASH IN')
                 .css({font: '40px Helvetica',  color: 'white'});
             $("#pumpText").text('0 tokens');
             $("#balloonIm").css({height: '50px', width: '50px', top: '250px'}).show();
             $("#balloonIm").animate({opacity: '1'});
-            $('#cashText').text('CASH IN');
-            $('#cashBox').animate({opacity:'1'},{queue:false});
         };
 
     }
