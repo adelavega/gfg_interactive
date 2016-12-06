@@ -70,7 +70,8 @@ BART_Block = (function() {
             $('#resultText').css({opacity: '0',top: '0px'}).hide();
 
             hideButtons();
-            $('#ContinueButton').css({opacity:'0'}).hide();
+            $('#cashBox').delay(200).animate({backgroundColor:'#009201'}, {duration: 750});
+            $('#cashBox').text('Next Balloon');
             $("#pumpText").text('0 tokens');
             $("#balloonIm").css({height: '50px', width: '50px', top: '250px'}).show();
             $("#balloonIm").animate({opacity: '1'});
@@ -144,7 +145,8 @@ BART_Block = (function() {
                     $("#pumpText").text('0 tokens');
                     $('#mainContainer').css({backgroundColor: '#FFB7B7'});
 
-                    $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
+                    $('#cashBox').delay(200).animate({backgroundColor:'grey'}, {duration: 750});
+                    $('#cashBox').text('Next Balloon');
                     $('#mainContainer').delay(500)
                         .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                     $('#cashBox').delay(500).animate({opacity:'0'},{duration:200, easing:"linear", queue:false});
@@ -166,7 +168,8 @@ BART_Block = (function() {
                         'pop_point': this.popPoint
                     });
                 this.ended = true;
-                $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
+                $('#cashBox').delay(200).animate({backgroundColor:'grey'}, {duration: 750});
+                $('#cashBox').text('Next Balloon');
                 $('#resultText')
                     .text('Cashed!')
                     .css({top: '20px', color:'green'});
@@ -175,7 +178,7 @@ BART_Block = (function() {
                 $('#resultText').show().delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue: false});
 
                 if (this.balloonNum == this.maxTrials -1) {
-                    $('#ContinueText').text('End Section');
+                    $('#cashBox').text('End Section');
                 }
             }
         }
