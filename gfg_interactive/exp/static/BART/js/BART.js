@@ -67,7 +67,7 @@ BART_Block = (function() {
             $('#inst').hide();
             $('#taskContainer').show();
             $("#poppedIm").hide();
-            $('#resultText').css({opacity: '0'});
+            $('#resultText').hide().css({opacity: '0'});
             hideButtons();
             $('#ContinueButton').css({opacity:'0'}).hide();
             $("#pumpText").text('0 tokens');
@@ -147,7 +147,7 @@ BART_Block = (function() {
                     $('#mainContainer').delay(500)
                         .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                     $('#cashBox').delay(500).animate({opacity:'0'},{duration:200, easing:"linear", queue:false});
-                    $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
+                    $('#resultText').delay(500).show().animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
                     $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
 
                     if (this.balloonNum == this.maxTrials -1) {
@@ -171,7 +171,7 @@ BART_Block = (function() {
                     .css({top: '20px', color:'green'});
                 $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
                 $('#cashBox').delay(500).animate({opacity:'0'},{duration:750, easing:"linear", queue:false});
-                $('#resultText').delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
+                $('#resultText').delay(500).show().animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue:false});
                 $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
 
                 if (this.balloonNum == this.maxTrials -1) {
