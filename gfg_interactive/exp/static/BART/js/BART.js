@@ -128,7 +128,7 @@ BART_Block = (function() {
 
                     $('#cashBox').delay(200).animate({backgroundColor:'#747474'}, {duration: 750});
                     $('#cashText').text('Next Balloon');
-                    $('#cashText').css({font: '40px Helvetica',  color: 'white'});
+                    // $('#cashText').css({font: '40px Helvetica',  color: 'white'});
                     $('#mainContainer').delay(500)
                         .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                     $('#resultText').show().delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue: false});
@@ -151,7 +151,7 @@ BART_Block = (function() {
                 this.ended = true;
                 $('#cashBox').delay(200).animate({backgroundColor:'#747474'}, {duration: 750});
                 $('#cashText').text('Next Balloon');
-                $('#cashText').css({font: '40px Helvetica',  color: 'white'});
+                // $('#cashText').css({font: '40px Helvetica',  color: 'white'});
                 $('#resultText')
                     .text('Cashed!')
                     .css({top: '20px', color:'green'});
