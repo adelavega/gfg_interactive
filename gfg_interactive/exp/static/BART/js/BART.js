@@ -137,7 +137,7 @@ BART_Block = (function() {
                         'pop_point': this.popPoint
                     });
                     this.ended = true;
-                    $('#resultText').text('Popped')
+                    $('#resultText').text('ass')
                         .css({color:'red'})
                         .delay(100)
                         .animate({top: '20px' ,opacity:'1'},{duration:200, easing:'linear'});
