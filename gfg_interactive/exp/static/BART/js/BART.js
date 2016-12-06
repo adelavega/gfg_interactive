@@ -100,7 +100,7 @@ BART_Block = (function() {
 
     BART_Block.prototype.buttonClick = function(button) {
 
-        else if (button.id === 'pumpBox') {
+        if (button.id === 'pumpBox') {
             if (!this.ended) {
                 dataHandler.recordTrialData({
                     'balloon_num': this.balloonNum,
@@ -160,7 +160,7 @@ BART_Block = (function() {
                 if (this.balloonNum == this.maxTrials -1) {
                     $('#cashText').text('End Section');
                 }
-            } else if (this.ended){
+            } else {
                 if (this.balloonNum == this.maxTrials -1) {
                     this.exitTrial();
                 } else {
