@@ -143,11 +143,11 @@ BART_Block = (function() {
                     $("#pumpText").text('0 tokens');
                     $('#mainContainer').css({backgroundColor: '#FFB7B7'});
 
+                    $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
                     $('#mainContainer').delay(500)
                         .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                     $('#cashBox').delay(500).animate({opacity:'0'},{duration:200, easing:"linear", queue:false});
                     $('#resultText').delay(100).animate({top: '20px' ,opacity:'1'},{duration:200, easing:'linear',queue:false});
-                    $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
 
                     if (this.balloonNum == this.maxTrials -1) {
                         $('#ContinueText').text('End Section');
@@ -165,13 +165,13 @@ BART_Block = (function() {
                         'pop_point': this.popPoint
                     });
                 this.ended = true;
+                $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
                 $('#resultText')
                     .text('Cashed!')
                     .css({top: '20px', color:'green'});
                 $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
                 $('#cashBox').delay(500).animate({opacity:'0'},{duration:750, easing:"linear", queue:false});
                 $('#resultText').delay(100).animate({top: '20px' ,opacity:'1'},{duration:200, easing:'linear',queue:false});
-                $('#ContinueButton').show().delay(200).animate({opacity: '1'}, {duration:750});
 
                 if (this.balloonNum == this.maxTrials -1) {
                     $('#ContinueText').text('End Section');
