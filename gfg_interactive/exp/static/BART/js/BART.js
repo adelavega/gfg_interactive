@@ -67,7 +67,7 @@ BART_Block = (function() {
             $('#inst').hide();
             $('#taskContainer').show();
             $("#poppedIm").hide();
-            $('#resultText').finish().css({opacity: '0',top: '0px'});
+            $('#resultText').hide();
             hideButtons();
             $('#ContinueButton').css({opacity:'0'}).hide();
             $("#pumpText").text('0 tokens');
