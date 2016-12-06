@@ -145,7 +145,7 @@ BART_Block = (function() {
                     $("#pumpText").text('0 tokens');
                     $('#mainContainer').css({backgroundColor: '#FFB7B7'});
 
-                    $('#cashBox').delay(200).animate({backgroundColor:'grey'}, {duration: 750});
+                    $('#cashBox').delay(200).animate({backgroundColor:'#747474'}, {duration: 750});
                     $('#cashText').text('Next Balloon');
                     $('#mainContainer').delay(500)
                         .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
@@ -167,7 +167,7 @@ BART_Block = (function() {
                         'pop_point': this.popPoint
                     });
                 this.ended = true;
-                $('#cashBox').delay(200).animate({backgroundColor:'grey'}, {duration: 750});
+                $('#cashBox').delay(200).animate({backgroundColor:'#747474'}, {duration: 750});
                 $('#cashText').text('Next Balloon');
                 $('#resultText')
                     .text('Cashed!')
