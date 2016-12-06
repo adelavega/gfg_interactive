@@ -160,7 +160,7 @@ BART_Block = (function() {
                 if (this.balloonNum == this.maxTrials -1) {
                     $('#cashText').text('End Section');
                 }
-            } else{
+            } else if (this.ended){
                 if (this.balloonNum == this.maxTrials -1) {
                     this.exitTrial();
                 } else {
