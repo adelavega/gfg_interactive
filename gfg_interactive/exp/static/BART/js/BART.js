@@ -149,7 +149,6 @@ BART_Block = (function() {
                     $('#cashBox').text('Next Balloon');
                     $('#mainContainer').delay(500)
                         .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
-                    $('#cashBox').delay(500).animate({opacity:'0'},{duration:200, easing:"linear", queue:false});
                     $('#resultText').show().delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue: false});
 
                     if (this.balloonNum == this.maxTrials -1) {
@@ -174,7 +173,6 @@ BART_Block = (function() {
                     .text('Cashed!')
                     .css({top: '20px', color:'green'});
                 $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
-                $('#cashBox').delay(500).animate({opacity:'0'},{duration:750, easing:"linear", queue:false});
                 $('#resultText').show().delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue: false});
 
                 if (this.balloonNum == this.maxTrials -1) {
