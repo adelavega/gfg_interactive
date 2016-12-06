@@ -67,13 +67,12 @@ BART_Block = (function() {
             $('#inst').hide();
             $('#taskContainer').show();
             $("#poppedIm").hide();
-            $('#resultText').hide().css({opacity: '0'});
+            $('#resultText').css({opacity: '0',top: '0px'});
             hideButtons();
             $('#ContinueButton').css({opacity:'0'}).hide();
             $("#pumpText").text('0 tokens');
             $("#balloonIm").css({height: '50px', width: '50px', top: '250px'}).show();
             $("#balloonIm").animate({opacity: '1'});
-            $('#resultText').css({top: '0px'});
             $('#cashText').text('CASH IN');
             $('#cashBox').animate({opacity:'1'},{queue:false});
         };
@@ -98,7 +97,6 @@ BART_Block = (function() {
     };
 
     BART_Block.prototype.buttonClick = function(button) {
-        $('#resultText').hide();
         if (button.id === 'ContinueText' || button.id === 'ContinueButton') {
             if (this.balloonNum == this.maxTrials -1) {
                 this.exitTrial();
