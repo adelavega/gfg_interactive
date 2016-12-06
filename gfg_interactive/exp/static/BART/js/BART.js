@@ -98,6 +98,7 @@ BART_Block = (function() {
     };
 
     BART_Block.prototype.buttonClick = function(button) {
+        $('#resultText').hide();
         if (button.id === 'ContinueText' || button.id === 'ContinueButton') {
             if (this.balloonNum == this.maxTrials -1) {
                 this.exitTrial();
