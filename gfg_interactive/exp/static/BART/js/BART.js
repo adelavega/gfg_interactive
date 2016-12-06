@@ -99,24 +99,6 @@ BART_Block = (function() {
     };
 
     BART_Block.prototype.buttonClick = function(button) {
-        if (button.id === 'ContinueText' || button.id === 'ContinueButton') {
-            if (this.balloonNum == this.maxTrials -1) {
-                this.exitTrial();
-            } else {
-                dataHandler.recordTrialData({
-                        'balloon_num': this.balloonNum,
-                        'action': 3,
-                        'pumps': this.Tokens,
-                        'pop_point': this.popPoint
-                    });
-                this.Tokens = 0;
-                this.ended = false;
-                this.balloonNum++;
-                this.popPoint = Math.floor((Math.random() * 63) + 1);
-                this.resetAllDisplay();
-            }
-
-        }
 
         else if (button.id === 'pumpBox') {
             if (!this.ended) {
@@ -161,11 +143,11 @@ BART_Block = (function() {
         else if (button.id === 'cashBox' || button.id === 'cashText') {
             if (!this.ended) {
                 dataHandler.recordTrialData({
-                        'balloon_num': this.balloonNum,
-                        'action': 2,
-                        'pumps': this.Tokens,
-                        'pop_point': this.popPoint
-                    });
+                    'balloon_num': this.balloonNum,
+                    'action': 2,
+                    'pumps': this.Tokens,
+                    'pop_point': this.popPoint
+                });
                 this.ended = true;
                 $('#cashBox').delay(200).animate({backgroundColor:'#747474'}, {duration: 750});
                 $('#cashText').text('Next Balloon');
@@ -177,6 +159,22 @@ BART_Block = (function() {
 
                 if (this.balloonNum == this.maxTrials -1) {
                     $('#cashText').text('End Section');
+                }
+            } else{
+                if (this.balloonNum == this.maxTrials -1) {
+                    this.exitTrial();
+                } else {
+                    dataHandler.recordTrialData({
+                        'balloon_num': this.balloonNum,
+                        'action': 3,
+                        'pumps': this.Tokens,
+                        'pop_point': this.popPoint
+                    });
+                    this.Tokens = 0;
+                    this.ended = false;
+                    this.balloonNum++;
+                    this.popPoint = Math.floor((Math.random() * 63) + 1);
+                    this.resetAllDisplay();
                 }
             }
         }
