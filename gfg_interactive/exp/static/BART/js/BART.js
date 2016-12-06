@@ -67,6 +67,8 @@ BART_Block = (function() {
             $('#inst').hide();
             $('#taskContainer').show();
             $("#poppedIm").hide();
+            $('#resultText').css({opacity: '0',top: '0px'}).hide();
+
             hideButtons();
             $('#ContinueButton').css({opacity:'0'}).hide();
             $("#pumpText").text('0 tokens');
@@ -136,10 +138,8 @@ BART_Block = (function() {
                         'pop_point': this.popPoint
                     });
                     this.ended = true;
-                    $('#resultText').text('ass')
-                        .css({color:'red'})
-                        .delay(100)
-                        .animate({top: '20px' ,opacity:'1'},{duration:200, easing:'linear'});
+                    $('#resultText').text('Popped');
+                    $('#resultText').css({color:'red'});
                     $("#balloonIm").css({opacity:'0'}).hide();
                     $("#pumpText").text('0 tokens');
                     $('#mainContainer').css({backgroundColor: '#FFB7B7'});
@@ -148,6 +148,7 @@ BART_Block = (function() {
                     $('#mainContainer').delay(500)
                         .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                     $('#cashBox').delay(500).animate({opacity:'0'},{duration:200, easing:"linear", queue:false});
+                    $('#resultText').show().delay(100).animate({top: '20px' ,opacity:'1'},{duration:200, easing:'linear'});
 
                     if (this.balloonNum == this.maxTrials -1) {
                         $('#ContinueText').text('End Section');
@@ -171,7 +172,7 @@ BART_Block = (function() {
                     .css({top: '20px', color:'green'});
                 $('#balloonIm').animate({opacity:'0'},{duration:200}).hide();
                 $('#cashBox').delay(500).animate({opacity:'0'},{duration:750, easing:"linear", queue:false});
-                $('#resultText').delay(100).animate({top: '20px' ,opacity:'1'},{duration:200, easing:'linear'});
+                $('#resultText').show().delay(100).animate({top: '20px' ,opacity:'1'},{duration:200, easing:'linear'});
 
                 if (this.balloonNum == this.maxTrials -1) {
                     $('#ContinueText').text('End Section');
