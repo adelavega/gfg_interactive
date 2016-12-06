@@ -146,13 +146,13 @@ BART_Block = (function() {
                     $('#mainContainer').css({backgroundColor: '#FFB7B7'});
 
                     $('#cashBox').delay(200).animate({backgroundColor:'grey'}, {duration: 750});
-                    $('#cashBox').text('Next Balloon');
+                    $('#cashText').text('Next Balloon');
                     $('#mainContainer').delay(500)
                         .animate({backgroundColor:'#f8f7ff'},{duration:750,easing:"linear", queue:false});
                     $('#resultText').show().delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue: false});
 
                     if (this.balloonNum == this.maxTrials -1) {
-                        $('#ContinueText').text('End Section');
+                        $('#cashText').text('End Section');
                     }
                 }
             }
@@ -168,7 +168,7 @@ BART_Block = (function() {
                     });
                 this.ended = true;
                 $('#cashBox').delay(200).animate({backgroundColor:'grey'}, {duration: 750});
-                $('#cashBox').text('Next Balloon');
+                $('#cashText').text('Next Balloon');
                 $('#resultText')
                     .text('Cashed!')
                     .css({top: '20px', color:'green'});
@@ -176,7 +176,7 @@ BART_Block = (function() {
                 $('#resultText').show().delay(500).animate({top: '20px' ,opacity:'1'},{duration:750, easing:'linear',queue: false});
 
                 if (this.balloonNum == this.maxTrials -1) {
-                    $('#cashBox').text('End Section');
+                    $('#cashText').text('End Section');
                 }
             }
         }
