@@ -9,20 +9,9 @@
         var debug = "{{ debug }}";
 
     </script>
-{% endblock %}s
+{% endblock %}
 
 {% block content %}
-    <header>
-        <nav class="nav nav-gfg-header">
-            <div class="container-fluid ">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                        <a class="logo" rel="home" title="Home" ><img alt="Home" src="../other/header_logo.png"></a>
-                    </div>
-                </div>	<!-- end of class="row"-->
-            </div> <!-- end of class="container"-->
-        </nav>
-    </header>
     <div class="container fill">
         <div id="task-container" class="col-xs-12 col-md-10 col-md-offset-1">
             <div id="progress-container" style="visibility: hidden">
@@ -36,7 +25,7 @@
                 <div class="row" style="text-align: center">
                     <h1 id="token-text"> 0 Tokens </h1>
                 </div>
-                <img id="balloon-image" src="../other/PurpleBalloon.png"/>
+                <img id="balloon-image" src="static/{{ experimentname }}/images/PurpleBalloon.png"/>
                 <h1 id="result-text"> Popped </h1>
             </div>
             <div  id='pump-box' class='action-bin' style=" background-color: transparent; position: absolute; height: 100%; width:100%; top: -20%; left:0">
