@@ -106,7 +106,6 @@ BART_TUTORIAL = function() {
                             if (required < self.popList.length - 1) {
                                 self.watchrange(required + 1);
                             } else {
-                                $('#continue-instruction').show();
                                 self.displayInstruction(
                                     "now that you've seen what sorts of balloons you might encounter in this task," +
                                     " we'd like to ask you to tell us where you think the balloon is most likely to pop."
@@ -162,7 +161,7 @@ BART_TUTORIAL = function() {
                 "<h3 style='position:absolute; bottom: -80px; left: 40%;'>  Size (in pumps)</h3>" +
                 "<h3 style='position:absolute; bottom: 50%; left:-150px; -webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);-ms-transform: rotate(-90deg);-o-transform: rotate(-90deg);transform: rotate(-90deg);'> number of balloons </h3>" +
                 "<div id='chart-instruct' onclick='tutorial.startDistribute()'  style=' top: 5px; position: absolute; padding: 10px; text-align: center; left: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:10px; background-color: whitesmoke;border: 2px solid black;'> Please distribute at least 500 balloons to where you believe the balloons in this task are most likely to pop. <br><br>You can click/tap and drag to draw your distribution. Once you have distributed 500 or more balloons you may continue.<br><br>" +
-                "<p id='chart-continue' style='font-size: 80%; margin-bottom: -20px; color: #616161;'> click this box to begin this task </p>" +
+                "<p id='chart-continue' style='font-size: 80%; margin-bottom: -10px; color: #616161;'> click this box to begin this task </p>" +
                 "</div>" +
                 "<h2 id='distribution-counter' style='position: absolute; top: -100px; width: 100%; text-align: center'> 0 </h2>" +
                 "<div onclick='tutorial.removeChart()' id='chart-next' style='position: absolute; left: 90%; top: 110%; background-color: whitesmoke; border: 2px solid black;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:10px; visibility: hidden; padding: 10px;'>Continue</div>"
@@ -408,7 +407,6 @@ BART_TUTORIAL = function() {
 
         if (tutorial.status === 'learntocash' && tutorial.tokens == 10) {
             if (tutorial.active) {
-                $('#continue-instruction').show();
                 clearInterval(tutorial.flashinterval);
                 clearInterval(Task.flashinterval);
                 tutorial.active = false;
