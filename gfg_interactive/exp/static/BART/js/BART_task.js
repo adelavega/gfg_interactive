@@ -239,6 +239,7 @@ BART_TUTORIAL = function() {
             $('#cash-box').show();
             $('#result-text').show();
             $('#pump-box').show();
+            $('#continue-instruction').hide();
             $('#instructions-box').animate({opacity: '0'}).show();
             tutorial.changeStatus('learntocash');
             tutorial.displayInstruction(
@@ -406,6 +407,7 @@ BART_TUTORIAL = function() {
 
         if (tutorial.status === 'learntocash' && tutorial.tokens == 10) {
             if (tutorial.active) {
+                $('#continue-instruction').show();
                 clearInterval(tutorial.flashinterval);
                 clearInterval(Task.flashinterval);
                 tutorial.active = false;
