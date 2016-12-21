@@ -1,60 +1,8 @@
-hideButtons = function() {
-    $("#leftButton").hide();
-    return $("#rightButton").hide();
-};
+/**
+ * Created by JMP on 12/7/16.
+ */
 
-
-
-
-keyText = function(text, key) {
-    if (key === 'left') {
-        $("#leftText").html(text);
-        return $("#leftButton").show();
-    } else {
-        $("#rightText").html(text);
-        return $("#rightButton").show();
-    }
-};
-
-BART_Instructions = (function () {
-    function BART_Instructions(message,leftKey,rightKey) {
-        this.message = message;
-        this.leftKey = leftKey != null ? leftKey : null;
-        this.rightKey = rightKey != null ? rightKey : "Continue";
-    }
-
-    BART_Instructions.prototype.start = function(exitTrial) {
-        this.exitTrial = exitTrial;
-        $('#taskContainer').hide();
-        $('#mainContainer').hide();
-        $('#InstructionSide').hide();
-        $("#inst").html(this.message);
-        $("#inst").show();
-        console.log('Starting Instructions');
-        hideButtons();
-        if (this.leftKey != null) {
-            keyText(this.leftKey, 'left');
-        }
-        return keyText(this.rightKey,'right');
-    };
-
-    BART_Instructions.prototype.buttonClick = function(button) {
-        var acc;
-        if (button.id == 'leftText' || button.id == 'leftButton') {
-            acc = 'BACK';
-            this.exitTrial(false);
-        }
-        else if (button.id === 'rightText' || button.id === 'rightButton') {
-            acc = 'FORWARD';
-            this.exitTrial();
-        }
-    };
-
-    return BART_Instructions;
-
-})();
-
-BART_Block = (function() {
+BART_Instruction = (function() {
     function BART_Block(practice) {
         this.practice = practice;
         this.balloonNum = 0;
@@ -96,7 +44,8 @@ BART_Block = (function() {
         console.log('hi');
         this.resetAllDisplay();
     };
-    $('#pump-box').click(function() {
+    BART_Block.prototype.buttonClick = function(button) {
+
         if (button.id === 'pumpBox') {
             if (!this.ended) {
                 dataHandler.recordTrialData({
@@ -175,7 +124,7 @@ BART_Block = (function() {
                 }
             }
         }
-    });
+    };
 
 
     return BART_Block;
