@@ -108,7 +108,7 @@ BART_TUTORIAL = function() {
                             } else {
                                 self.displayInstruction(
                                     "now that you've seen what sorts of balloons you might encounter in this task," +
-                                    " we'd like to ask you to tell us where you think the balloon is most likely to pop."
+                                    " we'd like to ask you what you think the largest any balloon could grow to is."
                                 );
                                 self.changeStatus('maxRating');
                             }
