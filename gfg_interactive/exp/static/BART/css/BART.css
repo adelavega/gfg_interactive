@@ -15,9 +15,6 @@
     height: 100%;
 }
 
-html, body {
-    height: 90%;
-}
 
 .fill {
     min-height: 100%;
@@ -45,12 +42,6 @@ html, body {
     left: 50%;
 }
 
-body {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
 
 #pump-text {
     top: 60%;
