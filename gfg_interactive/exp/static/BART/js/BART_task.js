@@ -131,6 +131,7 @@ BART_TUTORIAL = function() {
 
 
         BART_tutorial.prototype.maxRating = function () {
+            $('#continue-instruction').hide();
             this.changeStatus('inputMax');
             this.displayInstruction('Before we move on. Please tell us what you think the largest a balloon can grow to is.');
             $('#instructions-box').delay(200).append('<input type="number" id="maxSize" /> <input type="submit" onclick="tutorial.submitMax()" />');
