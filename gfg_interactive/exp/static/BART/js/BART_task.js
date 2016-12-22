@@ -1,4 +1,5 @@
-var datahandler = DataHandler(sessionid);
+console.log(sessionid);
+var dataHandler = DataHandler(sessionid);
 
 
 function popAnimation() {
