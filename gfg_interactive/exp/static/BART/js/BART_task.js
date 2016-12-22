@@ -1,6 +1,6 @@
 
 var datahandler = DataHandler(sessionid);
-dataHandler.recordTrialData({
+datahandler.recordTrialData({
                     'balloon_num': Task.trial,
                     'action': 2,
                     'pumps': Task.tokens,
@@ -388,7 +388,7 @@ BART_TUTORIAL = function() {
                 $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             }
         } else if (Task.active){
-            dataHandler.recordTrialData({
+            datahandler.recordTrialData({
                     'balloon_num': Task.trial,
                     'action': 1,
                     'pumps': Task.tokens,
@@ -402,7 +402,7 @@ BART_TUTORIAL = function() {
             $("#token-text").text(String(Task.tokens) + ' Tokens');
             $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             if (Task.tokens === Task.popPoint) {
-                dataHandler.recordTrialData({
+                datahandler.recordTrialData({
                         'balloon_num': Task.trial,
                         'action': 0,
                         'pumps': Task.tokens,
@@ -436,7 +436,7 @@ BART_TUTORIAL = function() {
 
             }
         } else if (Task.active){
-            dataHandler.recordTrialData({
+            datahandler.recordTrialData({
                     'balloon_num': Task.trial,
                     'action': 2,
                     'pumps': Task.tokens,
