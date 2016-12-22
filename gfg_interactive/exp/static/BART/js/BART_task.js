@@ -1,5 +1,3 @@
-console.log(sessionid);
-var dataHandler = DataHandler(sessionid);
 
 
 function popAnimation() {
@@ -56,6 +54,7 @@ BART_TUTORIAL = function() {
             this.maxSize = 0;
             this.isDown = false;
             this.barValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.datahandler = DataHandler(sessionid);
         }
 
         BART_tutorial.prototype.onboarding = function () {
@@ -383,7 +382,7 @@ BART_TUTORIAL = function() {
                 $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             }
         } else if (Task.active){
-            dataHandler.recordTrialData({
+            this.dataHandler.recordTrialData({
                     'balloon_num': this.balloonNum,
                     'action': 1,
                     'pumps': this.Tokens,
@@ -397,7 +396,7 @@ BART_TUTORIAL = function() {
             $("#token-text").text(String(Task.tokens) + ' Tokens');
             $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             if (Task.tokens === Task.popPoint) {
-                dataHandler.recordTrialData({
+                this.dataHandler.recordTrialData({
                         'balloon_num': this.balloonNum,
                         'action': 0,
                         'pumps': this.Tokens,
@@ -431,7 +430,7 @@ BART_TUTORIAL = function() {
 
             }
         } else if (Task.active){
-            dataHandler.recordTrialData({
+            this.dataHandler.recordTrialData({
                     'balloon_num': this.balloonNum,
                     'action': 2,
                     'pumps': this.Tokens,
