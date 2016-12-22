@@ -1,3 +1,5 @@
+var datahandler = DataHandler(sessionid);
+
 
 function popAnimation() {
     $("#balloon-image").css({opacity: '0'});
@@ -106,7 +108,6 @@ BART_TUTORIAL = function() {
                             if (required < self.popList.length - 1) {
                                 self.watchrange(required + 1);
                             } else {
-                                $('#continue-instruction').hide();
                                 self.displayInstruction(
                                     "now that you've seen what sorts of balloons you might encounter in this task," +
                                     " we'd like to ask you what you think the largest any balloon could grow to is."
@@ -131,11 +132,11 @@ BART_TUTORIAL = function() {
 
 
         BART_tutorial.prototype.maxRating = function () {
+            $('#continue-instruction').hide();
             this.changeStatus('inputMax');
             this.displayInstruction('Before we move on. Please tell us what you think the largest a balloon can grow to is.');
             $('#instructions-box').delay(200).append('<input type="number" id="maxSize" /> <input type="submit" onclick="tutorial.submitMax()" />');
         };
-
 
         BART_tutorial.prototype.distribution = function () {
             $('#balloon-image').hide();
@@ -166,7 +167,6 @@ BART_TUTORIAL = function() {
                 "<h2 id='distribution-counter' style='position: absolute; top: -100px; width: 100%; text-align: center'> 0 </h2>" +
                 "<div onclick='tutorial.removeChart()' id='chart-next' style='position: absolute; left: 90%; top: 110%; background-color: whitesmoke; border: 2px solid black;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:10px; visibility: hidden; padding: 10px;'>Continue</div>"
             );
-
         };
 
         BART_tutorial.prototype.startDistribute = function () {
@@ -276,7 +276,6 @@ BART_TUTORIAL = function() {
 
 
         return BART_tutorial;
-
     })();
 
 
@@ -300,7 +299,6 @@ BART_TUTORIAL = function() {
             }
         };
 
-
         BART_task.prototype.checkTime = function () {
             clearInterval(this.flashinterval);
             this.lastClick = new Date().getTime();
@@ -316,9 +314,9 @@ BART_TUTORIAL = function() {
             }, 2000)
         };
 
-
         return BART_task;
     })();
+
 
 
 
@@ -384,6 +382,12 @@ BART_TUTORIAL = function() {
                 $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             }
         } else if (Task.active){
+            dataHandler.recordTrialData({
+                    'balloon_num': this.balloonNum,
+                    'action': 1,
+                    'pumps': this.Tokens,
+                    'pop_point': this.popPoint
+                });
             clearInterval(tutorial.flashinterval);
             clearInterval(Task.flashinterval);
             console.log(Task.tokens);
@@ -392,13 +396,18 @@ BART_TUTORIAL = function() {
             $("#token-text").text(String(Task.tokens) + ' Tokens');
             $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             if (Task.tokens === Task.popPoint) {
+                dataHandler.recordTrialData({
+                        'balloon_num': this.balloonNum,
+                        'action': 0,
+                        'pumps': this.Tokens,
+                        'pop_point': this.popPoint
+                    });
                 Task.active = false;
                 popAnimation();
                 $('#cash-text').html('Next Balloon');
                 Task.proceed = true;
             } else if (Task.proceed) {
                 Task.newTrial();
-
             }
         }
     });
@@ -421,6 +430,12 @@ BART_TUTORIAL = function() {
 
             }
         } else if (Task.active){
+            dataHandler.recordTrialData({
+                    'balloon_num': this.balloonNum,
+                    'action': 2,
+                    'pumps': this.Tokens,
+                    'pop_point': this.popPoint
+                });
             clearInterval(tutorial.flashinterval);
             clearInterval(Task.flashinterval);
             Task.active = false;
