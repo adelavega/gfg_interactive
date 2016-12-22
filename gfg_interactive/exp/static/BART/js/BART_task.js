@@ -1,5 +1,11 @@
 
 var datahandler = DataHandler(sessionid);
+dataHandler.recordTrialData({
+                    'balloon_num': Task.trial,
+                    'action': 2,
+                    'pumps': Task.tokens,
+                    'pop_point': Task.popPoint
+                });
 function popAnimation() {
     $("#balloon-image").css({opacity: '0'});
     $("#token-text").text('0 Tokens');
