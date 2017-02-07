@@ -55,7 +55,7 @@ We use Alembic to track database migrations. To initate the db and perform the f
 
     pip install -r requirements.txt
     
-6) Copy config files from example ones and add SQL credentials. Also, make sure config.ini is in gfg_interactive/
+6) Copy config files from example ones and add SQL credentials. Make sure config.ini is in gfg_interactive/ and points to a complete config block defined in gfg_interactive/config.py (see gfg_interactive/example.config.py for a template). Make sure to define credentials for the research database, the SQL Alchemy URL for the interactive database (which includes all DB creds on one line) and that the secret key matches the MODULE_INTEGRATION_KEY value for the genes for good app configuration.
 
 7) Set permission of relevant files to +755 
 
