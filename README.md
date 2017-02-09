@@ -46,16 +46,16 @@ We use Alembic to track database migrations. To initate the db and perform the f
 
     sudo apt-get install python-dev libmysqlclient-dev libapache2-mod-wsgi
     
-4) Create virtual environment and activate (in /var/www/gfginteractive)
+4) Create virtual environment and activate (in /var/www/gfg-interactive)
 
     virtualenv venv
-    source venv/bin/activate
+    source venv/bin/activate.csh
     
 5) Install python dependencies
 
     pip install -r requirements.txt
     
-6) Copy config files from example ones and add SQL credentials. Make sure config.ini is in gfg_interactive/ and points to a complete config block defined in gfg_interactive/config.py (see gfg_interactive/example.config.py for a template). Make sure to define credentials for the research database, the SQL Alchemy URL for the interactive database (which includes all DB creds on one line) and that the secret key matches the MODULE_INTEGRATION_KEY value for the genes for good app configuration.
+6) Copy config files from example ones and add SQL credentials. Make sure config.ini is in gfg-interactive/ and points to a complete config block defined in gfg-interactive/config.py (see gfg-interactive/example.config.py for a template). Make sure to define credentials for the research database, the SQL Alchemy URL for the interactive database (which includes all DB creds on one line) and that the secret key matches the MODULE_INTEGRATION_KEY value for the genes for good app configuration.
 
 7) Set permission of relevant files to +755 
 
@@ -64,8 +64,8 @@ We use Alembic to track database migrations. To initate the db and perform the f
 8) Edit apache config to enable WSGI. Relevant section should look like:
 
     WSGIDaemonProcess gfg-interactive user=www-data group=www-data threads=5
-    WSGIScriptAlias /gfg-interactive /var/www/gfginteractive/gfginteractive.wsgi
-    <Directory "/var/www/gfginteractive/">
+    WSGIScriptAlias /gfg-interactive /var/www/gfg-interactive/gfginteractive.wsgi
+    <Directory "/var/www/gfg-interactive/">
         WSGIProcessGroup gfg-interactive
         WSGIApplicationGroup %{GLOBAL}
         Require all granted
@@ -73,9 +73,9 @@ We use Alembic to track database migrations. To initate the db and perform the f
 
 9) Initatialize db
 
-    sudo gfginteractive/venv/bin/python gfginteractive/gfg_interactive/manage.py db init
-    sudo gfginteractive/venv/bin/python gfginteractive/gfg_interactive/manage.py db migrate
-    sudo gfginteractive/venv/bin/python gfginteractive/gfg_interactive/manage.py db upgrade
+    sudo gfg-interactive/venv/bin/python gfg-interactive/gfg_interactive/manage.py db init
+    sudo gfg-interactive/venv/bin/python gfg-interactive/gfg_interactive/manage.py db migrate
+    sudo gfg-interactive/venv/bin/python gfg-interactive/gfg_interactive/manage.py db upgrade
 
 	
 ## Documentation
