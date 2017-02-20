@@ -1,8 +1,6 @@
 
 var datahandler = DataHandler(sessionid);
 
-
-
 function popAnimation() {
     $("#balloon-image").css({opacity: '0'});
     $("#token-text").text('0 Tokens');
@@ -87,11 +85,9 @@ BART_TUTORIAL = function() {
         };
 
         BART_tutorial.prototype.watchrange = function (required) {
-
             var self = this;
             var tokens = 0;
             var popat = this.popList[required];
-            console.log(popat);
             window.setTimeout(function () {
                 resetBalloon();
             }, 1000);
@@ -130,8 +126,6 @@ BART_TUTORIAL = function() {
         BART_tutorial.prototype.changeStatus = function (status) {
             this.status = status;
         };
-
-
 
         BART_tutorial.prototype.maxRating = function () {
             $('#continue-instruction').hide();
@@ -274,9 +268,6 @@ BART_TUTORIAL = function() {
                 }
             }, 2000)
         };
-
-
-
         return BART_tutorial;
     })();
 
@@ -299,6 +290,8 @@ BART_TUTORIAL = function() {
                 resetBalloon();
                 this.active = true;
                 this.proceed = false;
+            }else {
+                datahandler.exitTask();
             }
         };
 
