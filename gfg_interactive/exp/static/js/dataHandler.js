@@ -221,7 +221,7 @@ var DataHandler = function(sessionid) {
 		});
 		opener.completeInteractiveSurvey();
 		window.location.replace('results?uniqueid=' + uniqueid + '&surveyid=' + surveyid)
-	}
+	};
 
 	// To be fleshed out with backbone views in the future.
 	var replaceBody = function(x) { $('body').html(x); };
