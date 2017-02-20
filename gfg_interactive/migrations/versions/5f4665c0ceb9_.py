@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 43c800fdf0c8
+Revision ID: 5f4665c0ceb9
 Revises: None
-Create Date: 2016-07-28 13:25:36.097195
+Create Date: 2016-10-13 13:00:55.165462
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '43c800fdf0c8'
+revision = '5f4665c0ceb9'
 down_revision = None
 
 from alembic import op
@@ -33,6 +33,19 @@ def upgrade():
     sa.Column('results', sa.Float(precision=2), nullable=True),
     sa.PrimaryKeyConstraint('session_id')
     )
+    op.create_table('BART',
+    sa.Column('action_id', sa.Integer(), nullable=False),
+    sa.Column('gfg_id', sa.String(length=32), nullable=False),
+    sa.Column('session_id', sa.Integer(), nullable=True),
+    sa.Column('trial_num', sa.Integer(), nullable=True),
+    sa.Column('trial_action_num', sa.Integer(), nullable=True),
+    sa.Column('user_action', sa.Integer(), nullable=True),
+    sa.Column('pumps', sa.Integer(), nullable=True),
+    sa.Column('pop_point', sa.Integer(), nullable=True),
+    sa.Column('timestamp', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['session_id'], ['session.session_id'], ),
+    sa.PrimaryKeyConstraint('action_id')
+    )
     op.create_table('category_switch',
     sa.Column('cs_id', sa.Integer(), nullable=False),
     sa.Column('gfg_id', sa.String(length=32), nullable=False),
@@ -41,10 +54,10 @@ def upgrade():
     sa.Column('response', sa.String(length=2), nullable=True),
     sa.Column('reaction_time', sa.Float(), nullable=True),
     sa.Column('accuracy', sa.Integer(), nullable=True),
-    sa.Column('block', sa.Unicode(length=32), nullable=True),
-    sa.Column('question', sa.Unicode(length=32), nullable=True),
-    sa.Column('answer', sa.Unicode(length=32), nullable=True),
-    sa.Column('user_answer', sa.Unicode(length=32), nullable=True),
+    sa.Column('block', sa.String(length=200), nullable=True),
+    sa.Column('question', sa.String(length=100), nullable=True),
+    sa.Column('answer', sa.String(length=100), nullable=True),
+    sa.Column('user_answer', sa.String(length=100), nullable=True),
     sa.Column('timestamp', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['session_id'], ['session.session_id'], ),
     sa.PrimaryKeyConstraint('cs_id')
@@ -55,7 +68,7 @@ def upgrade():
     sa.Column('session_id', sa.Integer(), nullable=True),
     sa.Column('exp_name', sa.String(length=32), nullable=False),
     sa.Column('event_type', sa.String(length=32), nullable=True),
-    sa.Column('value', sa.Unicode(length=32), nullable=True),
+    sa.Column('value', sa.String(length=100), nullable=True),
     sa.Column('interval', sa.Float(), nullable=True),
     sa.Column('timestamp', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['session_id'], ['session.session_id'], ),
@@ -68,10 +81,10 @@ def upgrade():
     sa.Column('trial_num', sa.Integer(), nullable=True),
     sa.Column('reaction_time', sa.Float(), nullable=True),
     sa.Column('accuracy', sa.String(length=32), nullable=True),
-    sa.Column('block', sa.Unicode(length=32), nullable=True),
+    sa.Column('block', sa.String(length=200), nullable=True),
     sa.Column('timestamp', sa.DateTime(), nullable=True),
-    sa.Column('target_words', sa.Unicode(length=32), nullable=True),
-    sa.Column('input_words', sa.Unicode(length=32), nullable=True),
+    sa.Column('target_words', sa.String(length=100), nullable=True),
+    sa.Column('input_words', sa.String(length=100), nullable=True),
     sa.ForeignKeyConstraint(['session_id'], ['session.session_id'], ),
     sa.PrimaryKeyConstraint('kt_id')
     )
@@ -96,6 +109,7 @@ def downgrade():
     op.drop_table('keep_track')
     op.drop_table('event_data')
     op.drop_table('category_switch')
+    op.drop_table('BART')
     op.drop_table('session')
     op.drop_table('participant')
     ### end Alembic commands ###
