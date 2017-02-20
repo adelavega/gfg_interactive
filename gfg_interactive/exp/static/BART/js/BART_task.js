@@ -274,6 +274,7 @@ BART_TUTORIAL = function() {
 
     BART_task = (function() {
         function BART_task(){
+            datahandler.finishInstructions();
             this.flashinterval = null;
             this.proceed = false;
             this.trial = 0;
@@ -292,7 +293,8 @@ BART_TUTORIAL = function() {
                 this.proceed = false;
             }else {
                 console.log('end');
-                datahandler.exitTask();
+
+                datahandler.completeTask();
             }
         };
 
