@@ -295,6 +295,7 @@ BART_TUTORIAL = function() {
                 console.log('end');
 
                 datahandler.completeTask();
+                datahandler.exitTask();
             }
         };
 
