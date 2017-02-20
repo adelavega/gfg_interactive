@@ -10,6 +10,7 @@ import json
 import urllib
 import utils
 import stats
+import numpy as np
 
 # Status codes
 NOT_ACCEPTED = 0
@@ -318,6 +319,10 @@ def results():
     ## JAKE: You'd need to add another elif for your task. This is probably not the best way to code this but oh well
     ## Probably would be good to have the scoring functions all in one file and just call the right function for the git
     ## task, but lets leave that for later
+    elif session.exp_name == 'BART':
+        score = session.query.(func.avg(BART.pumps)).filter(BART.session_id==session.session_id,BART.user_action == 2).all()
+
+
 
     session.results = score
     db.session.commit()
