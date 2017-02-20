@@ -219,7 +219,7 @@ var DataHandler = function(sessionid) {
 				action: "complete"
 		}
 		});
-		opener.completeInteractiveSurvey();
+		// opener.completeInteractiveSurvey();
 		window.location.replace('results?uniqueid=' + uniqueid + '&surveyid=' + surveyid)
 	};
 
