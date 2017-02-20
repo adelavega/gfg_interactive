@@ -210,7 +210,7 @@ var DataHandler = function(sessionid) {
 			type: "POST",
 			data: {'sessionid': self.taskdata.id}
 		});
-	}
+	};
 
 	self.exitTask = function(){
 		$.ajax("/gfg/lib/interactive_survey_module_handler.php", {
