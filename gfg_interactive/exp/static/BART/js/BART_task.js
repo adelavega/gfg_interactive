@@ -291,6 +291,7 @@ BART_TUTORIAL = function() {
                 this.active = true;
                 this.proceed = false;
             }else {
+                console.log('end');
                 datahandler.exitTask();
             }
         };
