@@ -10,7 +10,6 @@ import json
 import urllib
 import utils
 import stats
-import numpy as np
 
 # Status codes
 NOT_ACCEPTED = 0
