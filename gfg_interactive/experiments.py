@@ -319,7 +319,8 @@ def results():
     ## Probably would be good to have the scoring functions all in one file and just call the right function for the git
     ## task, but lets leave that for later
     elif session.exp_name == 'BART':
-        score = db.session.query(func.avg(BART.pumps).label('average')).all()
+        score = db.session.query.filter(BART.session_id == session.session_id,
+                                                                               BART.user_action == 2).all()
         current_app.logger.info(score)
 
     session.results = score
