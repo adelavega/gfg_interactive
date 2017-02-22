@@ -160,8 +160,8 @@ class BART(db.Model):
 
     # This is how the model prints itself
     def __repr__(self):
-        return "BART Values (%s, %s, %s, %s)" % (self.bart_id, self.gfg_id,
-                                                 self.session_id, self.trial_num)
+        return "BART Values (%s, %s, %s, %s, %s, %s, %s, %s, %s)" % (self.action_id, self.gfg_id,
+                                                 self.session_id, self.trial_num, self.trial_action_num,self.user_action,self.pumps,self.pop_point,self.timestamp)
 
     def add_json_data(self, json_trial):
         trial_data = json_trial['trialdata']
