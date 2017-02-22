@@ -321,7 +321,7 @@ def results():
     elif session.exp_name == 'BART':
         score = db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == session.session_id,
                                                                                BART.user_action == 2).all()
-        current_app.logger.info(Session.query.filter(BART.session_id==session.session_id).all())
+        current_app.logger.info(session.session_id)
 
 
 
