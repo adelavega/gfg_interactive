@@ -347,7 +347,7 @@ def results():
         percentile = None
 
     return render_template(session.exp_name + "/results.html", 
-        score=score,
+        score=12,
         percentile=percentile)
 
 
