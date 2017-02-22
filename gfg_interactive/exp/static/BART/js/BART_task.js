@@ -406,6 +406,7 @@ BART_TUTORIAL = function() {
                 popAnimation();
                 $('#cash-text').html('Next Balloon');
                 Task.proceed = true;
+                datahandler.saveData();
             } else if (Task.proceed) {
                 Task.newTrial();
             }
@@ -436,6 +437,7 @@ BART_TUTORIAL = function() {
                     'pumps': Task.tokens,
                     'pop_point': Task.popPoint
                 });
+            datahandler.saveData();
             clearInterval(tutorial.flashinterval);
             clearInterval(Task.flashinterval);
             Task.active = false;
