@@ -321,7 +321,7 @@ def results():
     elif session.exp_name == 'BART':
         score = db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == 2,
                                                                                BART.user_action == 1).all()
-    current_app.logger.info(score)
+    current_app.logger.info(float(score))
 
 
 
@@ -347,7 +347,7 @@ def results():
         percentile = None
 
     return render_template(session.exp_name + "/results.html", 
-        score=12,
+        score=score,
         percentile=percentile)
 
 
