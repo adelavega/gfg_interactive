@@ -26,13 +26,9 @@ html, body {
 
 #balloon-image {
     position: relative;
-    top: 65%;
+
     left: 50%;
-    -webkit-transform: translate(-50%, -65%);
-    -moz-transform: translate(-50%, -65%);
-    -ms-transform: translate(-50%, -65%);
-    -o-transform: translate(-50%, -65%)
-    transform: translate(-50%, -65%);
+
     height: 100px;
 }
 
