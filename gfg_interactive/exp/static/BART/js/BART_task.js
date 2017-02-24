@@ -22,7 +22,8 @@ function resetBalloon() {
             top: '40%',
             left: '50%',
             height: '100px',
-            width: '75px'
+            width: '75px',
+            transform: 'translate(-50%, -50%)'
         })
         .animate({opacity: '1'});
     $("#result-text")
