@@ -355,7 +355,7 @@ BART_TUTORIAL = function() {
         if (tutorial.status === 'learntopump') {
             if (tutorial.active) {
                 tutorial.tokens++;
-                $("#balloon-image").animate({height: '+=3.25px', width: '+=3px', top: '-=1vw'}, 50);
+                $("#balloon-image").animate({height: '+=3.25px', width: '+=3px', top: '-=1%'}, 50);
                 $("#token-text").text(String(tutorial.tokens) + ' Tokens');
                 $('#pump-text').animate({opacity: '0'}, tutorial.checkTime());
 
@@ -377,7 +377,7 @@ BART_TUTORIAL = function() {
             console.log('hi');
             if (tutorial.active){
                 tutorial.tokens++;
-                $("#balloon-image").animate({height: '+=3.25px', width: '+=3px', top: '-=1vw'}, 50);
+                $("#balloon-image").animate({height: '+=3.25px', width: '+=3px', top: '-=1%'}, 50);
                 $("#token-text").text(String(tutorial.tokens) + ' Tokens');
                 $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             }
@@ -392,7 +392,7 @@ BART_TUTORIAL = function() {
             clearInterval(Task.flashinterval);
             console.log(Task.tokens);
             Task.tokens++;
-            $("#balloon-image").animate({height: '+=3.25px', width: '+=3px', top: '-=1vw'}, 50);
+            $("#balloon-image").animate({height: '+=3.25px', width: '+=3px', top: '-=1%'}, 50);
             $("#token-text").text(String(Task.tokens) + ' Tokens');
             $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             if (Task.tokens === Task.popPoint) {
