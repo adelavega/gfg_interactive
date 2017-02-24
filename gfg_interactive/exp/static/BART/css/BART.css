@@ -27,12 +27,12 @@ html, body {
 #balloon-image {
     position: relative;
     left: 50%;
-    top: 100%;
-    -webkit-transform: translate(-50%, 100%);
-    -moz-transform: translate(-50%, 100%);
-    -ms-transform: translate(-50%, 100%);
-    -o-transform: translate(-50%, 100%)
-    transform: translate(-50%, 100%);
+    top: 400%;
+    -webkit-transform: translate(-50%, 400%);
+    -moz-transform: translate(-50%, 400%);
+    -ms-transform: translate(-50%, 400%);
+    -o-transform: translate(-50%, 400%)
+    transform: translate(-50%, 400%);
     height: 100px;
 }
 
