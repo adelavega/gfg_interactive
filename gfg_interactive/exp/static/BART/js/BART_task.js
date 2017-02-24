@@ -332,7 +332,7 @@ BART_TUTORIAL = function() {
         } else if (tutorial.status === 'onboardWatch') {
             $('#progress-container').css({visibility:'visible'});
             $('#instructions-box').animate({opacity:'0'});
-            
+
             tutorial.watchrange(0);
         } else if (tutorial.status === 'maxRating'){
             $('#progress-container').css({visibility:'hidden'});
