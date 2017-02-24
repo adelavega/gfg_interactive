@@ -25,6 +25,7 @@ html, body {
 }
 
 #balloon-image {
+    position: relative;
     left: 50%;
     -webkit-transform: translate(-50%, -65%);
     -moz-transform: translate(-50%, -65%);
