@@ -19,7 +19,7 @@ function resetBalloon() {
     $("#token-text").text( '0 Tokens');
     $("#balloon-image")
         .css({
-            top: '40%',
+            top: '50%',
             left: '50%',
             height: '100px',
             width: '75px'
