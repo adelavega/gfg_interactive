@@ -417,7 +417,7 @@ BART_TUTORIAL = function() {
     $('#cash-box').click(function(){
 
         if (tutorial.status === 'learntocash' && tutorial.tokens == 10) {
-            if (tutorial.active) {
+            if (tutorial.active && tutorial.tokens != 0) {
                 clearInterval(tutorial.flashinterval);
                 clearInterval(Task.flashinterval);
                 tutorial.active = false;
@@ -431,7 +431,7 @@ BART_TUTORIAL = function() {
                 tutorial.changeStatus('preTask');
 
             }
-        } else if (Task.active){
+        } else if (Task.active && tutorial.tokens != 0){
             datahandler.recordTrialData({
                     'balloon_num': Task.trial,
                     'action': 2,
