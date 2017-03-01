@@ -431,7 +431,7 @@ BART_TUTORIAL = function() {
                 tutorial.changeStatus('preTask');
 
             }
-        } else if (Task.active && tutorial.tokens != 0){
+        } else if (Task.active && Task.tokens != 0){
             datahandler.recordTrialData({
                     'balloon_num': Task.trial,
                     'action': 2,
