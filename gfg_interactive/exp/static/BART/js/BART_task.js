@@ -61,7 +61,7 @@ BART_TUTORIAL = function() {
             this.changeStatus('onboarding');
             this.displayInstruction(
                 '<strong> Welcome to the BART </strong>' +
-                '<br><br> Throughout this task, you will be presented with 30 balloons, one at a time.' +
+                '<br><br> Throughout this task, you will be presented with 15 balloons, one at a time.' +
                 '<br><br> You will be asked to inflate these balloons. Every time you choose to inflate the balloon,' +
                 ' it will grow slightly and you will receive one token. '
             );
@@ -71,7 +71,7 @@ BART_TUTORIAL = function() {
             this.changeStatus('learntopump');
             $('#continue-instruction').hide();
             this.displayInstruction(
-                "To inflate the balloon click or tap anywhere in the upper white space of this container.<br><br>Go ahead and pump as many times as you'd like."
+                "To inflate the balloon click or tap anywhere in the white space of this container.<br><br>Go ahead and pump as many times as you'd like."
             );
             $('#pump-text').delay(1000).animate({opacity: '1'});
         };
@@ -90,7 +90,7 @@ BART_TUTORIAL = function() {
             var popat = this.popList[required];
             window.setTimeout(function () {
                 resetBalloon();
-            }, 1000);
+            }, 6000);
 
             if (this.autotrial == required) {
                 window.setTimeout(function () {
@@ -284,7 +284,7 @@ BART_TUTORIAL = function() {
         }
 
         BART_task.prototype.newTrial = function() {
-            if (this.trial <= 29) {
+            if (this.trial <= 14) {
                 this.trial++;
                 this.tokens = 0;
                 this.popPoint = Math.floor((Math.random() * 63) + 1);
@@ -423,7 +423,7 @@ BART_TUTORIAL = function() {
                 tutorial.active = false;
                 cashDisplay();
                 tutorial.displayInstruction(
-                    "And that's all there is to it! <br><br> In this task you will be presented with 30 balloons." +
+                    "And that's all there is to it! <br><br> In this task you will be presented with 15 balloons." +
                     " For each balloon you can choose to pump the balloon to whatever size you like before cashing in" +
                     " your tokens. But remember, if you pump the balloon too much, it will explode and you will lose your tokens." +
                     "<br><br>If you are ready to start this task for real, click/tap this box and we will get started."
