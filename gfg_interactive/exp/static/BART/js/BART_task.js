@@ -14,22 +14,19 @@ function popAnimation() {
 }
 
 function resetBalloon() {
-    window.setTimeout(function(){
-        $('#cash-box').animate({backgroundColor:'#7bb37e'});
-        $('#cash-text').html('Cash In');
-        $("#token-text").text( '0 Tokens');
-        $("#balloon-image")
-            .css({
-                top: '50%',
-                left: '50%',
-                height: '100px',
-                width: '75px'
-            })
-            .animate({opacity: '1'});
-        $("#result-text")
-            .animate({opacity: '0'});
-    },1000);
-
+    $('#cash-box').animate({backgroundColor:'#7bb37e'});
+    $('#cash-text').html('Cash In');
+    $("#token-text").text( '0 Tokens');
+    $("#balloon-image")
+        .css({
+            top: '50%',
+            left: '50%',
+            height: '100px',
+            width: '75px'
+        })
+        .animate({opacity: '1'});
+    $("#result-text")
+        .animate({opacity: '0'});
 }
 
 function cashDisplay() {
@@ -110,14 +107,14 @@ BART_TUTORIAL = function() {
                                 self.watchrange(required + 1);
                             } else {
                                 self.displayInstruction(
-                                    "now that you've seen what sorts of balloons you might encounter in this task," +
+                                    "Now that you've seen what sorts of balloons you might encounter in this task," +
                                     " we'd like to ask you what you think the largest any balloon could grow to is."
                                 );
                                 self.changeStatus('maxRating');
                             }
                         }
                     }, 120)
-                }, 3000)
+                }, 1500)
             }
         };
 
@@ -387,11 +384,11 @@ BART_TUTORIAL = function() {
             }
         } else if (Task.active){
             datahandler.recordTrialData({
-                'balloon_num': Task.trial,
-                'action': 1,
-                'pumps': Task.tokens,
-                'pop_point': Task.popPoint
-            });
+                    'balloon_num': Task.trial,
+                    'action': 1,
+                    'pumps': Task.tokens,
+                    'pop_point': Task.popPoint
+                });
             clearInterval(tutorial.flashinterval);
             clearInterval(Task.flashinterval);
             console.log(Task.tokens);
@@ -401,11 +398,11 @@ BART_TUTORIAL = function() {
             $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             if (Task.tokens === Task.popPoint) {
                 datahandler.recordTrialData({
-                    'balloon_num': Task.trial,
-                    'action': 0,
-                    'pumps': Task.tokens,
-                    'pop_point': Task.popPoint
-                });
+                        'balloon_num': Task.trial,
+                        'action': 0,
+                        'pumps': Task.tokens,
+                        'pop_point': Task.popPoint
+                    });
                 Task.active = false;
                 popAnimation();
                 $('#cash-text').html('Next Balloon');
@@ -436,11 +433,11 @@ BART_TUTORIAL = function() {
             }
         } else if (Task.active && Task.tokens != 0){
             datahandler.recordTrialData({
-                'balloon_num': Task.trial,
-                'action': 2,
-                'pumps': Task.tokens,
-                'pop_point': Task.popPoint
-            });
+                    'balloon_num': Task.trial,
+                    'action': 2,
+                    'pumps': Task.tokens,
+                    'pop_point': Task.popPoint
+                });
             datahandler.saveData();
             clearInterval(tutorial.flashinterval);
             clearInterval(Task.flashinterval);
