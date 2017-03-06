@@ -90,7 +90,7 @@ BART_TUTORIAL = function() {
             var popat = this.popList[required];
             window.setTimeout(function () {
                 resetBalloon();
-            }, 100);
+            }, 1000);
 
             if (this.autotrial == required) {
                 window.setTimeout(function () {
@@ -114,7 +114,7 @@ BART_TUTORIAL = function() {
                             }
                         }
                     }, 120)
-                }, 3000)
+                }, 2000)
             }
         };
 
