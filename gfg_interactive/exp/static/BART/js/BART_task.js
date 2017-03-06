@@ -14,19 +14,22 @@ function popAnimation() {
 }
 
 function resetBalloon() {
-    $('#cash-box').animate({backgroundColor:'#7bb37e'});
-    $('#cash-text').html('Cash In');
-    $("#token-text").text( '0 Tokens');
-    $("#balloon-image")
-        .css({
-            top: '50%',
-            left: '50%',
-            height: '100px',
-            width: '75px'
-        })
-        .animate({opacity: '1'});
-    $("#result-text")
-        .animate({opacity: '0'});
+    window.setTimeout(function(){
+        $('#cash-box').animate({backgroundColor:'#7bb37e'});
+        $('#cash-text').html('Cash In');
+        $("#token-text").text( '0 Tokens');
+        $("#balloon-image")
+            .css({
+                top: '50%',
+                left: '50%',
+                height: '100px',
+                width: '75px'
+            })
+            .animate({opacity: '1'});
+        $("#result-text")
+            .animate({opacity: '0'});
+    },1000);
+
 }
 
 function cashDisplay() {
@@ -114,7 +117,7 @@ BART_TUTORIAL = function() {
                             }
                         }
                     }, 120)
-                }, 4000)
+                }, 1500)
             }
         };
 
@@ -384,11 +387,11 @@ BART_TUTORIAL = function() {
             }
         } else if (Task.active){
             datahandler.recordTrialData({
-                    'balloon_num': Task.trial,
-                    'action': 1,
-                    'pumps': Task.tokens,
-                    'pop_point': Task.popPoint
-                });
+                'balloon_num': Task.trial,
+                'action': 1,
+                'pumps': Task.tokens,
+                'pop_point': Task.popPoint
+            });
             clearInterval(tutorial.flashinterval);
             clearInterval(Task.flashinterval);
             console.log(Task.tokens);
@@ -398,11 +401,11 @@ BART_TUTORIAL = function() {
             $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             if (Task.tokens === Task.popPoint) {
                 datahandler.recordTrialData({
-                        'balloon_num': Task.trial,
-                        'action': 0,
-                        'pumps': Task.tokens,
-                        'pop_point': Task.popPoint
-                    });
+                    'balloon_num': Task.trial,
+                    'action': 0,
+                    'pumps': Task.tokens,
+                    'pop_point': Task.popPoint
+                });
                 Task.active = false;
                 popAnimation();
                 $('#cash-text').html('Next Balloon');
@@ -433,11 +436,11 @@ BART_TUTORIAL = function() {
             }
         } else if (Task.active && Task.tokens != 0){
             datahandler.recordTrialData({
-                    'balloon_num': Task.trial,
-                    'action': 2,
-                    'pumps': Task.tokens,
-                    'pop_point': Task.popPoint
-                });
+                'balloon_num': Task.trial,
+                'action': 2,
+                'pumps': Task.tokens,
+                'pop_point': Task.popPoint
+            });
             datahandler.saveData();
             clearInterval(tutorial.flashinterval);
             clearInterval(Task.flashinterval);
