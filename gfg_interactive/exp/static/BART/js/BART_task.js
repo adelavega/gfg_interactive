@@ -343,6 +343,11 @@ BART_TUTORIAL = function() {
             tutorial.changeStatus('done');
             $('#instructions-box').hide();
             Task.newTrial();
+        } else if (tutorial.status === 'endLearnCash') {
+            tutorial.displayInstruction(
+                "At the end of this task we will compare your average tokens for cashed in balloons with other individuals who have also completed this task."
+            );
+            tutorial.changeStatus('preTask');
         }
     });
 
@@ -428,8 +433,7 @@ BART_TUTORIAL = function() {
                     " your tokens. But remember, if you pump the balloon too much, it will explode and you will lose your tokens." +
                     "<br><br>If you are ready to start this task for real, click/tap this box and we will get started."
                 );
-                tutorial.changeStatus('preTask');
-
+                tutorial.changeStatus('endLearnCash');
             }
         } else if (Task.active && Task.tokens != 0){
             datahandler.recordTrialData({
