@@ -77,6 +77,8 @@ body {
 
 #instructions-box {
     position: absolute;
+    height: 200px;
+    overflow: scroll;
     left: 60%;
     top: 23%;
     width: 30%;
