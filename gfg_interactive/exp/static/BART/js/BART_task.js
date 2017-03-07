@@ -345,7 +345,8 @@ BART_TUTORIAL = function() {
             Task.newTrial();
         } else if (tutorial.status === 'endLearnCash') {
             tutorial.displayInstruction(
-                "At the end of this task we will compare your average tokens for cashed in balloons with other individuals who have also completed this task."
+                "At the end of this task we will compare your average tokens for cashed in balloons with other individuals who have also completed this task." +
+                "<br><br>If you are ready to start this task for real, click/tap this box and we will get started.""
             );
             tutorial.changeStatus('preTask');
         }
@@ -427,11 +428,11 @@ BART_TUTORIAL = function() {
                 clearInterval(Task.flashinterval);
                 tutorial.active = false;
                 cashDisplay();
+                $('#continue-instruction').show();
                 tutorial.displayInstruction(
                     "And that's all there is to it! <br><br> In this task you will be presented with 15 balloons." +
                     " For each balloon you can choose to pump the balloon to whatever size you like before cashing in" +
-                    " your tokens. But remember, if you pump the balloon too much, it will explode and you will lose your tokens." +
-                    "<br><br>If you are ready to start this task for real, click/tap this box and we will get started."
+                    " your tokens. But remember, if you pump the balloon too much, it will explode and you will lose your tokens."
                 );
                 tutorial.changeStatus('endLearnCash');
             }
