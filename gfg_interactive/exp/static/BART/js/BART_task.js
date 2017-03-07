@@ -130,7 +130,7 @@ BART_TUTORIAL = function() {
         BART_tutorial.prototype.maxRating = function () {
             $('#continue-instruction').hide();
             this.changeStatus('inputMax');
-            this.displayInstruction('Before we move on. Please tell us what you think the largest a balloon can grow to is.');
+            this.displayInstruction('Before we move on, please tell us what you think the largest a balloon can grow to is (in number of pumps).');
             $('#instructions-box').delay(200).append('<input type="number" id="maxSize" /> <input type="submit" onclick="tutorial.submitMax()" />');
         };
 
@@ -157,7 +157,7 @@ BART_TUTORIAL = function() {
                 "<p style='position: absolute; bottom: -50px; left: 2%'> 0 </p>" +
                 "<h3 style='position:absolute; bottom: -80px; left: 40%;'>  Size (in pumps)</h3>" +
                 "<h3 style='position:absolute; bottom: 50%; left:-150px; -webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);-ms-transform: rotate(-90deg);-o-transform: rotate(-90deg);transform: rotate(-90deg);'> number of balloons </h3>" +
-                "<div id='chart-instruct' onclick='tutorial.startDistribute()'  style=' top: 5px; position: absolute; padding: 10px; text-align: center; left: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:10px; background-color: whitesmoke;border: 2px solid black;'> Please distribute at least 500 balloons to where you believe the balloons in this task are most likely to pop. <br><br>You can click/tap and drag to draw your distribution. Once you have distributed 500 or more balloons you may continue.<br><br>" +
+                "<div id='chart-instruct' onclick='tutorial.startDistribute()'  style=' top: 5px; position: absolute; padding: 10px; text-align: center; left: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:10px; background-color: whitesmoke;border: 2px solid black;'>The chart you see here represents the size of a balloon from 0 pumps (leftmost bar) to your estimated maximum balloon size (rightmost bar). Each bar, from left to right, represents a slightly larger balloon. We would like you to tell us where you think any given balloon is most likely to grow to before popping. Imagine playing 500 balloons. Where do you think these balloons will pop? <br><br>You can click/tap each bar and it will raise. You need to distribute at least 500 balloons on the chart." +
                 "<p id='chart-continue' style='font-size: 80%; margin-bottom: -10px; color: #616161;'> click this box to begin this task </p>" +
                 "</div>" +
                 "<h2 id='distribution-counter' style='position: absolute; top: -100px; width: 100%; text-align: center'> 0 </h2>" +
