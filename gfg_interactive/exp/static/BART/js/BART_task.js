@@ -346,7 +346,7 @@ BART_TUTORIAL = function() {
         } else if (tutorial.status === 'endLearnCash') {
             tutorial.displayInstruction(
                 "At the end of this task we will compare your average tokens for cashed in balloons with other individuals who have also completed this task." +
-                "<br><br>If you are ready to start this task for real, click/tap this box and we will get started.""
+                "<br><br>If you are ready to start this task for real, click/tap this box and we will get started."
             );
             tutorial.changeStatus('preTask');
         }
