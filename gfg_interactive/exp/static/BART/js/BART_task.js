@@ -71,7 +71,7 @@ BART_TUTORIAL = function() {
             this.changeStatus('learntopump');
             $('#continue-instruction').hide();
             this.displayInstruction(
-                "To inflate the balloon click or tap anywhere in the white space of this container.<br><br>Go ahead and pump as many times as you'd like."
+                "To inflate the balloon click/tap anywhere in the white space (or press the spacebar) of this container.<br><br>Go ahead and pump as many times as you'd like."
             );
             $('#pump-text').delay(1000).animate({opacity: '1'});
         };
@@ -239,8 +239,8 @@ BART_TUTORIAL = function() {
             $('#instructions-box').animate({opacity: '0'}).show();
             tutorial.changeStatus('learntocash');
             tutorial.displayInstruction(
-                "To save your tokens before a balloon pops, you may choose to 'cash in'.<br><br>To cash in, touch anywhere " +
-                "inside of the green 'cash in' box at the bottom of this container.<br><br> Go ahead and pump this balloon" +
+                "To save your tokens before a balloon pops, you may choose to 'cash in'.<br><br>To cash in, click/tap anywhere " +
+                "inside of the green 'cash in' box at the bottom of this container (or press the return key).<br><br> Go ahead and pump this balloon" +
                 " to 10 tokens and cash in."
             );
             tutorial.active = true;
