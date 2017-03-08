@@ -358,6 +358,70 @@ BART_TUTORIAL = function() {
         tutorial.isDown = false;
     });
 
+    document.body.onkeyup = function(e){
+        if(e.keyCode == 32){
+            if (tutorial.status === 'learntopump') {
+            if (tutorial.active) {
+                tutorial.tokens++;
+                $("#balloon-image").animate({height: '+=3.25px', width: '+=3px'}, 50);
+                $("#token-text").text(String(tutorial.tokens) + ' Tokens');
+                $('#pump-text').animate({opacity: '0'}, tutorial.checkTime());
+
+                if (tutorial.tokens === 7) {
+                    tutorial.changeStatus('popped');
+                    clearInterval(tutorial.flashinterval);
+                    clearInterval(Task.flashinterval);
+                    tutorial.active = false;
+                    $('#continue-instruction').show();
+                    tutorial.displayInstruction(
+                        ' <strong>Oh no! It looks like the balloon popped.</strong><br><br>' +
+                        'Every balloon that you inflate will have a different maximum size that it can grow to.' +
+                        ' Once the balloon gets to its max size, it will pop and you will lose your current tokens.'
+                    );
+                    popAnimation();
+                }
+            }
+        } else if (tutorial.status === 'learntocash' && tutorial.tokens < 10){
+            console.log('hi');
+            if (tutorial.active){
+                tutorial.tokens++;
+                $("#balloon-image").animate({height: '+=3.25px', width: '+=3px'}, 50);
+                $("#token-text").text(String(tutorial.tokens) + ' Tokens');
+                $('#pump-text').animate({opacity: '0'}, Task.checkTime());
+            }
+        } else if (Task.active){
+            datahandler.recordTrialData({
+                'balloon_num': Task.trial,
+                'action': 1,
+                'pumps': Task.tokens,
+                'pop_point': Task.popPoint
+            });
+            clearInterval(tutorial.flashinterval);
+            clearInterval(Task.flashinterval);
+            console.log(Task.tokens);
+            Task.tokens++;
+            $("#balloon-image").animate({height: '+=3.25px', width: '+=3px'}, 50);
+            $("#token-text").text(String(Task.tokens) + ' Tokens');
+            $('#pump-text').animate({opacity: '0'}, Task.checkTime());
+            if (Task.tokens === Task.popPoint) {
+                datahandler.recordTrialData({
+                    'balloon_num': Task.trial,
+                    'action': 0,
+                    'pumps': Task.tokens,
+                    'pop_point': Task.popPoint
+                });
+                Task.active = false;
+                popAnimation();
+                $('#cash-text').html('Next Balloon');
+                Task.proceed = true;
+                datahandler.saveData();
+            } else if (Task.proceed) {
+                Task.newTrial();
+            }
+        }
+        }
+    };
+
     $("#pump-box").click(function() {
         if (tutorial.status === 'learntopump') {
             if (tutorial.active) {
@@ -390,11 +454,11 @@ BART_TUTORIAL = function() {
             }
         } else if (Task.active){
             datahandler.recordTrialData({
-                    'balloon_num': Task.trial,
-                    'action': 1,
-                    'pumps': Task.tokens,
-                    'pop_point': Task.popPoint
-                });
+                'balloon_num': Task.trial,
+                'action': 1,
+                'pumps': Task.tokens,
+                'pop_point': Task.popPoint
+            });
             clearInterval(tutorial.flashinterval);
             clearInterval(Task.flashinterval);
             console.log(Task.tokens);
@@ -404,11 +468,11 @@ BART_TUTORIAL = function() {
             $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             if (Task.tokens === Task.popPoint) {
                 datahandler.recordTrialData({
-                        'balloon_num': Task.trial,
-                        'action': 0,
-                        'pumps': Task.tokens,
-                        'pop_point': Task.popPoint
-                    });
+                    'balloon_num': Task.trial,
+                    'action': 0,
+                    'pumps': Task.tokens,
+                    'pop_point': Task.popPoint
+                });
                 Task.active = false;
                 popAnimation();
                 $('#cash-text').html('Next Balloon');
@@ -438,11 +502,11 @@ BART_TUTORIAL = function() {
             }
         } else if (Task.active && Task.tokens != 0){
             datahandler.recordTrialData({
-                    'balloon_num': Task.trial,
-                    'action': 2,
-                    'pumps': Task.tokens,
-                    'pop_point': Task.popPoint
-                });
+                'balloon_num': Task.trial,
+                'action': 2,
+                'pumps': Task.tokens,
+                'pop_point': Task.popPoint
+            });
             datahandler.saveData();
             clearInterval(tutorial.flashinterval);
             clearInterval(Task.flashinterval);
