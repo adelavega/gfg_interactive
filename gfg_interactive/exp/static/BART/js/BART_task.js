@@ -420,6 +420,39 @@ BART_TUTORIAL = function() {
                 }
             }
         }
+        else if(e.keyCode == 13){
+            if (tutorial.status === 'learntocash' && tutorial.tokens == 10) {
+                if (tutorial.active && tutorial.tokens != 0) {
+                    clearInterval(tutorial.flashinterval);
+                    clearInterval(Task.flashinterval);
+                    tutorial.active = false;
+                    cashDisplay();
+                    $('#continue-instruction').show();
+                    tutorial.displayInstruction(
+                        "And that's all there is to it! <br><br> In this task you will be presented with 15 balloons." +
+                        " For each balloon you can choose to pump the balloon to whatever size you like before cashing in" +
+                        " your tokens. But remember, if you pump the balloon too much, it will explode and you will lose your tokens."
+                    );
+                    tutorial.changeStatus('endLearnCash');
+                }
+            } else if (Task.active && Task.tokens != 0){
+                datahandler.recordTrialData({
+                    'balloon_num': Task.trial,
+                    'action': 2,
+                    'pumps': Task.tokens,
+                    'pop_point': Task.popPoint
+                });
+                datahandler.saveData();
+                clearInterval(tutorial.flashinterval);
+                clearInterval(Task.flashinterval);
+                Task.active = false;
+                cashDisplay();
+                $('#cash-text').html('Next Balloon');
+                Task.proceed = true;
+            } else if (Task.proceed) {
+                Task.newTrial();
+            }
+        }
     };
 
     $("#pump-box").click(function() {
@@ -483,41 +516,7 @@ BART_TUTORIAL = function() {
             }
         }
     });
-    document.body.onkeyup = function(e){
-        if(e.keyCode == 13){
-            if (tutorial.status === 'learntocash' && tutorial.tokens == 10) {
-                if (tutorial.active && tutorial.tokens != 0) {
-                    clearInterval(tutorial.flashinterval);
-                    clearInterval(Task.flashinterval);
-                    tutorial.active = false;
-                    cashDisplay();
-                    $('#continue-instruction').show();
-                    tutorial.displayInstruction(
-                        "And that's all there is to it! <br><br> In this task you will be presented with 15 balloons." +
-                        " For each balloon you can choose to pump the balloon to whatever size you like before cashing in" +
-                        " your tokens. But remember, if you pump the balloon too much, it will explode and you will lose your tokens."
-                    );
-                    tutorial.changeStatus('endLearnCash');
-                }
-            } else if (Task.active && Task.tokens != 0){
-                datahandler.recordTrialData({
-                    'balloon_num': Task.trial,
-                    'action': 2,
-                    'pumps': Task.tokens,
-                    'pop_point': Task.popPoint
-                });
-                datahandler.saveData();
-                clearInterval(tutorial.flashinterval);
-                clearInterval(Task.flashinterval);
-                Task.active = false;
-                cashDisplay();
-                $('#cash-text').html('Next Balloon');
-                Task.proceed = true;
-            } else if (Task.proceed) {
-                Task.newTrial();
-            }
-        }
-    };
+
 
     $('#cash-box').click(function(){
 
