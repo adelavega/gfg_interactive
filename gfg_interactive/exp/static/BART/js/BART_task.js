@@ -484,7 +484,7 @@ BART_TUTORIAL = function() {
         }
     });
     document.body.onkeyup = function(e){
-        if(e.keyCode == 32){
+        if(e.keyCode == 13){
             if (tutorial.status === 'learntocash' && tutorial.tokens == 10) {
                 if (tutorial.active && tutorial.tokens != 0) {
                     clearInterval(tutorial.flashinterval);
