@@ -71,7 +71,7 @@ BART_TUTORIAL = function() {
             this.changeStatus('learntopump');
             $('#continue-instruction').hide();
             this.displayInstruction(
-                "To inflate the balloon click/tap anywhere in the white space (or press the spacebar) of this container.<br><br>Go ahead and pump as many times as you'd like."
+                "To inflate the balloon click/tap anywhere in the white space of this container (or press the spacebar).<br><br>Go ahead and pump as many times as you'd like."
             );
             $('#pump-text').delay(1000).animate({opacity: '1'});
         };
