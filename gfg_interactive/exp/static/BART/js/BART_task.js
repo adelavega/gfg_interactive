@@ -551,7 +551,6 @@ BART_TUTORIAL = function() {
             Task.newTrial();
         }
     });
-
 }();
 
 
