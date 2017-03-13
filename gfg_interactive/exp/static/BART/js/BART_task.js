@@ -223,9 +223,9 @@ BART_TUTORIAL = function() {
 
         BART_tutorial.prototype.submitMax = function () {
             tutorial.changeStatus('Distribution');
-            tutorial.displayInstruction('Now you will make a distribution');
             tutorial.maxSize = parseInt($('#maxSize')[0].value);
             $('input').hide().remove();
+            tutorial.distribution();
         };
 
         BART_tutorial.prototype.removeChart = function () {
@@ -331,12 +331,7 @@ BART_TUTORIAL = function() {
     Task = new BART_task();
 
 
-    $('#instructions-box').click(function(){
-        if (tutorial.status === 'maxRating'){
-            tutorial.distribution();
-        }
-    });
-    
+
     $('#continue-instruction').click(function() {
         if (tutorial.status === 'onboarding') {
             tutorial.learntopump();
