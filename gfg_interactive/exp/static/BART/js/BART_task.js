@@ -95,7 +95,7 @@ BART_TUTORIAL = function() {
                 window.setTimeout(function () {
                     var interv = setInterval(function () {
                         tokens++;
-                        $("#balloon-image").animate({height: '+=0.1%'}, 50);
+                        $("#balloon-image").animate({height: '+=1%'}, 50);
                         $("#token-text").text(String(tokens) + ' Tokens');
                         if (tokens == popat) {
                             $('#progress').css({width: (1+required) * 6.25.toString() + '%'});
