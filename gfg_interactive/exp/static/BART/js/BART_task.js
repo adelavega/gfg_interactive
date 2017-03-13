@@ -21,7 +21,7 @@ function resetBalloon() {
         .css({
             top: '50%',
             left: '50%',
-            height: '10%';
+            height: '10%'
         })
         .animate({opacity: '1'});
     $("#result-text")
