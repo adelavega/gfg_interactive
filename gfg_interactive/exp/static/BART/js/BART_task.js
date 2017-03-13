@@ -21,7 +21,7 @@ function resetBalloon() {
         .css({
             top: '50%',
             left: '50%',
-            height: '10%'
+            height: '10%';
         })
         .animate({opacity: '1'});
     $("#result-text")
@@ -95,9 +95,7 @@ BART_TUTORIAL = function() {
                 window.setTimeout(function () {
                     var interv = setInterval(function () {
                         tokens++;
-                        var xx = '30px';
-                        $("#balloon-image").animate({height: xx}, 50);
-                        $("#balloon-image").animate({height: xx}, 50);
+                        $("#balloon-image").animate({height: String( 10 + (tutorial.tokens /1.5)) + '%'}, 50);
                         $("#token-text").text(String(tokens) + ' Tokens');
                         if (tokens == popat) {
                             $('#progress').css({width: (1+required) * 6.25.toString() + '%'});
@@ -364,8 +362,7 @@ BART_TUTORIAL = function() {
             if (tutorial.status === 'learntopump') {
                 if (tutorial.active) {
                     tutorial.tokens++;
-                    var xx = '20';
-                    $("#balloon-image").animate({height: xx}, 50);
+                    $("#balloon-image").animate({height: String( 10 + (tutorial.tokens /1.5)) + '%'}, 50);
                     $("#token-text").text(String(tutorial.tokens) + ' Tokens');
                     $('#pump-text').animate({opacity: '0'}, tutorial.checkTime());
 
@@ -387,8 +384,7 @@ BART_TUTORIAL = function() {
                 console.log('hi');
                 if (tutorial.active){
                     tutorial.tokens++;
-                    var xx = '20';
-                    $("#balloon-image").animate({height: xx}, 50);
+                    $("#balloon-image").animate({height: String( 10 + (tutorial.tokens /1.5)) + '%'}, 50);
                     $("#token-text").text(String(tutorial.tokens) + ' Tokens');
                     $('#pump-text').animate({opacity: '0'}, Task.checkTime());
                 }
@@ -403,8 +399,7 @@ BART_TUTORIAL = function() {
                 clearInterval(Task.flashinterval);
                 console.log(Task.tokens);
                 Task.tokens++;
-                var xx = '20';
-                $("#balloon-image").animate({height: xx}, 50);
+                $("#balloon-image").animate({height: String( 10 + (tutorial.tokens /1.5)) + '%'}, 50);
                 $("#token-text").text(String(Task.tokens) + ' Tokens');
                 $('#pump-text').animate({opacity: '0'}, Task.checkTime());
                 if (Task.tokens === Task.popPoint) {
@@ -467,7 +462,7 @@ BART_TUTORIAL = function() {
                 $("#token-text").text(String(tutorial.tokens) + ' Tokens');
                 $('#pump-text').animate({opacity: '0'}, tutorial.checkTime());
 
-                if (tutorial.tokens === 65) {
+                if (tutorial.tokens === 7) {
                     tutorial.changeStatus('popped');
                     clearInterval(tutorial.flashinterval);
                     clearInterval(Task.flashinterval);
@@ -485,8 +480,7 @@ BART_TUTORIAL = function() {
             console.log('hi');
             if (tutorial.active){
                 tutorial.tokens++;
-                var xx = '20';
-                $("#balloon-image").animate({height: xx}, 50);
+                $("#balloon-image").animate({height: String( 10 + (tutorial.tokens /1.5)) + '%'}, 50);
                 $("#token-text").text(String(tutorial.tokens) + ' Tokens');
                 $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             }
@@ -501,8 +495,7 @@ BART_TUTORIAL = function() {
             clearInterval(Task.flashinterval);
             console.log(Task.tokens);
             Task.tokens++;
-            var xx = '20';
-            $("#balloon-image").animate({height: xx}, 50);
+            $("#balloon-image").animate({height: String( 10 + (tutorial.tokens /1.5)) + '%'}, 50);
             $("#token-text").text(String(Task.tokens) + ' Tokens');
             $('#pump-text').animate({opacity: '0'}, Task.checkTime());
             if (Task.tokens === Task.popPoint) {
