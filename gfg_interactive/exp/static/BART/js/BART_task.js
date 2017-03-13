@@ -68,6 +68,7 @@ BART_TUTORIAL = function() {
         };
 
         BART_tutorial.prototype.learntopump = function () {
+            resetBalloon();
             this.changeStatus('learntopump');
             $('#continue-instruction').hide();
             this.displayInstruction(
@@ -468,7 +469,6 @@ BART_TUTORIAL = function() {
     $("#pump-box").click(function() {
         if (tutorial.status === 'learntopump') {
             if (tutorial.active) {
-                resetBalloon();
                 tutorial.tokens++;
                 $("#balloon-image").animate({height: String( 10 + (tutorial.tokens /1.5)) + '%'}, 50);
                 $("#token-text").text(String(tutorial.tokens) + ' Tokens');
