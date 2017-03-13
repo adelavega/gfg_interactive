@@ -384,7 +384,6 @@ BART_TUTORIAL = function() {
                         clearInterval(Task.flashinterval);
                         tutorial.active = false;
                         $('#continue-instruction').show();
-                        $('#back-instruction').hide();
                         tutorial.displayInstruction(
                             ' <strong>Oh no! It looks like the balloon popped.</strong><br><br>' +
                             'Every balloon that you inflate will have a different maximum size that it can grow to.' +
