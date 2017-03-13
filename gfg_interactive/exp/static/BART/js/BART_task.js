@@ -58,6 +58,7 @@ BART_TUTORIAL = function() {
 
         BART_tutorial.prototype.onboarding = function () {
             this.changeStatus('onboarding');
+            $('#continue-instruction').show();
             this.displayInstruction(
                 '<strong> Welcome to the BART </strong>' +
                 '<br><br> Throughout this task, you will be presented with 15 balloons, one at a time.' +
