@@ -69,6 +69,7 @@ BART_TUTORIAL = function() {
 
         BART_tutorial.prototype.learntopump = function () {
             resetBalloon();
+            tutorial.active = true;
             this.changeStatus('learntopump');
             $('#continue-instruction').hide();
             this.displayInstruction(
