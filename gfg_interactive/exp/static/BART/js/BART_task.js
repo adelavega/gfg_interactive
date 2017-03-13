@@ -467,7 +467,7 @@ BART_TUTORIAL = function() {
                 $("#token-text").text(String(tutorial.tokens) + ' Tokens');
                 $('#pump-text').animate({opacity: '0'}, tutorial.checkTime());
 
-                if (tutorial.tokens === 7) {
+                if (tutorial.tokens === 65) {
                     tutorial.changeStatus('popped');
                     clearInterval(tutorial.flashinterval);
                     clearInterval(Task.flashinterval);
