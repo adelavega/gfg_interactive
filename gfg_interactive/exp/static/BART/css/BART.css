@@ -33,8 +33,7 @@ html, body {
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    height: 10vh;
-    width: 6vw;
+    height: 10%;
 }
 
 #result-text {
