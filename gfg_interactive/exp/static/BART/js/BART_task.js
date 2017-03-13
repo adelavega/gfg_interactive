@@ -371,8 +371,8 @@ BART_TUTORIAL = function() {
     document.body.onkeyup = function(e){
         if(e.keyCode == 32){
             if (tutorial.status === 'learntopump') {
-                console.log('yes');
                 if (tutorial.active) {
+                    console.log('yes');
                     tutorial.tokens++;
                     $("#balloon-image").animate({height: String( 10 + (tutorial.tokens /1.5)) + '%'}, 50);
                     $("#token-text").text(String(tutorial.tokens) + ' Tokens');
