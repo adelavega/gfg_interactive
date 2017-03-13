@@ -34,6 +34,7 @@ html, body {
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     height: 10vh;
+    width: 10vw;
 }
 
 #result-text {
