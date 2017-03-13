@@ -330,6 +330,13 @@ BART_TUTORIAL = function() {
     tutorial.onboarding();
     Task = new BART_task();
 
+
+    $('#instructions-box').click(function(){
+        if (tutorial.status === 'maxRating'){
+            tutorial.distribution();
+        }
+    });
+    
     $('#continue-instruction').click(function() {
         if (tutorial.status === 'onboarding') {
             tutorial.learntopump();
@@ -343,8 +350,6 @@ BART_TUTORIAL = function() {
         } else if (tutorial.status === 'maxRating'){
             $('#progress-container').css({visibility:'hidden'});
             tutorial.maxRating();
-        }else if (tutorial.status === 'Distribution') {
-            tutorial.distribution();
         } else if (tutorial.status === 'preTask') {
             tutorial.changeStatus('done');
             $('#instructions-box').hide();
