@@ -357,7 +357,7 @@ BART_TUTORIAL = function() {
     $('#back-instruction').click(function() {
         if (tutorial.status === 'learntopump') {
             tutorial.onboarding();
-        } else if (tutorial.status === 'popped' || tutoria.status == 'onboardWatch') {
+        } else if (tutorial.status === 'popped' || tutorial.status == 'onboardWatch') {
             tutorial.learntopump();
         }
 
