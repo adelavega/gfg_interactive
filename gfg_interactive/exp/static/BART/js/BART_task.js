@@ -29,6 +29,7 @@ function resetBalloon() {
 }
 
 function cashDisplay() {
+function cashDisplay() {
     $("#balloon-image").css({opacity: '0'});
     $('#task-container')
         .animate({backgroundColor: '#41B96B'}, 100);
@@ -357,10 +358,9 @@ BART_TUTORIAL = function() {
     $('#back-instruction').click(function() {
         if (tutorial.status === 'learntopump') {
             tutorial.onboarding();
-        } else if (tutorial.status === 'popped') {
+        } else if (tutorial.status === 'popped' || tutorial.status === 'onboardWatch'){
             tutorial.learntopump();
         }
-
     });
 
 
