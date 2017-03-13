@@ -323,7 +323,7 @@ BART_TUTORIAL = function() {
     tutorial.onboarding();
     Task = new BART_task();
 
-    $('#instructions-box').click(function() {
+    $('#continue-instruction').click(function() {
         if (tutorial.status === 'onboarding') {
             tutorial.learntopump();
         } else if (tutorial.status === 'popped') {
