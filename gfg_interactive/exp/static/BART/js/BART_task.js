@@ -350,6 +350,34 @@ BART_TUTORIAL = function() {
             tutorial.changeStatus('preTask');
         }
     });
+    $('#back-instruction').click(function() {
+        if (tutorial.status === 'learntopump') {
+            tutorial.onboarding();
+        } else if (tutorial.status === 'popped') {
+            tutorial.watchrangeIntro();
+        } else if (tutorial.status === 'onboardWatch') {
+            $('#progress-container').css({visibility:'visible'});
+            $('#instructions-box').animate({opacity:'0'});
+
+            tutorial.watchrange(0);
+        } else if (tutorial.status === 'maxRating'){
+            $('#progress-container').css({visibility:'hidden'});
+            tutorial.maxRating();
+        }else if (tutorial.status === 'Distribution') {
+            tutorial.distribution();
+        } else if (tutorial.status === 'preTask') {
+            tutorial.changeStatus('done');
+            $('#instructions-box').hide();
+            Task.newTrial();
+        } else if (tutorial.status === 'endLearnCash') {
+            tutorial.displayInstruction(
+                "At the end of this task we will compare your average tokens for cashed in balloons with other individuals who have also completed this task." +
+                "<br><br>If you are ready to start this task for real, click/tap this box and we will get started."
+            );
+            tutorial.changeStatus('preTask');
+        }
+    });
+
 
     $("#task-container").mousedown(function() {
         tutorial.isDown = true;
