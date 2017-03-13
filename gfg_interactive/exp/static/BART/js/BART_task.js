@@ -73,6 +73,7 @@ BART_TUTORIAL = function() {
             tutorial.active = true;
             tutorial.tokens = 0;
             this.changeStatus('learntopump');
+            $('#back-instruction').show();
             $('#continue-instruction').hide();
             this.displayInstruction(
                 "To inflate the balloon click/tap anywhere in the white space of this container (or press the spacebar).<br><br>Go ahead and pump as many times as you'd like."
