@@ -353,7 +353,7 @@ BART_TUTORIAL = function() {
     $('#back-instruction').click(function() {
         if (tutorial.status === 'learntopump') {
             tutorial.onboarding();
-   
+        }
     });
 
 
