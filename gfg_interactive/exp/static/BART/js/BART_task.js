@@ -59,6 +59,7 @@ BART_TUTORIAL = function() {
         BART_tutorial.prototype.onboarding = function () {
             this.changeStatus('onboarding');
             $('#continue-instruction').show();
+            $("#back-instruction").hide();
             this.displayInstruction(
                 '<strong> Welcome to the BART </strong>' +
                 '<br><br> Throughout this task, you will be presented with 15 balloons, one at a time.' +
@@ -106,6 +107,7 @@ BART_TUTORIAL = function() {
                             clearInterval(interv);
                             popAnimation();
                             self.incrementAuto();
+                            $("#back-instruction").hide();
                             if (required < self.popList.length - 1) {
                                 self.watchrange(required + 1);
                             } else {
