@@ -463,7 +463,7 @@ BART_TUTORIAL = function() {
         if (tutorial.status === 'learntopump') {
             if (tutorial.active) {
                 tutorial.tokens++;
-                $("#balloon-image").animate({height: String( 10 + (tutorial.tokens /1.15)) + '%'}, 50);
+                $("#balloon-image").animate({height: String( 10 + (tutorial.tokens /1.5)) + '%'}, 50);
                 $("#token-text").text(String(tutorial.tokens) + ' Tokens');
                 $('#pump-text').animate({opacity: '0'}, tutorial.checkTime());
 
