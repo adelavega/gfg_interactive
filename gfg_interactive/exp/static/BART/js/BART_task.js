@@ -176,7 +176,7 @@ BART_TUTORIAL = function() {
         BART_tutorial.prototype.showDistInstruct = function() {
           $('#chart-instruct').animate({opacity: '1'}, function () {
               $('#chart-instruct').show();
-          }
+          })
         };
 
         BART_tutorial.prototype.startDistribute = function () {
