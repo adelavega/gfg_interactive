@@ -34,8 +34,8 @@ def index():
 @experiments.route('/task', methods=['GET'])
 @utils.nocache
 def start_exp():
-    """ Serves up the experiment applet. 
-    If experiment is ongoing or completed, will not serve. 
+    """ Serves up the experiment applet.
+    If experiment is ongoing or completed, will not serve.
 
     Querystring args (required):
     uniqueid: External gfg_id
@@ -80,7 +80,7 @@ def start_exp():
         db.session.add(session)
         db.session.commit()
 
-        return render_template(exp_name + "/exp.html", experimentname=exp_name, surveyid=survey_id, 
+        return render_template(exp_name + "/exp.html", experimentname=exp_name, surveyid=survey_id,
             sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'],
             uniqueid=urllib.quote(uniqueid))
 
@@ -113,7 +113,7 @@ def enterexp():
         db.session.commit()
 
         current_app.logger.info(
-            "User has finished the instructions in session id: %s, experiment name: %s", 
+            "User has finished the instructions in session id: %s, experiment name: %s",
             session_id, session.exp_name)
         resp = {"status": "success"}
     else:
@@ -170,7 +170,7 @@ def update(session_id=None):
             valid_json['sessionid']))
 
     ## JAKE: This needs to be slightly customized to add your task
-    ## However, most of the work will be in models.py 
+    ## However, most of the work will be in models.py
     # For each trial, pass to appropriate parser, if not in db
     for json_trial in valid_json['data']:
         if session.exp_name == "category_switch":
@@ -194,7 +194,7 @@ def update(session_id=None):
     # For each event, pass to parser, if not in db
     for json_event in valid_json['eventdata']:
         db_event, new = db_utils.get_or_create(db.session, EventData,
-            gfg_id=session.gfg_id, session_id=session.session_id, exp_name=session.exp_name, 
+            gfg_id=session.gfg_id, session_id=session.session_id, exp_name=session.exp_name,
             timestamp = utils.convert_timestamp(json_event['timestamp']))
 
         if new:
@@ -206,7 +206,7 @@ def update(session_id=None):
         # For the QuestionData, pass to parser, if not in db
         db_ques, new = db_utils.get_or_create(db.session, QuestionData,
                     gfg_id=session.gfg_id, session_id=session.session_id, exp_name=session.exp_name)
-        db_ques.add_json_data(valid_json['questiondata']) 
+        db_ques.add_json_data(valid_json['questiondata'])
         db.session.commit()
 
     if resp is None:
@@ -229,7 +229,7 @@ def quitter():
             session = Session.query.filter(
                 Session.session_id == session_id).one()
             session.status = 6
-            db.session.commit() 
+            db.session.commit()
             resp = {"status": "marked as quitter"}
 
         except SQLAlchemyError:
@@ -264,9 +264,7 @@ def worker_complete():
 
         return jsonify(**resp)
 
-## JAKE: This part might take a bit more work since there is custom code to score 
-## and percentile rank their results. dataHandler.js automatically redirects here
-## once exitTask() is called
+## As you know, this is where you  get routed for results
 @experiments.route('/results', methods=['GET'])
 def results():
     """Return results at the end."""
@@ -282,20 +280,27 @@ def results():
     gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(uniqueid))
     current_app.logger.info("GFG id after decrypt is -- %s" % (gfg_id))
 
+    # I would leave all the stuff above alone, as its just getting all the variable it needs
+
+    # Here we are "supposedly" querying the DB for the last session from that user. it is possible that this should be asc() not desc()
     try:
         session = Session.query.filter_by(gfg_id=gfg_id, status=3, exp_name=exp_name).order_by(Session.session_id.desc()).first()
     except SQLAlchemyError:
         raise ExperimentError('user_access_denied')
 
+    # As you can see, we start doing things different for each task here, but template is still just
+    # expecting two variables, score and percentile (last line). So if you want to do something
+    # totally different, then you need to stick an if statement that splits off the whole thing here
+    # if session.exp_name == "bart": {your stuff} else:
     if session is None :
-	current_app.logger.info("Session is null---%s" %(session))
-	raise ExperimentError('user_access_denied')
+    	current_app.logger.info("Session is null---%s" %(session))
+    	raise ExperimentError('user_access_denied')
 
     elif session.exp_name == "keep_track":
-        target_trials = KeepTrack.query.filter(KeepTrack.session_id==session.session_id, 
+        target_trials = KeepTrack.query.filter(KeepTrack.session_id==session.session_id,
             KeepTrack.block.in_(["1", "2", "3", "4", "5", "6"])).all()
 
-        all_scored = [] 
+        all_scored = []
         for trial in target_trials:
             score = trial.simple_score()
             all_scored += score
@@ -306,10 +311,10 @@ def results():
 
     elif session.exp_name == "category_switch":
         single_trials_avg = db.session.query(func.avg(CategorySwitch.reaction_time).label('average')).filter(
-            CategorySwitch.session_id==session.session_id, CategorySwitch.block.in_(["sizeReal", "livingReal"]), 
+            CategorySwitch.session_id==session.session_id, CategorySwitch.block.in_(["sizeReal", "livingReal"]),
                 CategorySwitch.accuracy==1).all()
         mixed_trials_avg = db.session.query(func.avg(CategorySwitch.reaction_time).label('average')).filter(
-            CategorySwitch.session_id==session.session_id, CategorySwitch.block.in_(["mixedReal1", "mixedReal2"]), 
+            CategorySwitch.session_id==session.session_id, CategorySwitch.block.in_(["mixedReal1", "mixedReal2"]),
                 CategorySwitch.accuracy==1).all()
 
         ## This value also needs to be stored
@@ -325,15 +330,19 @@ def results():
 
 
 
-
+    # Do make sure to save the value that you computer for each subject here
     session.results = score
     db.session.commit()
+
+    ## I would also make sure to use the same method to get "comparion subjects"
+    ## to have consistency across GFG
 
     ## Find other people in same age range. If more than 20, calculate percentile and display
     age_matched_ids = db_utils.get_age_matched_ids(gfg_id, current_app.config['RESEARCH_DB_HOST'], current_app.config['RESEARCH_DB_USER'],
     current_app.config['RESEARCH_DB_PASSWORD'], current_app.config['RESEARCH_DB_NAME'])
 
-
+    # Importantly, I only show results if I have at least 20 control subjects, so when there is very little data
+    # I don't show anything because it can be misleading.
     if len(age_matched_ids) > 20:
         mean_score = db.session.query(func.avg(Session.results).label('average')).filter(
         Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name, Session.status==3).all()
@@ -347,7 +356,9 @@ def results():
     else:
         percentile = None
 
-    return render_template(session.exp_name + "/results.html", 
+    # If you're going to do something different, then you'd want this call to be in your own
+    # "if" branch, because presumable you'd want to pass different variables. 
+    return render_template(session.exp_name + "/results.html",
         score=score,
         percentile=percentile)
 
