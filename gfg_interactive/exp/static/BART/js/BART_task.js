@@ -168,7 +168,7 @@ BART_TUTORIAL = function() {
                 "</div>" +
                 "<h2 id='distribution-counter' style='position: absolute; top: -100px; width: 100%; text-align: center'> 0 </h2>" +
                 "<div onclick='tutorial.removeChart()' id='chart-next' style='position: absolute; left: 90%; top: 110%; background-color: whitesmoke; border: 2px solid black;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:10px; visibility: hidden; padding: 10px;'>Continue</div>" +
-                "<button onclick='tutorial.showDistInstruct()' class='glyphicon glyphicon-question-sign' style='height: 20px; position: absolute; bottom: 10%; left: 2%;'></button>"
+                "<button onclick='tutorial.showDistInstruct()' class='glyphicon glyphicon-question-sign' style='height: 20px; position: absolute; bottom: 300px; left: 2%;'></button>"
             );
         };
 
