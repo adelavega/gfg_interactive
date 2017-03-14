@@ -159,16 +159,21 @@ BART_TUTORIAL = function() {
                 $('#action-' + i.toString()).css({left: (i * 5).toString() + '%'});
             }
             $('#chart').append(
+                "<button onclick='tutorial.showDistInstruct()' class='glyphicon glyphicon-question-sign' style='position: absolute;bottom: -80px; left: 85%;'></button>" +
                 "<p style='position: absolute; bottom: -50px; left: 96%'>" + this.maxSize + "</p>" +
                 "<p style='position: absolute; bottom: -50px; left: 2%'> 0 </p>" +
                 "<h3 style='position:absolute; bottom: -80px; left: 40%;'>  Size (in pumps)</h3>" +
                 "<h3 style='position:absolute; bottom: 50%; left:-150px; -webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);-ms-transform: rotate(-90deg);-o-transform: rotate(-90deg);transform: rotate(-90deg);'> number of balloons </h3>" +
-                "<div id='chart-instruct' onclick='tutorial.startDistribute()'  style=' top: 5px; position: absolute; padding: 10px; text-align: center; left: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:10px; background-color: whitesmoke;border: 2px solid black;overflow: scroll;height:100px;'>The chart you see here represents the size of a balloon from 0 pumps (leftmost bar) to your estimated maximum balloon size (rightmost bar). Each bar, from left to right, represents a slightly larger balloon. We would like you to tell us where you think any given balloon is most likely to grow to before popping. Imagine playing 500 balloons. Where do you think these balloons will pop? <br><br>You can click/tap each bar and it will raise. You need to distribute at least 500 balloons on the chart." +
+                "<div id='chart-instruct' onclick='tutorial.startDistribute()'  style=' top: 5px; position: absolute; padding: 10px; text-align: center; left: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: whitesmoke;border: 2px solid black;overflow: scroll;height:100px;'>The chart you see here represents the size of a balloon from 0 pumps (leftmost bar) to your estimated maximum balloon size (rightmost bar). Each bar, from left to right, represents a slightly larger balloon. We would like you to tell us where you think any given balloon is most likely to grow to before popping. Imagine playing 500 balloons. Where do you think these balloons will pop? <br><br>You can click/tap each bar and it will raise. You need to distribute at least 500 balloons on the chart." +
                 "<p id='chart-continue' style='font-size: 80%; margin-bottom: -10px; color: #616161;'> click this box to begin this task </p>" +
                 "</div>" +
                 "<h2 id='distribution-counter' style='position: absolute; top: -100px; width: 100%; text-align: center'> 0 </h2>" +
                 "<div onclick='tutorial.removeChart()' id='chart-next' style='position: absolute; left: 90%; top: 110%; background-color: whitesmoke; border: 2px solid black;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:10px; visibility: hidden; padding: 10px;'>Continue</div>"
             );
+        };
+
+        BART_tutorial.prototype.showDistInstruct = function() {
+          $('#chart-instruct').show();
         };
 
         BART_tutorial.prototype.startDistribute = function () {
