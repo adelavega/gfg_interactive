@@ -159,7 +159,7 @@ BART_TUTORIAL = function() {
                 $('#action-' + i.toString()).css({left: (i * 5).toString() + '%'});
             }
             $('#chart').append(
-                "<button onclick='tutorial.showDistInstruct()' class='glyphicon glyphicon-question-sign' style='height: 20px; position: absolute; bottom: -200px; left: 2%;'></button>" +
+                "<button onclick='tutorial.showDistInstruct()' class='glyphicon glyphicon-question-sign' style='height: 20px; position: absolute; bottom: -20%; left: 2%;'></button>" +
                 "<p style='position: absolute; bottom: -50px; left: 96%'>" + this.maxSize + "</p>" +
                 "<p style='position: absolute; bottom: -50px; left: 2%'> 0 </p>" +
                 "<h3 style='position: absolute; bottom: -80px; left: 40%;'>  Size (in pumps)</h3>" +
