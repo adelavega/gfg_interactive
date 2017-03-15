@@ -277,6 +277,7 @@ def results():
 
     current_app.logger.info("Results: uniqueid is  %s, exp_name is %s and survey id is %s" %(uniqueid, exp_name, survey_id))
     ## Get last session with code 3 from user
+
     gfg_id = utils.decrypt(str(current_app.config['SECRET_KEY']), str(uniqueid))
     current_app.logger.info("GFG id after decrypt is -- %s" % (gfg_id))
 
@@ -324,7 +325,7 @@ def results():
     ## Probably would be good to have the scoring functions all in one file and just call the right function for the git
     ## task, but lets leave that for later
     elif session.exp_name == 'BART':
-        score = db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == 2,
+        score = db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == session.session_id,
                                                                                BART.user_action == 1).all()
         score = round(score[0][0])
 
