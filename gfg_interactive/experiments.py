@@ -329,7 +329,7 @@ def results():
                                                                                BART.user_action == 1).all()
         score = round(score[0][0])
 
-
+        print BART.query.all()
 
     # Do make sure to save the value that you computer for each subject here
     session.results = score
