@@ -334,6 +334,9 @@ def results():
             BART.session_id).all()
         print [i[0] for i in othersScores]
 
+    return render_template(session.exp_name + "/results.html",
+                           score=score,
+                           others = othersScores)
     # Do make sure to save the value that you computer for each subject here
     session.results = score
     db.session.commit()
