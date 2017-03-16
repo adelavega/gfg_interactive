@@ -334,7 +334,7 @@ def results():
 
 
         previousSessions = [int(round(_[0])) for _ in db.session.query(
-                                func.avg(BART.pump).label('average')).filter(
+                                func.avg(BART.pumps).label('average')).filter(
                                 BART.gfg_id == gfg_id, BART.session_id.in_(previousSessionsCompleted),
                                 BART.user_action == 1
                             ).order_by(asc(BART.session_id)).group_by(BART.session_id).all()
