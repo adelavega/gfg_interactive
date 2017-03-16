@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from errors import ExperimentError
 from models import Session, Participant, CategorySwitch, EventData, KeepTrack, QuestionData, BART
-from sqlalchemy import func, distinct
+from sqlalchemy import func, asc
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
 import db_utils
@@ -325,21 +325,37 @@ def results():
     ## Probably would be good to have the scoring functions all in one file and just call the right function for the git
     ## task, but lets leave that for later
     elif session.exp_name == 'BART':
+        # individuals scores
+        previousSessionsCompleted = [_[0] for _ in db.session.query(Session.session_id).filter(Session.session_id != session.session_id,
+                                                                                Session.exp_name == session.exp_name,
+                                                                                session.gfg_id == gfg_id,
+                                                                                Session.status == 3).all()
+                                     ]
+
+
+        previousSessions = [int(round(_[0])) for _ in db.session.query(
+                                func.avg(BART.pump).label('average')).filter(
+                                BART.gfg_id == gfg_id, BART.session_id.in_(previousSessionsCompleted),
+                                BART.user_action == 1
+                            ).order_by(asc(BART.session_id)).group_by(BART.session_id).all()
+                            ]
+        print previousSessions
         score = db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == session.session_id,
                                                                                BART.user_action == 1).all()
         score = round(score[0][0])
 
         # data from subjects with completed sessions
-        completed_others = db.session.query(Session.session_id).filter(Session.session_id != session.session_id,
+        completed_others = [_[0] for _ in db.session.query(Session.session_id).filter(Session.session_id != session.session_id,
                                                                        Session.exp_name == session.exp_name,
                                                                        Session.status ==3).all()
-        completed_others = [_[0] for _ in completed_others]
-        print completed_others
-        othersScores =  db.session.query(
-            func.avg(BART.pumps).label('average')).filter(
-            BART.session_id.in_(completed_others), BART.user_action == 1).group_by(
-            BART.session_id).all()
-        othersScores = [int(round(i[0],0)) for i in othersScores]
+                            ]
+
+        othersScores = [int(round(_[0])) for _ in db.session.query(
+                            func.avg(BART.pumps).label('average')).filter(
+                            BART.session_id.in_(completed_others), BART.user_action == 1).group_by(
+                            BART.session_id).all()
+                         ]
+
 
     return render_template(session.exp_name + "/results.html",
                            score=score,
