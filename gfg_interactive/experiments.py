@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for, redirect
 from errors import ExperimentError
 from models import Session, Participant, CategorySwitch, EventData, KeepTrack, QuestionData, BART
-from sqlalchemy import func, asc
+from sqlalchemy import func, asc, distinct
 from sqlalchemy.exc import SQLAlchemyError
 from database import db
 import db_utils
@@ -325,42 +325,50 @@ def results():
     ## Probably would be good to have the scoring functions all in one file and just call the right function for the git
     ## task, but lets leave that for later
     elif session.exp_name == 'BART':
-        # individuals scores
-        previousSessionsCompleted = [_[0] for _ in db.session.query(Session.session_id).filter(Session.session_id != session.session_id,
-                                                                                Session.exp_name == session.exp_name,
-                                                                                session.gfg_id == gfg_id,
-                                                                                Session.status == 3).all()
-                                     ]
+
+        # Individuals previous scores
+        previousSessions = [_[0] for _ in db.session.query(Session.results).filter(Session.gfg_id == gfg_id,
+                                               Session.exp_name == session.exp_name,
+                                               Session.session_id != session.session_id,
+                                               Session.status == 3).order_by(asc(Session.session_id)).all()]
+
+        if len(previousSessions) == 0:
+            previousSessions = None
 
 
-        previousSessions = [int(round(_[0])) for _ in db.session.query(
-                                func.avg(BART.pumps).label('average')).filter(
-                                BART.gfg_id == gfg_id, BART.session_id.in_(previousSessionsCompleted),
-                                BART.user_action == 1
-                            ).order_by(asc(BART.session_id)).group_by(BART.session_id).all()
-                            ]
-        print previousSessions
-        score = db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == session.session_id,
-                                                                               BART.user_action == 1).all()
-        score = round(score[0][0])
+        # current score
+        score = round(db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == session.session_id,
+                                                                               BART.user_action == 1).all()[0][0])
+        session.results = score
+        db.session.commit()
 
         # data from subjects with completed sessions
-        completed_others = [_[0] for _ in db.session.query(Session.session_id).filter(Session.session_id != session.session_id,
-                                                                       Session.exp_name == session.exp_name,
-                                                                       Session.status ==3).all()
-                            ]
+        completed_others = [_[0] for _ in db.session.query(Session.gfg_id).filter(
+                                               Session.gfg_id != gfg_id,
+                                               Session.exp_name == session.exp_name,
+                                               Session.status == 3).all()]
 
-        othersScores = [int(round(_[0])) for _ in db.session.query(
-                            func.avg(BART.pumps).label('average')).filter(
-                            BART.session_id.in_(completed_others), BART.user_action == 1).group_by(
-                            BART.session_id).all()
-                         ]
+        if len(completed_others) > 0:
 
+            mean_score = db.session.query(func.avg(Session.results).label('average')).filter(
+                Session.gfg_id.in_(completed_others)).all()
 
-    return render_template(session.exp_name + "/results.html",
-                           score=score,
-                           others = othersScores,
-                           percentile=10)
+            std_score = db.session.query(func.STD(Session.results).label('average')).filter(
+                Session.gfg_id.in_(completed_others)).all()
+
+            percentile = stats.z2p((score - mean_score[0][0]) / (std_score[0][0] + 0.0000001))
+            otherResults = [_[0] for _ in db.session.query(Session.results).filter(Session.gfg_id.in_(completed_others),
+                                                                                   ).all()]
+            print otherResults
+        else:
+            percentile = None
+            otherResults = None
+
+        return render_template(session.exp_name + "/results.html",
+                               score=score,
+                               others = percentile,
+                               previousSessions = previousSessions
+                               )
     # Do make sure to save the value that you computer for each subject here
     session.results = score
     db.session.commit()
