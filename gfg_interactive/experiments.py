@@ -328,7 +328,7 @@ def results():
         score = db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == session.session_id,
                                                                                BART.user_action == 1).all()
         score = round(score[0][0])
-        print db.session.query(func.avg(BART.pumps).label('average')).group_by(distinct(BART.session_id))
+        print db.session.query(func.avg(BART.pumps).label('average')).group_by(BART.session_id).all()
 
     # Do make sure to save the value that you computer for each subject here
     session.results = score
