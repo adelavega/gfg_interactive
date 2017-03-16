@@ -328,11 +328,18 @@ def results():
         score = db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == session.session_id,
                                                                                BART.user_action == 1).all()
         score = round(score[0][0])
+
+        # data from subjects with completed sessions
+        completed_others = db.session.query(Session.session_id).filter(Session.gfg_id != gfg_id,
+                                                                       Session.exp_name == session.exp_name,
+                                                                       Session.status ==3).all()
+
+        print completed_others
         othersScores =  db.session.query(
             func.avg(BART.pumps).label('average')).filter(
-            BART.session_id != session.session_id, BART.user_action == 1).group_by(
+            BART.session_id.in_(completed_others), BART.user_action == 1).group_by(
             BART.session_id).all()
-        othersScores = [round(i[0],0) for i in othersScores]
+        othersScores = [int(round(i[0],0)) for i in othersScores]
 
     return render_template(session.exp_name + "/results.html",
                            score=score,
