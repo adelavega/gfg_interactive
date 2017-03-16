@@ -332,7 +332,7 @@ def results():
             func.avg(BART.pumps).label('average')).filter(
             BART.session_id != session.session_id, BART.user_action == 1).group_by(
             BART.session_id).all()
-        othersScores = [round(i[0],1) for i in othersScores]
+        othersScores = [round(i[0],0) for i in othersScores]
 
     return render_template(session.exp_name + "/results.html",
                            score=score,
