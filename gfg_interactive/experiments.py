@@ -70,9 +70,9 @@ def start_exp():
     # If any existing sessions disqualify user (ongoing or completed), throw error
     # Otherwise, create new session and serve experiment
     disqualifying_sessions = Session.query.filter_by(gfg_id = gfg_id, exp_name = exp_name, status = 3).first()
-    if disqualifying_sessions and current_app.config['EXP_DEBUG'] == False:
+    if disqualifying_sessions and current_app.config['EXP_DEBUG'] == False and exp_name != 'BART':
         raise ExperimentError('already_did_exp', session_id=disqualifying_sessions.session_id)
-        
+
     # Otherwise, allow participant to re-enter
     else:
         session = Session(gfg_id=gfg_id, browser=browser, platform=platform,
@@ -329,7 +329,7 @@ def results():
                                                                                BART.user_action == 1).all()
         score = round(score[0][0])
 
-        print BART.query.all()
+        print Session.query.filter_by(exp_name='BART').all()
 
     # Do make sure to save the value that you computer for each subject here
     session.results = score
