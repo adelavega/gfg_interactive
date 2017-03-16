@@ -343,22 +343,22 @@ def results():
         db.session.commit()
 
         # data from subjects with completed sessions
-        completed_others = [_[0] for _ in db.session.query(Session.gfg_id).filter(
-                                               
+        completed_others = [_[0] for _ in db.session.query(distinct(Session.gfg_id)).filter(
+
                                                Session.exp_name == session.exp_name,
                                                Session.status == 3).all()]
 
         if len(completed_others) > 0:
 
             mean_score = db.session.query(func.avg(Session.results).label('average')).filter(
-                Session.gfg_id.in_(completed_others)).all()
+                Session.gfg_id.in_(completed_others), Session.status == 3).group_by(Session.gfg_id).all()
 
             std_score = db.session.query(func.STD(Session.results).label('average')).filter(
-                Session.gfg_id.in_(completed_others)).all()
+                Session.gfg_id.in_(completed_others), Session.status == 3).group_by(Session.gfg_id).all()
 
             percentile = stats.z2p((score - mean_score[0][0]) / (std_score[0][0] + 0.0000001))
             otherResults = [_[0] for _ in db.session.query(Session.results).filter(Session.gfg_id.in_(completed_others),
-                                                                                   ).all()]
+                                                                                   Session.status == 3).all()]
             print otherResults
         else:
             percentile = None
@@ -390,7 +390,6 @@ def results():
         std_score = db.session.query(func.STD(Session.results).label('average')).filter(
         Session.gfg_id.in_(age_matched_ids), Session.exp_name == session.exp_name, Session.status==3).all()
 
-        print mean_score
 
         percentile = stats.z2p((score - mean_score[0][0]) / (std_score[0][0] + 0.0000001))
     else:
