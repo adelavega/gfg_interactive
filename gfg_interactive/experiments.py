@@ -329,7 +329,7 @@ def results():
                                                                                BART.user_action == 1).all()
         score = round(score[0][0])
 
-        print 'booga'
+        print db.session.query(BART.pumps).filter(BART.game_id == 2).all()
 
     # Do make sure to save the value that you computer for each subject here
     session.results = score
