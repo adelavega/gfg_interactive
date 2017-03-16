@@ -330,7 +330,7 @@ def results():
         score = round(score[0][0])
 
         # data from subjects with completed sessions
-        completed_others = db.session.query(Session.session_id).filter(Session.gfg_id != gfg_id,
+        completed_others = db.session.query(Session.session_id).filter(Session.session_id != session.session_id,
                                                                        Session.exp_name == session.exp_name,
                                                                        Session.status ==3).all()
 
