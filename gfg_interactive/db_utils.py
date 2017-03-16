@@ -49,3 +49,10 @@ def get_age_matched_ids(userid, db_host, db_user, db_password, db_name):
 	db.close()
 
 	return cur.fetchall()
+
+def get_BART_subjects(userid, db_host, db_user, db_password, db_name):
+	import MySQLdb
+	db = MySQLdb.connect(host="localhost", user=db_user, passwd=db_password, db=db_name)
+	cur = db.cursor()
+	cur.execute("select DISTINCT subject_id from BART where subject_id != %d"% int(userid))
+	print cur.fetchall()

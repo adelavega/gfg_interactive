@@ -328,8 +328,9 @@ def results():
         score = db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == session.session_id,
                                                                                BART.user_action == 1).all()
         score = round(score[0][0])
+        print db_utils.get_BART_subjects(gfg_id,current_app.config['RESEARCH_DB_HOST'], current_app.config['RESEARCH_DB_USER'],
+    current_app.config['RESEARCH_DB_PASSWORD'], current_app.config['RESEARCH_DB_NAME'])
 
-        print db.session.query(BART.pumps).filter(BART.gfg_id == 2).all()
 
     # Do make sure to save the value that you computer for each subject here
     session.results = score
