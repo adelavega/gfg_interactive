@@ -336,7 +336,8 @@ def results():
 
     return render_template(session.exp_name + "/results.html",
                            score=score,
-                           others = othersScores)
+                           others = othersScores,
+                           percentile=10)
     # Do make sure to save the value that you computer for each subject here
     session.results = score
     db.session.commit()
