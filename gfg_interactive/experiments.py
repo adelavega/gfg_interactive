@@ -344,7 +344,7 @@ def results():
 
         # data from subjects with completed sessions
         completed_others = [_[0] for _ in db.session.query(Session.gfg_id).filter(
-                                               Session.gfg_id != gfg_id,
+                                               
                                                Session.exp_name == session.exp_name,
                                                Session.status == 3).all()]
 
