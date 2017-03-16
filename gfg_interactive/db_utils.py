@@ -49,4 +49,3 @@ def get_age_matched_ids(userid, db_host, db_user, db_password, db_name):
 	db.close()
 
 	return cur.fetchall()
-)
