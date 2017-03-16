@@ -8,7 +8,7 @@
 
         <p>
         {% for x in others %}
-            <p> x </p>
+            <p> {{ "%0.2f" | format(x|float) }} </p>
         {% endfor %}
         On Average you saved <strong> {{'%0.0f'| format(score|float)}} </strong> Tokens when you cashed in. Thanks for the hard work!
 
