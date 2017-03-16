@@ -328,7 +328,7 @@ def results():
 
         # Individuals previous scores
         previousSessions = [_[0] for _ in db.session.query(Session.results).filter(Session.gfg_id == gfg_id,
-                                               Session.exp_name == session.exp_name,
+                                               Session.exp_name == exp_name,
                                                Session.session_id != session.session_id,
                                                Session.status == 3).order_by(asc(Session.session_id)).all()]
 
@@ -341,25 +341,30 @@ def results():
                                                                                BART.user_action == 1).all()[0][0])
         session.results = score
         db.session.commit()
+        print score
 
         # data from subjects with completed sessions
         completed_others = [_[0] for _ in db.session.query(distinct(Session.gfg_id)).filter(
-
+                                               # Session.gfg_id != gfg_id,
                                                Session.exp_name == session.exp_name,
                                                Session.status == 3).all()]
 
         if len(completed_others) > 0:
 
             mean_score = db.session.query(func.avg(Session.results).label('average')).filter(
-                Session.gfg_id.in_(completed_others), Session.status == 3).group_by(Session.gfg_id).all()
+                Session.gfg_id.in_(completed_others),
+                Session.status == 3,
+                Session.exp_name == exp_name).group_by(Session.gfg_id).all()
 
             std_score = db.session.query(func.STD(Session.results).label('average')).filter(
-                Session.gfg_id.in_(completed_others), Session.status == 3).group_by(Session.gfg_id).all()
+                Session.gfg_id.in_(completed_others),
+                Session.status == 3,
+                Session.exp_name == exp_name).group_by(Session.gfg_id).all()
 
             percentile = stats.z2p((score - mean_score[0][0]) / (std_score[0][0] + 0.0000001))
             otherResults = [_[0] for _ in db.session.query(Session.results).filter(Session.gfg_id.in_(completed_others),
-                                                                                   Session.status == 3).all()]
-            print otherResults
+                                                                                   Session.status == 3,
+                                                                                   Session.exp_name == exp_name).all()]
         else:
             percentile = None
             otherResults = None
@@ -370,6 +375,7 @@ def results():
                                previousSessions = previousSessions,
                                percentile = percentile
                                )
+
     # Do make sure to save the value that you computer for each subject here
     session.results = score
     db.session.commit()
