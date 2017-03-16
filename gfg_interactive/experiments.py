@@ -333,7 +333,7 @@ def results():
         completed_others = db.session.query(Session.session_id).filter(Session.session_id != session.session_id,
                                                                        Session.exp_name == session.exp_name,
                                                                        Session.status ==3).all()
-
+        completed_others = [_[0] for _ in completed_others]
         print completed_others
         othersScores =  db.session.query(
             func.avg(BART.pumps).label('average')).filter(
