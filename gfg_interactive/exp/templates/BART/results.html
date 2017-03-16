@@ -5,11 +5,7 @@
     <div class="well">
 
         <h2>Your results!</h2>
-
-        <p>
-        {% for x in others %}
-            <p> {{x }} </p>
-        {% endfor %}
+    
         On Average you saved <strong> {{'%0.0f'| format(score|float)}} </strong> Tokens when you cashed in. Thanks for the hard work!
 
         {%- if percentile is not none-%}
