@@ -285,7 +285,7 @@ def results():
 
     # Here we are "supposedly" querying the DB for the last session from that user. it is possible that this should be asc() not desc()
     try:
-        session = Session.query.filter_by(gfg_id=gfg_id, status=3, exp_name=exp_name).order_by(Session.session_id.desc()).first()
+        session = Session.query.filter_by(gfg_id=gfg_id, status=3, exp_name=exp_name).order_by(Session.session_id.asc()).first()
     except SQLAlchemyError:
         raise ExperimentError('user_access_denied')
 
