@@ -379,6 +379,8 @@ def results():
             otherResults = [_[0] for _ in db.session.query(Session.results).filter(Session.gfg_id.in_(completed_others),
                                                                                    Session.status == 3,
                                                                                    Session.exp_name == exp_name).all()]
+
+            print otherResults
         else:
             percentile = None
             otherResults = None
