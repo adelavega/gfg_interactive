@@ -311,7 +311,7 @@ BART_TUTORIAL = function() {
                 datahandler.completeTask();
                 window.setTimeout(function () {
                     datahandler.exitTask();
-                }, 100);
+                }, 1500);
             }
         };
 
