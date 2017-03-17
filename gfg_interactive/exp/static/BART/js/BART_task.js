@@ -296,6 +296,8 @@ BART_TUTORIAL = function() {
 
         }
 
+
+
         BART_task.prototype.newTrial = function() {
             if (this.trial <= 14) {
                 this.trial++;
@@ -306,9 +308,10 @@ BART_TUTORIAL = function() {
                 this.proceed = false;
             }else {
                 console.log('end');
-
                 datahandler.completeTask();
-                datahandler.exitTask();
+                window.setTimeout(function () {
+                    datahandler.exitTask();
+                }, 100);
             }
         };
 
