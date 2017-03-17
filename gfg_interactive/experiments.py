@@ -106,7 +106,7 @@ def enterexp():
         session_id = request.form['sessionid']
 
     session = Session.query.filter_by(session_id=session_id).first()
-
+    print 'enterexp'
     if session:
         session.status = 2
         session.begin_experiment = datetime.datetime.now()
