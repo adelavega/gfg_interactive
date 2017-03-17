@@ -41,7 +41,7 @@ def start_exp():
     uniqueid: External gfg_id
     surveyid: Which experiment to serve
     """
-
+    print 'make new'
     browser, platform = utils.check_browser_platform(request.user_agent)
 
     # Check query string
