@@ -73,16 +73,7 @@ def start_exp():
     if disqualifying_sessions and current_app.config['EXP_DEBUG'] == False:
         raise ExperimentError('already_did_exp', session_id=disqualifying_sessions.session_id)
 
-    # Otherwise, allow participant to re-enter
-    elif exp_name == 'BSART':
-        session = Session(gfg_id=gfg_id, browser=browser, platform=platform,
-                          status=1, exp_name=exp_name, begin_session=datetime.datetime.now())
-        db.session.add(session)
-        db.session.commit()
-
-        return render_template(exp_name + "/exp.html", experimentname=exp_name, surveyid=survey_id,
-                               sessionid=session.session_id, debug=current_app.config['EXP_DEBUG'],
-                               uniqueid=urllib.quote(uniqueid))
+    
 
     else:
         session = Session(gfg_id=gfg_id, browser=browser, platform=platform,
