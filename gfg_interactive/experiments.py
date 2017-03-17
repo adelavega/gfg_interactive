@@ -335,13 +335,15 @@ def results():
         if len(previousSessions) == 0:
             previousSessions = None
 
+        print 'Other sessions'
+        print previousSessions
 
         # current score
         score = round(db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == session.session_id,
                                                                                BART.user_action == 2).all()[0][0])
         session.results = score
         db.session.commit()
-        print score
+
 
         # data from subjects with completed sessions
         completed_others = [_[0] for _ in db.session.query(distinct(Session.gfg_id)).filter(
@@ -349,6 +351,8 @@ def results():
                                                Session.exp_name == session.exp_name,
                                                Session.status == 3).all()]
 
+        print 'Other participants'
+        print completed_others
         if len(completed_others) > 0:
 
             mean_score = db.session.query(func.avg(Session.results).label('average')).filter(
