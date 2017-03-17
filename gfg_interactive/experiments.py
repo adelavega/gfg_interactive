@@ -338,7 +338,7 @@ def results():
 
         # current score
         score = round(db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == session.session_id,
-                                                                               BART.user_action == 1).all()[0][0])
+                                                                               BART.user_action == 2).all()[0][0])
         session.results = score
         db.session.commit()
         print score
