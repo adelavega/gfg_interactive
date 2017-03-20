@@ -92,7 +92,7 @@ Deleter.prototype.update = function() {
 
 
 function Distribution_init(){
-    Canvas.visibility = 'visible';
+    Canvas.display = 'block';
     for (i = 0; i < 11; i++){
         b = new Bin(i*(Canvas.clientWidth/10));
         x = new Deleter(i*(Canvas.clientWidth/10));
