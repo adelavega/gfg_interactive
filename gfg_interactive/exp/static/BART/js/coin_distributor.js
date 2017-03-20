@@ -92,7 +92,10 @@ Deleter.prototype.update = function() {
 
 
 function Distribution_init(){
+    Context.canvas.width  = window.innerWidth;
+    Context.canvas.height = window.innerHeight;
     $('#coin_distribution').show();
+
     for (i = 0; i < 11; i++){
         b = new Bin(i*(Canvas.clientWidth/10));
         x = new Deleter(i*(Canvas.clientWidth/10));
