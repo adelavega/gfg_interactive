@@ -92,8 +92,7 @@ Deleter.prototype.update = function() {
 
 
 function Distribution_init(){
-    Context.canvas.width  = window.innerWidth;
-    Context.canvas.height = window.innerHeight;
+    fitToContainer();
     $('#coin_distribution').show();
 
     for (i = 0; i < 11; i++){
@@ -106,7 +105,7 @@ function Distribution_init(){
 }
 
 function updateAll(){
-
+    fitToContainer();
     Context.clearRect(0,0,Canvas.clientWidth,Canvas.clientHeight);
 
     Context.fillStyle = "#000000";
@@ -204,6 +203,14 @@ Canvas.addEventListener('click', function(event) {
     }
 }, false);
 
+function fitToContainer(){
+  // Make it visually fill the positioned parent
+  Canvas.style.width ='100%';
+  Canvas.style.height='100%';
+  // ...then set the internal size to match
+  Canvas.width  = Canvas.offsetWidth;
+  Canvas.height = Canvas.offsetHeight;
+}
 
 function FinishandEndDistribution() {
 
@@ -215,6 +222,7 @@ function removeInstruction(){
     $("#hider").hide();
     InstructionsOpen = false;
 }
+Distribution_init();
 
 // TODO: program move on functionality and data entry
 // TODO: integrate with GFG-BART
