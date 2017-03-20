@@ -145,6 +145,7 @@ function updateAll(){
 }
 
 Canvas.addEventListener('click', function(event) {
+    console.log('clicked');
     var x = event.pageX - Canvas.offsetLeft,
         y = event.pageY - Canvas.offsetTop;
     if (!InstructionsOpen) {
