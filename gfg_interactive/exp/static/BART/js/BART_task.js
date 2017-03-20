@@ -146,7 +146,8 @@ BART_TUTORIAL = function() {
             $('#token-text').hide();
             $('#cash-box').hide();
             $('#result-text').hide();
-            $('#coin_distribution').show();
+            $('#instructions-box').animate({opacity: '0'}).hide();
+
         };
 
         BART_tutorial.prototype.showDistInstruct = function() {
@@ -209,7 +210,7 @@ BART_TUTORIAL = function() {
             tutorial.changeStatus('Distribution');
             tutorial.maxSize = parseInt($('#maxSize')[0].value);
             $('input').hide().remove();
-
+            tutorial.distribution();
         };
 
         BART_tutorial.prototype.removeChart = function () {
