@@ -213,7 +213,5 @@ function removeInstruction(){
     InstructionsOpen = false;
 }
 
-Distribution_init();
-
 // TODO: program move on functionality and data entry
 // TODO: integrate with GFG-BART
