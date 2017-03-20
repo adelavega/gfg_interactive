@@ -234,7 +234,7 @@ BART_TUTORIAL = function() {
             tutorial.maxSize = parseInt($('#maxSize')[0].value);
             $('input').hide().remove();
             Distribution_init();
-            tutorial.distribution();
+            
         };
 
         BART_tutorial.prototype.removeChart = function () {
