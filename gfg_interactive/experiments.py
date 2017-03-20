@@ -73,7 +73,7 @@ def start_exp():
     if disqualifying_sessions and current_app.config['EXP_DEBUG'] == False:
         raise ExperimentError('already_did_exp', session_id=disqualifying_sessions.session_id)
 
-    
+
 
     else:
         session = Session(gfg_id=gfg_id, browser=browser, platform=platform,

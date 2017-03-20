@@ -158,6 +158,7 @@ BART_TUTORIAL = function() {
                 $('#bar-' + i.toString()).css({left: (i * 5).toString() + '%'});
                 $('#action-' + i.toString()).css({left: (i * 5).toString() + '%'});
             }
+
             $('#chart').append(
                 "<p style='position: absolute; bottom: -50px; left: 96%'>" + this.maxSize + "</p>" +
                 "<p style='position: absolute; bottom: -50px; left: 2%'> 0 </p>" +
@@ -232,6 +233,7 @@ BART_TUTORIAL = function() {
             tutorial.changeStatus('Distribution');
             tutorial.maxSize = parseInt($('#maxSize')[0].value);
             $('input').hide().remove();
+            Distribution_init();
             tutorial.distribution();
         };
 
