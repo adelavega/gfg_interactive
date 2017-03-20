@@ -49,7 +49,8 @@ BART_TUTORIAL = function() {
             this.tokens = 0;
             this.popPoint = 10;
             this.active = true;
-            this.popList = [4,40,12,20,32,48,52,1,60,24,64,28,8,56,36,44,16];
+            this.popList = [3];
+            this.popLista = [4,40,12,20,32,48,52,1,60,24,64,28,8,56,36,44,16];
             this.autotrial = 0;
             this.maxSize = 0;
             this.isDown = false;
@@ -208,7 +209,7 @@ BART_TUTORIAL = function() {
             tutorial.changeStatus('Distribution');
             tutorial.maxSize = parseInt($('#maxSize')[0].value);
             $('input').hide().remove();
-            
+
         };
 
         BART_tutorial.prototype.removeChart = function () {
