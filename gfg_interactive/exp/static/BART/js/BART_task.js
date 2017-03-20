@@ -147,19 +147,6 @@ BART_TUTORIAL = function() {
             $('#cash-box').hide();
             $('#result-text').hide();
             $('#instructions-box').animate({opacity: '0'}).hide();
-            $('#chart').css({visibility: 'visible'}).delay(200).animate({opacity: '1'});
-            $('#chart-border').css({visibility: 'visible'}).delay(200).animate({opacity: '1'});
-
-            for (var i = 0; i < 20; i++) {
-                var barHTML = "<div id=bar-" + i.toString() + " class='chart-bar'></div>";
-                var actionHTML = "<div onmousemove='tutorial.moveInChart(this)' onclick='tutorial.clickInChart(this)' id=action-" + i.toString() + " class='chart-action'></div>";
-                $('#chart')
-                    .append(barHTML)
-                    .append(actionHTML);
-                $('#bar-' + i.toString()).css({left: (i * 5).toString() + '%'});
-                $('#action-' + i.toString()).css({left: (i * 5).toString() + '%'});
-            }
-
             Distribution_init();
         };
 
