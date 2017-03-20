@@ -148,8 +148,9 @@ function updateAll(){
 
 Canvas.addEventListener('click', function(event) {
     console.log('clicked');
-    var x = event.pageX,
-        y = event.pageY;
+    console.log(Canvas.offsetLeft);
+    var x = event.pageX - Canvas.offsetLeft,
+        y = event.pageY - Canvas.offsetTop;
     if (!InstructionsOpen) {
         Bins.forEach(function (bin, i) {
             if (y > bin.y && y < bin.y + bin.height &&
