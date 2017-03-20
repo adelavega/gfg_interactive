@@ -49,7 +49,8 @@ BART_TUTORIAL = function() {
             this.tokens = 0;
             this.popPoint = 10;
             this.active = true;
-            this.popList = [4,40,12,20,32,48,52,1,60,24,64,28,8,56,36,44,16];
+            this.popList = [4];
+            this.popLista = [4,40,12,20,32,48,52,1,60,24,64,28,8,56,36,44,16];
             this.autotrial = 0;
             this.maxSize = 0;
             this.isDown = false;
@@ -141,6 +142,24 @@ BART_TUTORIAL = function() {
         };
 
         BART_tutorial.prototype.distribution = function () {
+            $('#balloon-image').hide();
+            $('#token-text').hide();
+            $('#cash-box').hide();
+            $('#result-text').hide();
+            $('#instructions-box').animate({opacity: '0'}).hide();
+            $('#chart').css({visibility: 'visible'}).delay(200).animate({opacity: '1'});
+            $('#chart-border').css({visibility: 'visible'}).delay(200).animate({opacity: '1'});
+
+            for (var i = 0; i < 20; i++) {
+                var barHTML = "<div id=bar-" + i.toString() + " class='chart-bar'></div>";
+                var actionHTML = "<div onmousemove='tutorial.moveInChart(this)' onclick='tutorial.clickInChart(this)' id=action-" + i.toString() + " class='chart-action'></div>";
+                $('#chart')
+                    .append(barHTML)
+                    .append(actionHTML);
+                $('#bar-' + i.toString()).css({left: (i * 5).toString() + '%'});
+                $('#action-' + i.toString()).css({left: (i * 5).toString() + '%'});
+            }
+
             Distribution_init();
         };
 
