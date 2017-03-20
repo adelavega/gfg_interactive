@@ -33,7 +33,9 @@
         </div> <!-- end of class="container"-->
     </nav>
 </header>
-<div onclick="removeInstruction()" id="hider" style="background-color: white; text-align: center; border: 2px solid black;position: absolute; padding: 10px; overflow: scroll; z-index: 5; margin: 20px; width: 200px; max-height: 200px" hidden="hidden">
+
+<div id="task-container" class="col-md-10 col-md-offset-1">
+    <div onclick="removeInstruction()" id="hider" style="background-color: white; text-align: center; border: 2px solid black;position: absolute; padding: 10px; overflow: scroll; z-index: 5; margin: 20px; width: 200px; max-height: 200px" hidden="hidden">
         <p>
             For this task we would like you to place some bets on where you think the balloon is going to pop most.
             You can place a bet by clicking on any of the bins. You can place as many bets as you'd like, but will need
@@ -44,8 +46,6 @@
     <canvas id="coin_distribution" width="500" height="300" style="z-index: 4; position: absolute;" hidden="hidden">
         <p>Coin distribution builder</p>
     </canvas>
-<div id="task-container" class="col-md-10 col-md-offset-1">
-
     <div id="progress-container" style="visibility: hidden">
         <div class="progress"  style="border: 2px solid black;">
             <div id="progress" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">
