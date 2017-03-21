@@ -207,7 +207,7 @@ Canvas.addEventListener('click', function(event) {
 function fitToContainer(){
   // Make it visually fill the positioned parent
   Canvas.style.width ='60%';
-  Canvas.style.height='75%';
+  Canvas.style.height='50%';
   // ...then set the internal size to match
   Canvas.width  = Canvas.offsetWidth;
   Canvas.height = Canvas.offsetHeight;
