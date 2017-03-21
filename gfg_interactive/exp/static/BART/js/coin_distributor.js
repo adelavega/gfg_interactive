@@ -140,7 +140,7 @@ function updateAll(){
     Context.font = String((Canvas.clientWidth/50)) + "px Arial";
     Context.fillText('?',Canvas.clientWidth/85, Canvas.clientHeight/30);
 
-    Context.fillStyle = "#000000";
+    Context.fillStyle = "black";
     Context.setLineDash([0,0]);
     Context.beginPath();
     Context.moveTo(0,Canvas.clientHeight - (Canvas.clientHeight/25));
