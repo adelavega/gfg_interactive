@@ -66,8 +66,7 @@ Bin.prototype.update = function() {
     Context.moveTo(this.x,Canvas.clientHeight/20);
     Context.lineTo(this.x,Canvas.clientHeight);
     Context.stroke();
-    Context.strokeStyle="black";
-    Context.setLineDash([0,0]);
+    Context.setLineDash([0,10]);
 };
 
 
