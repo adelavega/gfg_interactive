@@ -149,63 +149,9 @@ BART_TUTORIAL = function() {
             $('#instructions-box').animate({opacity: '0'}).hide();
             $("#coin_distribution").show();
             Distribution_init();
+            tutorial.changeStatus('distributeGo');
         };
 
-        BART_tutorial.prototype.showDistInstruct = function() {
-          $('#chart-instruct').animate({opacity: '1'}, function () {
-              $('#chart-instruct').show();
-          })
-        };
-
-        BART_tutorial.prototype.startDistribute = function () {
-            var self = tutorial;
-            $('#chart-instruct').animate({opacity: '0'}, function () {
-                $('#chart-instruct').hide();
-                self.changeStatus('distributeGo');
-            })
-        };
-
-        BART_tutorial.prototype.moveInChart = function (e) {
-            if (tutorial.status == 'distributeGo') {
-                if (tutorial.isDown) {
-                    var selfID = e.id;
-                    var chartBar = $('#bar-' + selfID.split('-')[1]);
-                    var actionY = event.pageY - $('#chart').offset().top;
-                    var barHeight = Math.floor(100 - ((actionY / parseInt($('#chart').css('height'), 10)) * 100));
-
-                    chartBar.css({height: barHeight.toString() + '%'});
-                    tutorial.barValues[parseInt(selfID.split('-')[1])] = barHeight;
-                    tutorial.updateChartText();
-                }
-            }
-        };
-
-        BART_tutorial.prototype.clickInChart = function (e) {
-            if (tutorial.status == 'distributeGo') {
-                var selfID = e.id;
-                var chartBar = $('#bar-' + selfID.split('-')[1]);
-                var actionY = event.pageY - $('#chart').offset().top;
-                var barHeight = Math.floor(100 - ((actionY / parseInt($('#chart').css('height'), 10)) * 100));
-
-                chartBar.css({height: barHeight.toString() + '%'});
-                tutorial.barValues[parseInt(selfID.split('-')[1])] = barHeight;
-                tutorial.updateChartText();
-            }
-        };
-
-        BART_tutorial.prototype.updateChartText = function () {
-            var count = 0;
-            for (var i = 0; i < tutorial.barValues.length; i++) {
-                count += tutorial.barValues[i];
-            }
-            console.log(count);
-            $('#distribution-counter').text(count.toString());
-            if (count >= 500) {
-                $('#chart-next').css({visibility: 'visible'})
-            } else {
-                $('#chart-next').css({visibility: 'hidden'})
-            }
-        };
 
         BART_tutorial.prototype.submitMax = function () {
             tutorial.changeStatus('Distribution');
@@ -215,11 +161,9 @@ BART_TUTORIAL = function() {
         };
 
         BART_tutorial.prototype.removeChart = function () {
-            $('#chart').animate({opacity: '0'}, function () {
-                $('#chart').remove();
-            });
-            $('#chart-border').animate({opacity: '0'}, function () {
-                $("#chart-border").remove();
+            $('#coin_distribution').animate({opacity: '0'}, function () {
+                $('#coin_distribution').remove();
+                addAndSubmitData();
             });
             resetBalloon();
             $('#balloon-image').show();
@@ -398,7 +342,8 @@ BART_TUTORIAL = function() {
                     'balloon_num': Task.trial,
                     'action': 1,
                     'pumps': Task.tokens,
-                    'pop_point': Task.popPoint
+                    'pop_point': Task.popPoint,
+                    'dist': '_'
                 });
                 clearInterval(tutorial.flashinterval);
                 clearInterval(Task.flashinterval);
@@ -412,7 +357,8 @@ BART_TUTORIAL = function() {
                         'balloon_num': Task.trial,
                         'action': 0,
                         'pumps': Task.tokens,
-                        'pop_point': Task.popPoint
+                        'pop_point': Task.popPoint,
+                        'dist': '_'
                     });
                     Task.active = false;
                     popAnimation();
@@ -445,7 +391,8 @@ BART_TUTORIAL = function() {
                     'balloon_num': Task.trial,
                     'action': 2,
                     'pumps': Task.tokens,
-                    'pop_point': Task.popPoint
+                    'pop_point': Task.popPoint,
+                    'dist': '_'
                 });
                 datahandler.saveData();
                 clearInterval(tutorial.flashinterval);
@@ -495,7 +442,8 @@ BART_TUTORIAL = function() {
                 'balloon_num': Task.trial,
                 'action': 1,
                 'pumps': Task.tokens,
-                'pop_point': Task.popPoint
+                'pop_point': Task.popPoint,
+                'dist': '_'
             });
             clearInterval(tutorial.flashinterval);
             clearInterval(Task.flashinterval);
@@ -509,7 +457,8 @@ BART_TUTORIAL = function() {
                     'balloon_num': Task.trial,
                     'action': 0,
                     'pumps': Task.tokens,
-                    'pop_point': Task.popPoint
+                    'pop_point': Task.popPoint,
+                    'dist': '_'
                 });
                 Task.active = false;
                 popAnimation();
@@ -544,7 +493,8 @@ BART_TUTORIAL = function() {
                 'balloon_num': Task.trial,
                 'action': 2,
                 'pumps': Task.tokens,
-                'pop_point': Task.popPoint
+                'pop_point': Task.popPoint,
+                'dist': '_'
             });
             datahandler.saveData();
             clearInterval(tutorial.flashinterval);

@@ -157,11 +157,11 @@ class BART(db.Model):
     pumps = db.Column(db.Integer)
     pop_point = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime)
-
+    distribution = db.Column(db.String(300))
     # This is how the model prints itself
     def __repr__(self):
-        return "BART Values (%s, %s, %s, %s, %s, %s, %s, %s, %s)" % (self.action_id, self.gfg_id,
-                                                 self.session_id, self.trial_num, self.trial_action_num,self.user_action,self.pumps,self.pop_point,self.timestamp)
+        return "BART Values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" % (self.action_id, self.gfg_id,
+                                                 self.session_id, self.trial_num, self.trial_action_num,self.user_action,self.pumps,self.pop_point,self.timestamp, self.distribution)
 
     def add_json_data(self, json_trial):
         trial_data = json_trial['trialdata']
@@ -171,6 +171,8 @@ class BART(db.Model):
         self.pumps = trial_data['pumps']
         self.pop_point = trial_data['pop_point']
         self.timestamp = convert_timestamp(json_trial['dateTime'])
+        self.distribution = trial_data['dist']
+
 
 
 class EventData(db.Model):

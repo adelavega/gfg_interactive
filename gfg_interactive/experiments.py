@@ -180,6 +180,7 @@ def update(session_id=None):
             experiment_class = KeepTrack
         elif session.exp_name == 'BART':
             experiment_class = BART
+            print 'jake'
 
         db_trial, new = db_utils.get_or_create(db.session,
             experiment_class, gfg_id=session.gfg_id, session_id=session.session_id,
@@ -199,6 +200,7 @@ def update(session_id=None):
             timestamp = utils.convert_timestamp(json_event['timestamp']))
 
         if new:
+            print 'added';
             db_event.add_json_data(json_event)
             db.session.commit()
 

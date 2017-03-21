@@ -3,12 +3,12 @@ var Canvas = document.getElementById('coin_distribution'),
     coins = [],
     Bins = [],
     Deleters = [],
-    QuestionMark = {x: Canvas.clientWidth/85, y:Canvas.clientHeight/30, width: Canvas.clientHeight/25, height:Canvas.clientHeight/25},
-    ContinueButton = {x: Canvas.clientWidth/1.13,y: QuestionMark.y,width: Canvas.clientWidth/10, height: QuestionMark.height},
-    ContinueGo = null;
+    QuestionMark = {x: Canvas.clientWidth - (Canvas.clientWidth/1.005),y:Canvas.clientHeight/1,width:Canvas.clientHeight/25,height:Canvas.clientHeight/25},
+    ContinueButton = {x:Canvas.clientWidth/1.13,y:QuestionMark.y,width:Canvas.clientWidth/10,height:QuestionMark.height},
+    ContinueGo = null,
     InstructionsOpen = false;
 
-function Coin(x,bottomed){
+function Coin(x,bottomed,binindex){
     this.x = x;
     this.y = Canvas.clientHeight/20;
     this.width = Canvas.clientWidth/10;
@@ -17,6 +17,7 @@ function Coin(x,bottomed){
     this.gravity = 0.9;
     this.gravitySpeed = 0;
     this.bottomed = bottomed;
+    this.binindex = binindex;
 }
 
 Coin.prototype.update = function() {
@@ -44,19 +45,20 @@ Coin.prototype.hitBottom = function() {
 };
 
 function newCoin(bin){
-    var coin = new Coin(bin.x,bin.bottomed);
+    var coin = new Coin(bin.x,bin.bottomed,bin.binIndex);
     coins.push(coin);
 }
 
 
 
-function Bin(x){
+function Bin(x,i){
     this.x= x;
     this.y= Canvas.clientHeight/14;
     this.width= Canvas.clientWidth/10;
     this.height= Canvas.clientHeight - (Canvas.clientHeight/10);
     this.bottomed = Canvas.clientHeight - (Canvas.clientHeight/25);
     this.inBin = 0;
+    this.binIndex = i;
 }
 
 Bin.prototype.update = function() {
@@ -95,7 +97,7 @@ function Distribution_init(){
     $('#coin_distribution').show();
 
     for (i = 0; i < 11; i++){
-        b = new Bin(i*(Canvas.clientWidth/10));
+        b = new Bin(i*(Canvas.clientWidth/10),i);
         x = new Deleter(i*(Canvas.clientWidth/10));
         Bins.push(b);
         Deleters.push(x);
@@ -104,8 +106,8 @@ function Distribution_init(){
 }
 
 function updateAll(){
-    fitToContainer();
     Context.clearRect(0,0,Canvas.clientWidth,Canvas.clientHeight);
+    fitToContainer();
 
     Context.fillStyle = "#000000";
     Context.font = String((Canvas.clientWidth/50)) + "px Arial";
@@ -134,14 +136,14 @@ function updateAll(){
         d.update();
     });
 
-    Context.rect(Canvas.clientWidth/200,QuestionMark.y,QuestionMark.width,QuestionMark.height);
+    Context.setLineDash([0,0]);
+    Context.rect(QuestionMark.x,QuestionMark.y,QuestionMark.width,QuestionMark.height);
     Context.stroke();
     Context.fillStyle = "#0B2972";
     Context.font = String((Canvas.clientWidth/50)) + "px Arial";
-    Context.fillText('?',Canvas.clientWidth/85, Canvas.clientHeight/30);
+    Context.fillText('?',QuestionMark.x, Canvas.clientHeight/28);
 
     Context.fillStyle = "black";
-    Context.setLineDash([0,0]);
     Context.beginPath();
     Context.moveTo(0,Canvas.clientHeight - (Canvas.clientHeight/25));
     Context.lineTo(Canvas.clientWidth,Canvas.clientHeight - (Canvas.clientHeight/25));
@@ -152,8 +154,7 @@ function updateAll(){
 }
 
 Canvas.addEventListener('click', function(event) {
-    console.log('clicked');
-    console.log(Canvas.offsetLeft);
+
     var x = event.pageX - Canvas.offsetLeft,
         y = event.pageY - Canvas.offsetTop;
     if (!InstructionsOpen) {
@@ -163,6 +164,7 @@ Canvas.addEventListener('click', function(event) {
                 if (bin.inBin < 20) {
                     bin.inBin++;
                     bin.bottomed -= (Canvas.clientHeight / 25);
+
                     newCoin(bin);
                 }
             }
@@ -176,7 +178,7 @@ Canvas.addEventListener('click', function(event) {
                     var results = coins.filter(function (coin) {
                         return coin.x == d.x;
                     });
-                    console.log(results);
+
                     var index = coins.findIndex(function (coin) {
                         return coin.x == results[results.length - 1].x
                             && coin.y == results[results.length - 1].y;
@@ -188,15 +190,13 @@ Canvas.addEventListener('click', function(event) {
         });
         if ( y > QuestionMark.y && y < QuestionMark.y + QuestionMark.height &&
             x > QuestionMark.x && x < QuestionMark.x + QuestionMark.width){
-            console.log('h');
+
             InstructionsOpen = true;
             $("#hider").show();
         }
 
     } else {
-        if ( (y > InstructionBox.y && y < InstructionBox.y + InstructionBox.height &&
-            x > InstructionBox.x && x < InstructionBox.x + InstructionBox.width) ||
-            ( y > QuestionMark.y && y < QuestionMark.y + QuestionMark.height &&
+        if (( y > QuestionMark.y && y < QuestionMark.y + QuestionMark.height &&
             x > QuestionMark.x && x < QuestionMark.x + QuestionMark.width)){
             $("#hider").hide();
             InstructionsOpen = false;
@@ -204,30 +204,56 @@ Canvas.addEventListener('click', function(event) {
         }
     }
     if (ContinueGo && y > ContinueButton.y && y < ContinueButton.y + ContinueButton.height &&
-            x > ContinueButton.x && x < ContinueButton.x + ContinueButton.width) {
-        FinishandEndDistribution();
+        x > ContinueButton.x && x < ContinueButton.x + ContinueButton.width) {
+        console.log('yes');
+        tutorial.removeChart();
     }
 }, false);
 
 function fitToContainer(){
-  // Make it visually fill the positioned parent
-  Canvas.style.width ='60%';
-  Canvas.style.height='65%';
-  // ...then set the internal size to match
-  Canvas.width  = Canvas.offsetWidth;
-  Canvas.height = Canvas.offsetHeight;
+    // Make it visually fill the positioned parent
+    Canvas.style.width ='60%';
+    Canvas.style.height='65%';
+    // ...then set the internal size to match
+    Canvas.width  = Canvas.offsetWidth;
+    Canvas.height = Canvas.offsetHeight;
+
+    Bins.forEach(function(b,i){
+        Bins[i].width = Canvas.width/10;
+        Bins[i].x = i*(Canvas.clientWidth/10);
+        Deleters[i].width = Canvas.width/10;
+        Deleters[i].x = i*(Canvas.clientWidth/10);
+    });
+    coins.forEach(function(c,i){
+        coins[i].width = Canvas.width/10;
+        coins[i].x = Bins[coins[i].binindex].x;
+    });
+    QuestionMark.x = Canvas.clientWidth - (Canvas.clientWidth/1.005);
+    QuestionMark.y =Canvas.clientHeight - (Canvas.clientHeight/1.005);
+    QuestionMark.width = Canvas.clientHeight/25;
+    QuestionMark.height = Canvas.clientHeight/25;
+    ContinueButton.x = Canvas.clientWidth/1.13;
+    ContinueButton.y = QuestionMark.y;
+    ContinueButton.width = Canvas.clientWidth/10;
+    ContinueButton.height = QuestionMark.height;
 }
 
-function FinishandEndDistribution() {
-    $('#coin_distribution').hide();
-
+function addAndSubmitData() {
+    var results = Bins.map(function(a) {return a.inBin;});
+    results.push(tutorial.maxSize);
+    var result = results.join();
+    datahandler.recordTrialData({
+        'balloon_num': 0,
+        'action': 5,
+        'pumps': 0,
+        'pop_point': 0,
+        'dist': result
+    });
+    datahandler.saveData();
 }
 
 function removeInstruction(){
+    console.log('h');
     $("#hider").hide();
     InstructionsOpen = false;
 }
-
-
-// TODO: program move on functionality and data entry
-// TODO: integrate with GFG-BART
