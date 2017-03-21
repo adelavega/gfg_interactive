@@ -149,8 +149,8 @@ function updateAll(){
 Canvas.addEventListener('click', function(event) {
     console.log('clicked');
     console.log(Canvas.offsetLeft);
-    var x = event.pageX + Canvas.offsetLeft,
-        y = event.pageY + Canvas.offsetTop;
+    var x = event.pageX - Canvas.offsetLeft,
+        y = event.pageY - Canvas.offsetTop;
     if (!InstructionsOpen) {
         Bins.forEach(function (bin, i) {
             if (y > bin.y && y < bin.y + bin.height &&
@@ -206,15 +206,14 @@ Canvas.addEventListener('click', function(event) {
 
 function fitToContainer(){
   // Make it visually fill the positioned parent
-  Canvas.style.width ='80%';
-  Canvas.style.height='80%';
+  Canvas.style.width ='100%';
+  Canvas.style.height='100%';
   // ...then set the internal size to match
   Canvas.width  = Canvas.offsetWidth;
   Canvas.height = Canvas.offsetHeight;
 }
 
 function FinishandEndDistribution() {
-
     $('#coin_distribution').hide();
 
 }
