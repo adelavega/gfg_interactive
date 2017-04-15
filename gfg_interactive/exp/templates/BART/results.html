@@ -1,38 +1,202 @@
 {% extends "base.html" %}
 {% block content %}
-<br><br>
-<div class = "container">
-    <div class="well">
+    <script>
 
-        <h2>Your results!</h2>
+        $(document).ready(function(){
+            var data = [];
+            var dates = {{ dates | safe }};
+            var today = [];
+            for (var i = 0; i < dates.length; i++) {
+                var d = dates[i];
+                data.push([Date.UTC(d[0],d[1],d[2]),{{ previousSessions }}[i]]);
+                today.push([Date.UTC(d[0],d[1],d[2]),null]);
+            }
+            today[today.length - 1] = data[data.length - 1];
+            console.log(data);
 
-        On Average you saved <strong> {{'%0.0f'| format(score|float)}} </strong> Tokens when you cashed in. Thanks for the hard work!
+            var chart = new Highcharts.Chart('container',
+                    {
+                        chart: {
+                            borderColor: 'black',
+                            borderWidth: 1
+                        },
+                        title: {
+                            text: "All sessions"
+                        },
+                        xAxis: {
+                            type: 'datetime',
+                            title: {
+                                text: 'Date'
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Tokens'
+                            },
+                            min: 0
+                        },
+                        plotOptions: {
+                            series: {
+                                marker: {
+                                    enabled: true,
+                                    symbol: 'circle',
+                                    radius: 5
+                                }
+                            }
+                        },
+                        tooltip: {
+                            headerFormat: '<b>{point.x:%e. %b}</b><br>',
+                            pointFormat: 'Tokens: {point.y}'
+                        },
+                        series: [{name:'Previous sessions',
+                            data:data},
+                            {name: 'Today',
+                                data:today,
+                                color:'orange'}
+                        ]
+                    });
+            var gaugeOptions = {
 
-        {%- if percentile is not none-%}
-        <br>
-        You performed better on this test than {{'%0.2f'| format(percentile|float)}}% of other Genes for Good participants your age. As more people take this test your ranking may change, so feel free to look at your results again. 
-        {% else %}
-         <br>
-        We cannot tell you how your score compared to others yet, as not enough people in your age bracket have completed the test. Please try again later.
-        {% endif %}
+                chart: {
+                    type: 'solidgauge',
+                    borderColor: 'black',
+                    borderWidth: 1
+                },
 
-        </p>
+                title: null,
 
-        <h2>What do my results mean?</h2>
+                pane: {
+                    center: ['50%', '85%'],
+                    size: '140%',
+                    startAngle: -90,
+                    endAngle: 90,
+                    background: {
+                        backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                        innerRadius: '60%',
+                        outerRadius: '100%',
+                        shape: 'arc'
+                    }
+                },
 
-        <p>
-        With this task we measure how much risk individuals are willing to take in the face of uncertainty. The number of times that you were willing to pump the balloon is a strong indicator of your general
-        tolerance for risk. Your score is calculated only from balloons in which you chose to cash in your earnings, because popped balloons are not a representation of how many times you were willing to
-        pump the balloon. </p>
+                tooltip: {
+                    enabled: false
+                },
+
+                // the value axis
+                yAxis: {
+                    stops: [
+                        [0.1, '#DF5353'], // green
+                        [0.5, '#DDDF0D'], // yellow
+                        [0.9, '#55BF3B'] // red
+                    ],
+                    lineWidth: 0,
+                    minorTickInterval: null,
+                    tickAmount: 2,
+                    title: {
+                        y: -70
+                    },
+                    labels: {
+                        y: 16
+                    }
+                },
+
+                plotOptions: {
+                    solidgauge: {
+                        dataLabels: {
+                            y: 5,
+                            borderWidth: 0,
+                            useHTML: true
+                        }
+                    }
+                }
+            };
+
+            // The speed gauge
+            var chartSpeed = Highcharts.chart('gauge-container', Highcharts.merge(gaugeOptions, {
+                yAxis: {
+                    min: 0,
+                    max: 100,
+                    title: {
+                        text: 'Percentile'
+                    }
+                },
+
+                credits: {
+                    enabled: false
+                },
+
+                series: [{
+                    name: 'Percentile',
+                    data: [{{ percentile }}],
+                    dataLabels: {
+                        format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                        ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span>' +
+                        '<span style="font-size:12px;color:silver">%</span></div>'
+                    },
+                    tooltip: {
+                        valueSuffix: '%'
+                    }
+                }]
+
+            }));
+            chart.redraw();
+            chartSpeed.redraw();
+        });
 
 
-        <h2>Why do we study risk with this task?</h2>
-        This task has previously been shown to strongly relate to risky behaviors in the real world. With this task we are able to identify both individuals who are especially risky as well as individuals
-        who are especially sensitive to risk. Understanding how individuals engage in risky behaviors is critical for improving methods to help populations of individuals who make too many or too few
-        risky decisions in their life.
-        </p>
+    </script>
+    <br><br>
+    <div class = "container">
+        <div class="well">
 
+            <h2>Your results!</h2>
+
+            On Average you saved <strong> {{'%0.0f'| format(score|float)}} </strong> Tokens when you cashed in. Thanks for the hard work!
+
+            {% if previousSessions is not none %}
+                <div class="row" style="margin: 5px;">
+                    <h4> Result history </h4>
+                    <p>Here you will see the full history of all of your BART results.</p>
+                    <div id="container" class="col-sm-7"></div>
+                </div>
+            {% endif %}
+
+            {% if percentile is not none %}
+                <h3> How you stack up.</h3>
+                <div class="row">
+                    <div  class="col-sm-3" id="gauge-container" style="width: 300px; height: 200px; float: left"></div>
+                    <p class="col-sm-8">On average, where you cashed in was greater than {{'%0.0f'| format(percentile|float)}}% of other Genes for Good participants who completed this task. This means that {{'%0.0f'| format(percentile|float)}}% of all participants, on average, cashed in below you, and that {{'%0.0f'|format( 100 - percentile|float)}}% of participants, on average, cashed in above you.</p>
+                </div>
+            {% else %}
+                <br>
+                We cannot tell you how your score compared to others yet, as not enough people have completed the test. Please try again later.
+            {% endif %}
+
+            </p>
+
+            <h2>What do my results mean?</h2>
+
+            <p>
+                This task is formally called the Balloon Analogue Risk Task, or BART <a href="https://www.ncbi.nlm.nih.gov/pubmed/12075692">(link to original article)</a>. With the BART we are able to elicit individuals'
+                appetite for risk. We do this by measuring how many pumps an individual takes in the face of an uncertain explosion point.
+                Individuals vary greatly in their willingness to pump the balloons in the BART, and this variation allows us to label them
+                as risk averse, seeking or neutral. An individual who shies away from risk (pumps very few times) would be labeled risk averse, whereas an individual
+                who is willing to take greater risk (pump more) would be labeled risk seeking. Those individuals who fall in the middle of these
+                preferences would be labeled risk neutral.
+            </p>
+
+
+            <h2>Why do we study risk with this task?</h2>
+            Risky behavior, as it is measured in the BART, is frequently associated with a range of health related risk behaviors such as alcohol use, drug use,
+            unprotected sex, diving without a seatbelt and smoking. With the BART we can identify individuals who are at risk of engaging
+            in these behaviors in a harmful way. While individuals who are risk averse are less likely to engage in these behaviors, it is also known that
+            these individuals are also likely to overspend on insurance and miss out on investment opportunities due to them being overly cautious.
+            Ultimately, understanding how individuals engage in risky behaviors is critical for improving methods for helping populations of individuals
+            who make too many or too few risky decisions in their daily lives.
+            </p>
+
+        </div>
+        <button type="button" class="btn btn-primary" onclick="opener.closeInteractiveSurvey(); window.close()">Back to Genes for Good</button>
     </div>
-    <button type="button" class="btn btn-primary" onclick="opener.closeInteractiveSurvey(); window.close()">Back to Genes for Good</button>
-</div>
+
 {% endblock %}

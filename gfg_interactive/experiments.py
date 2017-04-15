@@ -328,31 +328,37 @@ def results():
     ## Probably would be good to have the scoring functions all in one file and just call the right function for the git
     ## task, but lets leave that for later
     elif session.exp_name == 'BART':
+        def date_handler(date):
+            return [date.year,date.month,date.day,date.hour,date.minute]
 
-        # Individuals previous scores
-        previousSessions = [_[0] for _ in db.session.query(Session.results).filter(Session.gfg_id == gfg_id,
-                                               Session.exp_name == exp_name,
-                                               Session.session_id != session.session_id,
-                                               Session.status == 3).order_by(asc(Session.session_id)).all()]
 
-        if len(previousSessions) == 0:
-            previousSessions = None
 
-        print 'Other sessions'
-        print previousSessions
-
-        # current score
         score = round(db.session.query(func.avg(BART.pumps).label('average')).filter(BART.session_id == session.session_id,
                                                                                BART.user_action == 2).all()[0][0])
         session.results = score
         db.session.commit()
-
 
         # data from subjects with completed sessions
         completed_others = [_[0] for _ in db.session.query(distinct(Session.gfg_id)).filter(
                                                # Session.gfg_id != gfg_id,
                                                Session.exp_name == session.exp_name,
                                                Session.status == 3).all()]
+
+        # Individuals previous scores
+        previousSessions = [_[0] for _ in db.session.query(Session.results).filter(Session.gfg_id == gfg_id,
+                                                                                   Session.exp_name == exp_name,
+                                                                                   Session.status == 3).order_by(
+            asc(Session.session_id)).all()]
+        print previousSessions
+        dates = [date_handler(_[0]) for _ in db.session.query(Session.begin_session).filter(Session.gfg_id == gfg_id,
+                                                                                            Session.exp_name == exp_name,
+                                                                                            Session.status == 3).order_by(
+            asc(Session.session_id)).all()]
+        if len(previousSessions) == 0:
+            previousSessions = None
+
+        # current score
+        print dates
 
         print 'Other participants'
         print completed_others
@@ -382,7 +388,8 @@ def results():
                                score=score,
                                others = otherResults,
                                previousSessions = previousSessions,
-                               percentile = percentile
+                               dates = dates,
+                               percentile = int(percentile * 100)
                                )
 
     # Do make sure to save the value that you computer for each subject here

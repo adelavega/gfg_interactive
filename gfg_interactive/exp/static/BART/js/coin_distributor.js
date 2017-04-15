@@ -3,16 +3,18 @@ var Canvas = document.getElementById('coin_distribution'),
     coins = [],
     Bins = [],
     Deleters = [],
-    QuestionMark = {x: Canvas.clientWidth - (Canvas.clientWidth/1.005),y:Canvas.clientHeight/1,width:Canvas.clientHeight/25,height:Canvas.clientHeight/25},
+    values = [],
+    QuestionMark = {x: Canvas.clientWidth - (Canvas.clientWidth/1.005),y:Canvas.clientHeight,width:Canvas.clientHeight/25,height:Canvas.clientHeight/25},
     ContinueButton = {x:Canvas.clientWidth/1.13,y:QuestionMark.y,width:Canvas.clientWidth/10,height:QuestionMark.height},
     ContinueGo = null,
-    InstructionsOpen = false;
+    InstructionsOpen = false,
+    maxsize = null;
 
 function Coin(x,bottomed,binindex){
     this.x = x;
     this.y = Canvas.clientHeight/20;
     this.width = Canvas.clientWidth/10;
-    this.height = Canvas.clientHeight/25;
+    this.height = Canvas.clientHeight/60;
     this.speed = 0.1;
     this.gravity = 0.9;
     this.gravitySpeed = 0;
@@ -55,8 +57,8 @@ function Bin(x,i){
     this.x= x;
     this.y= Canvas.clientHeight/14;
     this.width= Canvas.clientWidth/10;
-    this.height= Canvas.clientHeight - (Canvas.clientHeight/10);
-    this.bottomed = Canvas.clientHeight - (Canvas.clientHeight/25);
+    this.height= Canvas.clientHeight - (Canvas.clientHeight/5) ;
+    this.bottomed = Canvas.clientHeight - (Canvas.clientHeight/10);
     this.inBin = 0;
     this.binIndex = i;
 }
@@ -66,7 +68,7 @@ Bin.prototype.update = function() {
     Context.setLineDash([5, 10]);
     Context.beginPath();
     Context.moveTo(this.x,Canvas.clientHeight/20);
-    Context.lineTo(this.x,Canvas.clientHeight);
+    Context.lineTo(this.x,Canvas.clientHeight - (Canvas.clientHeight/10));
     Context.stroke();
     Context.setLineDash([0,10]);
 };
@@ -75,9 +77,9 @@ Bin.prototype.update = function() {
 
 function Deleter(x){
     this.x = x;
-    this.y = Canvas.clientHeight - (Canvas.clientHeight/25);
+    this.y = Canvas.clientHeight - (Canvas.clientHeight/10);
     this.width = Canvas.clientWidth/10;
-    this.height = 30;
+    this.height = Canvas.clientHeight/20;
 }
 
 Deleter.prototype.update = function() {
@@ -86,13 +88,16 @@ Deleter.prototype.update = function() {
     Context.rect(this.x,this.y,this.width,this.height);
     Context.stroke();
     Context.fillStyle = "#0B2972";
-    Context.font = String((Canvas.clientWidth/75)) + "px Arial";
+    Context.font = String((Canvas.clientHeight/35)) + "px Arial";
     Context.fillText("REMOVE",this.x + (Canvas.clientWidth/45),this.y + (Canvas.clientHeight/35));
 };
 
 
 
-function Distribution_init(){
+function Distribution_init(max){
+    $("#hider").show();
+    InstructionsOpen = true;
+    maxsize = max;
     fitToContainer();
     $('#coin_distribution').show();
 
@@ -109,6 +114,14 @@ function updateAll(){
     Context.clearRect(0,0,Canvas.clientWidth,Canvas.clientHeight);
     fitToContainer();
 
+    Context.font = String((Canvas.clientWidth/75)) + "px Arial";
+    Context.textAlign="left";
+    Context.fillText("0",Canvas.clientWidth - (Canvas.clientWidth - 1),Canvas.clientHeight - (Canvas.clientHeight/100));
+    Context.textAlign="center";
+    Context.fillText("Balloon size",(Canvas.clientWidth / 2),Canvas.clientHeight - (Canvas.clientHeight/120));
+    Context.textAlign="right";
+    Context.fillText(String(maxsize),Canvas.clientWidth,Canvas.clientHeight - (Canvas.clientHeight/120));
+    Context.textAlign="left";
     Context.fillStyle = "#000000";
     Context.font = String((Canvas.clientWidth/50)) + "px Arial";
     var results = Bins.map(function(a) {return a.inBin;});
@@ -145,8 +158,8 @@ function updateAll(){
 
     Context.fillStyle = "black";
     Context.beginPath();
-    Context.moveTo(0,Canvas.clientHeight - (Canvas.clientHeight/25));
-    Context.lineTo(Canvas.clientWidth,Canvas.clientHeight - (Canvas.clientHeight/25));
+    Context.moveTo(0,Canvas.clientHeight - (Canvas.clientHeight/10));
+    Context.lineTo(Canvas.clientWidth,Canvas.clientHeight - (Canvas.clientHeight/10));
     Context.stroke();
 
     requestAnimationFrame(updateAll);
@@ -157,14 +170,17 @@ Canvas.addEventListener('click', function(event) {
 
     var x = event.pageX - Canvas.offsetLeft,
         y = event.pageY - Canvas.offsetTop;
-    if (!InstructionsOpen) {
+    var results = Bins.map(function(a) {return a.inBin;});
+    var sum = results.reduce(function(a, b) { return a + b; }, 0);
+    if (!InstructionsOpen)  {
         Bins.forEach(function (bin, i) {
-            if (y > bin.y && y < bin.y + bin.height &&
-                x > bin.x && x < bin.x + bin.width) {
-                if (bin.inBin < 20) {
-                    bin.inBin++;
-                    bin.bottomed -= (Canvas.clientHeight / 25);
 
+            if (y > bin.y && y < bin.y + bin.height &&
+                x > bin.x && x < bin.x + bin.width && sum < 50) {
+                console.log('hi');
+                if (bin.inBin < 50) {
+                    bin.inBin++;
+                    bin.bottomed -= (Canvas.clientHeight / 60);
                     newCoin(bin);
                 }
             }
@@ -173,6 +189,7 @@ Canvas.addEventListener('click', function(event) {
         Deleters.forEach(function (d, i) {
             if (y > d.y && y < d.y + d.height &&
                 x > d.x && x < d.x + d.width) {
+                console.log('hiss');
                 if (Bins[i].inBin > 0) {
                     Bins[i].inBin -= 1;
                     var results = coins.filter(function (coin) {
@@ -183,7 +200,7 @@ Canvas.addEventListener('click', function(event) {
                         return coin.x == results[results.length - 1].x
                             && coin.y == results[results.length - 1].y;
                     });
-                    Bins[i].bottomed += (Canvas.clientHeight / 25);
+                    Bins[i].bottomed += (Canvas.clientHeight / 60);
                     coins.splice(index, 1);
                 }
             }

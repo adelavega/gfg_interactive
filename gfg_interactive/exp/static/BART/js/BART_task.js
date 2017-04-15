@@ -49,8 +49,8 @@ BART_TUTORIAL = function() {
             this.tokens = 0;
             this.popPoint = 10;
             this.active = true;
-            this.popList = [3];
-            this.popLista = [4,40,12,20,32,48,52,1,60,24,64,28,8,56,36,44,16];
+
+            this.popList = [4,40,12,20,32,48,52,1,60,24,64,28,8,56,36,44,16];
             this.autotrial = 0;
             this.maxSize = 0;
             this.isDown = false;
@@ -148,7 +148,7 @@ BART_TUTORIAL = function() {
             $('#result-text').hide();
             $('#instructions-box').animate({opacity: '0'}).hide();
             $("#coin_distribution").show();
-            Distribution_init();
+            Distribution_init(tutorial.maxSize);
             tutorial.changeStatus('distributeGo');
         };
 
