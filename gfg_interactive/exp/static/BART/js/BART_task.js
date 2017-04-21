@@ -231,6 +231,7 @@ BART_TUTORIAL = function() {
                 this.proceed = false;
             }else {
                 console.log('end');
+                datahandler.saveData();
                 datahandler.completeTask();
                 window.setTimeout(function () {
                     datahandler.exitTask();
@@ -285,7 +286,7 @@ BART_TUTORIAL = function() {
         } else if (tutorial.status === 'endLearnCash') {
             tutorial.displayInstruction(
                 "At the end of this task we will compare your average tokens for cashed in balloons with other individuals who have also completed this task." +
-                "<br><br>If you are ready to start this task for real, click/tap this box and we will get started."
+                "<br><br>Ready to start? Click/tap this box."
             );
             tutorial.changeStatus('preTask');
         }
@@ -364,7 +365,7 @@ BART_TUTORIAL = function() {
                     popAnimation();
                     $('#cash-text').html('Next Balloon');
                     Task.proceed = true;
-                    datahandler.saveData();
+
                 } else if (Task.proceed) {
                     Task.newTrial();
                 }
@@ -394,7 +395,7 @@ BART_TUTORIAL = function() {
                     'pop_point': Task.popPoint,
                     'dist': '_'
                 });
-                datahandler.saveData();
+
                 clearInterval(tutorial.flashinterval);
                 clearInterval(Task.flashinterval);
                 Task.active = false;
@@ -464,7 +465,7 @@ BART_TUTORIAL = function() {
                 popAnimation();
                 $('#cash-text').html('Next Balloon');
                 Task.proceed = true;
-                datahandler.saveData();
+
             } else if (Task.proceed) {
                 Task.newTrial();
             }
@@ -496,7 +497,6 @@ BART_TUTORIAL = function() {
                 'pop_point': Task.popPoint,
                 'dist': '_'
             });
-            datahandler.saveData();
             clearInterval(tutorial.flashinterval);
             clearInterval(Task.flashinterval);
             Task.active = false;
