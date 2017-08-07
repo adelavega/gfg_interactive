@@ -5,6 +5,8 @@ class Config(object):
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = 'enter key here'
+    ## TODO: Default setting will suppress log warnings in minimally invasive fashion. If we are confident no signals are used, better to switch to `False`.
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 class ProductionConfig(Config):
     DEBUG = False
