@@ -375,4 +375,4 @@ def handle_exp_error(exception):
     """Handle errors by sending an error page."""
     current_app.logger.error(
         "%s (%s) %s", exception.value, exception.errornum, str(dict(request.args)))
-    return exception.error_page(request, "gfgemail@gfg.edu") ## Update this email
+    return exception.error_page(request, "genesforgood@umich.edu")
